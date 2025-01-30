@@ -5,44 +5,6 @@ import { Link } from 'react-router-dom';
 const Hero = () => {
   return (
     <div className="flex flex-col bg-zinc-50">
-      {/* Header Navigation */}
-      <header className="bg-white border-b border-zinc-100 sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-20">
-              <div className="flex-shrink-0">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-zinc-900 rotate-45 flex items-center justify-center">
-                    <div className="-rotate-45 text-white font-bold text-xl">Y</div>
-                  </div>
-                  <span className="text-2xl font-bold tracking-tight">YORKSHIRE PATHWAYS</span>
-                </div>
-              </div>
-              <nav className="hidden md:flex items-center space-x-8">
-                <a href="#educators" className="text-zinc-600 hover:text-zinc-900 transition-colors text-base uppercase tracking-wide">Educators</a>
-                <Link to="/businesses" className="text-zinc-600 hover:text-zinc-900 transition-colors text-base uppercase tracking-wide">Businesses</Link>
-                <div className="relative group">
-                  <Link to="/adult-skills" className="text-zinc-600 hover:text-zinc-900 transition-colors text-base uppercase tracking-wide flex items-center">
-                    Adults
-                  </Link>
-                  <div className="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <Link to="/adult-skills#employment" className="block px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50">Employment Support</Link>
-                    <Link to="/adult-skills#training" className="block px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50">Funded Training</Link>
-                    <Link to="/adult-skills#wellbeing" className="block px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50">Mental Health Support</Link>
-                    <Link to="/adult-skills#contact" className="block px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50">Contact Us</Link>
-                  </div>
-                </div>
-                <Link to="/young-people" className="text-zinc-600 hover:text-zinc-900 transition-colors text-base uppercase tracking-wide">Young people</Link>
-                <a href="#parents" className="text-zinc-600 hover:text-zinc-900 transition-colors text-base uppercase tracking-wide">Parents</a>
-                <div className="h-5 w-px bg-zinc-200"></div>
-                <button className="flex items-center space-x-2 bg-zinc-900 text-white px-6 py-3 rounded-full text-base hover:bg-zinc-800 transition-colors">
-                  <Search className="h-5 w-5" />
-                  <span>Search</span>
-                </button>
-              </nav>
-            </div>
-          </div>
-      </header>
-
       {/* Hero Section with Integrated Blocks */}
       <div className="relative min-h-screen bg-zinc-50 pb-24">
         {/* Background Image and Overlay */}

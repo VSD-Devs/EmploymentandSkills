@@ -29,47 +29,29 @@ const AdultSkills = () => {
   return (
     <div className="min-h-screen bg-zinc-50">
       {/* Hero Section */}
-      <div className="relative h-[85vh] bg-zinc-900">
-        {/* Background Image */}
-        <div className="absolute inset-0">
+      <div className="relative bg-zinc-900 text-white py-16">
+        <div className="absolute inset-0 opacity-40">
           <img 
             src={IMAGES.hero}
-            alt="Modern Yorkshire skyline showing business district"
-            className="w-full h-full object-cover opacity-40"
+            alt="Professional development and career growth in Yorkshire"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/80 via-zinc-900/70 to-zinc-50"></div>
         </div>
-
-        {/* Hero Content */}
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-full flex flex-col justify-center">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-                <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                <span className="text-white/90 text-sm font-medium">Free Support Available</span>
-              </div>
-              <h1 className="text-6xl font-bold text-white mb-8 leading-tight">
-                Transform Your Career in Yorkshire
-              </h1>
-              <p className="text-2xl text-zinc-200 mb-10 leading-relaxed">
-                Access free support, training, and resources to help you thrive in Yorkshire's growing industries.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <button className="bg-white text-zinc-900 px-8 py-4 rounded-lg text-lg font-medium hover:bg-zinc-100 transition-colors inline-flex items-center group">
-                  Start Your Journey
-                  <ChevronRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-white/20 transition-colors border border-white/20">
-                  View Courses
-                </button>
-              </div>
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-900/75"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-emerald-500/10 text-emerald-300 text-lg font-medium mb-6">
+            <GraduationCap className="w-5 h-5 mr-2" />
+            Adult Skills & Training
           </div>
+          <h1 className="text-6xl font-bold mb-6 text-white max-w-2xl">Transform Your Career in Yorkshire</h1>
+          <p className="text-2xl text-zinc-200 max-w-3xl leading-relaxed">
+            Access free support, training, and resources to help you thrive in Yorkshire's growing industries. Whether you're looking to upskill, change careers, or get back into work, we're here to help.
+          </p>
         </div>
       </div>
 
       {/* Key Benefits Section */}
-      <div className="relative -mt-20 mb-16">
+      <div className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white rounded-xl p-8 shadow-xl border border-zinc-100">

@@ -18,7 +18,7 @@ const Navigation = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/educators" className="text-zinc-600 hover:text-zinc-900 transition-colors text-sm uppercase tracking-wide">Educators</Link>
             <Link to="/businesses" className="text-zinc-600 hover:text-zinc-900 transition-colors text-sm uppercase tracking-wide">Businesses</Link>
-            <Link to="/adults" className="text-zinc-600 hover:text-zinc-900 transition-colors text-sm uppercase tracking-wide">Adults</Link>
+            <Link to="/adult-skills" className="text-zinc-600 hover:text-zinc-900 transition-colors text-sm uppercase tracking-wide">Adults</Link>
             <Link to="/young-people" className="text-zinc-600 hover:text-zinc-900 transition-colors text-sm uppercase tracking-wide">Young people</Link>
             <Link to="/parents" className="text-zinc-600 hover:text-zinc-900 transition-colors text-sm uppercase tracking-wide">Parents</Link>
             <div className="h-4 w-px bg-zinc-200"></div>

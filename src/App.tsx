@@ -34,7 +34,7 @@ const App = () => {
       <ScrollToTop />
       <div className="min-h-screen">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
           <Route path="/young-people" element={<MainLayout><YoungPeople /></MainLayout>} />
           <Route path="/career-quiz" element={<MainLayout><CareerQuizPage /></MainLayout>} />
           <Route path="/businesses" element={<MainLayout><BusinessPage /></MainLayout>} />
