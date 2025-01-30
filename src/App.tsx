@@ -10,6 +10,7 @@ import CareerQuizPage from './pages/CareerQuizPage';
 import EmployerPage from './components/EmployerPage';
 import BusinessPage from './components/BusinessPage';
 import AdultSkills from './components/AdultSkills';
+import ScrollToTop from './components/ScrollToTop';
 
 const HomePage = () => (
   <>
@@ -30,6 +31,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => (
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="min-h-screen">
         <Routes>
           <Route path="/" element={<HomePage />} />
