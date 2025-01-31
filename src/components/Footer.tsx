@@ -76,7 +76,7 @@ const Footer = () => {
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Contact</h3>
             <ul className="space-y-2 text-zinc-400">
-              <li>South Yorkshire Skills Hub</li>
+              <li>South Yorkshire Employment & Skills Hub</li>
               <li>South Yorkshire Mayoral Combined Authority</li>
               <li>South Yorkshire</li>
               <li>
