@@ -1,0 +1,404 @@
+'use client'
+
+import React from 'react'
+import { Clock, CheckCircle2, Users, ChevronRight, Phone, Mail, BookOpen, GraduationCap, Lightbulb } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+
+// Image constants to ensure consistent loading and prevent typos
+const IMAGES = {
+  careerGuidance: "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80",
+  skillsSupport: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80",
+  financialHelp: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80"
+}
+
+const sections = {
+  guidance: {
+    id: 'guidance',
+    title: 'Career Guidance',
+    description: 'Supporting Your Child',
+    icon: <GraduationCap className="w-6 h-6" />,
+    color: 'teal' as const
+  },
+  skills: {
+    id: 'skills',
+    title: 'Skills Support',
+    description: 'Learning & Development',
+    icon: <BookOpen className="w-6 h-6" />,
+    color: 'emerald' as const
+  },
+  funding: {
+    id: 'funding',
+    title: 'Financial Support',
+    description: 'Available Funding',
+    icon: <Lightbulb className="w-6 h-6" />,
+    color: 'purple' as const
+  }
+}
+
+const colorClasses = {
+  teal: {
+    button: 'border-teal-500 bg-teal-50',
+    icon: 'bg-teal-100 text-teal-600',
+    link: 'bg-teal-600 hover:bg-teal-500',
+    badge: 'bg-teal-50 text-teal-700',
+    gradient: 'from-teal-50 to-white',
+    nav: 'hover:bg-teal-50/80'
+  },
+  emerald: {
+    button: 'border-emerald-500 bg-emerald-50',
+    icon: 'bg-emerald-100 text-emerald-600',
+    link: 'bg-emerald-600 hover:bg-emerald-500',
+    badge: 'bg-emerald-50 text-emerald-700',
+    gradient: 'from-emerald-50 to-white',
+    nav: 'hover:bg-emerald-50/80'
+  },
+  purple: {
+    button: 'border-purple-500 bg-purple-50',
+    icon: 'bg-purple-100 text-purple-600',
+    link: 'bg-purple-600 hover:bg-purple-500',
+    badge: 'bg-purple-50 text-purple-700',
+    gradient: 'from-purple-50 to-white',
+    nav: 'hover:bg-purple-50/80'
+  }
+} as const
+
+const Parents = () => {
+  return (
+    <div className="bg-white">
+      {/* Hero Section */}
+      <div className="relative bg-[#111827] py-24">
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/images/parents-hero.jpg"
+            alt=""
+            fill
+            priority
+            className="object-cover opacity-30"
+            quality={90}
+          />
+          <div className="absolute inset-0 bg-[#111827]/60 mix-blend-multiply" />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative z-10">
+            <div className="flex items-center gap-2 text-teal-400 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-teal-400" />
+              <span className="text-sm font-medium">Parents & Carers Guide</span>
+            </div>
+            <h1 className="text-5xl font-bold text-white mb-6">
+              Support Your Child's<br />Career Journey
+            </h1>
+            <p className="text-lg text-gray-400 mb-8 max-w-2xl leading-relaxed">
+              Get expert guidance and resources to help your child make informed decisions about their future career path in Yorkshire's growing industries.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Enhanced Sticky Navigation Banner */}
+      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-start sm:justify-center min-w-max">
+            <div className="flex space-x-1 py-1">
+              {Object.values(sections).map((section) => (
+                <a 
+                  key={section.id}
+                  href={`#${section.id}`} 
+                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl ${colorClasses[section.color].nav}`}
+                >
+                  <div className="relative z-10 flex flex-col items-center gap-1">
+                    <div className={`h-6 w-6 text-gray-600 group-hover:text-${section.color}-600 group-hover:scale-105`}>
+                      {section.icon}
+                    </div>
+                    <span className={`text-sm sm:text-base font-medium text-gray-900 group-hover:text-${section.color}-600 whitespace-nowrap`}>
+                      {section.title}
+                    </span>
+                    <div className={`h-0.5 w-0 bg-${section.color}-600 group-hover:w-full transition-all duration-50`} />
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Career Guidance Section */}
+      <div id="guidance" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="relative h-[460px] rounded-2xl overflow-hidden">
+            <Image
+              src={IMAGES.careerGuidance}
+              alt="Career guidance session"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-teal-50 rounded-full flex items-center justify-center flex-shrink-0">
+                  <GraduationCap className="h-7 w-7 text-teal-600" />
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900 text-xl mb-1">Expert Guidance</div>
+                  <div className="text-gray-600">Professional career advisors for your child</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center gap-2 text-teal-600 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-teal-600" />
+              <span className="text-sm font-medium tracking-wide uppercase">Supporting Your Child</span>
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Career Guidance</h2>
+            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+              Help your child explore career options and make informed decisions about their future.
+            </p>
+            <div className="bg-gray-50 rounded-xl p-6 mb-8">
+              <div className="grid gap-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-5 w-5 text-teal-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Career Exploration</h3>
+                    <p className="text-gray-600">Discover diverse career paths and opportunities</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-5 w-5 text-teal-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Industry Insights</h3>
+                    <p className="text-gray-600">Learn about Yorkshire's growing sectors</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-5 w-5 text-teal-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Decision Support</h3>
+                    <p className="text-gray-600">Tools to help make informed career choices</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-6">
+              <Link
+                href="/career-guidance"
+                className="inline-flex items-center px-6 py-3 bg-teal-600 text-white rounded-xl hover:bg-teal-500 transition-colors text-lg shadow-sm"
+              >
+                Get Started
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                href="/success-stories"
+                className="inline-flex items-center text-teal-600 font-medium hover:text-teal-500 group text-lg"
+              >
+                View Success Stories
+                <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Skills Support Section */}
+      <div id="skills" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <div className="flex items-center gap-2 text-emerald-600 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
+              <span className="text-sm font-medium tracking-wide uppercase">Learning & Development</span>
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Skills Support</h2>
+            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+              Access resources and support to help your child develop essential skills for their future career.
+            </p>
+            <div className="bg-gray-50 rounded-xl p-6 mb-8">
+              <div className="grid gap-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Study Support</h3>
+                    <p className="text-gray-600">Resources to help with academic development</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Life Skills</h3>
+                    <p className="text-gray-600">Building essential skills for work and life</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Digital Skills</h3>
+                    <p className="text-gray-600">Technology skills for the modern workplace</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-6">
+              <Link
+                href="/skills-support"
+                className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-lg shadow-sm"
+              >
+                Explore Resources
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                href="/learning-resources"
+                className="inline-flex items-center text-emerald-600 font-medium hover:text-emerald-500 group text-lg"
+              >
+                View Learning Materials
+                <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+          <div className="relative h-[460px] rounded-2xl overflow-hidden">
+            <Image
+              src={IMAGES.skillsSupport}
+              alt="Skills development"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="h-7 w-7 text-emerald-600" />
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900 text-xl mb-1">Learning Resources</div>
+                  <div className="text-gray-600">Comprehensive support materials</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Financial Support Section */}
+      <div id="funding" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="relative h-[460px] rounded-2xl overflow-hidden">
+            <Image
+              src={IMAGES.financialHelp}
+              alt="Financial support"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-purple-50 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Lightbulb className="h-7 w-7 text-purple-600" />
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900 text-xl mb-1">Available Support</div>
+                  <div className="text-gray-600">Financial aid and funding options</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center gap-2 text-purple-600 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-purple-600" />
+              <span className="text-sm font-medium tracking-wide uppercase">Available Funding</span>
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Financial Support</h2>
+            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+              Learn about available financial support and funding options for your child's education and training.
+            </p>
+            <div className="bg-gray-50 rounded-xl p-6 mb-8">
+              <div className="grid gap-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-5 w-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Education Grants</h3>
+                    <p className="text-gray-600">Available grants and bursaries for study</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-5 w-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Training Support</h3>
+                    <p className="text-gray-600">Funding for vocational training and courses</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-5 w-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Additional Help</h3>
+                    <p className="text-gray-600">Extra support for specific circumstances</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-6">
+              <Link
+                href="/financial-support"
+                className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-500 transition-colors text-lg shadow-sm"
+              >
+                Explore Funding
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                href="/funding-guide"
+                className="inline-flex items-center text-purple-600 font-medium hover:text-purple-500 group text-lg"
+              >
+                View Funding Guide
+                <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Contact Section */}
+      <div className="bg-[#111827] text-white py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Need Help? We're Here For You</h2>
+            <p className="text-gray-400 text-lg">
+              Our team is ready to support you and your child on their journey to success.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-gray-800/50 backdrop-blur rounded-xl p-8">
+              <div className="flex items-center gap-4 mb-4">
+                <Phone className="h-6 w-6 text-gray-400" />
+                <h3 className="font-semibold text-gray-300 text-lg">Call us at</h3>
+              </div>
+              <p className="text-3xl font-bold mb-2">0800 123 4567</p>
+              <p className="text-gray-400">Monday to Friday, 9am - 5pm</p>
+            </div>
+            <div className="bg-gray-800/50 backdrop-blur rounded-xl p-8">
+              <div className="flex items-center gap-4 mb-4">
+                <Mail className="h-6 w-6 text-gray-400" />
+                <h3 className="font-semibold text-gray-300 text-lg">Email us at</h3>
+              </div>
+              <p className="text-3xl font-bold mb-2">parents@yorkshirepathways.com</p>
+              <p className="text-gray-400">We'll respond within 24 hours</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Parents 

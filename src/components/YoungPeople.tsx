@@ -11,35 +11,48 @@ const colorClasses = {
     icon: 'bg-indigo-100 text-indigo-600',
     link: 'bg-indigo-600 hover:bg-indigo-500',
     badge: 'bg-indigo-50 text-indigo-700',
-    gradient: 'from-indigo-50 to-white'
+    gradient: 'from-indigo-50 to-white',
+    nav: 'hover:bg-indigo-50/80'
+  },
+  emerald: {
+    button: 'border-emerald-500 bg-emerald-50',
+    icon: 'bg-emerald-100 text-emerald-600',
+    link: 'bg-emerald-600 hover:bg-emerald-500',
+    badge: 'bg-emerald-50 text-emerald-700',
+    gradient: 'from-emerald-50 to-white',
+    nav: 'hover:bg-emerald-50/80'
   },
   violet: {
     button: 'border-violet-500 bg-violet-50',
     icon: 'bg-violet-100 text-violet-600',
     link: 'bg-violet-600 hover:bg-violet-500',
     badge: 'bg-violet-50 text-violet-700',
-    gradient: 'from-violet-50 to-white'
+    gradient: 'from-violet-50 to-white',
+    nav: 'hover:bg-violet-50/80'
   },
   fuchsia: {
     button: 'border-fuchsia-500 bg-fuchsia-50',
     icon: 'bg-fuchsia-100 text-fuchsia-600',
     link: 'bg-fuchsia-600 hover:bg-fuchsia-500',
     badge: 'bg-fuchsia-50 text-fuchsia-700',
-    gradient: 'from-fuchsia-50 to-white'
+    gradient: 'from-fuchsia-50 to-white',
+    nav: 'hover:bg-fuchsia-50/80'
   },
   sky: {
     button: 'border-sky-500 bg-sky-50',
     icon: 'bg-sky-100 text-sky-600',
     link: 'bg-sky-600 hover:bg-sky-500',
     badge: 'bg-sky-50 text-sky-700',
-    gradient: 'from-sky-50 to-white'
+    gradient: 'from-sky-50 to-white',
+    nav: 'hover:bg-sky-50/80'
   },
   rose: {
     button: 'border-rose-500 bg-rose-50',
     icon: 'bg-rose-100 text-rose-600',
     link: 'bg-rose-600 hover:bg-rose-500',
     badge: 'bg-rose-50 text-rose-700',
-    gradient: 'from-rose-50 to-white'
+    gradient: 'from-rose-50 to-white',
+    nav: 'hover:bg-rose-50/80'
   }
 } as const
 
@@ -83,6 +96,22 @@ const YoungPeople = () => {
         alt: 'Students collaborating in a university library',
         link: '/university',
         cta: 'Explore Universities'
+      }
+    },
+    tlevels: {
+      icon: <BookOpen className="w-6 h-6" />,
+      color: 'emerald',
+      title: 'T-Levels',
+      description: 'Technical Excellence',
+      content: {
+        text: [
+          'T-Levels are new qualifications that combine classroom learning with industry placements. Perfect for those who want a practical, hands-on approach to learning.',
+          'Discover how T-Levels can give you the skills and knowledge that employers are looking for, with real workplace experience built into your course.'
+        ],
+        image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80',
+        alt: 'Students in technical training',
+        link: '/t-levels',
+        cta: 'Explore T-Levels'
       }
     },
     apprenticeships: {
@@ -154,7 +183,7 @@ const YoungPeople = () => {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-24 overflow-hidden">
+      <div className="relative bg-[#111827] py-12 sm:py-24 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
@@ -188,27 +217,27 @@ const YoungPeople = () => {
           <div className="relative z-10">
             <div className="flex items-center gap-2 text-indigo-400 mb-4">
               <div className="p-2 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-500/20">
-                <Rocket className="h-5 w-5" />
+                <Rocket className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
-              <span className="text-sm font-medium tracking-wide uppercase">Your Future Starts Here</span>
+              <span className="text-xs sm:text-sm font-medium tracking-wide uppercase">Your Future Starts Here</span>
             </div>
-            <h1 className="text-5xl font-bold text-white mb-6 drop-shadow-sm">
+            <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6 drop-shadow-sm">
               Discover Your Path<br />in Yorkshire
             </h1>
-            <p className="text-lg text-gray-200 mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
+            <p className="text-base sm:text-lg text-gray-200 mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
               Explore exciting opportunities for your future. Whether it's university, apprenticeships, or starting your career, we're here to help you make informed choices.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 sm:gap-4">
               <Link
                 href="/career-quiz"
-                className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:shadow-indigo-500/30 backdrop-blur-sm"
+                className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-indigo-600 text-white text-sm sm:text-base rounded-xl hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:shadow-indigo-500/30 backdrop-blur-sm"
               >
                 Take Career Quiz
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Link>
               <Link
                 href="/explore"
-                className="inline-flex items-center px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10 hover:border-white/20"
+                className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-white/10 text-white text-sm sm:text-base rounded-xl hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10 hover:border-white/20"
               >
                 Explore Options
               </Link>
@@ -217,42 +246,28 @@ const YoungPeople = () => {
         </div>
       </div>
 
-      {/* Quick Stats Section */}
-      <div className="relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-20">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center">
-                  <GraduationCap className="h-5 w-5 text-indigo-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900">Free Support</h3>
-              </div>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                Access expert career guidance and resources at no cost
-              </p>
-            </div>
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-fuchsia-50 flex items-center justify-center">
-                  <Briefcase className="h-5 w-5 text-fuchsia-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900">Career Planning</h3>
-              </div>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                Discover opportunities and plan your future career path
-              </p>
-            </div>
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-violet-50 flex items-center justify-center">
-                  <Users className="h-5 w-5 text-violet-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900">Personal Support</h3>
-              </div>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                Get one-to-one guidance from experienced advisors
-              </p>
+      {/* Enhanced Sticky Navigation Banner */}
+      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-start sm:justify-center min-w-max">
+            <div className="flex space-x-1 py-1">
+              {Object.entries(tabs).map(([key, tab]) => (
+                <a 
+                  key={key}
+                  href={`#${key}`} 
+                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl ${colorClasses[tab.color].nav}`}
+                >
+                  <div className="relative z-10 flex flex-col items-center gap-1">
+                    <div className={`h-6 w-6 text-gray-600 group-hover:text-${tab.color}-600 group-hover:scale-105`}>
+                      {tab.icon}
+                    </div>
+                    <span className={`text-sm sm:text-base font-medium text-gray-900 group-hover:text-${tab.color}-600 whitespace-nowrap`}>
+                      {tab.title}
+                    </span>
+                    <div className={`h-0.5 w-0 bg-${tab.color}-600 group-hover:w-full transition-all duration-50`} />
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -260,10 +275,10 @@ const YoungPeople = () => {
 
       {/* Main Content Sections */}
       {Object.entries(tabs).map(([key, tab], index) => (
-        <div key={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+        <div key={key} id={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
           {/* Top wave divider for even sections */}
           {index % 2 === 0 && (
-            <div className="absolute top-0 left-0 right-0 h-16 overflow-hidden -translate-y-[99%]">
+            <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
               <svg
                 viewBox="0 0 1440 48"
                 fill="none"
@@ -280,7 +295,7 @@ const YoungPeople = () => {
           )}
           
           {/* Section Content */}
-          <div className="relative py-24">
+          <div className="relative py-12 sm:py-24">
             {/* Decorative elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
@@ -288,11 +303,11 @@ const YoungPeople = () => {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
                 {/* Alternate layout based on index */}
                 {index % 2 === 0 ? (
                   <>
-                    <div className="relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden shadow-2xl">
                       <Image
                         src={tab.content.image}
                         alt={tab.content.alt}
@@ -300,25 +315,25 @@ const YoungPeople = () => {
                         className="object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
-                        <div className="flex items-center gap-4">
-                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                      <div className="absolute bottom-4 sm:bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-xl max-w-[calc(100%-2rem)] sm:max-w-sm transform sm:-translate-x-20 border border-gray-100">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                          <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
                             {tab.icon}
                           </div>
                           <div>
-                            <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
-                            <div className="text-gray-600">{tab.description}</div>
+                            <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">{tab.title}</div>
+                            <div className="text-sm sm:text-base text-gray-600">{tab.description}</div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                      <div className={`inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full ${colorClasses[tab.color].button} mb-4 sm:mb-6`}>
                         {tab.icon}
-                        <span className="text-sm font-medium">{tab.title}</span>
+                        <span className="text-xs sm:text-sm font-medium">{tab.title}</span>
                       </div>
-                      <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
-                      <div className="prose prose-lg max-w-none mb-8">
+                      <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">{tab.description}</h2>
+                      <div className="prose prose-sm sm:prose-lg max-w-none mb-6 sm:mb-8">
                         {tab.content.text.map((paragraph, index) => (
                           <p key={index} className="text-gray-600 leading-relaxed">
                             {paragraph}
@@ -327,22 +342,22 @@ const YoungPeople = () => {
                       </div>
                       <Link
                         href={tab.content.link}
-                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                        className={`inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-sm sm:text-base`}
                       >
                         {tab.content.cta}
-                        <ChevronRight className="ml-2 h-5 w-5" />
+                        <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                       </Link>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div>
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                    <div className="md:order-1">
+                      <div className={`inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full ${colorClasses[tab.color].button} mb-4 sm:mb-6`}>
                         {tab.icon}
-                        <span className="text-sm font-medium">{tab.title}</span>
+                        <span className="text-xs sm:text-sm font-medium">{tab.title}</span>
                       </div>
-                      <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
-                      <div className="prose prose-lg max-w-none mb-8">
+                      <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">{tab.description}</h2>
+                      <div className="prose prose-sm sm:prose-lg max-w-none mb-6 sm:mb-8">
                         {tab.content.text.map((paragraph, index) => (
                           <p key={index} className="text-gray-600 leading-relaxed">
                             {paragraph}
@@ -351,13 +366,13 @@ const YoungPeople = () => {
                       </div>
                       <Link
                         href={tab.content.link}
-                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                        className={`inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-sm sm:text-base`}
                       >
                         {tab.content.cta}
-                        <ChevronRight className="ml-2 h-5 w-5" />
+                        <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                       </Link>
                     </div>
-                    <div className="relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden shadow-2xl md:order-2">
                       <Image
                         src={tab.content.image}
                         alt={tab.content.alt}
@@ -365,14 +380,14 @@ const YoungPeople = () => {
                         className="object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
-                        <div className="flex items-center gap-4">
-                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                      <div className="absolute bottom-4 sm:bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-xl max-w-[calc(100%-2rem)] sm:max-w-sm transform sm:-translate-x-20 border border-gray-100">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                          <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
                             {tab.icon}
                           </div>
                           <div>
-                            <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
-                            <div className="text-gray-600">{tab.description}</div>
+                            <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">{tab.title}</div>
+                            <div className="text-sm sm:text-base text-gray-600">{tab.description}</div>
                           </div>
                         </div>
                       </div>
@@ -385,7 +400,7 @@ const YoungPeople = () => {
 
           {/* Bottom wave divider for odd sections */}
           {index % 2 === 1 && (
-            <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden translate-y-[99%]">
+            <div className="absolute bottom-0 left-0 right-0 h-8 sm:h-16 overflow-hidden translate-y-[99%]">
               <svg
                 viewBox="0 0 1440 48"
                 fill="none"

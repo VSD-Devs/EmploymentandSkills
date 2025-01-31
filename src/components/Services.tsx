@@ -10,7 +10,7 @@ const Services = () => {
       link: '#individuals'
     },
     {
-      title: 'For Businesses',
+      title: 'Businesses',
       description: 'Access funding, find talent, and develop your workforce with our comprehensive business support services.',
       icon: Building2,
       link: '#businesses'

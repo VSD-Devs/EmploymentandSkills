@@ -22,6 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta httpEquiv="Cache-Control" content="public, max-age=31536000, immutable" />
+        <meta name="theme-color" content="#10b981" />
+      </head>
       <body className="min-h-screen flex flex-col">
         <ScrollToTop />
         <Navigation />

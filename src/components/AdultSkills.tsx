@@ -12,6 +12,57 @@ const IMAGES = {
   mentalHealth: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&q=80"
 }
 
+const colorClasses = {
+  blue: {
+    button: 'border-blue-500 bg-blue-50',
+    icon: 'bg-blue-100 text-blue-600',
+    link: 'bg-blue-600 hover:bg-blue-500',
+    badge: 'bg-blue-50 text-blue-700',
+    gradient: 'from-blue-50 to-white',
+    nav: 'hover:bg-blue-50/80'
+  },
+  emerald: {
+    button: 'border-emerald-500 bg-emerald-50',
+    icon: 'bg-emerald-100 text-emerald-600',
+    link: 'bg-emerald-600 hover:bg-emerald-500',
+    badge: 'bg-emerald-50 text-emerald-700',
+    gradient: 'from-emerald-50 to-white',
+    nav: 'hover:bg-emerald-50/80'
+  },
+  purple: {
+    button: 'border-purple-500 bg-purple-50',
+    icon: 'bg-purple-100 text-purple-600',
+    link: 'bg-purple-600 hover:bg-purple-500',
+    badge: 'bg-purple-50 text-purple-700',
+    gradient: 'from-purple-50 to-white',
+    nav: 'hover:bg-purple-50/80'
+  }
+} as const
+
+const sections = {
+  employment: {
+    id: 'employment',
+    title: 'Employment Support',
+    description: 'Career Development',
+    icon: <CheckCircle2 className="w-6 h-6" />,
+    color: 'blue' as const
+  },
+  training: {
+    id: 'training',
+    title: 'Funded Training',
+    description: 'Professional Development',
+    icon: <Users className="w-6 h-6" />,
+    color: 'emerald' as const
+  },
+  wellbeing: {
+    id: 'wellbeing',
+    title: 'Mental Health',
+    description: 'Wellbeing Services',
+    icon: <Users className="w-6 h-6" />,
+    color: 'purple' as const
+  }
+}
+
 const AdultSkills = () => {
   return (
     <div className="bg-white">
@@ -44,47 +95,35 @@ const AdultSkills = () => {
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-10">
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                <CheckCircle2 className="h-5 w-5 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900">Free Support</h3>
+      {/* Enhanced Sticky Navigation Banner */}
+      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-start sm:justify-center min-w-max">
+            <div className="flex space-x-1 py-1">
+              {Object.values(sections).map((section) => (
+                <a 
+                  key={section.id}
+                  href={`#${section.id}`} 
+                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl ${colorClasses[section.color].nav}`}
+                >
+                  <div className="relative z-10 flex flex-col items-center gap-1">
+                    <div className={`h-6 w-6 text-gray-600 group-hover:text-${section.color}-600 group-hover:scale-105`}>
+                      {section.icon}
+                    </div>
+                    <span className={`text-sm sm:text-base font-medium text-gray-900 group-hover:text-${section.color}-600 whitespace-nowrap`}>
+                      {section.title}
+                    </span>
+                    <div className={`h-0.5 w-0 bg-${section.color}-600 group-hover:w-full transition-all duration-50`} />
+                  </div>
+                </a>
+              ))}
             </div>
-            <p className="text-gray-500 text-sm leading-relaxed">
-              All our services and courses are fully funded for Yorkshire residents.
-            </p>
-          </div>
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                <Clock className="h-5 w-5 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900">Flexible Learning</h3>
-            </div>
-            <p className="text-gray-500 text-sm leading-relaxed">
-              Choose from online, in-person, or hybrid learning options to suit your schedule.
-            </p>
-          </div>
-          <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                <Users className="h-5 w-5 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900">Expert Support</h3>
-            </div>
-            <p className="text-gray-500 text-sm leading-relaxed">
-              Get guidance from industry professionals and career advisors.
-            </p>
           </div>
         </div>
       </div>
 
       {/* Employment Support Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div id="employment" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative h-[460px] rounded-2xl overflow-hidden">
             <Image
@@ -166,7 +205,7 @@ const AdultSkills = () => {
       </div>
 
       {/* Funded Training Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div id="training" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="flex items-center gap-2 text-emerald-600 mb-4">
@@ -248,7 +287,7 @@ const AdultSkills = () => {
       </div>
 
       {/* Mental Health Support Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div id="wellbeing" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative h-[460px] rounded-2xl overflow-hidden">
             <Image

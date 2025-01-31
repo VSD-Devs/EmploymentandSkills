@@ -11,35 +11,40 @@ const colorClasses = {
     icon: 'bg-emerald-100 text-emerald-600',
     link: 'bg-emerald-600 hover:bg-emerald-500',
     badge: 'bg-emerald-50 text-emerald-700',
-    gradient: 'from-emerald-50 to-white'
+    gradient: 'from-emerald-50 to-white',
+    nav: 'hover:bg-emerald-50/80'
   },
   blue: {
     button: 'border-blue-500 bg-blue-50',
     icon: 'bg-blue-100 text-blue-600',
     link: 'bg-blue-600 hover:bg-blue-500',
     badge: 'bg-blue-50 text-blue-700',
-    gradient: 'from-blue-50 to-white'
+    gradient: 'from-blue-50 to-white',
+    nav: 'hover:bg-blue-50/80'
   },
   indigo: {
     button: 'border-indigo-500 bg-indigo-50',
     icon: 'bg-indigo-100 text-indigo-600',
     link: 'bg-indigo-600 hover:bg-indigo-700',
     badge: 'bg-indigo-50 text-indigo-700',
-    gradient: 'from-indigo-50 to-white'
+    gradient: 'from-indigo-50 to-white',
+    nav: 'hover:bg-indigo-50/80'
   },
   purple: {
     button: 'border-purple-500 bg-purple-50',
     icon: 'bg-purple-100 text-purple-600',
     link: 'bg-purple-600 hover:bg-purple-500',
     badge: 'bg-purple-50 text-purple-700',
-    gradient: 'from-purple-50 to-white'
+    gradient: 'from-purple-50 to-white',
+    nav: 'hover:bg-purple-50/80'
   },
   teal: {
     button: 'border-teal-500 bg-teal-50',
     icon: 'bg-teal-100 text-teal-600',
     link: 'bg-teal-600 hover:bg-teal-500',
     badge: 'bg-teal-50 text-teal-700',
-    gradient: 'from-teal-50 to-white'
+    gradient: 'from-teal-50 to-white',
+    nav: 'hover:bg-teal-50/80'
   }
 } as const
 
@@ -199,42 +204,28 @@ const BusinessPage = () => {
         </div>
       </div>
 
-      {/* Quick Stats Section */}
-      <div className="relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-20">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center">
-                  <Building2 className="h-5 w-5 text-emerald-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900">Free Support</h3>
-              </div>
-              <p className="text-lg text-gray-500 leading-relaxed">
-                Access expert business support and funding at no cost
-              </p>
-            </div>
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                  <GraduationCap className="h-5 w-5 text-blue-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900">Skills Development</h3>
-              </div>
-              <p className="text-lg text-gray-500 leading-relaxed">
-                Build your future workforce through apprenticeships and training
-              </p>
-            </div>
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center">
-                  <Globe2 className="h-5 w-5 text-purple-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900">Growth Support</h3>
-              </div>
-              <p className="text-lg text-gray-500 leading-relaxed">
-                Expert guidance to help your business scale and expand
-              </p>
+      {/* Enhanced Sticky Navigation Banner */}
+      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-start sm:justify-center min-w-max">
+            <div className="flex space-x-1 py-1">
+              {Object.entries(tabs).map(([key, tab]) => (
+                <a 
+                  key={key}
+                  href={`#${key}`} 
+                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl ${colorClasses[tab.color].nav}`}
+                >
+                  <div className="relative z-10 flex flex-col items-center gap-1">
+                    <div className={`h-6 w-6 text-gray-600 group-hover:text-${tab.color}-600 group-hover:scale-105`}>
+                      {tab.icon}
+                    </div>
+                    <span className={`text-sm sm:text-base font-medium text-gray-900 group-hover:text-${tab.color}-600 whitespace-nowrap`}>
+                      {tab.title}
+                    </span>
+                    <div className={`h-0.5 w-0 bg-${tab.color}-600 group-hover:w-full transition-all duration-50`} />
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -242,7 +233,7 @@ const BusinessPage = () => {
 
       {/* Main Content Sections */}
       {Object.entries(tabs).map(([key, tab], index) => (
-        <div key={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+        <div key={key} id={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
           {/* Top wave divider for even sections */}
           {index % 2 === 0 && (
             <div className="absolute top-0 left-0 right-0 h-16 overflow-hidden -translate-y-[99%]">

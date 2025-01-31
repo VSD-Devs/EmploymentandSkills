@@ -1,3 +1,5 @@
+"use client"
+
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
@@ -8,14 +10,18 @@ const Hero = () => {
       <div className="relative min-h-[70vh] bg-zinc-50 pb-24">
         {/* Background Image and Overlay */}
         <div className="absolute inset-0 h-[70vh]">
-          <Image 
-            src="/images/hero-yorkshire.jpg" 
-            alt="Yorkshire industrial heritage meets digital innovation"
-            className="object-cover"
-            fill
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 via-zinc-900/40 to-zinc-50"></div>
+          <div className="relative w-full h-full">
+            <Image 
+              src="/images/hero-yorkshire.jpg" 
+              alt="Yorkshire industrial heritage meets digital innovation"
+              className="object-cover"
+              fill
+              priority
+              sizes="100vw"
+              quality={85}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 via-zinc-900/40 to-zinc-50"></div>
+          </div>
         </div>
 
         {/* Hero Content */}
@@ -38,9 +44,9 @@ const Hero = () => {
                   Career Pathways
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Link>
-                <button className="bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-lg text-base font-medium hover:bg-white/20 transition-colors border border-white/20">
-                  Explore Funding Support
-                </button>
+                <Link href="/vision" className="bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-lg text-base font-medium hover:bg-white/20 transition-colors border border-white/20">
+                  Our Vision
+                </Link>
               </div>
             </div>
           </div>
@@ -56,7 +62,7 @@ const Hero = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors mb-4">For Educators</h3>
+                <h3 className="text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors mb-4">Educators</h3>
                 <p className="text-lg text-zinc-600 group-hover:text-white/90 transition-colors mb-6">
                   Connect your students with Yorkshire's evolving industries through innovative teaching resources.
                 </p>
@@ -76,7 +82,7 @@ const Hero = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors mb-4">For Businesses</h3>
+                <h3 className="text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors mb-4">Businesses</h3>
                 <p className="text-lg text-zinc-600 group-hover:text-white/90 transition-colors mb-6">
                   Shape the future workforce by connecting with emerging talent in our region.
                 </p>
@@ -96,7 +102,7 @@ const Hero = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors mb-4">For Young People</h3>
+                <h3 className="text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors mb-4">Young People</h3>
                 <p className="text-lg text-zinc-600 group-hover:text-white/90 transition-colors mb-6">
                   Discover exciting career paths in Yorkshire's innovative sectors and future industries.
                 </p>
@@ -128,7 +134,7 @@ const Hero = () => {
             </Link>
 
             {/* Parents Block */}
-            <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            <Link href="/parents" className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <div className="absolute inset-0 bg-gradient-to-br from-teal-600 to-emerald-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
               <div className="relative z-10 p-8">
                 <div className="w-14 h-14 bg-teal-100 rounded-lg flex items-center justify-center mb-6 transition-colors group-hover:bg-white/20">
@@ -145,7 +151,7 @@ const Hero = () => {
                   <ChevronRight className="ml-2 h-6 w-6" />
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Region Block */}
             <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
