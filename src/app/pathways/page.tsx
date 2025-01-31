@@ -12,9 +12,9 @@ const careerCategories = [
     title: 'Digital & Technology',
     description: 'From software development to cybersecurity, discover opportunities in Yorkshire\'s growing tech sector.',
     icon: Code2,
-    color: 'bg-blue-500',
+    color: 'bg-blue-900',
     lightColor: 'bg-blue-50',
-    textColor: 'text-blue-600',
+    textColor: 'text-blue-900',
     borderColor: 'border-blue-100',
     jobs: ['Software Developer', 'Data Analyst', 'Cybersecurity Specialist'],
     stats: { growth: '+22%', avgSalary: '£35k', jobs: '1.2k' },
@@ -25,9 +25,9 @@ const careerCategories = [
     title: 'Finance & Professional Services',
     description: 'Explore careers in banking, accounting, and financial services across South Yorkshire.',
     icon: Landmark,
-    color: 'bg-emerald-500',
+    color: 'bg-emerald-900',
     lightColor: 'bg-emerald-50',
-    textColor: 'text-emerald-600',
+    textColor: 'text-emerald-900',
     borderColor: 'border-emerald-100',
     jobs: ['Accountant', 'Financial Advisor', 'Insurance Broker'],
     stats: { growth: '+15%', avgSalary: '£40k', jobs: '800+' },
@@ -38,9 +38,9 @@ const careerCategories = [
     title: 'Construction & Infrastructure',
     description: 'Build your future in construction, from trades to project management roles.',
     icon: HardHat,
-    color: 'bg-amber-500',
+    color: 'bg-amber-900',
     lightColor: 'bg-amber-50',
-    textColor: 'text-amber-600',
+    textColor: 'text-amber-900',
     borderColor: 'border-amber-100',
     jobs: ['Construction Manager', 'Quantity Surveyor', 'Civil Engineer'],
     stats: { growth: '+18%', avgSalary: '£38k', jobs: '950+' },
@@ -51,9 +51,9 @@ const careerCategories = [
     title: 'Healthcare & Medical',
     description: 'Make a difference in healthcare with roles from nursing to medical technology.',
     icon: Stethoscope,
-    color: 'bg-red-500',
+    color: 'bg-red-900',
     lightColor: 'bg-red-50',
-    textColor: 'text-red-600',
+    textColor: 'text-red-900',
     borderColor: 'border-red-100',
     jobs: ['Nurse', 'Healthcare Assistant', 'Medical Technician'],
     stats: { growth: '+25%', avgSalary: '£32k', jobs: '1.5k' },
@@ -64,9 +64,9 @@ const careerCategories = [
     title: 'Logistics & Transport',
     description: 'Keep Yorkshire moving with careers in logistics, transport, and supply chain management.',
     icon: Truck,
-    color: 'bg-purple-500',
+    color: 'bg-purple-900',
     lightColor: 'bg-purple-50',
-    textColor: 'text-purple-600',
+    textColor: 'text-purple-900',
     borderColor: 'border-purple-100',
     jobs: ['Logistics Manager', 'Supply Chain Analyst', 'Fleet Coordinator'],
     stats: { growth: '+12%', avgSalary: '£35k', jobs: '600+' },
@@ -77,10 +77,10 @@ const careerCategories = [
     title: 'Advanced Manufacturing',
     description: 'Join Yorkshire\'s innovative manufacturing sector with roles in production and engineering.',
     icon: Factory,
-    color: 'bg-zinc-500',
-    lightColor: 'bg-zinc-50',
-    textColor: 'text-zinc-600',
-    borderColor: 'border-zinc-100',
+    color: 'bg-slate-800',
+    lightColor: 'bg-slate-50',
+    textColor: 'text-slate-900',
+    borderColor: 'border-slate-100',
     jobs: ['Production Engineer', 'Quality Control', 'Manufacturing Technician'],
     stats: { growth: '+20%', avgSalary: '£36k', jobs: '900+' },
     image: '/images/categories/manufacturing.jpg'
@@ -90,9 +90,9 @@ const careerCategories = [
     title: 'Research & Innovation',
     description: 'Drive innovation in Yorkshire\'s research institutions and development centres.',
     icon: Microscope,
-    color: 'bg-indigo-500',
+    color: 'bg-indigo-900',
     lightColor: 'bg-indigo-50',
-    textColor: 'text-indigo-600',
+    textColor: 'text-indigo-900',
     borderColor: 'border-indigo-100',
     jobs: ['Research Scientist', 'R&D Engineer', 'Laboratory Technician'],
     stats: { growth: '+16%', avgSalary: '£42k', jobs: '400+' },
@@ -103,9 +103,9 @@ const careerCategories = [
     title: 'Education & Training',
     description: 'Shape the future through careers in education and professional training.',
     icon: GraduationCap,
-    color: 'bg-teal-500',
+    color: 'bg-teal-900',
     lightColor: 'bg-teal-50',
-    textColor: 'text-teal-600',
+    textColor: 'text-teal-900',
     borderColor: 'border-teal-100',
     jobs: ['Teacher', 'Training Coordinator', 'Education Consultant'],
     stats: { growth: '+14%', avgSalary: '£34k', jobs: '750+' },
@@ -214,7 +214,7 @@ export default function PathwaysPage() {
       {/* Categories Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCategories.map((category, index) => {
+          {filteredCategories.map((category) => {
             const IconComponent = category.icon;
             return (
               <Link
@@ -222,41 +222,27 @@ export default function PathwaysPage() {
                 href={`/pathways/${category.id}`}
                 className="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                {/* Image Section */}
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={category.image}
-                    alt={`${category.title} career opportunities`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    priority={index < 6}
-                  />
-                  {/* Enhanced gradient overlay for better text contrast */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/30"></div>
-                  
-                  {/* Category Header with improved contrast */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-black/40 backdrop-blur-sm">
-                    <div className="flex items-center gap-3">
-                      <div className={`flex-shrink-0 w-10 h-10 ${category.color} rounded-lg flex items-center justify-center`}>
-                        <IconComponent className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <h2 className="text-xl font-bold text-white drop-shadow-md">
-                          {category.title}
-                        </h2>
-                        <p className="text-sm text-white/90">
-                          {category.jobs[0]} • {category.jobs[1]} • {category.jobs[2]}
-                        </p>
-                      </div>
+                {/* Header Section */}
+                <div className={`${category.color} p-6`}>
+                  <div className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-12 h-12 bg-white/30 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                      <IconComponent className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-white">
+                        {category.title}
+                      </h2>
+                      <p className="text-sm text-white/95 font-medium">
+                        {category.jobs[0]} • {category.jobs[1]} • {category.jobs[2]}
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 {/* Content Section */}
-                <div className="p-6">
-                  <p className="text-zinc-600 mb-4">{category.description}</p>
-                  <div className="flex items-center justify-end text-emerald-600 group-hover:text-emerald-700">
+                <div className="p-6 bg-white">
+                  <p className="text-zinc-700 mb-4 leading-relaxed">{category.description}</p>
+                  <div className="flex items-center justify-end text-emerald-800 group-hover:text-emerald-900">
                     <span className="text-sm font-medium">Explore Pathway</span>
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>

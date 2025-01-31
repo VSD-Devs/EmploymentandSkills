@@ -23,7 +23,7 @@ const Hero = () => {
           <div className="pt-24 pb-12 max-w-4xl">
             <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
               <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-              <span className="text-white text-base font-medium">South Yorkshire Skills Hub</span>
+              <span className="text-white text-base font-medium">South Yorkshire Employment & Skills Hub</span>
             </div>
 
             <div className="bg-zinc-900/70 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
