@@ -31,7 +31,7 @@ const TrainingProviders = () => {
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900">Training Providers</h2>
           <p className="mt-4 text-xl text-gray-600">
-            Partner with us to deliver high-quality training across South Yorkshire
+            Work with us to deliver high-quality training across South Yorkshire
           </p>
         </div>
 

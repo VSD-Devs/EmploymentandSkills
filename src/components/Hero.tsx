@@ -1,44 +1,44 @@
-import React from 'react';
-import { Search, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
+import Image from 'next/image'
 
 const Hero = () => {
   return (
     <div className="flex flex-col bg-zinc-50">
-      {/* Hero Section with Integrated Blocks */}
-      <div className="relative min-h-screen bg-zinc-50 pb-24">
+      <div className="relative min-h-[70vh] bg-zinc-50 pb-24">
         {/* Background Image and Overlay */}
         <div className="absolute inset-0 h-[70vh]">
-          <img 
+          <Image 
             src="/images/hero-yorkshire.jpg" 
             alt="Yorkshire industrial heritage meets digital innovation"
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="eager"
+            className="object-cover"
+            fill
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/30 via-zinc-900/40 to-zinc-50"></div>
         </div>
 
         {/* Hero Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Main Hero Text */}
           <div className="pt-24 pb-12 max-w-4xl">
             <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+              <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
               <span className="text-white text-base font-medium">South Yorkshire Skills Hub</span>
             </div>
+
             <div className="bg-zinc-900/70 backdrop-blur-sm p-8 rounded-2xl border border-white/10">
-              <h1 className="text-6xl font-bold text-white mb-6 leading-tight">
+              <h1 className="text-4xl font-bold text-white mb-6 leading-tight">
                 South Yorkshire Pathways
               </h1>
-              <p className="text-2xl text-white/90 mb-8 max-w-2xl leading-relaxed">
-                Connect with local businesses, discover funded training opportunities, and access the skills you need for Yorkshire's growing industries. From digital tech to advanced manufacturing, your next career move starts here.
+              <p className="text-xl text-white/90 mb-8 max-w-2xl leading-relaxed">
+                Connect with local businesses, discover funded training opportunities, and access the skills you need for Yorkshire's growing industries.
               </p>
               <div className="flex flex-wrap gap-4">
-                <button className="bg-emerald-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-emerald-500 transition-colors inline-flex items-center group shadow-lg">
-                  Find Training & Jobs
-                  <ChevronRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-                </button>
-                <button className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-white/20 transition-colors shadow-lg border border-white/20">
+                <Link href="/pathways" className="bg-emerald-600 text-white px-6 py-3 rounded-lg text-base font-medium hover:bg-emerald-500 transition-colors inline-flex items-center">
+                  Career Pathways
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Link>
+                <button className="bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-lg text-base font-medium hover:bg-white/20 transition-colors border border-white/20">
                   Explore Funding Support
                 </button>
               </div>
@@ -46,7 +46,7 @@ const Hero = () => {
           </div>
 
           {/* Integrated Path Blocks */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {/* Educators Block */}
             <div className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
@@ -68,7 +68,7 @@ const Hero = () => {
             </div>
 
             {/* Businesses Block */}
-            <Link to="/businesses" className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            <Link href="/business" className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
               <div className="relative z-10 p-8">
                 <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6 transition-colors group-hover:bg-white/20">
@@ -81,14 +81,14 @@ const Hero = () => {
                   Shape the future workforce by connecting with emerging talent in our region.
                 </p>
                 <div className="flex items-center text-blue-600 group-hover:text-white transition-colors text-lg">
-                  <span className="font-medium">Partner With Us</span>
+                  <span className="font-medium">Business Support</span>
                   <ChevronRight className="ml-2 h-6 w-6" />
                 </div>
               </div>
             </Link>
 
             {/* Young People Block */}
-            <Link to="/young-people" className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            <Link href="/young-people" className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
               <div className="relative z-10 p-8">
                 <div className="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-6 transition-colors group-hover:bg-white/20">
@@ -108,7 +108,7 @@ const Hero = () => {
             </Link>
 
             {/* Adult Skills Block */}
-            <Link to="/adult-skills" className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            <Link href="/adult-skills" className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
               <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-orange-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
               <div className="relative z-10 p-8">
                 <div className="w-14 h-14 bg-amber-100 rounded-lg flex items-center justify-center mb-6 transition-colors group-hover:bg-white/20">
@@ -167,6 +167,24 @@ const Hero = () => {
               </div>
             </div>
           </div>
+
+          {/* Career Quiz Banner */}
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl overflow-hidden shadow-lg">
+            <div className="px-8 py-6 flex flex-col md:flex-row items-center justify-between">
+              <div className="flex-1 mb-4 md:mb-0">
+                <h2 className="text-2xl font-bold text-white mb-2">Discover Your Perfect Career Path</h2>
+                <p className="text-white/90">Take our quick quiz to find opportunities that match your skills and interests</p>
+              </div>
+              <Link 
+                href="/career-quiz"
+                className="bg-white text-indigo-600 px-6 py-3 rounded-lg text-base font-medium hover:bg-white/90 transition-colors inline-flex items-center whitespace-nowrap"
+              >
+                Start Career Quiz
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

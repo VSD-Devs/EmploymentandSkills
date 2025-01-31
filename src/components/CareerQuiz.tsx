@@ -1,75 +1,177 @@
-import React from 'react';
-import { ChevronRight, Sparkles, Clock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
+
+const questions = [
+  {
+    id: 1,
+    question: 'What type of work environment do you prefer?',
+    options: [
+      { id: 'a', text: 'Office-based with a team', sector: ['digital', 'business'] },
+      { id: 'b', text: 'Active and hands-on', sector: ['healthcare', 'manufacturing'] },
+      { id: 'c', text: 'Creative studio space', sector: ['creative', 'digital'] },
+      { id: 'd', text: 'Mixed environments', sector: ['education', 'healthcare'] }
+    ]
+  },
+  {
+    id: 2,
+    question: 'Which skills do you most enjoy using?',
+    options: [
+      { id: 'a', text: 'Problem-solving and analysis', sector: ['digital', 'engineering'] },
+      { id: 'b', text: 'Communication and helping others', sector: ['healthcare', 'education'] },
+      { id: 'c', text: 'Creative and design skills', sector: ['creative', 'digital'] },
+      { id: 'd', text: 'Technical and practical skills', sector: ['manufacturing', 'engineering'] }
+    ]
+  },
+  {
+    id: 3,
+    question: 'What interests you most about future industries?',
+    options: [
+      { id: 'a', text: 'Technology and innovation', sector: ['digital', 'engineering'] },
+      { id: 'b', text: 'Sustainability and environment', sector: ['green', 'manufacturing'] },
+      { id: 'c', text: 'Healthcare and wellbeing', sector: ['healthcare', 'science'] },
+      { id: 'd', text: 'Creative and cultural impact', sector: ['creative', 'digital'] }
+    ]
+  }
+]
 
 const CareerQuiz = () => {
-  return (
-    <section className="bg-white py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div>
-            <div className="inline-flex items-center space-x-2 bg-emerald-50 px-4 py-2 rounded-full mb-6">
-              <Sparkles className="h-5 w-5 text-emerald-600" />
-              <span className="text-emerald-700 text-base font-medium">Career Discovery</span>
-            </div>
-            
-            <h2 className="text-4xl md:text-5xl font-bold text-zinc-900 mb-6 leading-tight">
-              Find Your Perfect Career Path in Yorkshire
-            </h2>
-            
-            <p className="text-lg text-zinc-600 leading-relaxed mb-8">
-              Take our interactive career quiz to discover personalised recommendations based on your interests and skills. Connect with local opportunities across South Yorkshire.
-            </p>
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [answers, setAnswers] = useState<string[]>([])
+  const [showResults, setShowResults] = useState(false)
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-              <Link 
-                to="/career-quiz"
-                className="bg-emerald-600 text-white px-8 py-4 rounded-xl text-lg font-medium hover:bg-emerald-700 transition-all inline-flex items-center justify-center group shadow-lg shadow-emerald-200"
+  const handleAnswer = (sectorArray: string[]) => {
+    const newAnswers = [...answers, ...sectorArray]
+    
+    if (currentQuestion < questions.length - 1) {
+      setAnswers(newAnswers)
+      setCurrentQuestion(currentQuestion + 1)
+    } else {
+      setAnswers(newAnswers)
+      setShowResults(true)
+    }
+  }
+
+  const getRecommendedSectors = () => {
+    const sectorCount: { [key: string]: number } = {}
+    answers.forEach(sector => {
+      sectorCount[sector] = (sectorCount[sector] || 0) + 1
+    })
+    
+    return Object.entries(sectorCount)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 3)
+      .map(([sector]) => sector)
+  }
+
+  if (showResults) {
+    const recommendedSectors = getRecommendedSectors()
+    
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="bg-white rounded-2xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Your Career Recommendations</h2>
+          <p className="text-gray-600 mb-8">
+            Based on your answers, here are the sectors that might interest you:
+          </p>
+          
+          <div className="grid gap-6 md:grid-cols-3 mb-8">
+            {recommendedSectors.map((sector, index) => (
+              <Link
+                key={index}
+                href={`/careers/${sector}`}
+                className="group bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
               >
-                Start Career Quiz
-                <ChevronRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 capitalize">
+                  {sector} Sector
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  Explore opportunities in Yorkshire\'s {sector} industry
+                </p>
+                <div className="flex items-center text-blue-600 group-hover:text-blue-500">
+                  <span className="font-medium">Learn more</span>
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </div>
               </Link>
-
-              <div className="flex items-center space-x-3 text-zinc-600">
-                <Clock className="h-5 w-5 text-emerald-600" />
-                <span className="text-base">Takes only 5 minutes</span>
-              </div>
-            </div>
+            ))}
           </div>
 
-          {/* Right Content - Quiz Preview */}
-          <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-3xl p-8 shadow-xl shadow-emerald-100">
-            <div className="space-y-6">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                <h3 className="text-xl font-semibold text-white mb-4">Sample Question</h3>
-                <p className="text-emerald-50 mb-6">When faced with a complex problem, what's your natural approach?</p>
-                <div className="space-y-3">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 text-white cursor-pointer hover:bg-white/20 transition-colors">
-                    Break it down into smaller parts
-                  </div>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 text-white cursor-pointer hover:bg-white/20 transition-colors">
-                    Brainstorm creative solutions
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
-                  <h4 className="font-medium text-white mb-2">Personalised</h4>
-                  <p className="text-sm text-emerald-50">Tailored career recommendations</p>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
-                  <h4 className="font-medium text-white mb-2">Local Focus</h4>
-                  <p className="text-sm text-emerald-50">Yorkshire opportunities</p>
-                </div>
-              </div>
-            </div>
+          <div className="flex justify-between items-center pt-6 border-t border-gray-100">
+            <button
+              onClick={() => {
+                setCurrentQuestion(0)
+                setAnswers([])
+                setShowResults(false)
+              }}
+              className="text-blue-600 font-medium hover:text-blue-500"
+            >
+              Retake Quiz
+            </button>
+            <Link
+              href="/careers"
+              className="inline-flex items-center text-white bg-blue-600 px-6 py-3 rounded-lg hover:bg-blue-500 transition-colors"
+            >
+              Explore All Careers
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Link>
           </div>
         </div>
       </div>
-    </section>
-  );
-};
+    )
+  }
 
-export default CareerQuiz;
+  return (
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">Career Quiz</h2>
+            <span className="text-gray-500">
+              Question {currentQuestion + 1} of {questions.length}
+            </span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-2">
+            <div
+              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 mb-6">
+            {questions[currentQuestion].question}
+          </h3>
+          <div className="grid gap-4">
+            {questions[currentQuestion].options.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => handleAnswer(option.sector)}
+                className="text-left p-4 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-colors"
+              >
+                <span className="font-medium text-gray-900">{option.text}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center pt-6 border-t border-gray-100">
+          <button
+            onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
+            disabled={currentQuestion === 0}
+            className="text-gray-600 font-medium hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Previous
+          </button>
+          <div className="text-sm text-gray-500">
+            Your answers are saved automatically
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default CareerQuiz

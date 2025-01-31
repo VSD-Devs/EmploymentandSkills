@@ -1,80 +1,101 @@
-import React from 'react';
-import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import Link from 'next/link'
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white pt-16 pb-8">
+    <footer className="bg-zinc-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Logo and Description */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-1">
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-white rotate-45 flex items-center justify-center">
+                <div className="-rotate-45 text-zinc-900 font-bold">Y</div>
+              </div>
+              <span className="text-xl font-bold tracking-tight">YORKSHIRE PATHWAYS</span>
+            </Link>
+            <p className="mt-4 text-zinc-400 text-sm">
+              Connecting Yorkshire's future workforce with opportunities for growth and development.
+            </p>
+          </div>
+
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><a href="/advice" className="hover:text-blue-400">Advice</a></li>
-              <li><a href="/engage" className="hover:text-blue-400">Engage</a></li>
-              <li><a href="/learn" className="hover:text-blue-400">Learn</a></li>
-              <li><a href="/whats-happening" className="hover:text-blue-400">What's happening?</a></li>
-              <li><a href="/about-us" className="hover:text-blue-400">About us</a></li>
+              <li>
+                <Link href="/about" className="text-zinc-400 hover:text-white transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-zinc-400 hover:text-white transition-colors">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-zinc-400 hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-zinc-400 hover:text-white transition-colors">
+                  Terms of Use
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Contact Information */}
+          {/* Resources */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">West Yorkshire Combined Authority</h3>
-            <address className="not-italic">
-              <p>Wellington House</p>
-              <p>40-50 Wellington Street</p>
-              <p>Leeds</p>
-              <p>LS1 2DE</p>
-            </address>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Resources</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/career-quiz" className="text-zinc-400 hover:text-white transition-colors">
+                  Career Quiz
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-zinc-400 hover:text-white transition-colors">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/news" className="text-zinc-400 hover:text-white transition-colors">
+                  News
+                </Link>
+              </li>
+              <li>
+                <Link href="/events" className="text-zinc-400 hover:text-white transition-colors">
+                  Events
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Regional Map */}
+          {/* Contact */}
           <div>
-            <div className="bg-white p-4 rounded-lg">
-              <img
-                src="/images/region-map.svg"
-                alt="Map of South Yorkshire region"
-                className="w-full h-auto"
-              />
-            </div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Contact</h3>
+            <ul className="space-y-2 text-zinc-400">
+              <li>South Yorkshire Skills Hub</li>
+              <li>South Yorkshire Mayoral Combined Authority</li>
+              <li>South Yorkshire</li>
+              <li>
+                <a href="mailto:info@yorkshireskills.org" className="hover:text-white transition-colors">
+                  info@yorkshireskills.org
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            {/* Logo Section */}
-            <div className="flex items-center space-x-4 mb-4 md:mb-0">
-              <img src="/images/combined-authority-logo.svg" alt="Combined Authority" className="h-12" />
-              <img src="/images/northern-powerhouse-logo.svg" alt="Northern Powerhouse" className="h-12" />
-            </div>
-
-            {/* Social Links */}
-            <div className="flex space-x-4">
-              <a href="#" className="hover:text-blue-400"><Facebook size={24} /></a>
-              <a href="#" className="hover:text-blue-400"><Twitter size={24} /></a>
-              <a href="#" className="hover:text-blue-400"><Linkedin size={24} /></a>
-              <a href="#" className="hover:text-blue-400"><Instagram size={24} /></a>
-            </div>
-          </div>
-
-          {/* Copyright and Legal */}
-          <div className="mt-8 text-sm text-gray-400 flex flex-wrap justify-center md:justify-start gap-4">
-            <span>© 2024</span>
-            <a href="/terms" className="hover:text-white">Terms & Conditions</a>
-            <a href="/privacy" className="hover:text-white">Privacy and Cookie Policy</a>
-            <a href="/accessibility" className="hover:text-white">Accessibility Statement</a>
-            <a href="/sitemap" className="hover:text-white">Sitemap</a>
-            <a href="/cookie-preferences" className="hover:text-white">Cookie preferences</a>
-          </div>
-          <div className="mt-4 text-sm text-gray-400 text-center md:text-left">
-            Powered by uMotif
-          </div>
+        <div className="mt-12 pt-8 border-t border-zinc-800">
+          <p className="text-zinc-400 text-sm text-center">
+            © {new Date().getFullYear()} Yorkshire Skills Hub. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
