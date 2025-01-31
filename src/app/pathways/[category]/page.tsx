@@ -1,7 +1,5 @@
-'use client';
-
-import { useState } from 'react';
-import { useParams } from 'next/navigation';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { 
   ArrowLeft, 
   Code2, 
@@ -16,6 +14,31 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+
+// Categories data
+const categories = [
+  'digital',
+  'healthcare',
+  'manufacturing',
+  'logistics',
+  'finance',
+  'education'
+];
+
+// Generate static params for all categories
+export async function generateStaticParams() {
+  return categories.map((category) => ({
+    category: category,
+  }));
+}
+
+// Add metadata generation
+export async function generateMetadata({ params }: { params: { category: string } }): Promise<Metadata> {
+  return {
+    title: `${params.category.charAt(0).toUpperCase() + params.category.slice(1)} Careers - South Yorkshire Pathways`,
+    description: `Explore career opportunities and training pathways in ${params.category} across South Yorkshire.`,
+  };
+}
 
 const digitalData = {
   title: 'Digital & Technology',
@@ -83,12 +106,12 @@ const digitalData = {
   ]
 };
 
-export default function CategoryPage() {
-  const params = useParams();
-  if (!params?.category) {
-    return null; // or handle the error case appropriately
+export default function CategoryPage({ params }: { params: { category: string } }) {
+  // Validate category
+  if (!categories.includes(params.category)) {
+    notFound();
   }
-  const category = params.category as string;
+
   // In a real app, we would fetch data based on the category
   const data = digitalData;
 
