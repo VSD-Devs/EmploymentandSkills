@@ -69,22 +69,6 @@ const BusinessPage = () => {
   const [activeTab, setActiveTab] = useState('skills')
 
   const tabs: TabsType = {
-    enterprise: {
-      icon: <GraduationCap className="w-6 h-6" />,
-      color: 'emerald',
-      title: 'Community & Schools',
-      description: 'Build your future workforce',
-      content: {
-        text: [
-          'Connect directly with local schools and colleges to shape your future workforce. Our Enterprise Advisor network helps you inspire young talent and create strong links between education and business.',
-          'Get involved in mentoring, work experience, and career events to develop your talent pipeline and give back to the Yorkshire community.'
-        ],
-        image: 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&q=80',
-        alt: 'Enterprise advisors collaborating in a meeting room',
-        link: '/register-interest',
-        cta: 'Get Involved'
-      }
-    },
     skills: {
       icon: <LineChart className="w-6 h-6" />,
       color: 'blue',
@@ -104,7 +88,7 @@ const BusinessPage = () => {
     apprenticeship: {
       icon: <BookOpen className="w-6 h-6" />,
       color: 'blue',
-      title: 'Apprenticeships',
+      title: 'Recruitment',
       description: 'Grow your team with apprentices',
       content: {
         text: [
@@ -113,7 +97,23 @@ const BusinessPage = () => {
         image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80',
         alt: 'Young apprentice learning with a mentor',
         link: '/apprenticeship-support',
-        cta: 'Start Hiring'
+        cta: 'Learn More'
+      }
+    },
+    enterprise: {
+      icon: <GraduationCap className="w-6 h-6" />,
+      color: 'emerald',
+      title: 'Community & Schools',
+      description: 'Build your future workforce',
+      content: {
+        text: [
+          'Connect directly with local schools and colleges to shape your future workforce. Our Enterprise Advisor network helps you inspire young talent and create strong links between education and business.',
+          'Get involved in mentoring, work experience, and career events to develop your talent pipeline and give back to the Yorkshire community.'
+        ],
+        image: 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&q=80',
+        alt: 'Enterprise advisors collaborating in a meeting room',
+        link: '/register-interest',
+        cta: 'Get Involved'
       }
     },
     business: {
@@ -210,7 +210,7 @@ const BusinessPage = () => {
                 </div>
                 <h3 className="font-semibold text-gray-900">Free Support</h3>
               </div>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <p className="text-lg text-gray-500 leading-relaxed">
                 Access expert business support and funding at no cost
               </p>
             </div>
@@ -221,7 +221,7 @@ const BusinessPage = () => {
                 </div>
                 <h3 className="font-semibold text-gray-900">Skills Development</h3>
               </div>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <p className="text-lg text-gray-500 leading-relaxed">
                 Build your future workforce through apprenticeships and training
               </p>
             </div>
@@ -232,7 +232,7 @@ const BusinessPage = () => {
                 </div>
                 <h3 className="font-semibold text-gray-900">Growth Support</h3>
               </div>
-              <p className="text-gray-500 text-sm leading-relaxed">
+              <p className="text-lg text-gray-500 leading-relaxed">
                 Expert guidance to help your business scale and expand
               </p>
             </div>
