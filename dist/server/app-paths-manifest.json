@@ -1,7 +1,9 @@
 {
-  "/page": "app/page.js",
-  "/pathways/page": "app/pathways/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/vision/page": "app/vision/page.js",
+  "/our-region/page": "app/our-region/page.js",
+  "/young-people/page": "app/young-people/page.js",
   "/adult-skills/page": "app/adult-skills/page.js",
-  "/business/page": "app/business/page.js",
-  "/pathways/[category]/page": "app/pathways/[category]/page.js"
+  "/page": "app/page.js",
+  "/events/page": "app/events/page.js"
 }

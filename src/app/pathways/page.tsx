@@ -16,7 +16,7 @@ export default function PathwaysPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-              Discover Your Career Pathway
+              Career Pathways
             </h1>
             <p className="text-xl text-white/90 mb-12 font-medium">
               Explore different sectors and find the perfect career path that matches your skills and interests

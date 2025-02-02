@@ -13,12 +13,12 @@ const CareerCard = ({ career }: CareerCardProps) => {
     <div className="overflow-hidden">
       <button 
         onClick={() => setIsExpanded(!isExpanded)}
-        className={`w-full text-left transition-colors ${isExpanded ? 'bg-emerald-50' : 'bg-white hover:bg-zinc-50'}`}
+        className={`w-full text-left transition-colors ${isExpanded ? 'bg-emerald-100' : 'bg-white hover:bg-zinc-50'}`}
         aria-expanded={isExpanded}
       >
         <div className="flex items-center h-14 px-4 border border-zinc-200">
           <div className="flex-shrink-0 w-10">
-            <Briefcase className="h-5 w-5 text-emerald-600" />
+            <Briefcase className="h-5 w-5 text-emerald-600" aria-hidden="true" />
           </div>
           <div className="flex-grow">
             <h3 className="font-medium text-zinc-900">{career.title}</h3>
@@ -29,9 +29,9 @@ const CareerCard = ({ career }: CareerCardProps) => {
               <div className="text-xs text-emerald-600">{career.demand}</div>
             </div>
             {isExpanded ? (
-              <ChevronUp className="h-5 w-5 text-zinc-400" />
+              <ChevronUp className="h-6 w-6 text-emerald-600" aria-label="Collapse details" />
             ) : (
-              <ChevronDown className="h-5 w-5 text-zinc-400" />
+              <ChevronDown className="h-6 w-6 text-emerald-600" aria-label="Expand details" />
             )}
           </div>
         </div>
@@ -40,7 +40,7 @@ const CareerCard = ({ career }: CareerCardProps) => {
       <div className={`transition-all duration-200 ease-in-out ${
         isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
       }`}>
-        <div className="p-4 bg-white border-x border-b border-zinc-200">
+        <div className="p-4 bg-emerald-50 border-x border-b border-zinc-200">
           <div className="space-y-4">
             <p className="text-sm text-zinc-600">{career.description}</p>
             

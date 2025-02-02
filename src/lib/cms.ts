@@ -1,9 +1,35 @@
 import { SectorData, Sector } from '@/types/sector';
 import { Building2, Users, Banknote } from 'lucide-react';
+import { deliveryClient, handleKenticoResponse } from './kentico-config';
+
+// Kentico content type codenames
+const CONTENT_TYPES = {
+  SECTOR: 'sector',
+  SECTOR_LIST: 'sector_list'
+};
 
 // This is just an example - replace with your actual CMS fetching logic
 async function fetchFromCMS(endpoint: string) {
-  // Example using fetch - replace with your CMS SDK
+  if (process.env.USE_KENTICO === 'true') {
+    // Use Kentico delivery client
+    if (endpoint.startsWith('sectors/')) {
+      const slug = endpoint.split('/')[1];
+      return handleKenticoResponse(
+        deliveryClient.items()
+          .type(CONTENT_TYPES.SECTOR)
+          .equalsFilter('elements.slug', slug)
+          .toPromise()
+      );
+    } else if (endpoint === 'sectors') {
+      return handleKenticoResponse(
+        deliveryClient.items()
+          .type(CONTENT_TYPES.SECTOR)
+          .toPromise()
+      );
+    }
+  }
+
+  // Fallback to current implementation
   const response = await fetch(`${process.env.CMS_API_URL}/${endpoint}`, {
     headers: {
       Authorization: `Bearer ${process.env.CMS_API_KEY}`
@@ -21,6 +47,33 @@ function mapCMSDataToSector(cmsData: any): Sector {
     'banknote': Banknote
   };
 
+  if (process.env.USE_KENTICO === 'true') {
+    const elements = cmsData.elements;
+    return {
+      title: elements.title.value,
+      description: elements.description.value,
+      stats: elements.stats.value.map((stat: any) => ({
+        icon: iconMap[stat.icon as keyof typeof iconMap],
+        number: stat.number,
+        label: stat.label
+      })),
+      careerProgression: {
+        title: elements.careerProgressionTitle.value,
+        levels: elements.careerProgressionLevels.value
+      },
+      skills: {
+        general: elements.generalSkills.value,
+        specialist: elements.specialistSkills.value
+      },
+      greenJobs: {
+        title: elements.greenJobsTitle.value,
+        description: elements.greenJobsDescription.value,
+        roles: elements.greenJobsRoles.value
+      }
+    };
+  }
+
+  // Fallback to current implementation
   return {
     title: cmsData.title,
     description: cmsData.description,

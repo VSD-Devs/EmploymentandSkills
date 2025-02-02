@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, Building2, GraduationCap, BookOpen, LineChart, Globe2, ArrowRight } from 'lucide-react'
+import Newsletter from './Newsletter'
 
 const colorClasses = {
   emerald: {
@@ -90,18 +91,34 @@ const BusinessPage = () => {
         cta: 'Learn More'
       }
     },
+    startup: {
+      icon: <Building2 className="w-6 h-6" />,
+      color: 'indigo',
+      title: 'Start-ups',
+      description: 'Launch your business journey',
+      content: {
+        text: [
+          'Get your business off the ground with expert guidance and support. Our startup specialists provide personalised mentoring, access to funding, and essential resources to help you succeed.',
+          'From business planning to market research, we offer comprehensive support to turn your idea into a thriving Yorkshire business. Access startup grants, networking opportunities, and workshops designed for new entrepreneurs.'
+        ],
+        image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80',
+        alt: 'Entrepreneurs collaborating in a modern workspace',
+        link: '/startup-support',
+        cta: 'Start Your Journey'
+      }
+    },
     apprenticeship: {
       icon: <BookOpen className="w-6 h-6" />,
       color: 'blue',
       title: 'Recruitment',
-      description: 'Grow your team with apprentices',
+      description: 'Find and develop talent',
       content: {
         text: [
-          'Boost your business with apprentices. We cover 95% of training costs and help you set up successful apprenticeship programmes that work for your business. Our team guides you through funding, recruitment, and training provider selection.'
+          'Access comprehensive recruitment support and funding to grow your team. Our specialists help you find, train and retain the right talent for your business. We offer guidance on various fully-funded training programmes and recruitment initiatives tailored to Yorkshire businesses.'
         ],
         image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80',
-        alt: 'Young apprentice learning with a mentor',
-        link: '/apprenticeship-support',
+        alt: 'Business professionals in a meeting discussing recruitment',
+        link: '/recruitment-support',
         cta: 'Learn More'
       }
     },
@@ -117,7 +134,7 @@ const BusinessPage = () => {
         ],
         image: 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&q=80',
         alt: 'Enterprise advisors collaborating in a meeting room',
-        link: '/register-interest',
+        link: '/community-schools',
         cta: 'Get Involved'
       }
     },
@@ -125,7 +142,7 @@ const BusinessPage = () => {
       icon: <Building2 className="w-6 h-6" />,
       color: 'purple',
       title: 'Business Growth',
-      description: 'Expert advice to scale your business',
+      description: 'Advice to scale your business',
       content: {
         text: [
           'Get practical, hands-on support to grow your business. Our expert advisors provide free consultations on strategy, funding, and growth planning. We help you identify opportunities, overcome challenges, and connect with the right support at the right time.'
@@ -167,24 +184,20 @@ const BusinessPage = () => {
             priority
           />
           {/* Dark overlay for text legibility */}
-          <div className="absolute inset-0 bg-[#111827]/80" />
+          <div className="absolute inset-0 bg-black/75" />
         </div>
 
-        {/* Enhanced gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/30 via-purple-600/30 to-blue-600/30 mix-blend-overlay" />
-        
         {/* Dotted grid pattern with better contrast */}
         <div 
-          className="absolute inset-0 opacity-20 mix-blend-soft-light"
+          className="absolute inset-0 opacity-10 mix-blend-soft-light"
           style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 0)`,
             backgroundSize: '40px 40px'
           }}
         />
         
-        {/* Subtle glow effects */}
-        <div className="absolute top-0 left-1/4 w-1/2 h-1/2 bg-emerald-500/20 rounded-full blur-3xl mix-blend-overlay" />
-        <div className="absolute bottom-0 right-1/4 w-1/2 h-1/2 bg-purple-500/20 rounded-full blur-3xl mix-blend-overlay" />
+        {/* Subtle light effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/20" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative z-10">
@@ -262,29 +275,42 @@ const BusinessPage = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid md:grid-cols-2 gap-12 items-center">
-                {key === 'enterprise' || key === 'business' || key === 'trade' ? (
+                {/* Mobile: Stack content on top of image */}
+                <div className="md:hidden">
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                    {tab.icon}
+                    <span className="text-sm font-medium">{tab.title}</span>
+                  </div>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                  <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg mb-6">
+                    <Image
+                      src={tab.content.image}
+                      alt={tab.content.alt}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                  </div>
+                  <div className="prose prose-lg max-w-none mb-8">
+                    {tab.content.text.map((paragraph, index) => (
+                      <p key={index} className="text-gray-600 leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                  <Link
+                    href={tab.content.link}
+                    className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                  >
+                    {tab.content.cta}
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </div>
+
+                {/* Desktop: Alternating layout */}
+                {index % 2 === 0 ? (
                   <>
-                    <div className="relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
-                      <Image
-                        src={tab.content.image}
-                        alt={tab.content.alt}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
-                        <div className="flex items-center gap-4">
-                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
-                            {tab.icon}
-                          </div>
-                          <div>
-                            <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
-                            <div className="text-gray-600">{tab.description}</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
+                    <div className="hidden md:block">
                       <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
                         {tab.icon}
                         <span className="text-sm font-medium">{tab.title}</span>
@@ -304,11 +330,51 @@ const BusinessPage = () => {
                         {tab.content.cta}
                         <ChevronRight className="ml-2 h-5 w-5" />
                       </Link>
+                    </div>
+                    <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                      <Image
+                        src={tab.content.image}
+                        alt={tab.content.alt}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                        <div className="flex items-center gap-4">
+                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                            {tab.icon}
+                          </div>
+                          <div>
+                            <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
+                            <div className="text-gray-600">{tab.description}</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </>
                 ) : (
                   <>
-                    <div>
+                    <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                      <Image
+                        src={tab.content.image}
+                        alt={tab.content.alt}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                        <div className="flex items-center gap-4">
+                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                            {tab.icon}
+                          </div>
+                          <div>
+                            <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
+                            <div className="text-gray-600">{tab.description}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="hidden md:block">
                       <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
                         {tab.icon}
                         <span className="text-sm font-medium">{tab.title}</span>
@@ -328,26 +394,6 @@ const BusinessPage = () => {
                         {tab.content.cta}
                         <ChevronRight className="ml-2 h-5 w-5" />
                       </Link>
-                    </div>
-                    <div className="relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
-                      <Image
-                        src={tab.content.image}
-                        alt={tab.content.alt}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
-                        <div className="flex items-center gap-4">
-                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
-                            {tab.icon}
-                          </div>
-                          <div>
-                            <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
-                            <div className="text-gray-600">{tab.description}</div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </>
                 )}
@@ -374,6 +420,9 @@ const BusinessPage = () => {
           )}
         </div>
       ))}
+
+      {/* Newsletter Section */}
+      <Newsletter />
     </div>
   )
 }

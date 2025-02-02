@@ -7,7 +7,6 @@ export interface Career {
     entry: string;
     mid: string;
     senior: string;
-    timeline: string;
   };
   localOpportunities: {
     employers: string[];
@@ -16,9 +15,14 @@ export interface Career {
       location: string;
       type: string;
     }[];
-    networking: string[];
   };
-  keyProjects: string[];
+}
+
+export interface CareerPath {
+  title: string;
+  description: string;
+  careers: Career[];
+  traits: string[];
 }
 
 export interface Skill {
@@ -40,7 +44,7 @@ export interface CareerProfiles {
 export interface QuizOption {
   id: string;
   text: string;
-  trait: string;
+  paths: string[];
 }
 
 export interface QuizQuestion {
@@ -53,102 +57,122 @@ export interface QuizQuestion {
 export const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "Which type of tasks energise you the most?",
+    question: "Which of these activities do you enjoy the most?",
     options: [
-      { id: 'a', text: "Solving complex problems and analysing data", trait: "analytical" },
-      { id: 'b', text: "Creating and designing new things", trait: "creative" },
-      { id: 'c', text: "Leading teams and making strategic decisions", trait: "leadership" },
-      { id: 'd', text: "Helping others learn and develop", trait: "supportive" }
+      { id: 'a', text: "Solving puzzles or working with numbers", paths: ["tech", "digital-tech", "manufacturing"] },
+      { id: 'b', text: "Helping people and making a difference in their lives", paths: ["healthcare", "hospitality", "education"] },
+      { id: 'c', text: "Working with tools, machines, or your hands", paths: ["manufacturing", "construction", "trades"] },
+      { id: 'd', text: "Creating something new, like art, music, or stories", paths: ["creative", "creative-media", "digital-tech"] },
+      { id: 'e', text: "Organising, planning, and working with details", paths: ["logistics-transport", "business", "hospitality-tourism"] },
+      { id: 'f', text: "Selling or persuading people about ideas", paths: ["business", "creative-media", "hospitality-tourism"] }
     ]
   },
   {
     id: 2,
-    question: "What's your preferred way of learning new skills?",
+    question: "When working on a project, what part excites you the most?",
     options: [
-      { id: 'a', text: "Through structured courses and formal education", trait: "methodical" },
-      { id: 'b', text: "By experimenting and hands-on practice", trait: "practical" },
-      { id: 'c', text: "Through collaboration and peer learning", trait: "collaborative" },
-      { id: 'd', text: "By researching and self-directed study", trait: "analytical" }
+      { id: 'a', text: "Figuring out the most efficient way to get things done", paths: ["digital-tech", "manufacturing", "logistics-transport"] },
+      { id: 'b', text: "Collaborating with a team to bring ideas to life", paths: ["creative-media", "business", "digital-tech"] },
+      { id: 'c', text: "Taking charge and making key decisions", paths: ["business", "hospitality-tourism", "logistics-transport"] },
+      { id: 'd', text: "Coming up with creative and original solutions", paths: ["creative-media", "digital-tech", "manufacturing"] },
+      { id: 'e', text: "Working independently and focusing on the details", paths: ["digital-tech", "construction", "manufacturing"] },
+      { id: 'f', text: "Making sure everything is structured and follows a process", paths: ["healthcare", "logistics-transport", "manufacturing"] }
     ]
   },
   {
     id: 3,
-    question: "What kind of work environment do you thrive in?",
+    question: "Which work environment sounds the most appealing to you?",
     options: [
-      { id: 'a', text: "Fast-paced startup with varied responsibilities", trait: "adaptable" },
-      { id: 'b', text: "Established organisation with clear structures", trait: "methodical" },
-      { id: 'c', text: "Creative studio with flexible working", trait: "creative" },
-      { id: 'd', text: "Remote work with autonomous decision-making", trait: "independent" }
+      { id: 'a', text: "A high-energy corporate office with lots of networking", paths: ["business", "digital-tech", "creative-media"] },
+      { id: 'b', text: "A calm, research-driven space where you analyse and problem-solve", paths: ["digital-tech", "healthcare", "manufacturing"] },
+      { id: 'c', text: "A hands-on setting like a workshop, lab, or outdoor space", paths: ["construction", "manufacturing", "healthcare"] },
+      { id: 'd', text: "A creative and flexible environment where ideas flow freely", paths: ["creative-media", "digital-tech", "business"] },
+      { id: 'e', text: "A structured and organised office where details matter", paths: ["logistics-transport", "business", "healthcare"] },
+      { id: 'f', text: "A field-based job where you engage with people daily", paths: ["hospitality-tourism", "healthcare", "construction"] }
     ]
   },
   {
     id: 4,
-    question: "What's your biggest career motivation?",
+    question: "How do you approach problem-solving?",
     options: [
-      { id: 'a', text: "Making a positive impact on society", trait: "purposeful" },
-      { id: 'b', text: "Achieving financial success and stability", trait: "ambitious" },
-      { id: 'c', text: "Continuous learning and personal growth", trait: "growth-minded" },
-      { id: 'd', text: "Building innovative solutions", trait: "innovative" }
+      { id: 'a', text: "I look for logical and data-driven solutions", paths: ["digital-tech", "manufacturing", "business"] },
+      { id: 'b', text: "I rely on creativity and thinking outside the box", paths: ["creative-media", "digital-tech", "business"] },
+      { id: 'c', text: "I trust my instincts and make quick decisions", paths: ["hospitality-tourism", "business", "healthcare"] },
+      { id: 'd', text: "I consult others and seek different perspectives", paths: ["healthcare", "hospitality-tourism", "creative-media"] },
+      { id: 'e', text: "I prefer following established processes and best practices", paths: ["logistics-transport", "manufacturing", "healthcare"] },
+      { id: 'f', text: "I experiment and try different hands-on methods", paths: ["construction", "manufacturing", "creative-media"] }
     ]
   },
   {
     id: 5,
-    question: "How do you handle challenging situations?",
+    question: "Which of these sounds like your dream job?",
     options: [
-      { id: 'a', text: "Break them down into manageable steps", trait: "analytical" },
-      { id: 'b', text: "Seek advice from mentors or experts", trait: "collaborative" },
-      { id: 'c', text: "Trust your intuition and experience", trait: "intuitive" },
-      { id: 'd', text: "Research similar cases and adapt solutions", trait: "methodical" }
+      { id: 'a', text: "Managing a business or leading a team", paths: ["business", "hospitality-tourism", "logistics-transport"] },
+      { id: 'b', text: "Designing or creating new products, content, or media", paths: ["creative-media", "digital-tech", "manufacturing"] },
+      { id: 'c', text: "Helping others improve their health, education, or wellbeing", paths: ["healthcare", "hospitality-tourism", "creative-media"] },
+      { id: 'd', text: "Working with technology, data, or solving complex problems", paths: ["digital-tech", "manufacturing", "business"] },
+      { id: 'e', text: "Working outdoors, with my hands, or in a practical trade", paths: ["construction", "manufacturing", "logistics-transport"] },
+      { id: 'f', text: "Planning events, organising details, or analysing trends", paths: ["hospitality-tourism", "business", "logistics-transport"] }
     ]
   },
   {
     id: 6,
-    question: "What skills would you most like to develop?",
+    question: "What kind of challenges do you enjoy most?",
     options: [
-      { id: 'a', text: "Technical and digital skills", trait: "technical" },
-      { id: 'b', text: "Leadership and management abilities", trait: "leadership" },
-      { id: 'c', text: "Creative and design capabilities", trait: "creative" },
-      { id: 'd', text: "Communication and interpersonal skills", trait: "interpersonal" }
+      { id: 'a', text: "Negotiating and persuading others", paths: ["business", "creative-media", "hospitality-tourism"] },
+      { id: 'b', text: "Designing or improving systems and processes", paths: ["digital-tech", "manufacturing", "logistics-transport"] },
+      { id: 'c', text: "Finding creative solutions to new problems", paths: ["creative-media", "digital-tech", "manufacturing"] },
+      { id: 'd', text: "Helping people and making an impact on their lives", paths: ["healthcare", "hospitality-tourism", "creative-media"] },
+      { id: 'e', text: "Managing multiple tasks and keeping things organised", paths: ["logistics-transport", "business", "hospitality-tourism"] },
+      { id: 'f', text: "Learning new technical or practical skills", paths: ["digital-tech", "construction", "manufacturing"] }
     ]
   },
   {
     id: 7,
-    question: "How do you prefer to make decisions?",
+    question: "How do you feel about working with others?",
     options: [
-      { id: 'a', text: "Based on data and careful analysis", trait: "analytical" },
-      { id: 'b', text: "Through group discussion and consensus", trait: "collaborative" },
-      { id: 'c', text: "Quick and decisive based on experience", trait: "decisive" },
-      { id: 'd', text: "Considering long-term implications", trait: "strategic" }
+      { id: 'a', text: "I love working in a team and bouncing ideas off others", paths: ["creative-media", "business", "hospitality-tourism"] },
+      { id: 'b', text: "I prefer working alone so I can focus and be productive", paths: ["digital-tech", "manufacturing", "construction"] },
+      { id: 'c', text: "I enjoy a mix of both—some independent work, some teamwork", paths: ["manufacturing", "digital-tech", "logistics-transport"] },
+      { id: 'd', text: "I like leading teams and motivating people towards a goal", paths: ["business", "hospitality-tourism", "healthcare"] },
+      { id: 'e', text: "I prefer interacting with people in small, meaningful ways", paths: ["healthcare", "hospitality-tourism", "creative-media"] },
+      { id: 'f', text: "I like collaborating on creative projects but value independence", paths: ["creative-media", "digital-tech", "manufacturing"] }
     ]
   },
   {
     id: 8,
-    question: "What type of projects interest you most?",
+    question: "What's your biggest motivation when choosing a career?",
     options: [
-      { id: 'a', text: "Those that require creative problem-solving", trait: "innovative" },
-      { id: 'b', text: "Projects with clear social impact", trait: "purposeful" },
-      { id: 'c', text: "Technical challenges requiring expertise", trait: "technical" },
-      { id: 'd', text: "Leading and coordinating teams", trait: "leadership" }
+      { id: 'a', text: "High salary and financial success", paths: ["digital-tech", "business", "manufacturing"] },
+      { id: 'b', text: "Freedom to be creative and express myself", paths: ["creative-media", "digital-tech", "hospitality-tourism"] },
+      { id: 'c', text: "Stability and security in a structured job", paths: ["logistics-transport", "healthcare", "manufacturing"] },
+      { id: 'd', text: "Helping others and making a difference", paths: ["healthcare", "hospitality-tourism", "creative-media"] },
+      { id: 'e', text: "Excitement, adventure, or working outdoors", paths: ["construction", "hospitality-tourism", "creative-media"] },
+      { id: 'f', text: "Constant learning and problem-solving", paths: ["digital-tech", "manufacturing", "business"] }
     ]
   },
   {
     id: 9,
-    question: "Where do you see yourself in 5 years?",
+    question: "If you had to pick one of these skills as your strongest, which would it be?",
     options: [
-      { id: 'a', text: "Leading a team or department", trait: "leadership" },
-      { id: 'b', text: "Working as a specialist or expert", trait: "technical" },
-      { id: 'c', text: "Running your own business", trait: "entrepreneurial" },
-      { id: 'd', text: "Contributing to meaningful projects", trait: "purposeful" }
+      { id: 'a', text: "Communication and persuasion", paths: ["business", "creative-media", "hospitality-tourism"] },
+      { id: 'b', text: "Logical thinking and data analysis", paths: ["digital-tech", "manufacturing", "logistics-transport"] },
+      { id: 'c', text: "Creativity and design", paths: ["creative-media", "digital-tech", "manufacturing"] },
+      { id: 'd', text: "Practical skills like fixing or building things", paths: ["construction", "manufacturing", "logistics-transport"] },
+      { id: 'e', text: "Organising and structuring information", paths: ["logistics-transport", "business", "digital-tech"] },
+      { id: 'f', text: "Leadership and decision-making", paths: ["business", "hospitality-tourism", "healthcare"] }
     ]
   },
   {
     id: 10,
-    question: "What's your approach to work-life balance?",
+    question: "Which statement best describes your approach to work?",
     options: [
-      { id: 'a', text: "Structured schedule with clear boundaries", trait: "methodical" },
-      { id: 'b', text: "Flexible hours based on project needs", trait: "adaptable" },
-      { id: 'c', text: "Results-focused regardless of hours", trait: "ambitious" },
-      { id: 'd', text: "Balance of remote and office work", trait: "balanced" }
+      { id: 'a', text: "I want to be my own boss and build something from scratch", paths: ["business", "creative-media", "digital-tech"] },
+      { id: 'b', text: "I like stability and clear career progression", paths: ["healthcare", "logistics-transport", "manufacturing"] },
+      { id: 'c', text: "I prefer a dynamic, ever-changing work environment", paths: ["creative-media", "hospitality-tourism", "digital-tech"] },
+      { id: 'd', text: "I enjoy mastering technical skills and applying them", paths: ["digital-tech", "manufacturing", "construction"] },
+      { id: 'e', text: "I want to help others and contribute to society", paths: ["healthcare", "hospitality-tourism", "creative-media"] },
+      { id: 'f', text: "I thrive in creative, fast-paced settings", paths: ["creative-media", "digital-tech", "hospitality-tourism"] }
     ]
   }
 ];
@@ -165,8 +189,7 @@ export const careerProfiles: CareerProfiles = {
         progression: {
           entry: "Junior Data Analyst",
           mid: "Senior Data Analyst",
-          senior: "Lead Data Scientist",
-          timeline: "3-5 years to senior level"
+          senior: "Lead Data Scientist"
         },
         localOpportunities: {
           employers: [
@@ -179,10 +202,8 @@ export const careerProfiles: CareerProfiles = {
               location: "Sheffield",
               type: "Data Analytics MSc"
             }
-          ],
-          networking: ["Yorkshire Data Network"]
-        },
-        keyProjects: ["NHS Data Analysis"]
+          ]
+        }
       }
     ],
     skills: [
@@ -195,4 +216,9 @@ export const careerProfiles: CareerProfiles = {
     description: "You excel at logical thinking and data-driven decision making."
   },
   // ... Add more profiles as needed
+};
+
+// Career paths and their associated careers will be defined here
+export const careerPaths: { [key: string]: CareerPath } = {
+  // Add career paths here
 }; 

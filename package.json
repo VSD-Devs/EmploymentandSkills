@@ -10,6 +10,9 @@
     "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
+    "@kentico/kontent-delivery": "^12.0.0",
+    "@kentico/kontent-management": "^12.0.0",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.344.0",
     "next": "^15.1.6",
     "react": "^19.0.0",

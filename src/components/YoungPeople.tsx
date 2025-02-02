@@ -1,9 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, GraduationCap, BookOpen, Briefcase, Users, ArrowRight, Rocket } from 'lucide-react'
+import Newsletter from './Newsletter'
+import CareerQuiz from './CareerQuiz'
 
 const colorClasses = {
   indigo: {
@@ -79,7 +81,10 @@ type TabsType = {
 }
 
 const YoungPeople = () => {
-  const [activeTab] = useState('university')
+  const [activeTab, setActiveTab] = useState('university')
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+  const [isQuizOpen, setIsQuizOpen] = useState(false)
 
   const tabs: TabsType = {
     university: {
@@ -180,8 +185,66 @@ const YoungPeople = () => {
     }
   }
 
+  // Handle touch swipe for mobile navigation
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    const SWIPE_THRESHOLD = 50
+    const touchDiff = touchStart - touchEnd
+
+    if (Math.abs(touchDiff) > SWIPE_THRESHOLD) {
+      const tabKeys = Object.keys(tabs)
+      const currentIndex = tabKeys.indexOf(activeTab)
+      
+      if (touchDiff > 0 && currentIndex < tabKeys.length - 1) {
+        // Swipe left
+        setActiveTab(tabKeys[currentIndex + 1])
+        document.getElementById(tabKeys[currentIndex + 1])?.scrollIntoView({ behavior: 'smooth' })
+      } else if (touchDiff < 0 && currentIndex > 0) {
+        // Swipe right
+        setActiveTab(tabKeys[currentIndex - 1])
+        document.getElementById(tabKeys[currentIndex - 1])?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+
+  // Handle scroll snap on mobile
+  const handleScroll = () => {
+    const sections = Object.keys(tabs).map(key => document.getElementById(key))
+    const scrollPosition = window.scrollY + window.innerHeight / 2
+
+    sections.forEach((section) => {
+      if (section) {
+        const sectionTop = section.offsetTop
+        const sectionBottom = sectionTop + section.offsetHeight
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          setActiveTab(section.id)
+        }
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll)
+      return () => window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
-    <div className="bg-white">
+    <div 
+      className="bg-white"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-12 sm:py-24 overflow-hidden">
         {/* Background Image */}
@@ -194,24 +257,20 @@ const YoungPeople = () => {
             priority
           />
           {/* Dark overlay for text legibility */}
-          <div className="absolute inset-0 bg-[#111827]/70" />
+          <div className="absolute inset-0 bg-black/75" />
         </div>
 
-        {/* Enhanced gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-neutral-900/30 to-stone-900/40 mix-blend-overlay" />
-        
         {/* Dotted grid pattern */}
         <div 
-          className="absolute inset-0 opacity-20 mix-blend-soft-light"
+          className="absolute inset-0 opacity-10 mix-blend-soft-light"
           style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 0)`,
             backgroundSize: '40px 40px'
           }}
         />
         
-        {/* Subtle glow effects */}
-        <div className="absolute top-0 left-1/4 w-1/2 h-1/2 bg-indigo-500/20 rounded-full blur-3xl mix-blend-overlay" />
-        <div className="absolute bottom-0 right-1/4 w-1/2 h-1/2 bg-fuchsia-500/20 rounded-full blur-3xl mix-blend-overlay" />
+        {/* Subtle light effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/20" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative z-10">
@@ -228,13 +287,13 @@ const YoungPeople = () => {
               Explore exciting opportunities for your future. Whether it's university, apprenticeships, or starting your career, we're here to help you make informed choices.
             </p>
             <div className="flex flex-wrap gap-3 sm:gap-4">
-              <Link
-                href="/career-quiz"
+              <button
+                onClick={() => setIsQuizOpen(true)}
                 className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-indigo-600 text-white text-sm sm:text-base rounded-xl hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:shadow-indigo-500/30 backdrop-blur-sm"
               >
                 Take Career Quiz
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-              </Link>
+              </button>
               <Link
                 href="/explore"
                 className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-white/10 text-white text-sm sm:text-base rounded-xl hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10 hover:border-white/20"
@@ -246,179 +305,276 @@ const YoungPeople = () => {
         </div>
       </div>
 
-      {/* Enhanced Sticky Navigation Banner */}
-      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
+      {/* Enhanced Mobile Navigation */}
+      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start sm:justify-center min-w-max">
-            <div className="flex space-x-1 py-1">
+          <div className="flex justify-start sm:justify-center">
+            <div className="flex space-x-1 py-1 overflow-x-auto scrollbar-hide snap-x snap-mandatory touch-pan-x">
               {Object.entries(tabs).map(([key, tab]) => (
-                <a 
+                <button
                   key={key}
-                  href={`#${key}`} 
-                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl ${colorClasses[tab.color].nav}`}
+                  onClick={() => {
+                    setActiveTab(key)
+                    document.getElementById(key)?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl snap-start ${
+                    activeTab === key 
+                      ? `${colorClasses[tab.color].button} shadow-md` 
+                      : colorClasses[tab.color].nav
+                  }`}
                 >
                   <div className="relative z-10 flex flex-col items-center gap-1">
-                    <div className={`h-6 w-6 text-gray-600 group-hover:text-${tab.color}-600 group-hover:scale-105`}>
+                    <div className={`h-6 w-6 ${
+                      activeTab === key 
+                        ? `text-${tab.color}-600` 
+                        : 'text-gray-600 group-hover:text-${tab.color}-600'
+                    }`}>
                       {tab.icon}
                     </div>
-                    <span className={`text-sm sm:text-base font-medium text-gray-900 group-hover:text-${tab.color}-600 whitespace-nowrap`}>
+                    <span className={`text-sm sm:text-base font-medium whitespace-nowrap ${
+                      activeTab === key 
+                        ? `text-${tab.color}-600` 
+                        : 'text-gray-900 group-hover:text-${tab.color}-600'
+                    }`}>
                       {tab.title}
                     </span>
-                    <div className={`h-0.5 w-0 bg-${tab.color}-600 group-hover:w-full transition-all duration-50`} />
+                    <div className={`h-0.5 ${
+                      activeTab === key 
+                        ? `w-full bg-${tab.color}-600` 
+                        : `w-0 bg-${tab.color}-600 group-hover:w-full`
+                    } transition-all duration-200`} />
                   </div>
-                </a>
+                </button>
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content Sections */}
-      {Object.entries(tabs).map(([key, tab], index) => (
-        <div key={key} id={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
-          {/* Top wave divider for even sections */}
-          {index % 2 === 0 && (
-            <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-              <svg
-                viewBox="0 0 1440 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="absolute bottom-0 w-full h-full text-gray-50"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-          )}
-          
-          {/* Section Content */}
-          <div className="relative py-12 sm:py-24">
-            {/* Decorative elements */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
-              <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
-            </div>
+      {/* Main Content Sections with Enhanced Mobile Scroll Snap */}
+      <div className="md:block">
+        {Object.entries(tabs).map(([key, tab], index) => (
+          <div 
+            key={key} 
+            id={key} 
+            className={`relative scroll-mt-20 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} snap-start`}
+          >
+            {/* Top wave divider for even sections */}
+            {index % 2 === 0 && (
+              <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
+                <svg
+                  viewBox="0 0 1440 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute bottom-0 w-full h-full text-gray-50"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+            )}
+            
+            {/* Section Content */}
+            <div className="relative py-8 sm:py-24">
+              {/* Decorative elements */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
+                <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
+              </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-                {/* Alternate layout based on index */}
-                {index % 2 === 0 ? (
-                  <>
-                    <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden shadow-2xl">
-                      <Image
-                        src={tab.content.image}
-                        alt={tab.content.alt}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                      <div className="absolute bottom-4 sm:bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-xl max-w-[calc(100%-2rem)] sm:max-w-sm transform sm:-translate-x-20 border border-gray-100">
-                        <div className="flex items-center gap-3 sm:gap-4">
-                          <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
-                            {tab.icon}
-                          </div>
-                          <div>
-                            <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">{tab.title}</div>
-                            <div className="text-sm sm:text-base text-gray-600">{tab.description}</div>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid md:grid-cols-2 gap-6 sm:gap-12 items-center">
+                  {/* Alternate layout based on index */}
+                  {index % 2 === 0 ? (
+                    <>
+                      {/* Mobile: Stack content on top of smaller image */}
+                      <div className="md:hidden">
+                        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${colorClasses[tab.color].button} mb-4`}>
+                          {tab.icon}
+                          <span className="text-xs font-medium">{tab.title}</span>
+                        </div>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-4">{tab.description}</h2>
+                        <div className="relative h-[200px] rounded-xl overflow-hidden shadow-lg mb-4">
+                          <Image
+                            src={tab.content.image}
+                            alt={tab.content.alt}
+                            fill
+                            className="object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                        </div>
+                        <div className="prose prose-sm max-w-none mb-6">
+                          {tab.content.text.map((paragraph, index) => (
+                            <p key={index} className="text-gray-600 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                        <Link
+                          href={tab.content.link}
+                          className={`inline-flex items-center px-4 py-2.5 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-sm`}
+                        >
+                          {tab.content.cta}
+                          <ChevronRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </div>
+
+                      {/* Desktop: Original layout */}
+                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                        <Image
+                          src={tab.content.image}
+                          alt={tab.content.alt}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                        <div className="absolute bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                          <div className="flex items-center gap-4">
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                              {tab.icon}
+                            </div>
+                            <div>
+                              <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
+                              <div className="text-base text-gray-600">{tab.description}</div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div>
-                      <div className={`inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full ${colorClasses[tab.color].button} mb-4 sm:mb-6`}>
-                        {tab.icon}
-                        <span className="text-xs sm:text-sm font-medium">{tab.title}</span>
+                      <div className="hidden md:block">
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                          {tab.icon}
+                          <span className="text-sm font-medium">{tab.title}</span>
+                        </div>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                        <div className="prose prose-lg max-w-none mb-8">
+                          {tab.content.text.map((paragraph, index) => (
+                            <p key={index} className="text-gray-600 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                        <Link
+                          href={tab.content.link}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-base`}
+                        >
+                          {tab.content.cta}
+                          <ChevronRight className="ml-2 h-5 w-5" />
+                        </Link>
                       </div>
-                      <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">{tab.description}</h2>
-                      <div className="prose prose-sm sm:prose-lg max-w-none mb-6 sm:mb-8">
-                        {tab.content.text.map((paragraph, index) => (
-                          <p key={index} className="text-gray-600 leading-relaxed">
-                            {paragraph}
-                          </p>
-                        ))}
+                    </>
+                  ) : (
+                    <>
+                      {/* Mobile: Stack content on top of smaller image */}
+                      <div className="md:hidden">
+                        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${colorClasses[tab.color].button} mb-4`}>
+                          {tab.icon}
+                          <span className="text-xs font-medium">{tab.title}</span>
+                        </div>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-4">{tab.description}</h2>
+                        <div className="relative h-[200px] rounded-xl overflow-hidden shadow-lg mb-4">
+                          <Image
+                            src={tab.content.image}
+                            alt={tab.content.alt}
+                            fill
+                            className="object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                        </div>
+                        <div className="prose prose-sm max-w-none mb-6">
+                          {tab.content.text.map((paragraph, index) => (
+                            <p key={index} className="text-gray-600 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                        <Link
+                          href={tab.content.link}
+                          className={`inline-flex items-center px-4 py-2.5 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-sm`}
+                        >
+                          {tab.content.cta}
+                          <ChevronRight className="ml-2 h-4 w-4" />
+                        </Link>
                       </div>
-                      <Link
-                        href={tab.content.link}
-                        className={`inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-sm sm:text-base`}
-                      >
-                        {tab.content.cta}
-                        <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                      </Link>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="md:order-1">
-                      <div className={`inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full ${colorClasses[tab.color].button} mb-4 sm:mb-6`}>
-                        {tab.icon}
-                        <span className="text-xs sm:text-sm font-medium">{tab.title}</span>
+
+                      {/* Desktop: Original layout */}
+                      <div className="hidden md:block md:order-1">
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                          {tab.icon}
+                          <span className="text-sm font-medium">{tab.title}</span>
+                        </div>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                        <div className="prose prose-lg max-w-none mb-8">
+                          {tab.content.text.map((paragraph, index) => (
+                            <p key={index} className="text-gray-600 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                        <Link
+                          href={tab.content.link}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-base`}
+                        >
+                          {tab.content.cta}
+                          <ChevronRight className="ml-2 h-5 w-5" />
+                        </Link>
                       </div>
-                      <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">{tab.description}</h2>
-                      <div className="prose prose-sm sm:prose-lg max-w-none mb-6 sm:mb-8">
-                        {tab.content.text.map((paragraph, index) => (
-                          <p key={index} className="text-gray-600 leading-relaxed">
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
-                      <Link
-                        href={tab.content.link}
-                        className={`inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-sm sm:text-base`}
-                      >
-                        {tab.content.cta}
-                        <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                      </Link>
-                    </div>
-                    <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden shadow-2xl md:order-2">
-                      <Image
-                        src={tab.content.image}
-                        alt={tab.content.alt}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                      <div className="absolute bottom-4 sm:bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-xl max-w-[calc(100%-2rem)] sm:max-w-sm transform sm:-translate-x-20 border border-gray-100">
-                        <div className="flex items-center gap-3 sm:gap-4">
-                          <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
-                            {tab.icon}
-                          </div>
-                          <div>
-                            <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">{tab.title}</div>
-                            <div className="text-sm sm:text-base text-gray-600">{tab.description}</div>
+                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl md:order-2">
+                        <Image
+                          src={tab.content.image}
+                          alt={tab.content.alt}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                        <div className="absolute bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                          <div className="flex items-center gap-4">
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                              {tab.icon}
+                            </div>
+                            <div>
+                              <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
+                              <div className="text-base text-gray-600">{tab.description}</div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </>
-                )}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
+        ))}
+      </div>
 
-          {/* Bottom wave divider for odd sections */}
-          {index % 2 === 1 && (
-            <div className="absolute bottom-0 left-0 right-0 h-8 sm:h-16 overflow-hidden translate-y-[99%]">
-              <svg
-                viewBox="0 0 1440 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="absolute top-0 w-full h-full text-white transform rotate-180"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-          )}
-        </div>
-      ))}
+      {/* Newsletter Section */}
+      <Newsletter />
+
+      {/* Career Quiz Modal */}
+      <CareerQuiz isOpen={isQuizOpen} onClose={() => setIsQuizOpen(false)} />
     </div>
   )
 }
+
+// Add this to your global CSS or a new styles module
+const styles = `
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  @media (max-width: 768px) {
+    html {
+      scroll-snap-type: y mandatory;
+    }
+  }
+`
 
 export default YoungPeople 
