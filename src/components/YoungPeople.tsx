@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, GraduationCap, BookOpen, Briefcase, Users, ArrowRight, Rocket } from 'lucide-react'
@@ -80,110 +80,113 @@ type TabsType = {
   [key: string]: Tab
 }
 
+// Move tabs object outside component
+const TABS_CONFIG: TabsType = {
+  university: {
+    icon: <GraduationCap className="w-6 h-6" />,
+    color: 'indigo',
+    title: 'University',
+    description: 'Explore Higher Education',
+    content: {
+      text: [
+        'Discover the exciting world of university education. From choosing the right course to understanding student life, we will help you make informed decisions about your future.',
+        'Learn about different universities, entry requirements, and how to make your UCAS application stand out.'
+      ],
+      image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80',
+      alt: 'Students collaborating in a university library',
+      link: '/university',
+      cta: 'Explore Universities'
+    }
+  },
+  tlevels: {
+    icon: <BookOpen className="w-6 h-6" />,
+    color: 'emerald',
+    title: 'T-Levels',
+    description: 'Technical Excellence',
+    content: {
+      text: [
+        'T-Levels are new qualifications that combine classroom learning with industry placements. Perfect for those who want a practical, hands-on approach to learning.',
+        'Discover how T-Levels can give you the skills and knowledge that employers are looking for, with real workplace experience built into your course.'
+      ],
+      image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80',
+      alt: 'Students in technical training',
+      link: '/t-levels',
+      cta: 'Explore T-Levels'
+    }
+  },
+  apprenticeships: {
+    icon: <Briefcase className="w-6 h-6" />,
+    color: 'violet',
+    title: 'Apprenticeships',
+    description: 'Earn While You Learn',
+    content: {
+      text: [
+        'Get hands-on experience while gaining qualifications with an apprenticeship. We will show you how to find the perfect apprenticeship opportunity and help you understand the application process.',
+        'Discover different levels of apprenticeships available and which industries are looking for apprentices in Yorkshire.'
+      ],
+      image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80',
+      alt: 'Young apprentice learning practical skills',
+      link: '/apprenticeships',
+      cta: 'Find Apprenticeships'
+    }
+  },
+  careers: {
+    icon: <Rocket className="w-6 h-6" />,
+    color: 'fuchsia',
+    title: 'Career Planning',
+    description: 'Find Your Path',
+    content: {
+      text: [
+        'Not sure what career path to take? Our career planning tools and resources help you explore different options and find what suits you best.',
+        'Take our career quiz, explore different industries, and learn about the skills needed for different jobs.'
+      ],
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+      alt: 'Young people in a career planning session',
+      link: '/career-planning',
+      cta: 'Start Planning'
+    }
+  },
+  skills: {
+    icon: <BookOpen className="w-6 h-6" />,
+    color: 'sky',
+    title: 'Skills & Training',
+    description: 'Build Your Future',
+    content: {
+      text: [
+        'Develop the skills that employers are looking for. From digital skills to professional qualifications, we will help you identify and access the training you need.',
+        'Find free courses, workshops, and training opportunities to boost your CV and employability.'
+      ],
+      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80',
+      alt: 'Young person learning new skills',
+      link: '/skills-training',
+      cta: 'Discover Training'
+    }
+  },
+  support: {
+    icon: <Users className="w-6 h-6" />,
+    color: 'rose',
+    title: 'Support Services',
+    description: 'Get Expert Help',
+    content: {
+      text: [
+        'Access free, confidential advice from our career experts. Whether you need help with applications, interviews, or making decisions about your future, we are here to support you.',
+        'Connect with mentors, attend workshops, and get personalised guidance for your journey.'
+      ],
+      image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80',
+      alt: 'Career advisor meeting with young person',
+      link: '/support',
+      cta: 'Get Support'
+    }
+  }
+}
+
 const YoungPeople = () => {
-  const [activeTab, setActiveTab] = useState('university')
+  const [activeTab, setActiveTab] = useState<string>('university')
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
   const [isQuizOpen, setIsQuizOpen] = useState(false)
 
-  const tabs: TabsType = {
-    university: {
-      icon: <GraduationCap className="w-6 h-6" />,
-      color: 'indigo',
-      title: 'University',
-      description: 'Explore Higher Education',
-      content: {
-        text: [
-          'Discover the exciting world of university education. From choosing the right course to understanding student life, we will help you make informed decisions about your future.',
-          'Learn about different universities, entry requirements, and how to make your UCAS application stand out.'
-        ],
-        image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80',
-        alt: 'Students collaborating in a university library',
-        link: '/university',
-        cta: 'Explore Universities'
-      }
-    },
-    tlevels: {
-      icon: <BookOpen className="w-6 h-6" />,
-      color: 'emerald',
-      title: 'T-Levels',
-      description: 'Technical Excellence',
-      content: {
-        text: [
-          'T-Levels are new qualifications that combine classroom learning with industry placements. Perfect for those who want a practical, hands-on approach to learning.',
-          'Discover how T-Levels can give you the skills and knowledge that employers are looking for, with real workplace experience built into your course.'
-        ],
-        image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80',
-        alt: 'Students in technical training',
-        link: '/t-levels',
-        cta: 'Explore T-Levels'
-      }
-    },
-    apprenticeships: {
-      icon: <Briefcase className="w-6 h-6" />,
-      color: 'violet',
-      title: 'Apprenticeships',
-      description: 'Earn While You Learn',
-      content: {
-        text: [
-          'Get hands-on experience while gaining qualifications with an apprenticeship. We will show you how to find the perfect apprenticeship opportunity and help you understand the application process.',
-          'Discover different levels of apprenticeships available and which industries are looking for apprentices in Yorkshire.'
-        ],
-        image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80',
-        alt: 'Young apprentice learning practical skills',
-        link: '/apprenticeships',
-        cta: 'Find Apprenticeships'
-      }
-    },
-    careers: {
-      icon: <Rocket className="w-6 h-6" />,
-      color: 'fuchsia',
-      title: 'Career Planning',
-      description: 'Find Your Path',
-      content: {
-        text: [
-          'Not sure what career path to take? Our career planning tools and resources help you explore different options and find what suits you best.',
-          'Take our career quiz, explore different industries, and learn about the skills needed for different jobs.'
-        ],
-        image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
-        alt: 'Young people in a career planning session',
-        link: '/career-planning',
-        cta: 'Start Planning'
-      }
-    },
-    skills: {
-      icon: <BookOpen className="w-6 h-6" />,
-      color: 'sky',
-      title: 'Skills & Training',
-      description: 'Build Your Future',
-      content: {
-        text: [
-          'Develop the skills that employers are looking for. From digital skills to professional qualifications, we will help you identify and access the training you need.',
-          'Find free courses, workshops, and training opportunities to boost your CV and employability.'
-        ],
-        image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80',
-        alt: 'Young person learning new skills',
-        link: '/skills-training',
-        cta: 'Discover Training'
-      }
-    },
-    support: {
-      icon: <Users className="w-6 h-6" />,
-      color: 'rose',
-      title: 'Support Services',
-      description: 'Get Expert Help',
-      content: {
-        text: [
-          'Access free, confidential advice from our career experts. Whether you need help with applications, interviews, or making decisions about your future, we are here to support you.',
-          'Connect with mentors, attend workshops, and get personalised guidance for your journey.'
-        ],
-        image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80',
-        alt: 'Career advisor meeting with young person',
-        link: '/support',
-        cta: 'Get Support'
-      }
-    }
-  }
+  const tabs = useMemo(() => TABS_CONFIG, [])
 
   // Handle touch swipe for mobile navigation
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -214,7 +217,7 @@ const YoungPeople = () => {
     }
   }
 
-  // Handle scroll snap on mobile
+  // Update handleScroll to use memoized tabs
   const handleScroll = useCallback(() => {
     const sections = Object.keys(tabs).map(key => document.getElementById(key))
     const scrollPosition = window.scrollY + window.innerHeight / 2
@@ -229,7 +232,7 @@ const YoungPeople = () => {
         }
       }
     })
-  }, [tabs])
+  }, []) // Remove tabs from dependency array since it's now constant
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
@@ -282,7 +285,7 @@ const YoungPeople = () => {
               Discover Your Path<br />in Yorkshire
             </h1>
             <p className="text-base sm:text-lg text-gray-200 mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-              Explore exciting opportunities for your future. Whether it&apos;s university, apprenticeships, or starting your career, we're here to help you make informed choices.
+              Explore exciting opportunities for your future. Whether it&apos;s university, apprenticeships, or starting your career, we&apos;re here to help you make informed choices.
             </p>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <button

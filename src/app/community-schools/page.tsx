@@ -83,7 +83,7 @@ const CommunitySchoolsPage = () => {
               <span className="text-sm font-medium tracking-wide uppercase">Community &amp; Schools</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Shape Yorkshire's Future Workforce
+              Shape Yorkshire&apos;s Future Workforce
             </h1>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Choose how you want to make a difference in education

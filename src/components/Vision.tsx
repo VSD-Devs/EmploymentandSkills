@@ -118,7 +118,7 @@ const Vision = () => {
               </div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Empowering South Yorkshire&apos;s Future</h2>
               <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                We're dedicated to creating pathways to success for everyone in South Yorkshire, focusing on skills development, career opportunities, and inclusive growth.
+                We&apos;re dedicated to creating pathways to success for everyone in South Yorkshire, focusing on skills development, career opportunities, and inclusive growth.
               </p>
               <div className="bg-gray-50 rounded-xl p-6 mb-8">
                 <div className="grid gap-4">

@@ -95,7 +95,7 @@ export default function EducatorsPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Our Vision</h3>
               <p className="text-gray-600">
-                To create a world-class technical education and skills system that provides opportunities for all residents and meets employers' needs.
+                To create a world-class technical education and skills system that provides opportunities for all residents and meets employers&apos; needs.
               </p>
             </div>
 
