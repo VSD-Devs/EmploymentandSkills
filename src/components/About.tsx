@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 const About = () => {
   return (
@@ -44,10 +45,12 @@ const About = () => {
             </div>
           </div>
           <div className="mt-12 lg:mt-0">
-            <img
+            <Image
               className="rounded-lg shadow-xl"
               src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
               alt="Team meeting"
+              width={1950}
+              height={1300}
             />
           </div>
         </div>

@@ -211,7 +211,7 @@ const BusinessPage = () => {
               Grow Your Business<br />in Yorkshire
             </h1>
             <p className="text-lg text-gray-200 mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-              Access funding, expert support, and resources to help your business thrive. Connect with Yorkshire's future workforce and shape the skills of tomorrow.
+              Access funding, expert support, and resources to help your business thrive. Connect with Yorkshire&apos;s future workforce and shape the skills of tomorrow.
             </p>
           </div>
         </div>

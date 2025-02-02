@@ -36,6 +36,7 @@ const SearchResults = ({ results, isVisible, onClose }: SearchResultsProps) => {
             onClick={() => handleResultClick(result.url)}
             className="w-full text-left p-3 hover:bg-gray-50 rounded-md group transition-colors"
             role="option"
+            aria-selected={false}
           >
             <div className="flex items-start justify-between">
               <div>

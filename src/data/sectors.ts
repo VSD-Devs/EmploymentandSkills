@@ -3,7 +3,7 @@ import { SectorData } from '../types/sector';
 export const sectorData: SectorData = {
   'healthcare': {
     title: 'Health and social care',
-    description: 'The health and social care sector focuses on providing physical, emotional and social help to support people\'s health.',
+    description: 'The health and social care sector focuses on providing physical, emotional and social help to support people&apos;s health.',
     stats: [
       {
         icon: 'building',
@@ -128,7 +128,7 @@ export const sectorData: SectorData = {
   },
   'manufacturing': {
     title: 'Advanced Manufacturing',
-    description: 'Yorkshire\'s manufacturing sector combines traditional expertise with cutting-edge technology and sustainable practices.',
+    description: 'Yorkshire&apos;s manufacturing sector combines traditional expertise with cutting-edge technology and sustainable practices.',
     stats: [
       {
         icon: 'building',
@@ -254,7 +254,7 @@ export const sectorData: SectorData = {
   },
   'logistics-transport': {
     title: 'Logistics & Transport',
-    description: 'Yorkshire\'s strategic location makes it a hub for logistics and transport, connecting businesses across the UK and beyond.',
+    description: 'Yorkshire&apos;s strategic location makes it a hub for logistics and transport, connecting businesses across the UK and beyond.',
     stats: [
       {
         icon: 'building',
@@ -317,7 +317,7 @@ export const sectorData: SectorData = {
   },
   'creative-media': {
     title: 'Creative & Digital Media',
-    description: 'Yorkshire\'s creative sector is thriving with opportunities in film, television, gaming, and digital content creation.',
+    description: 'Yorkshire&apos;s creative sector is thriving with opportunities in film, television, gaming, and digital content creation.',
     stats: [
       {
         icon: 'building',
@@ -380,7 +380,7 @@ export const sectorData: SectorData = {
   },
   'hospitality-tourism': {
     title: 'Hospitality & Tourism',
-    description: 'Yorkshire\'s tourism and hospitality sector offers exciting careers in hotels, restaurants, events, and visitor attractions.',
+    description: 'Yorkshire&apos;s tourism and hospitality sector offers exciting careers in hotels, restaurants, events, and visitor attractions.',
     stats: [
       {
         icon: 'building',

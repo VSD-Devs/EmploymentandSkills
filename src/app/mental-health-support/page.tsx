@@ -107,23 +107,23 @@ const MentalHealthSupport = () => {
   const testimonials = [
     {
       icon: Building2,
-      name: "Sarah's Story",
+      name: "Sarah&apos;s Story",
       role: "Office Support",
       quote: "Working Win helped me find a role that accommodates my health needs. Their support was invaluable in building my confidence.",
       location: "Sheffield"
     },
     {
       icon: GraduationCap,
-      name: "James's Journey",
+      name: "James&apos;s Journey",
       role: "Education Sector",
       quote: "The programme helped me manage my anxiety while transitioning to a new career in teaching. The ongoing support made all the difference.",
       location: "Rotherham"
     },
     {
       icon: Briefcase,
-      name: "David's Progress",
+      name: "David&apos;s Progress",
       role: "Retail Management",
-      quote: "With Working Win's support, I was able to maintain my role while managing my health condition. Their strategies really work.",
+      quote: "With Working Win&apos;s support, I was able to maintain my role while managing my health condition. Their strategies really work.",
       location: "Doncaster"
     }
   ]
@@ -360,7 +360,7 @@ const MentalHealthSupport = () => {
               <span className="text-sm font-medium text-purple-900">Eligibility Criteria</span>
             </div>
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">Who Can Access Support?</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Check if you're eligible for our programme and take the first step towards better employment support.</p>
+            <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Check if you&apos;re eligible for our programme and take the first step towards better employment support.</p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-6">
@@ -782,7 +782,7 @@ const MentalHealthSupport = () => {
                       We may not be the right fit
                     </h3>
                     <p className="text-gray-600 max-w-md mx-auto">
-                      Based on your answers, Working Win might not be the best programme for you at this time. However, we'd still encourage you to contact us to discuss your situation.
+                      Based on your answers, Working Win might not be the best programme for you at this time. However, we&apos;d still encourage you to contact us to discuss your situation.
                     </p>
                     <div className="flex flex-wrap gap-4 justify-center">
                       <Link

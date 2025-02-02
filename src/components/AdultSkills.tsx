@@ -92,8 +92,8 @@ const AdultSkills = () => {
             <h1 className="text-5xl font-bold text-white mb-6">
               Transform Your Career<br />in Yorkshire
             </h1>
-            <p className="text-lg text-gray-400 mb-8 max-w-2xl leading-relaxed">
-              Access funded support, training, and resources to help you thrive in Yorkshire's growing industries. Whether you're looking to upskill, change careers, or get back into work, we're here to help.
+            <p className="text-base sm:text-lg text-white mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
+              Access funded support, training, and resources to help you thrive in Yorkshire&apos;s growing industries. Whether you&apos;re looking to upskill, change careers, or get back into work, we&apos;re here to help.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
               <button
@@ -265,7 +265,7 @@ const AdultSkills = () => {
               </div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Funded Training</h2>
               <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Access fully funded courses and qualifications in Yorkshire's high-growth sectors.
+                Access fully funded courses and qualifications in Yorkshire&apos;s high-growth sectors.
               </p>
               <div className="bg-gray-50 rounded-xl p-6 mb-8">
                 <div className="grid gap-4">
@@ -293,7 +293,7 @@ const AdultSkills = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 text-lg mb-1">Sector-Specific Training</h3>
-                      <p className="text-gray-600">Specialised programmes for Yorkshire's growth industries</p>
+                      <p className="text-gray-600">Specialised programmes for Yorkshire&apos;s growth industries</p>
                     </div>
                   </div>
                 </div>

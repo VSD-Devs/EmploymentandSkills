@@ -105,7 +105,7 @@ const CareerQuiz = ({ isOpen, onClose }: CareerQuizProps) => {
     const sector = sectorData[slug]
     return {
       title: sector?.title || path.replace('-', ' '),
-      description: sector?.description || `Explore opportunities in Yorkshire's ${path.replace('-', ' ')} sector`
+      description: sector?.description || `Explore opportunities in Yorkshire&apos;s ${path.replace('-', ' ')} sector`
     }
   }
 

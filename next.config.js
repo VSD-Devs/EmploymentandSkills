@@ -17,7 +17,9 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
   },
-  devIndicators: false,
+  devIndicators: {
+    buildActivity: false
+  },
   // Enable React Strict Mode for better development
   reactStrictMode: true,
   // Enable production source maps for better debugging

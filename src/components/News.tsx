@@ -38,7 +38,7 @@ const News = () => {
           </div>
           <h2 className="text-3xl font-bold text-zinc-900">Latest News</h2>
           <p className="mt-4 text-lg text-zinc-600 max-w-2xl mx-auto">
-            Stay updated with the latest developments in South Yorkshire's employment and skills sector
+            Stay updated with the latest developments in South Yorkshire&apos;s employment and skills sector
           </p>
         </div>
 
