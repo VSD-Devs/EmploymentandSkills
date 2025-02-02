@@ -95,7 +95,7 @@ export default function SectorPageContent({ sector }: { sector: Sector }) {
             </div>
             <h2 className="text-3xl font-bold text-zinc-900">Top skills requested by employers</h2>
             <p className="text-lg text-zinc-700 max-w-3xl font-medium">
-              Skills for {sector.title.toLowerCase()} jobs can be split between 'general' skills and 'specialist' skills. General or transferable skills are more focused on the sector.
+              Skills for {sector.title.toLowerCase()} jobs can be split between &apos;general&apos; skills and &apos;specialist&apos; skills. General or transferable skills are more focused on the sector.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-8">

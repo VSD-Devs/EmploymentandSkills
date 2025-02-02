@@ -67,7 +67,7 @@ export default function EducatorsPage() {
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">School</h2>
               <p className="text-gray-600 mb-6">
-                Find training providers, access career resources, and connect with professionals to enhance your students' career education.
+                Find training providers, access career resources, and connect with professionals to enhance your students&apos; career education.
               </p>
               <div className="flex items-center text-blue-600 group-hover:text-blue-500">
                 <span className="font-medium">Access resources</span>
@@ -182,7 +182,7 @@ const resources = [
   },
   {
     title: 'Industry Insights',
-    description: 'Up-to-date information about Yorkshire\'s key industries and future opportunities.',
+    description: 'Up-to-date information about Yorkshire&apos;s key industries and future opportunities.',
     image: '/images/resource-insights.jpg',
     href: '/educators/insights'
   },

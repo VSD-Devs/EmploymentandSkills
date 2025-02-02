@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, GraduationCap, BookOpen, Briefcase, Users, ArrowRight, Rocket } from 'lucide-react'
@@ -215,7 +215,7 @@ const YoungPeople = () => {
   }
 
   // Handle scroll snap on mobile
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const sections = Object.keys(tabs).map(key => document.getElementById(key))
     const scrollPosition = window.scrollY + window.innerHeight / 2
 
@@ -229,7 +229,7 @@ const YoungPeople = () => {
         }
       }
     })
-  }
+  }, [tabs])
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)

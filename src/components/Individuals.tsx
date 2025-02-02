@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, FileText, Compass, BookOpen } from 'lucide-react';
+import Image from 'next/image';
 
 const Individuals = () => {
   const resources = [
@@ -77,10 +78,12 @@ const Individuals = () => {
               <div key={story.name} className="bg-gray-50 rounded-lg overflow-hidden">
                 <div className="md:flex">
                   <div className="md:flex-shrink-0">
-                    <img
+                    <Image
                       className="h-48 w-full object-cover md:h-full md:w-48"
                       src={story.image}
                       alt={story.name}
+                      width={192}
+                      height={192}
                     />
                   </div>
                   <div className="p-8">
