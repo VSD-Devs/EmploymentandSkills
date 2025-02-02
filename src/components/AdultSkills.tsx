@@ -93,7 +93,7 @@ const AdultSkills = () => {
               Transform Your Career<br />in Yorkshire
             </h1>
             <p className="text-base sm:text-lg text-white mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-              Access funded support, training, and resources to help you thrive in Yorkshire&apos;s growing industries. Whether you&apos;re looking to upskill, change careers, or get back into work, we&apos;re here to help.
+              Access funded support, training, and resources to help you thrive in Yorkshires growing industries. Whether you are looking to upskill, change careers, or get back into work, we are here to help.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
               <button

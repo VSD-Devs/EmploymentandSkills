@@ -782,7 +782,7 @@ const MentalHealthSupport = () => {
                       We may not be the right fit
                     </h3>
                     <p className="text-gray-600 max-w-md mx-auto">
-                      Based on your answers, Working Win might not be the best programme for you at this time. However, we&apos;d still encourage you to contact us to discuss your situation.
+                      Based on your answers, Working Win might not be the best programme for you at this time. However, we would still encourage you to contact us to discuss your situation.
                     </p>
                     <div className="flex flex-wrap gap-4 justify-center">
                       <Link
