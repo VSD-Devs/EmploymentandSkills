@@ -166,11 +166,11 @@ const Hero = () => {
 
             {/* Region Block */}
             <Link href="/events" className="group relative bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 to-zinc-800 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
               <div className="relative z-10 p-4 sm:p-8">
                 <div className="flex items-center gap-4 mb-3 sm:mb-6">
-                  <div className="w-10 h-10 sm:w-14 sm:h-14 bg-indigo-100 rounded-lg flex items-center justify-center transition-colors group-hover:bg-white/20 flex-shrink-0">
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 bg-zinc-100 rounded-lg flex items-center justify-center transition-colors group-hover:bg-white/20 flex-shrink-0">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-900 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
@@ -179,7 +179,7 @@ const Hero = () => {
                 <p className="text-sm sm:text-lg text-zinc-600 group-hover:text-white/90 transition-colors mb-3 sm:mb-6 line-clamp-2 sm:line-clamp-none">
                   Discover local events and workshops to connect with employers and explore career opportunities in South Yorkshire.
                 </p>
-                <div className="flex items-center text-indigo-600 group-hover:text-white transition-colors">
+                <div className="flex items-center text-zinc-900 group-hover:text-white transition-colors">
                   <span className="text-sm sm:text-base font-medium">Browse Events</span>
                   <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
