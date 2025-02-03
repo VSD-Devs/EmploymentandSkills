@@ -232,7 +232,7 @@ const YoungPeople = () => {
         }
       }
     })
-  }, []) // Remove tabs from dependency array since it's now constant
+  }, [tabs]) // Add tabs to dependency array
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)

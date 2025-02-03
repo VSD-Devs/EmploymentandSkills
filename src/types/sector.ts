@@ -28,6 +28,7 @@ export interface GreenJobs {
 }
 
 export interface Sector {
+  slug: string;
   title: string;
   description: string;
   stats: Stat[];

@@ -158,10 +158,17 @@ const MentalHealthSupport = () => {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log(formData)
+    try {
+      // Handle form submission here
+      // Replace console.log with actual form submission logic
+      setFormSubmitted(true)
+      // Add your form submission logic here
+    } catch (error) {
+      // Handle error appropriately
+      setFormErrors({ submit: 'Failed to submit form. Please try again.' })
+    }
   }
 
   const handleNextStep = () => {

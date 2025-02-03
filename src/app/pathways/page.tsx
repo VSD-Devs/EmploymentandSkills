@@ -74,25 +74,25 @@ export default function PathwaysPage() {
             <div>
               <h3 className="text-lg font-bold text-zinc-900 mb-4">Popular Searches</h3>
               <div className="space-y-2">
-                <Link href="#" className="block text-emerald-700 hover:text-emerald-800">Software Developer</Link>
-                <Link href="#" className="block text-emerald-700 hover:text-emerald-800">Healthcare Assistant</Link>
-                <Link href="#" className="block text-emerald-700 hover:text-emerald-800">Digital Marketing</Link>
+                <Link href="/pathways/digital-tech" className="block text-emerald-700 hover:text-emerald-800">Software Developer</Link>
+                <Link href="/pathways/healthcare" className="block text-emerald-700 hover:text-emerald-800">Healthcare Assistant</Link>
+                <Link href="/pathways/digital-tech" className="block text-emerald-700 hover:text-emerald-800">Digital Marketing</Link>
               </div>
             </div>
             <div>
               <h3 className="text-lg font-bold text-zinc-900 mb-4">Entry Level Roles</h3>
               <div className="space-y-2">
-                <Link href="#" className="block text-emerald-700 hover:text-emerald-800">Apprenticeships</Link>
-                <Link href="#" className="block text-emerald-700 hover:text-emerald-800">Graduate Schemes</Link>
-                <Link href="#" className="block text-emerald-700 hover:text-emerald-800">Internships</Link>
+                <Link href="/apprenticeships" className="block text-emerald-700 hover:text-emerald-800">Apprenticeships</Link>
+                <Link href="/university" className="block text-emerald-700 hover:text-emerald-800">Graduate Schemes</Link>
+                <Link href="/pathways/work-experience" className="block text-emerald-700 hover:text-emerald-800">Internships</Link>
               </div>
             </div>
             <div>
               <h3 className="text-lg font-bold text-zinc-900 mb-4">Career Resources</h3>
               <div className="space-y-2">
-                <Link href="#" className="block text-emerald-700 hover:text-emerald-800">Skills Assessment</Link>
-                <Link href="#" className="block text-emerald-700 hover:text-emerald-800">CV Builder</Link>
-                <Link href="#" className="block text-emerald-700 hover:text-emerald-800">Career Advice</Link>
+                <Link href="/career-quiz" className="block text-emerald-700 hover:text-emerald-800">Skills Assessment</Link>
+                <Link href="/cv-builder" className="block text-emerald-700 hover:text-emerald-800">CV Builder</Link>
+                <Link href="/career-advice" className="block text-emerald-700 hover:text-emerald-800">Career Advice</Link>
               </div>
             </div>
           </div>

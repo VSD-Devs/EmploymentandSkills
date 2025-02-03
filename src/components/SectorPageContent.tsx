@@ -65,10 +65,13 @@ export default function SectorPageContent({ sector }: { sector: Sector }) {
             <div key={index} className="bg-white rounded-xl p-6 border border-emerald-100 hover:border-emerald-300 transition-all duration-300 shadow-sm hover:shadow-md">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold text-zinc-900">{level.title}</h3>
-                <Link href="#" className="text-emerald-700 hover:text-emerald-800 font-semibold inline-flex items-center gap-2">
+                <button 
+                  onClick={() => window.location.href = `/pathways/${sector.slug}/roles?level=${level.title.toLowerCase()}`}
+                  className="text-emerald-700 hover:text-emerald-800 font-semibold inline-flex items-center gap-2"
+                >
                   View roles
                   <ArrowRight className="w-4 h-4" />
-                </Link>
+                </button>
               </div>
               <div className="flex flex-wrap gap-2">
                 {level.roles.map((role, roleIndex) => (
@@ -178,7 +181,7 @@ export default function SectorPageContent({ sector }: { sector: Sector }) {
                   All teachers, students and parents should have access to high-quality information about future study options and labour market opportunities both nationally and locally.
                 </p>
                 <Link
-                  href="#"
+                  href={`/pathways/${sector.slug}/market-info`}
                   className="inline-flex items-center justify-center bg-emerald-700 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-800 transition-colors shadow-sm hover:shadow-md"
                 >
                   Learn more
