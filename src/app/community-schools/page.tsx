@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Building2, Clock, Users, GraduationCap, Briefcase, ArrowRight, ChevronRight, HandHeart, CheckCircle2 } from 'lucide-react'
+import { Building2, Clock, Users, GraduationCap, Briefcase, ArrowRight, ChevronRight, HeartHandshake, CheckCircle2 } from 'lucide-react'
 
 const sections = {
   advisor: {
@@ -143,7 +143,7 @@ const CommunitySchoolsPage = () => {
             </div>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                <HandHeart className="w-5 h-5 text-emerald-600" />
+                <HeartHandshake className="w-5 h-5 text-emerald-600" />
               </div>
               <div>
                 <div className="text-2xl font-bold text-emerald-600">5,000+</div>
