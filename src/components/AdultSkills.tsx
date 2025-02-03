@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Clock, CheckCircle2, Users, ChevronRight, Phone, Mail } from 'lucide-react'
+import { CheckCircle2, Users, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Newsletter from './Newsletter'

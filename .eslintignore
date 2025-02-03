@@ -1,0 +1,31 @@
+# Build output
+.next/
+dist/
+out/
+
+# Dependencies
+node_modules/
+
+# Cache
+.cache/
+.eslintcache
+
+# Environment variables
+.env*
+!.env.example
+
+# Coverage reports
+coverage/
+
+# Generated files
+*.generated.*
+*.min.js
+
+# Public assets
+public/
+
+# TypeScript declaration files
+*.d.ts
+
+# Development tools
+scripts/ 
