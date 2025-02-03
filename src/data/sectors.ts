@@ -2,6 +2,7 @@ import { SectorData } from '../types/sector';
 
 export const sectorData: SectorData = {
   'healthcare': {
+    slug: 'healthcare',
     title: 'Health and social care',
     description: 'The health and social care sector focuses on providing physical, emotional and social help to support people&apos;s health.',
     stats: [
@@ -64,6 +65,7 @@ export const sectorData: SectorData = {
     }
   },
   'digital-tech': {
+    slug: 'digital-tech',
     title: 'Digital & Technology',
     description: 'The digital sector is one of the fastest-growing sectors in Yorkshire, offering diverse opportunities in software, data, and digital transformation.',
     stats: [
@@ -127,6 +129,7 @@ export const sectorData: SectorData = {
     }
   },
   'manufacturing': {
+    slug: 'manufacturing',
     title: 'Advanced Manufacturing',
     description: 'Yorkshire&apos;s manufacturing sector combines traditional expertise with cutting-edge technology and sustainable practices.',
     stats: [
@@ -190,6 +193,7 @@ export const sectorData: SectorData = {
     }
   },
   'construction': {
+    slug: 'construction',
     title: 'Construction & Infrastructure',
     description: 'The construction sector in Yorkshire is vital for building sustainable communities and modern infrastructure, offering diverse career paths from trades to project management.',
     stats: [
@@ -253,6 +257,7 @@ export const sectorData: SectorData = {
     }
   },
   'logistics-transport': {
+    slug: 'logistics-transport',
     title: 'Logistics & Transport',
     description: 'Yorkshire&apos;s strategic location makes it a hub for logistics and transport, connecting businesses across the UK and beyond.',
     stats: [
@@ -316,6 +321,7 @@ export const sectorData: SectorData = {
     }
   },
   'creative-media': {
+    slug: 'creative-media',
     title: 'Creative & Digital Media',
     description: 'Yorkshire&apos;s creative sector is thriving with opportunities in film, television, gaming, and digital content creation.',
     stats: [
@@ -379,6 +385,7 @@ export const sectorData: SectorData = {
     }
   },
   'hospitality-tourism': {
+    slug: 'hospitality-tourism',
     title: 'Hospitality & Tourism',
     description: 'Yorkshire&apos;s tourism and hospitality sector offers exciting careers in hotels, restaurants, events, and visitor attractions.',
     stats: [
