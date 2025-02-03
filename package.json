@@ -1,31 +1,31 @@
 {
-  "name": "south-yorkshire-skills-hub",
-  "private": true,
+  "name": "south-yorkshire-pathways",
   "version": "0.1.0",
+  "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run optimize-images",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "optimize-images": "node scripts/optimize-images.js"
+    "optimize-images": "node scripts/optimize-images.js",
+    "optimize-new": "node scripts/optimize-new-images.js",
+    "watch-images": "node scripts/optimize-new-images.js --watch"
   },
   "dependencies": {
-    "date-fns": "^4.1.0",
-    "lucide-react": "^0.344.0",
-    "next": "^14.1.0",
+    "next": "^14.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sharp": "^0.33.2"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.19",
-    "@types/react": "^18.2.57",
-    "@types/react-dom": "^18.2.19",
-    "autoprefixer": "^10.4.18",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "14.1.0",
-    "postcss": "^8.4.35",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.0.0",
+    "chokidar": "^3.5.3",
+    "postcss": "^8.0.0",
+    "sharp": "^0.33.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.0"
   }
 }

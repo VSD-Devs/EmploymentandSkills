@@ -1,10 +1,10 @@
 'use client'
 
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronRight, Target, Users, Lightbulb, MapPin } from 'lucide-react'
 import Newsletter from './Newsletter'
+import { OptimizedImage } from './OptimizedImage'
 
 const Vision = () => {
   return (
@@ -12,13 +12,14 @@ const Vision = () => {
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-24">
         <div className="absolute inset-0 overflow-hidden">
-          <Image
+          <OptimizedImage
             src="/images/oliver-coppard.jpg"
             alt="Oliver Coppard, South Yorkshire Mayor"
             fill
             priority
             className="object-cover opacity-90"
-            quality={90}
+            quality={75}
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-[#111827]/60 mix-blend-multiply" />
         </div>
@@ -54,11 +55,12 @@ const Vision = () => {
               </div>
               <div className="relative aspect-square max-w-md mx-auto">
                 <div className="absolute inset-0 rounded-2xl overflow-hidden">
-                  <Image
+                  <OptimizedImage
                     src="/images/oliver-coppard.jpg"
                     alt="Oliver Coppard, South Yorkshire Mayor"
                     fill
                     className="object-cover"
+                    sizes="(max-width: 640px) 100vw, 400px"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#111827] via-[#111827]/20 to-transparent"></div>
                 </div>
@@ -94,11 +96,12 @@ const Vision = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative h-[460px] rounded-2xl overflow-hidden">
-              <Image
+              <OptimizedImage
                 src="/images/path.jpg"
                 alt="Our mission in action - supporting career pathways"
                 fill
                 className="object-cover"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
               <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
                 <div className="flex items-center gap-4">
