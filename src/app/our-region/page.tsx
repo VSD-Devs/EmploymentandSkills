@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export const metadata = {
   title: 'Our Region | South Yorkshire Pathways',
-  description: 'Discover South Yorkshire&apos;s economic landscape, our challenges, opportunities and vision for the future.',
+  description: `Discover South Yorkshire's economic landscape, our challenges, opportunities and vision for the future.`,
 }
 
 export default function OurRegionPage() {
@@ -166,8 +166,8 @@ export default function OurRegionPage() {
             <div className="p-12">
               <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Meet Our Mayor</h2>
               <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Oliver Coppard serves as the Mayor of South Yorkshire, championing our region&apos;s interests and driving forward our ambitious agenda for growth and innovation.
-                He&apos;s committed to unlocking South Yorkshire&apos;s full potential and creating opportunities for all our residents.
+                Oliver Coppard serves as the Mayor of South Yorkshire, championing our region's interests and driving forward our ambitious agenda for growth and innovation.
+                He's committed to unlocking South Yorkshire's full potential and creating opportunities for all our residents.
               </p>
             </div>
             <div className="lg:h-[600px] relative">

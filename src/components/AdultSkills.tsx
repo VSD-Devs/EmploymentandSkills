@@ -71,7 +71,7 @@ const AdultSkills = () => {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-24">
+      <div className="relative bg-[#111827] py-12 sm:py-24">
         <div className="absolute inset-0 overflow-hidden">
           <Image
             src="/images/adult-skills-hero.jpg"
@@ -89,23 +89,23 @@ const AdultSkills = () => {
               <span className="inline-block w-2 h-2 rounded-full bg-emerald-400" />
               <span className="text-sm font-medium">Adult Skills & Training</span>
             </div>
-            <h1 className="text-5xl font-bold text-white mb-6">
-              Transform Your Career<br />in Yorkshire
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
+              Transform Your Career<br className="hidden sm:block" /> in Yorkshire
             </h1>
             <p className="text-base sm:text-lg text-white mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
               Access funded support, training, and resources to help you thrive in Yorkshires growing industries. Whether you are looking to upskill, change careers, or get back into work, we are here to help.
             </p>
-            <div className="flex flex-wrap gap-4 mt-8">
+            <div className="flex flex-col sm:flex-row gap-4 mt-6 sm:mt-8">
               <button
                 onClick={() => setIsQuizOpen(true)}
-                className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-lg shadow-lg hover:shadow-xl"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-base sm:text-lg shadow-lg hover:shadow-xl"
               >
                 Take Career Quiz
                 <ChevronRight className="ml-2 h-5 w-5" />
               </button>
               <Link
                 href="/explore"
-                className="inline-flex items-center px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors text-lg border border-white/10 hover:border-white/20"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors text-base sm:text-lg border border-white/10 hover:border-white/20"
               >
                 Explore Options
               </Link>
@@ -116,20 +116,20 @@ const AdultSkills = () => {
 
       {/* Enhanced Sticky Navigation Banner */}
       <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="flex justify-start sm:justify-center min-w-max">
             <div className="flex space-x-1 py-1">
               {Object.values(sections).map((section) => (
                 <a 
                   key={section.id}
                   href={`#${section.id}`} 
-                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl ${colorClasses[section.color].nav}`}
+                  className={`group relative px-3 sm:px-6 py-2 sm:py-4 flex-shrink-0 rounded-xl ${colorClasses[section.color].nav}`}
                 >
                   <div className="relative z-10 flex flex-col items-center gap-1">
-                    <div className={`h-6 w-6 text-gray-600 group-hover:text-${section.color}-600 group-hover:scale-105`}>
+                    <div className={`h-5 w-5 sm:h-6 sm:w-6 text-gray-600 group-hover:text-${section.color}-600 group-hover:scale-105`}>
                       {section.icon}
                     </div>
-                    <span className={`text-sm sm:text-base font-medium text-gray-900 group-hover:text-${section.color}-600 whitespace-nowrap`}>
+                    <span className={`text-xs sm:text-base font-medium text-gray-900 group-hover:text-${section.color}-600 whitespace-nowrap`}>
                       {section.title}
                     </span>
                     <div className={`h-0.5 w-0 bg-${section.color}-600 group-hover:w-full transition-all duration-50`} />
@@ -158,36 +158,36 @@ const AdultSkills = () => {
             />
           </svg>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[460px] rounded-2xl overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
               <Image
                 src={IMAGES.employmentSupport}
                 alt="Employment support session"
                 fill
                 className="object-cover"
               />
-              <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle2 className="h-7 w-7 text-blue-600" />
+              <div className="absolute bottom-4 sm:bottom-8 -right-12 bg-white rounded-xl p-4 sm:p-6 shadow-xl max-w-[280px] sm:max-w-sm transform -translate-x-8 sm:-translate-x-20 backdrop-blur-sm border border-gray-100">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 className="h-6 w-6 sm:h-7 sm:w-7 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-bold text-gray-900 text-xl mb-1">94% Success Rate</div>
-                    <div className="text-gray-600">Our career guidance leads to successful job placements</div>
+                    <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">94% Success Rate</div>
+                    <div className="text-sm sm:text-base text-gray-600">Our career guidance leads to successful job placements</div>
                   </div>
                 </div>
               </div>
             </div>
             <div>
-              <div className="flex items-center gap-2 text-blue-600 mb-4">
+              <div className="flex items-center gap-2 text-blue-600 mb-3 sm:mb-4">
                 <span className="text-sm font-medium tracking-wide uppercase">Career Development</span>
               </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Employment Support</h2>
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Employment Support</h2>
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
                 Get personalised career guidance, CV writing support, and interview preparation from our expert advisors.
               </p>
-              <div className="bg-gray-50 rounded-xl p-6 mb-8">
+              <div className="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
                 <div className="grid gap-4">
                   <div className="flex items-start gap-4">
                     <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
@@ -218,17 +218,17 @@ const AdultSkills = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
                 <Link
                   href="/employment-support"
-                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors text-lg shadow-sm"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors text-base sm:text-lg shadow-sm"
                 >
                   Get Started
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Link>
                 <button
                   onClick={() => setIsQuizOpen(true)}
-                  className="inline-flex items-center text-blue-600 font-medium hover:text-blue-500 group text-lg"
+                  className="w-full sm:w-auto inline-flex items-center justify-center text-blue-600 font-medium hover:text-blue-500 group text-base sm:text-lg"
                 >
                   Find Your Career Path
                   <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -256,18 +256,18 @@ const AdultSkills = () => {
             />
           </svg>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
             <div>
-              <div className="flex items-center gap-2 text-emerald-600 mb-4">
+              <div className="flex items-center gap-2 text-emerald-600 mb-3 sm:mb-4">
                 <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
                 <span className="text-sm font-medium tracking-wide uppercase">Professional Development</span>
               </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Funded Training</h2>
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Access fully funded courses and qualifications in Yorkshire&apos;s high-growth sectors.
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Funded Training</h2>
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+                Access fully funded courses and qualifications in Yorkshire's high-growth sectors.
               </p>
-              <div className="bg-gray-50 rounded-xl p-6 mb-8">
+              <div className="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
                 <div className="grid gap-4">
                   <div className="flex items-start gap-4">
                     <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
@@ -293,29 +293,29 @@ const AdultSkills = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 text-lg mb-1">Sector-Specific Training</h3>
-                      <p className="text-gray-600">Specialised programmes for Yorkshire&apos;s growth industries</p>
+                      <p className="text-gray-600">Specialised programmes for Yorkshire's growth industries</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
                 <Link
                   href="/courses"
-                  className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-lg shadow-sm"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-base sm:text-lg shadow-sm"
                 >
                   Browse Courses
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Link>
                 <Link
                   href="/course-catalogue"
-                  className="inline-flex items-center text-emerald-600 font-medium hover:text-emerald-500 group text-lg"
+                  className="w-full sm:w-auto inline-flex items-center justify-center text-emerald-600 font-medium hover:text-emerald-500 group text-base sm:text-lg"
                 >
                   View Course Catalogue
                   <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>
-            <div className="relative h-[460px] rounded-2xl overflow-hidden">
+            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden">
               <Image
                 src={IMAGES.fundedTraining}
                 alt="Training session"
@@ -355,9 +355,9 @@ const AdultSkills = () => {
             />
           </svg>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[460px] rounded-2xl overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
               <Image
                 src={IMAGES.mentalHealth}
                 alt="Mental health support"
@@ -377,15 +377,15 @@ const AdultSkills = () => {
               </div>
             </div>
             <div>
-              <div className="flex items-center gap-2 text-purple-600 mb-4">
+              <div className="flex items-center gap-2 text-purple-600 mb-3 sm:mb-4">
                 <span className="inline-block w-2 h-2 rounded-full bg-purple-600" />
                 <span className="text-sm font-medium tracking-wide uppercase">Wellbeing Services</span>
               </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Mental Health Support</h2>
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Mental Health Support</h2>
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
                 Access confidential mental health support and resources to help you maintain wellbeing during your career journey.
               </p>
-              <div className="bg-gray-50 rounded-xl p-6 mb-8">
+              <div className="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
                 <div className="grid gap-4">
                   <div className="flex items-start gap-4">
                     <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-1">
@@ -416,17 +416,17 @@ const AdultSkills = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
                 <Link
                   href="/mental-health-support"
-                  className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-500 transition-colors text-lg shadow-sm"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-500 transition-colors text-base sm:text-lg shadow-sm"
                 >
                   Get Support
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Link>
                 <Link
                   href="/wellbeing-resources"
-                  className="inline-flex items-center text-purple-600 font-medium hover:text-purple-500 group text-lg"
+                  className="w-full sm:w-auto inline-flex items-center justify-center text-purple-600 font-medium hover:text-purple-500 group text-base sm:text-lg"
                 >
                   View Resources
                   <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

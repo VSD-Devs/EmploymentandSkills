@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X, Search } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 import { performSearch } from '@/utils/search'
 import SearchResults from './SearchResults'
 
@@ -14,6 +15,7 @@ interface SearchResult {
 }
 
 const Navigation = () => {
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
@@ -90,6 +92,13 @@ const Navigation = () => {
     }
   }
 
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return pathname === path
+    }
+    return pathname?.startsWith(path)
+  }
+
   return (
     <nav className="bg-slate-50 border-b border-slate-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -108,44 +117,71 @@ const Navigation = () => {
           <div className="hidden md:flex md:items-center md:space-x-1">
             <Link 
               href="/young-people"
-              className="px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                isActive('/young-people')
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+              }`}
             >
               Young People
             </Link>
             <Link 
               href="/adult-skills"
-              className="px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                isActive('/adult-skills')
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+              }`}
             >
               Adults
             </Link>
             <Link 
               href="/business"
-              className="px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                isActive('/business')
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+              }`}
             >
               Businesses
             </Link>
             <Link 
               href="/educators"
-              className="px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                isActive('/educators')
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+              }`}
             >
               Educators
             </Link>
             <Link 
               href="/parents"
-              className="px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                isActive('/parents')
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+              }`}
             >
               Parents
             </Link>
             <Link 
               href="/events"
-              className="px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              aria-current="page"
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                isActive('/events')
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+              }`}
             >
               Events
             </Link>
             <Link 
               href="/contact"
-              className="px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                isActive('/contact')
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+              }`}
             >
               Contact
             </Link>
@@ -227,49 +263,77 @@ const Navigation = () => {
             <nav className="space-y-2">
               <Link
                 href="/young-people"
-                className="block px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isActive('/young-people')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 Young People
               </Link>
               <Link
                 href="/adult-skills"
-                className="block px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isActive('/adult-skills')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 Adults
               </Link>
               <Link
                 href="/business"
-                className="block px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isActive('/business')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 Businesses
               </Link>
               <Link
                 href="/educators"
-                className="block px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isActive('/educators')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 Educators
               </Link>
               <Link
                 href="/parents"
-                className="block px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isActive('/parents')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 Parents
               </Link>
               <Link
                 href="/events"
-                className="block px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isActive('/events')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 Events
               </Link>
               <Link
                 href="/contact"
-                className="block px-3 py-2 rounded-lg text-slate-700 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isActive('/contact')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 Contact

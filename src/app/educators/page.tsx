@@ -182,7 +182,7 @@ const resources = [
   },
   {
     title: 'Industry Insights',
-    description: 'Up-to-date information about Yorkshire&apos;s key industries and future opportunities.',
+    description: `Up-to-date information about Yorkshire's key industries and future opportunities.`,
     image: '/images/resource-insights.jpg',
     href: '/educators/insights'
   },

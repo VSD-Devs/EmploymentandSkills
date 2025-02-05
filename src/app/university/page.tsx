@@ -99,7 +99,7 @@ const UniversityPage = () => {
               Our Regional Universities
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Explore South Yorkshire&apos;s leading universities and find the right path for your future studies
+              Explore South Yorkshire's leading universities and find the right path for your future studies
             </p>
           </div>
         </div>

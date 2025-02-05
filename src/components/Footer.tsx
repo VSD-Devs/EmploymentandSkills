@@ -14,7 +14,7 @@ const Footer = () => {
               <span className="text-xl font-bold tracking-tight">YORKSHIRE PATHWAYS</span>
             </Link>
             <p className="mt-4 text-zinc-400 text-sm">
-              Connecting Yorkshire&apos;s future workforce with opportunities for growth and development.
+              Connecting Yorkshire's future workforce with opportunities for growth and development.
             </p>
           </div>
 

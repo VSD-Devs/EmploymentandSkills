@@ -71,7 +71,7 @@ export default function EventsPageContent() {
                             Events in South Yorkshire
                         </h1>
                         <p className="text-lg text-gray-200 max-w-2xl mx-auto leading-relaxed mb-8">
-                            Find and join events, workshops, and training sessions that match your interests and career goals in Yorkshire&apos;s growing industries.
+                            Find and join events, workshops, and training sessions that match your interests and career goals in Yorkshire's growing industries.
                         </p>
                         
                         {/* Enhanced Audience Filter in Hero */}

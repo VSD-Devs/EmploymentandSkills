@@ -131,7 +131,7 @@ export const sectorData: SectorData = {
   'manufacturing': {
     slug: 'manufacturing',
     title: 'Advanced Manufacturing',
-    description: 'Yorkshire&apos;s manufacturing sector combines traditional expertise with cutting-edge technology and sustainable practices.',
+    description: `Yorkshire's manufacturing sector combines traditional expertise with cutting-edge technology and sustainable practices.`,
     stats: [
       {
         icon: 'building',
@@ -259,7 +259,7 @@ export const sectorData: SectorData = {
   'logistics-transport': {
     slug: 'logistics-transport',
     title: 'Logistics & Transport',
-    description: 'Yorkshire&apos;s strategic location makes it a hub for logistics and transport, connecting businesses across the UK and beyond.',
+    description: `Yorkshire's strategic location makes it a hub for logistics and transport, connecting businesses across the UK and beyond.`,
     stats: [
       {
         icon: 'building',
@@ -323,7 +323,7 @@ export const sectorData: SectorData = {
   'creative-media': {
     slug: 'creative-media',
     title: 'Creative & Digital Media',
-    description: 'Yorkshire&apos;s creative sector is thriving with opportunities in film, television, gaming, and digital content creation.',
+    description: `Yorkshire's creative sector is thriving with opportunities in film, television, gaming, and digital content creation.`,
     stats: [
       {
         icon: 'building',
@@ -387,7 +387,7 @@ export const sectorData: SectorData = {
   'hospitality-tourism': {
     slug: 'hospitality-tourism',
     title: 'Hospitality & Tourism',
-    description: 'Yorkshire&apos;s tourism and hospitality sector offers exciting careers in hotels, restaurants, events, and visitor attractions.',
+    description: `Yorkshire's tourism and hospitality sector offers exciting careers in hotels, restaurants, events, and visitor attractions.`,
     stats: [
       {
         icon: 'building',
@@ -445,6 +445,326 @@ export const sectorData: SectorData = {
         'Sustainable Tourism Manager',
         'Eco-Hotel Coordinator',
         'Green Events Specialist'
+      ]
+    }
+  },
+  'business-services': {
+    slug: 'business-services',
+    title: 'Business & Professional Services',
+    description: `South Yorkshire's business services sector offers diverse opportunities in consulting, management, HR, and professional services.`,
+    stats: [
+      {
+        icon: 'building',
+        number: '2,500+',
+        label: 'Businesses'
+      },
+      {
+        icon: 'users',
+        number: '55,000+',
+        label: 'Employee jobs'
+      },
+      {
+        icon: 'banknote',
+        number: '£38,000',
+        label: 'Average earnings'
+      }
+    ],
+    careerProgression: {
+      title: 'Career progression',
+      levels: [
+        {
+          title: 'Entry level',
+          roles: ['Business Administrator', 'HR Assistant', 'Junior Consultant']
+        },
+        {
+          title: 'Intermediate',
+          roles: ['Business Analyst', 'HR Advisor', 'Management Consultant']
+        },
+        {
+          title: 'Advanced level',
+          roles: ['Business Director', 'HR Manager', 'Senior Consultant']
+        }
+      ]
+    },
+    skills: {
+      general: [
+        'Communication',
+        'Problem solving',
+        'Project management',
+        'Leadership',
+        'Strategic thinking'
+      ],
+      specialist: [
+        'Business analysis',
+        'Change management',
+        'HR practices',
+        'Consulting',
+        'Risk management'
+      ]
+    },
+    greenJobs: {
+      title: 'Sustainable Business',
+      description: 'The business services sector is evolving to support sustainable practices:',
+      roles: [
+        'Sustainability Consultant',
+        'ESG Manager',
+        'Corporate Responsibility Specialist'
+      ]
+    }
+  },
+  'clean-energy': {
+    slug: 'clean-energy',
+    title: 'Clean Energy & Environmental',
+    description: 'A rapidly growing sector in Yorkshire, focusing on renewable energy, sustainability, and environmental services.',
+    stats: [
+      {
+        icon: 'building',
+        number: '800+',
+        label: 'Businesses'
+      },
+      {
+        icon: 'users',
+        number: '25,000+',
+        label: 'Employee jobs'
+      },
+      {
+        icon: 'banknote',
+        number: '£40,000',
+        label: 'Average earnings'
+      }
+    ],
+    careerProgression: {
+      title: 'Career progression',
+      levels: [
+        {
+          title: 'Entry level',
+          roles: ['Renewable Energy Technician', 'Environmental Officer', 'Sustainability Assistant']
+        },
+        {
+          title: 'Intermediate',
+          roles: ['Energy Consultant', 'Environmental Specialist', 'Sustainability Coordinator']
+        },
+        {
+          title: 'Advanced level',
+          roles: ['Renewable Energy Manager', 'Environmental Director', 'Head of Sustainability']
+        }
+      ]
+    },
+    skills: {
+      general: [
+        'Project management',
+        'Data analysis',
+        'Communication',
+        'Problem solving',
+        'Research'
+      ],
+      specialist: [
+        'Renewable technologies',
+        'Environmental assessment',
+        'Carbon management',
+        'Energy efficiency',
+        'Environmental legislation'
+      ]
+    },
+    greenJobs: {
+      title: 'Green Energy Innovation',
+      description: 'The clean energy sector is at the forefront of sustainable development:',
+      roles: [
+        'Solar Energy Specialist',
+        'Wind Farm Engineer',
+        'Carbon Reduction Manager'
+      ]
+    }
+  },
+  'education': {
+    slug: 'education',
+    title: 'Education & Training',
+    description: 'The education sector in Yorkshire provides opportunities in schools, colleges, universities, and training organisations.',
+    stats: [
+      {
+        icon: 'building',
+        number: '1,200+',
+        label: 'Institutions'
+      },
+      {
+        icon: 'users',
+        number: '95,000+',
+        label: 'Employee jobs'
+      },
+      {
+        icon: 'banknote',
+        number: '£34,000',
+        label: 'Average earnings'
+      }
+    ],
+    careerProgression: {
+      title: 'Career progression',
+      levels: [
+        {
+          title: 'Entry level',
+          roles: ['Teaching Assistant', 'Learning Support', 'Training Administrator']
+        },
+        {
+          title: 'Intermediate',
+          roles: ['Teacher', 'Trainer', 'Education Coordinator']
+        },
+        {
+          title: 'Advanced level',
+          roles: ['Head Teacher', 'Education Manager', 'Training Director']
+        }
+      ]
+    },
+    skills: {
+      general: [
+        'Communication',
+        'Organisation',
+        'Leadership',
+        'Problem solving',
+        'Time management'
+      ],
+      specialist: [
+        'Pedagogy',
+        'Curriculum development',
+        'Assessment',
+        'Special education',
+        'Educational technology'
+      ]
+    },
+    greenJobs: {
+      title: 'Sustainable Education',
+      description: 'The education sector is incorporating sustainability into teaching and operations:',
+      roles: [
+        'Environmental Education Specialist',
+        'Sustainability Curriculum Developer',
+        'Green Schools Coordinator'
+      ]
+    }
+  },
+  'financial-services': {
+    slug: 'financial-services',
+    title: 'Financial Services',
+    description: `Yorkshire's financial sector offers careers in banking, insurance, accounting, and fintech.`,
+    stats: [
+      {
+        icon: 'building',
+        number: '1,500+',
+        label: 'Businesses'
+      },
+      {
+        icon: 'users',
+        number: '45,000+',
+        label: 'Employee jobs'
+      },
+      {
+        icon: 'banknote',
+        number: '£45,000',
+        label: 'Average earnings'
+      }
+    ],
+    careerProgression: {
+      title: 'Career progression',
+      levels: [
+        {
+          title: 'Entry level',
+          roles: ['Finance Assistant', 'Junior Accountant', 'Banking Administrator']
+        },
+        {
+          title: 'Intermediate',
+          roles: ['Financial Advisor', 'Accountant', 'Investment Analyst']
+        },
+        {
+          title: 'Advanced level',
+          roles: ['Finance Director', 'Senior Accountant', 'Investment Manager']
+        }
+      ]
+    },
+    skills: {
+      general: [
+        'Numeracy',
+        'Analysis',
+        'Problem solving',
+        'Communication',
+        'Attention to detail'
+      ],
+      specialist: [
+        'Financial analysis',
+        'Accounting standards',
+        'Risk assessment',
+        'Investment management',
+        'Financial software'
+      ]
+    },
+    greenJobs: {
+      title: 'Sustainable Finance',
+      description: 'The financial sector is developing sustainable and ethical investment practices:',
+      roles: [
+        'ESG Investment Analyst',
+        'Sustainable Finance Manager',
+        'Green Finance Specialist'
+      ]
+    }
+  },
+  'public-services': {
+    slug: 'public-services',
+    title: 'Public Services',
+    description: 'Careers in local government, emergency services, and public sector organisations across Yorkshire.',
+    stats: [
+      {
+        icon: 'building',
+        number: '500+',
+        label: 'Organisations'
+      },
+      {
+        icon: 'users',
+        number: '75,000+',
+        label: 'Employee jobs'
+      },
+      {
+        icon: 'banknote',
+        number: '£32,000',
+        label: 'Average earnings'
+      }
+    ],
+    careerProgression: {
+      title: 'Career progression',
+      levels: [
+        {
+          title: 'Entry level',
+          roles: ['Administrative Officer', 'Customer Service Officer', 'Support Worker']
+        },
+        {
+          title: 'Intermediate',
+          roles: ['Policy Officer', 'Project Manager', 'Service Manager']
+        },
+        {
+          title: 'Advanced level',
+          roles: ['Senior Manager', 'Head of Service', 'Director']
+        }
+      ]
+    },
+    skills: {
+      general: [
+        'Communication',
+        'Organisation',
+        'Problem solving',
+        'Team working',
+        'Public service'
+      ],
+      specialist: [
+        'Policy development',
+        'Public administration',
+        'Stakeholder management',
+        'Service delivery',
+        'Governance'
+      ]
+    },
+    greenJobs: {
+      title: 'Sustainable Public Services',
+      description: 'Public services are leading the way in sustainable practices and policies:',
+      roles: [
+        'Environmental Policy Officer',
+        'Sustainability Programme Manager',
+        'Climate Action Coordinator'
       ]
     }
   }

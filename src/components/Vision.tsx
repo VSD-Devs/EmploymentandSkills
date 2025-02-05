@@ -32,7 +32,7 @@ const Vision = () => {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h1 className="text-5xl font-bold text-white mb-6">
-                  Transforming South Yorkshire&apos;s Future Together
+                  Transforming South Yorkshire's Future Together
                 </h1>
                 <p className="text-lg text-gray-400 mb-8 max-w-2xl leading-relaxed">
                   South Yorkshire Mayor Oliver Coppard&apos;s vision for creating a unified platform that connects residents, businesses, and communities with opportunities for growth and development across our region.
@@ -119,7 +119,7 @@ const Vision = () => {
               <div className="flex items-center gap-2 text-blue-600 mb-4">
                 <span className="text-sm font-medium tracking-wide uppercase">Our Purpose</span>
               </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Empowering South Yorkshire&apos;s Future</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">Empowering South Yorkshire's Future</h2>
               <p className="text-gray-600 text-lg mb-8 leading-relaxed">
                 We&apos;re dedicated to creating pathways to success for everyone in South Yorkshire, focusing on skills development, career opportunities, and inclusive growth.
               </p>
@@ -165,7 +165,7 @@ const Vision = () => {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Values</h2>
             <p className="text-lg text-gray-600">
-              Our values guide everything we do, ensuring we deliver the best possible outcomes for South Yorkshire&apos;s communities.
+              Our values guide everything we do, ensuring we deliver the best possible outcomes for South Yorkshire's communities.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">

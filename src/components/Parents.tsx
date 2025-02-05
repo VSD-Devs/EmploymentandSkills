@@ -90,7 +90,7 @@ const Parents = () => {
               Support Your Child&apos;s<br />Career Journey
             </h1>
             <p className="text-lg text-gray-400 mb-8 max-w-2xl leading-relaxed">
-              Guidance and resources to help your child make informed decisions about their future career path in Yorkshire&apos;s growing industries.
+              Guidance and resources to help your child make informed decisions about their future career path in Yorkshire's growing industries.
             </p>
           </div>
         </div>
@@ -187,7 +187,7 @@ const Parents = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 text-lg mb-1">Industry Insights</h3>
-                      <p className="text-gray-600">Learn about Yorkshire&apos;s growing sectors</p>
+                      <p className="text-gray-600">Learn about Yorkshire's growing sectors</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
