@@ -187,3 +187,102 @@ export default function ContactPage() {
               >
                 {/* Decorative gradient */}
                 <div className={`
+                  absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity
+                  bg-gradient-to-br ${colorClasses[option.color].gradient}
+                `} />
+                
+                <div className="relative">
+                  <div className={`${colorClasses[option.color].icon} p-2 rounded-lg w-fit mb-4`}>
+                    {option.icon}
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">{option.title}</h3>
+                  <p className="text-slate-600 mb-4">{option.description}</p>
+                  <div className="flex items-center text-sm space-x-2">
+                    <span className={`${colorClasses[option.color].badge} px-2.5 py-0.5 rounded-full`}>
+                      Learn More
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-slate-400" />
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="max-w-2xl mx-auto">
+            <button
+              onClick={() => setSelectedOption(null)}
+              className="flex items-center text-sm text-slate-600 hover:text-slate-900 mb-8"
+            >
+              <ChevronRight className="w-4 h-4 rotate-180 mr-1" />
+              Back to all options
+            </button>
+            
+            <div className="bg-white rounded-2xl border border-slate-200 p-8">
+              <div className={`${colorClasses[selectedOption.color].icon} p-2 rounded-lg w-fit mb-4`}>
+                {selectedOption.icon}
+              </div>
+              <h2 className="text-2xl font-semibold text-slate-900 mb-2">{selectedOption.title}</h2>
+              <p className="text-slate-600 mb-6">{selectedOption.description}</p>
+              
+              <div className="space-y-6 mb-8">
+                <div className="flex items-center space-x-3">
+                  <Mail className="w-5 h-5 text-slate-400" />
+                  <a href={`mailto:${selectedOption.email}`} className="text-slate-600 hover:text-slate-900">
+                    {selectedOption.email}
+                  </a>
+                </div>
+                {selectedOption.phone && (
+                  <div className="flex items-center space-x-3">
+                    <Phone className="w-5 h-5 text-slate-400" />
+                    <a href={`tel:${selectedOption.phone}`} className="text-slate-600 hover:text-slate-900">
+                      {selectedOption.phone}
+                    </a>
+                  </div>
+                )}
+                <div className="flex items-center space-x-3">
+                  <MapPin className="w-5 h-5 text-slate-400" />
+                  <span className="text-slate-600">South Yorkshire, UK</span>
+                </div>
+              </div>
+
+              {selectedOption.formFields && (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {selectedOption.formFields.map((field) => (
+                    <div key={field}>
+                      <label htmlFor={field} className="block text-sm font-medium text-slate-700 mb-1">
+                        {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}
+                      </label>
+                      <input
+                        type="text"
+                        id={field}
+                        name={field}
+                        value={formData[field] || ''}
+                        onChange={(e) => handleInputChange(field, e.target.value)}
+                        className="block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                      />
+                      {formErrors[field] && (
+                        <p className="mt-1 text-sm text-rose-600">{formErrors[field]}</p>
+                      )}
+                    </div>
+                  ))}
+                  
+                  <div>
+                    <button
+                      type="submit"
+                      className={`${colorClasses[selectedOption.color].link} text-white px-4 py-2 rounded-md shadow-sm w-full`}
+                    >
+                      Send Message
+                    </button>
+                    {formErrors.submit && (
+                      <p className="mt-2 text-sm text-rose-600">{formErrors.submit}</p>
+                    )}
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
