@@ -1,4 +1,5 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/sitemap.xml/[[...__metadata_id__]]/route": "app/sitemap.xml/[[...__metadata_id__]]/route.js"
+  "/business/page": "app/business/page.js",
+  "/page": "app/page.js"
 }
