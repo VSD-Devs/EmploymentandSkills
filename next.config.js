@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export',  // This will generate a static build
+  output: 'export',  // This will generate a static build
   distDir: 'dist',   // This specifies the output directory
   images: {
     unoptimized: true, // Required for static export
