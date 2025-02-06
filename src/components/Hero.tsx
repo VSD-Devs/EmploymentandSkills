@@ -38,7 +38,7 @@ const Hero = () => {
                 South Yorkshire Pathways
               </h1>
               <p className="text-lg sm:text-xl text-white/90 mb-6 sm:mb-8 max-w-2xl leading-relaxed">
-                Connect with local businesses, discover funded training opportunities, and access the skills you need for Yorkshire&apos;s growing industries.
+                Connect with local businesses, discover funded training opportunities, and access the skills you need for Yorkshire's growing industries.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Link href="/pathways" className="bg-emerald-600 text-white px-6 py-3 rounded-lg text-base font-medium hover:bg-emerald-500 transition-colors inline-flex items-center justify-center sm:justify-start">
@@ -67,7 +67,7 @@ const Hero = () => {
                   <h3 className="text-lg sm:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors">Educators</h3>
                 </div>
                 <p className="text-sm sm:text-lg text-zinc-600 group-hover:text-white/90 transition-colors mb-3 sm:mb-6 line-clamp-2 sm:line-clamp-none">
-                  Connect your students with Yorkshire&apos;s evolving industries through innovative teaching resources.
+                  Connect your students with Yorkshire's evolving industries through innovative teaching resources.
                 </p>
                 <div className="flex items-center text-emerald-600 group-hover:text-white transition-colors">
                   <span className="text-sm sm:text-base font-medium">Access Resources</span>
@@ -108,10 +108,10 @@ const Hero = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg sm:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors">Young People</h3>
+                  <h3 className="text-lg sm:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors">Young People (16-18)</h3>
                 </div>
                 <p className="text-sm sm:text-lg text-zinc-600 group-hover:text-white/90 transition-colors mb-3 sm:mb-6 line-clamp-2 sm:line-clamp-none">
-                  Discover exciting career paths in Yorkshire&apos;s innovative sectors and future industries.
+                  Discover exciting career paths in Yorkshire's innovative sectors and future industries.
                 </p>
                 <div className="flex items-center text-purple-600 group-hover:text-white transition-colors">
                   <span className="text-sm sm:text-base font-medium">Start Your Journey</span>
@@ -130,10 +130,10 @@ const Hero = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg sm:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors">Adult Skills</h3>
+                  <h3 className="text-lg sm:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors">Adults (19+)</h3>
                 </div>
                 <p className="text-sm sm:text-lg text-zinc-600 group-hover:text-white/90 transition-colors mb-3 sm:mb-6 line-clamp-2 sm:line-clamp-none">
-                  Transform your career with courses designed for Yorkshire&apos;s growth sectors and future industries.
+                  Transform your career with courses designed for Yorkshire's growth sectors and future industries.
                 </p>
                 <div className="flex items-center text-amber-600 group-hover:text-white transition-colors">
                   <span className="text-sm sm:text-base font-medium">Explore Courses</span>
@@ -155,7 +155,7 @@ const Hero = () => {
                   <h3 className="text-lg sm:text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors">Parents & Carers</h3>
                 </div>
                 <p className="text-sm sm:text-lg text-zinc-600 group-hover:text-white/90 transition-colors mb-3 sm:mb-6 line-clamp-2 sm:line-clamp-none">
-                  Guide your child&apos;s future with insights into Yorkshire&apos;s growing industries and opportunities.
+                  Guide your child's future with insights into Yorkshire's growing industries and opportunities.
                 </p>
                 <div className="flex items-center text-teal-600 group-hover:text-white transition-colors">
                   <span className="text-sm sm:text-base font-medium">Get Guidance</span>

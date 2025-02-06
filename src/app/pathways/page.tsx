@@ -39,7 +39,7 @@ export default function PathwaysPage() {
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search for a sector or role..."
+                  placeholder="Search for a sector or role"
                   className="w-full px-6 py-4 rounded-xl pl-14 pr-6 text-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-emerald-300/50 focus:border-transparent transition-all"
                 />
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-white/70" />
@@ -117,7 +117,7 @@ export default function PathwaysPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-white mb-1">Flexible Learning</h3>
-                      <p className="text-white/80">Study around your commitments</p>
+                      <p className="text-white/80">Study around your schedule</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -126,7 +126,7 @@ export default function PathwaysPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-white mb-1">Job Guarantee</h3>
-                      <p className="text-white/80">Interview guaranteed upon completion</p>
+                      <p className="text-white/80">Interview guaranteed on completion</p>
                     </div>
                   </div>
                 </div>

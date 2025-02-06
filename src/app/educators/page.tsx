@@ -66,7 +66,7 @@ export default function EducatorsPage() {
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">School</h2>
               <p className="text-gray-600 mb-6">
-                Find training providers, access career resources, and connect with professionals to enhance your students&apos; career education.
+                Find training providers, access career resources, and connect with professionals to enhance your students' career education.
               </p>
               <div className="flex items-center text-blue-600 group-hover:text-blue-500">
                 <span className="font-medium">Access resources</span>
@@ -94,7 +94,7 @@ export default function EducatorsPage() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Our Vision</h3>
               <p className="text-gray-600">
-                To create a world-class technical education and skills system that provides opportunities for all residents and meets employers&apos; needs.
+                To create a world-class technical education and skills system that provides opportunities for all residents and meets employers' needs.
               </p>
             </div>
 

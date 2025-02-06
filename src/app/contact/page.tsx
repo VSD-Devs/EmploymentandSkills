@@ -170,7 +170,7 @@ export default function ContactPage() {
             Contact Yorkshire Pathways
           </h1>
           <p className="text-base sm:text-lg text-gray-200 mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-            We&apos;re here to help you find the right support and guidance. Choose your path below, and we&apos;ll connect you with the right team.
+            We're here to help you find the right support and guidance. Choose your path below, and we'll connect you with the right team.
           </p>
         </div>
       </div>

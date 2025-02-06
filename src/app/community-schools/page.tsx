@@ -95,7 +95,7 @@ const CommunitySchoolsPage = () => {
               <span className="text-sm font-medium tracking-wide uppercase">Community &amp; Schools</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Shape Yorkshire&apos;s Future Workforce
+              Shape Yorkshire's Future Workforce
             </h1>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Choose how you want to make a difference in education
@@ -359,7 +359,7 @@ const CommunitySchoolsPage = () => {
             </div>
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Lead Strategic Change</h2>
             <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-              Take a leading role in transforming careers education in Yorkshire. As a Cornerstone Employer, you&apos;ll help shape the future of skills development.
+              Take a leading role in transforming careers education in Yorkshire. As a Cornerstone Employer, you'll help shape the future of skills development.
             </p>
             <div className="bg-gray-50 rounded-xl p-6 mb-8">
               <div className="grid gap-4">

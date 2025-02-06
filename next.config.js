@@ -23,7 +23,7 @@ const nextConfig = {
   // Enable React Strict Mode for better development
   reactStrictMode: true,
   // Enable production source maps for better debugging
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: true
 }
 
 module.exports = nextConfig 

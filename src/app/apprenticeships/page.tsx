@@ -166,7 +166,7 @@ const ApprenticeshipPage = () => {
               Apprenticeships
             </h1>
             <p className="text-lg text-gray-200 max-w-2xl mx-auto">
-              South Yorkshire&apos;s apprenticeship opportunities
+              South Yorkshire's apprenticeship opportunities
             </p>
           </div>
         </div>
@@ -182,10 +182,10 @@ const ApprenticeshipPage = () => {
               </h2>
               <div className="prose prose-lg text-gray-600">
                 <p>
-                  An apprenticeship is a real job where you learn, gain experience and get paid. You are an employee with a contract of employment and holiday leave.
+                  An apprenticeship is a real job where you learn, gain experience and get paid. You're an employee with a contract of employment and holiday leave.
                 </p>
                 <p>
-                  By the end of an apprenticeship, you will have gained the skills and knowledge needed to either succeed in your chosen career or progress onto the next apprenticeship level.
+                  By the end of an apprenticeship, you'll have gained the skills and knowledge needed to either succeed in your chosen career or progress onto the next apprenticeship level.
                 </p>
                 <ul className="space-y-3 mt-6">
                   <li className="flex items-start gap-3">
@@ -395,7 +395,7 @@ const ApprenticeshipPage = () => {
               Apprenticeship Life
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              See what it&rsquo;s like to be an apprentice in Yorkshire.
+              See what it's like to be an apprentice in Yorkshire.
             </p>
           </div>
 

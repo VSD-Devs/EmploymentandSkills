@@ -89,8 +89,8 @@ const TABS_CONFIG: TabsType = {
     description: 'Explore Higher Education',
     content: {
       text: [
-        'Discover the exciting world of university education. From choosing the right course to understanding student life, we will help you make informed decisions about your future.',
-        'Learn about different universities, entry requirements, and how to make your UCAS application stand out.'
+        "Discover the exciting world of university education. From choosing the right course to understanding student life, we'll help you make informed decisions about your future.",
+        "Learn about different universities, entry requirements, and how to make your UCAS application stand out."
       ],
       image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80',
       alt: 'Students collaborating in a university library',
@@ -105,8 +105,8 @@ const TABS_CONFIG: TabsType = {
     description: 'Technical Excellence',
     content: {
       text: [
-        'T-Levels are new qualifications that combine classroom learning with industry placements. Perfect for those who want a practical, hands-on approach to learning.',
-        'Discover how T-Levels can give you the skills and knowledge that employers are looking for, with real workplace experience built into your course.'
+        "T-Levels are new qualifications that combine classroom learning with industry placements. Perfect for those who want a practical, hands-on approach to learning.",
+        "Discover how T-Levels can give you the skills and knowledge that employers are looking for, with real workplace experience built into your course."
       ],
       image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80',
       alt: 'Students in technical training',
@@ -121,8 +121,8 @@ const TABS_CONFIG: TabsType = {
     description: 'Earn While You Learn',
     content: {
       text: [
-        'Get hands-on experience while gaining qualifications with an apprenticeship. We will show you how to find the perfect apprenticeship opportunity and help you understand the application process.',
-        'Discover different levels of apprenticeships available and which industries are looking for apprentices in Yorkshire.'
+        "Get hands-on experience while gaining qualifications with an apprenticeship. We'll show you how to find the perfect apprenticeship opportunity and help you understand the application process.",
+        "Discover different levels of apprenticeships available and which industries are looking for apprentices in Yorkshire."
       ],
       image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80',
       alt: 'Young apprentice learning practical skills',
@@ -137,8 +137,8 @@ const TABS_CONFIG: TabsType = {
     description: 'Find Your Path',
     content: {
       text: [
-        'Not sure what career path to take? Our career planning tools and resources help you explore different options and find what suits you best.',
-        'Take our career quiz, explore different industries, and learn about the skills needed for different jobs.'
+        "Not sure what career path to take? Our career planning tools and resources help you explore different options and find what suits you best.",
+        "Take our career quiz, explore different industries, and learn about the skills needed for different jobs."
       ],
       image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
       alt: 'Young people in a career planning session',
@@ -153,8 +153,8 @@ const TABS_CONFIG: TabsType = {
     description: 'Build Your Future',
     content: {
       text: [
-        'Develop the skills that employers are looking for. From digital skills to professional qualifications, we will help you identify and access the training you need.',
-        'Find free courses, workshops, and training opportunities to boost your CV and employability.'
+        "Develop the skills that employers are looking for. From digital skills to professional qualifications, we'll help you identify and access the training you need.",
+        "Find free courses, workshops, and training opportunities to boost your CV and employability."
       ],
       image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80',
       alt: 'Young person learning new skills',
@@ -169,8 +169,8 @@ const TABS_CONFIG: TabsType = {
     description: 'Get Expert Help',
     content: {
       text: [
-        'Access free, confidential advice from our career experts. Whether you need help with applications, interviews, or making decisions about your future, we are here to support you.',
-        'Connect with mentors, attend workshops, and get personalised guidance for your journey.'
+        "Access free, confidential advice from our career experts. Whether you need help with applications, interviews, or making decisions about your future, we're here to support you.",
+        "Connect with mentors, attend workshops, and get personalised guidance for your journey."
       ],
       image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80',
       alt: 'Career advisor meeting with young person',
@@ -285,7 +285,7 @@ const YoungPeople = () => {
               Discover Your Path<br />in Yorkshire
             </h1>
             <p className="text-base sm:text-lg text-gray-200 mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-              Explore exciting opportunities for your future. Whether it&apos;s university, apprenticeships, or starting your career, we&apos;re here to help you make informed choices.
+              Explore exciting opportunities for your future. Whether it's university, apprenticeships, or starting your career, we're here to help you make informed choices.
             </p>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <button

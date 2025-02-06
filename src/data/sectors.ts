@@ -4,7 +4,7 @@ export const sectorData: SectorData = {
   'healthcare': {
     slug: 'healthcare',
     title: 'Health and social care',
-    description: 'The health and social care sector focuses on providing physical, emotional and social help to support people&apos;s health.',
+    description: 'The health and social care sector focuses on providing physical, emotional and social help to support people\'s health.',
     stats: [
       {
         icon: 'building',

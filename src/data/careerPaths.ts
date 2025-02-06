@@ -9,7 +9,7 @@ export const careerPaths: { [key: string]: CareerPath } = {
       {
         title: 'Software Developer',
         description: 'Create applications and systems that power modern businesses',
-        salary: '£25,000 - £65,000',
+        salary: '£25,000 – £65,000',
         demand: 'Very High',
         progression: {
           entry: 'Junior Developer',
@@ -37,7 +37,7 @@ export const careerPaths: { [key: string]: CareerPath } = {
       {
         title: 'Digital Designer',
         description: 'Create engaging visual content for digital platforms',
-        salary: '£22,000 - £45,000',
+        salary: '£22,000 – £45,000',
         demand: 'High',
         progression: {
           entry: 'Junior Designer',
@@ -59,13 +59,13 @@ export const careerPaths: { [key: string]: CareerPath } = {
   },
   'healthcare': {
     title: 'Healthcare',
-    description: 'Make a difference in people\'s lives through healthcare',
+    description: 'Make a difference in people’s lives through healthcare',
     traits: ['caring', 'detail-oriented', 'responsible'],
     careers: [
       {
         title: 'Healthcare Assistant',
         description: 'Support healthcare professionals in providing patient care',
-        salary: '£20,000 - £28,000',
+        salary: '£20,000 – £28,000',
         demand: 'Very High',
         progression: {
           entry: 'Healthcare Assistant',
@@ -93,7 +93,7 @@ export const careerPaths: { [key: string]: CareerPath } = {
       {
         title: 'Business Development Manager',
         description: 'Grow business through strategic partnerships and sales',
-        salary: '£30,000 - £60,000',
+        salary: '£30,000 – £60,000',
         demand: 'High',
         progression: {
           entry: 'Business Development Executive',
@@ -121,7 +121,7 @@ export const careerPaths: { [key: string]: CareerPath } = {
       {
         title: 'Electrician',
         description: 'Install and maintain electrical systems in buildings',
-        salary: '£25,000 - £40,000',
+        salary: '£25,000 – £40,000',
         demand: 'High',
         progression: {
           entry: 'Apprentice Electrician',
@@ -149,7 +149,7 @@ export const careerPaths: { [key: string]: CareerPath } = {
       {
         title: 'Teaching Assistant',
         description: 'Support teachers and help students learn effectively',
-        salary: '£18,000 - £25,000',
+        salary: '£18,000 – £25,000',
         demand: 'Steady',
         progression: {
           entry: 'Teaching Assistant',

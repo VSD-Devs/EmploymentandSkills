@@ -1,11 +1,7 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
   "/young-people/page": "app/young-people/page.js",
-  "/t-levels/page": "app/t-levels/page.js",
-  "/business/page": "app/business/page.js",
-  "/educators/page": "app/educators/page.js",
-  "/parents/page": "app/parents/page.js",
+  "/mental-health-support/page": "app/mental-health-support/page.js",
   "/adult-skills/page": "app/adult-skills/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/events/page": "app/events/page.js"
+  "/page": "app/page.js"
 }

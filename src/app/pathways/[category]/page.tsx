@@ -37,7 +37,7 @@ export default function SectorPage({ params }: { params: { category: string } })
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Sector Not Found</h1>
-          <p className="text-gray-600 mb-8">The sector you&apos;re looking for doesn&apos;t exist.</p>
+          <p className="text-gray-600 mb-8">The sector you are looking for does not exist.</p>
           <Link 
             href="/pathways"
             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors"

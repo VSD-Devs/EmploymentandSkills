@@ -358,7 +358,7 @@ const MentalHealthSupport = () => {
               <span className="text-sm font-medium text-purple-900">Eligibility Criteria</span>
             </div>
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">Who Can Access Support?</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Check if you&apos;re eligible for our programme and take the first step towards better employment support.</p>
+            <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Check if you're eligible for our programme and take the first step towards better employment support.</p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-6">

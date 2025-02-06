@@ -196,7 +196,7 @@ const FundedTrainingPage = () => {
 
                   <div className="mt-8">
                     <Link
-                      href="/contact"
+                      href="/adult-skills-funding"
                       className={`w-full inline-flex justify-center items-center px-6 py-3 rounded-xl text-white bg-${option.color}-600 hover:bg-${option.color}-500 transition-colors`}
                     >
                       Explore {option.title}

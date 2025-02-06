@@ -87,7 +87,7 @@ const Parents = () => {
               <span className="text-sm font-medium">Parents & Carers Guide</span>
             </div>
             <h1 className="text-5xl font-bold text-white mb-6">
-              Support Your Child&apos;s<br />Career Journey
+              Support Your Child's<br />Career Journey
             </h1>
             <p className="text-lg text-gray-400 mb-8 max-w-2xl leading-relaxed">
               Guidance and resources to help your child make informed decisions about their future career path in Yorkshire's growing industries.
@@ -366,7 +366,7 @@ const Parents = () => {
               </div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Financial Support</h2>
               <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Learn about available financial support and funding options for your child&apos;s education and training.
+                Learn about available financial support and funding options for your child's education and training.
               </p>
               <div className="bg-gray-50 rounded-xl p-6 mb-8">
                 <div className="grid gap-4">

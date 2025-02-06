@@ -94,7 +94,7 @@ export default function SectorPageContent({ sector }: { sector: Sector }) {
                           <ArrowRight className="w-4 h-4" />
                         </span>
                       </div>
-                      <p className="text-sm text-emerald-800">View career paths →</p>
+                      <p className="text-sm text-emerald-800">View career paths</p>
                     </Link>
                   ) : (
                     <div

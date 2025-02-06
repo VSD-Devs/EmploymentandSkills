@@ -141,7 +141,7 @@ export const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 8,
-    question: "What&apos;s your biggest motivation when choosing a career?",
+    question: "What's your biggest motivation when choosing a career?",
     options: [
       { id: 'a', text: "High salary and financial success", paths: ["digital-tech", "business", "manufacturing"] },
       { id: 'b', text: "Freedom to be creative and express myself", paths: ["creative-media", "digital-tech", "hospitality-tourism"] },
