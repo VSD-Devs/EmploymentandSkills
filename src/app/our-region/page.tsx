@@ -165,7 +165,7 @@ export default function OurRegionPage() {
           <div className="relative grid lg:grid-cols-2 gap-8 items-center">
             <div className="p-12">
               <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">Meet Our Mayor</h2>
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+              <p className="text-white text-lg mb-8 leading-relaxed">
                 Oliver Coppard serves as the Mayor of South Yorkshire, championing our region's interests and driving forward our ambitious agenda for growth and innovation.
                 He's committed to unlocking South Yorkshire's full potential and creating opportunities for all our residents.
               </p>

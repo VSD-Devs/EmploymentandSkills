@@ -1,1 +1,8 @@
-{}
+{
+  "/young-people/page": "app/young-people/page.js",
+  "/business/page": "app/business/page.js",
+  "/skills-bank/page": "app/skills-bank/page.js",
+  "/funded-training/page": "app/funded-training/page.js",
+  "/apprenticeships/page": "app/apprenticeships/page.js",
+  "/pathways/[category]/page": "app/pathways/[category]/page.js"
+}
