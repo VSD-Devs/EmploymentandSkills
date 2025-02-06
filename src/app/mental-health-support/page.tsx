@@ -1,9 +1,31 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronRight, Heart, Phone, Mail, Users, Brain, Sparkles, Clock, CheckCircle2, Target, Briefcase, ArrowRight, FileCheck, Building2, GraduationCap, ArrowUpRight, X, HelpCircle, ArrowLeft, User, MapPin, HeartHandshake } from 'lucide-react'
+import { 
+  ChevronRight, 
+  Heart, 
+  Phone, 
+  Mail, 
+  Users, 
+  Brain, 
+  Sparkles, 
+  Clock, 
+  CheckCircle2, 
+  Target, 
+  Briefcase, 
+  ArrowRight, 
+  FileCheck, 
+  Building2, 
+  GraduationCap, 
+  X, 
+  HelpCircle, 
+  ArrowLeft, 
+  User, 
+  MapPin, 
+  HeartHandshake 
+} from 'lucide-react'
 
 // Define form data type
 type FormData = {
@@ -42,8 +64,6 @@ const MentalHealthSupport = () => {
   })
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
   const [formSubmitted, setFormSubmitted] = useState(false)
-
-  // Add touch handling for mobile swipe
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
 
@@ -96,35 +116,6 @@ const MentalHealthSupport = () => {
       title: "Support Requirements",
       fields: ["supportNeeded", "hearAboutUs"],
       icon: HeartHandshake
-    }
-  ]
-
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
-  const testimonialRef = useRef<HTMLDivElement>(null)
-  const [testimonialTouchStart, setTestimonialTouchStart] = useState(0)
-  const [testimonialTouchEnd, setTestimonialTouchEnd] = useState(0)
-
-  const testimonials = [
-    {
-      icon: Building2,
-      name: "Sarah&apos;s Story",
-      role: "Office Support",
-      quote: "Working Win helped me find a role that accommodates my health needs. Their support was invaluable in building my confidence.",
-      location: "Sheffield"
-    },
-    {
-      icon: GraduationCap,
-      name: "James&apos;s Journey",
-      role: "Education Sector",
-      quote: "The programme helped me manage my anxiety while transitioning to a new career in teaching. The ongoing support made all the difference.",
-      location: "Rotherham"
-    },
-    {
-      icon: Briefcase,
-      name: "David&apos;s Progress",
-      role: "Retail Management",
-      quote: "With Working Win&apos;s support, I was able to maintain my role while managing my health condition. Their strategies really work.",
-      location: "Doncaster"
     }
   ]
 

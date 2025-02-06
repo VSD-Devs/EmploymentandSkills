@@ -105,14 +105,25 @@ const contactOptions: ContactOption[] = [
   }
 ]
 
+const submitForm = async (formData: Record<string, string>) => {
+  // Implement your form submission logic here
+  // For now, we'll just return a resolved promise
+  return Promise.resolve()
+}
+
 export default function ContactPage() {
   const [selectedOption, setSelectedOption] = useState<ContactOption | null>(null)
   const [formData, setFormData] = useState<Record<string, string>>({})
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({})
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
+    try {
+      // Replace console.log with proper form handling
+      await submitForm(formData) // You'll need to implement this function
+    } catch (error) {
+      setFormErrors({ submit: 'Failed to submit form. Please try again.' })
+    }
   }
 
   const handleInputChange = (field: string, value: string) => {
@@ -175,156 +186,4 @@ export default function ContactPage() {
                 className={`group p-8 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-${option.color}-500 hover:shadow-lg transition-all text-left relative overflow-hidden`}
               >
                 {/* Decorative gradient */}
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br ${colorClasses[option.color].gradient}`} />
-                
-                <div className="relative">
-                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 ${colorClasses[option.color].icon}`}>
-                    {option.icon}
-                  </div>
-                  <h2 className={`text-2xl font-semibold text-slate-900 group-hover:text-${option.color}-600 mb-2`}>
-                    {option.title}
-                  </h2>
-                  <p className="text-slate-600 mb-4">{option.description}</p>
-                  <div className={`inline-flex items-center text-${option.color}-600`}>
-                    Learn more <ArrowRight className="ml-2 w-4 h-4" />
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Contact Information */}
-            <div>
-              <button
-                onClick={() => setSelectedOption(null)}
-                className={`text-${selectedOption.color}-600 hover:text-${selectedOption.color}-700 font-medium mb-6 flex items-center`}
-              >
-                <ChevronRight className="w-4 h-4 rotate-180 mr-1" />
-                Back to all options
-              </button>
-
-              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[selectedOption.color].button} mb-6`}>
-                {selectedOption.icon}
-                <span className="text-sm font-medium">{selectedOption.title}</span>
-              </div>
-
-              <div className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-bold text-slate-900 mb-4">How to Reach Us</h2>
-                  <p className="text-slate-600">{selectedOption.description}</p>
-                </div>
-
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-3">
-                    <Mail className={`w-6 h-6 text-${selectedOption.color}-600 mt-1`} />
-                    <div>
-                      <h3 className="font-medium text-slate-900">Email</h3>
-                      <a href={`mailto:${selectedOption.email}`} className={`text-${selectedOption.color}-600 hover:text-${selectedOption.color}-700`}>
-                        {selectedOption.email}
-                      </a>
-                    </div>
-                  </div>
-                  
-                  {selectedOption.phone && (
-                    <div className="flex items-start space-x-3">
-                      <Phone className={`w-6 h-6 text-${selectedOption.color}-600 mt-1`} />
-                      <div>
-                        <h3 className="font-medium text-slate-900">Phone</h3>
-                        <a href={`tel:${selectedOption.phone}`} className={`text-${selectedOption.color}-600 hover:text-${selectedOption.color}-700`}>
-                          {selectedOption.phone}
-                        </a>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex items-start space-x-3">
-                    <MapPin className={`w-6 h-6 text-${selectedOption.color}-600 mt-1`} />
-                    <div>
-                      <h3 className="font-medium text-slate-900">Visit Us</h3>
-                      <p className="text-slate-600">
-                        Yorkshire Pathways<br />
-                        123 Career Street<br />
-                        Leeds, LS1 1AB
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="bg-slate-50 rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">Send us a Message</h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                </div>
-
-                {selectedOption.formFields?.map((field) => (
-                  <div key={field}>
-                    <label htmlFor={field} className="block text-sm font-medium text-slate-700 mb-1">
-                      {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}
-                    </label>
-                    <input
-                      type="text"
-                      id={field}
-                      name={field}
-                      onChange={(e) => handleInputChange(field, e.target.value)}
-                      className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  </div>
-                ))}
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">
-                    Your Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    onChange={(e) => handleInputChange('message', e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:border-blue-500"
-                    required
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className={`w-full px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[selectedOption.color].link} shadow-lg hover:shadow-xl`}
-                >
-                  Send Message
-                </button>
-              </form>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  )
-} 
+                <div className={`

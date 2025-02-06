@@ -166,7 +166,7 @@ const ApprenticeshipPage = () => {
               Apprenticeships
             </h1>
             <p className="text-lg text-gray-200 max-w-2xl mx-auto">
-              Apprenticeships in South Yorkshire: Earn while you learn and gain recognised qualifications
+              South Yorkshire&apos;s apprenticeship opportunities
             </p>
           </div>
         </div>
@@ -395,7 +395,7 @@ const ApprenticeshipPage = () => {
               Apprenticeship Life
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              See what it's like to be an apprentice in Yorkshire.
+              See what it&rsquo;s like to be an apprentice in Yorkshire.
             </p>
           </div>
 

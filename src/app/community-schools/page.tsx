@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Building2, Clock, Users, GraduationCap, Briefcase, ArrowRight, ChevronRight, HeartHandshake, CheckCircle2 } from 'lucide-react'
+import { Building2, Clock, Users, GraduationCap, Briefcase, ChevronRight, HeartHandshake } from 'lucide-react'
 
 const sections = {
   advisor: {
@@ -57,7 +57,19 @@ const colorClasses = {
 } as const
 
 const CommunitySchoolsPage = () => {
-  const [activeTab, setActiveTab] = useState('advisor')
+  const [currentTab, setCurrentTab] = useState('advisor')
+  
+  const handleTabChange = (tab: string) => {
+    setCurrentTab(tab)
+  }
+
+  useEffect(() => {
+    // Handle tab change effects if needed
+    const section = document.getElementById(currentTab)
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [currentTab])
 
   return (
     <div className="min-h-screen bg-white">
@@ -83,7 +95,7 @@ const CommunitySchoolsPage = () => {
               <span className="text-sm font-medium tracking-wide uppercase">Community &amp; Schools</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Shape Yorkshire's Future Workforce
+              Shape Yorkshire&apos;s Future Workforce
             </h1>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Choose how you want to make a difference in education

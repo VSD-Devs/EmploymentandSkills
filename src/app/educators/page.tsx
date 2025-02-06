@@ -5,7 +5,6 @@ import {
   GraduationCap, 
   Building2, 
   Users, 
-  ClipboardList, 
   Target,
   BookOpen
 } from 'lucide-react'
@@ -171,96 +170,4 @@ export default function EducatorsPage() {
       </div>
     </main>
   )
-}
-
-const resources = [
-  {
-    title: 'Career Exploration Toolkit',
-    description: 'Lesson plans and activities to help students explore different career paths.',
-    image: '/images/resource-toolkit.jpg',
-    href: '/educators/toolkit'
-  },
-  {
-    title: 'Industry Insights',
-    description: `Up-to-date information about Yorkshire's key industries and future opportunities.`,
-    image: '/images/resource-insights.jpg',
-    href: '/educators/insights'
-  },
-  {
-    title: 'Skills Development',
-    description: 'Resources to help students develop essential workplace skills.',
-    image: '/images/resource-skills.jpg',
-    href: '/educators/skills'
-  }
-]
-
-const procurementOpportunities = [
-  {
-    title: 'Adult Education Budget',
-    description: 'Deliver accredited qualifications and learning aims to adult learners.',
-    icon: GraduationCap,
-    requirements: [
-      'Track record of quality provision',
-      'Ofsted Grade 2 or above',
-      'Financial health check',
-      'Due diligence completion'
-    ],
-    href: '/educators/procurement/aeb'
-  },
-  {
-    title: 'Skills Support',
-    description: 'Provide training and support services to help people into employment.',
-    requirements: [
-      'Experience in employability training',
-      'Local delivery capability',
-      'Performance tracking systems',
-      'Employer partnerships'
-    ],
-    href: '/educators/procurement/skills-support'
-  },
-  {
-    title: 'Specialist Programmes',
-    description: 'Deliver specialist training programmes in priority sectors.',
-    icon: BookOpen,
-    requirements: [
-      'Sector expertise',
-      'Industry-standard facilities',
-      'Qualified training staff',
-      'Quality assurance systems'
-    ],
-    href: '/educators/procurement/specialist'
-  }
-]
-
-const marketplaceListings = [
-  {
-    type: 'Career Talk',
-    title: 'Digital Careers Insight Session',
-    description: 'Looking for tech professionals to discuss careers in software development and cyber security.',
-    school: 'Meadowhead School',
-    yearGroup: 'Year 10 & 11',
-    timing: 'March 2024',
-    date: 'Posted 2 days ago',
-    href: '/educators/marketplace/digital-careers'
-  },
-  {
-    type: 'Mock Interviews',
-    title: 'Practice Interview Day',
-    description: 'Seeking professionals to conduct mock interviews and provide feedback to sixth form students.',
-    school: 'Notre Dame High School',
-    yearGroup: 'Year 12',
-    timing: 'April 2024',
-    date: 'Posted 1 week ago',
-    href: '/educators/marketplace/mock-interviews'
-  },
-  {
-    type: 'Workshop',
-    title: 'Engineering Workshop',
-    description: 'Need engineering professionals to run hands-on workshops showcasing different engineering disciplines.',
-    school: 'Silverdale School',
-    yearGroup: 'Year 9',
-    timing: 'May 2024',
-    date: 'Posted 3 days ago',
-    href: '/educators/marketplace/engineering-workshop'
-  }
-] 
+} 
