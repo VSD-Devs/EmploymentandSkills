@@ -5,7 +5,7 @@ import RoleDetails from '@/components/RoleDetails';
 
 // Generate static params for all roles in all sectors
 export async function generateStaticParams() {
-  const params = [];
+  const params: { category: string; role: string }[] = [];
   Object.entries(sectorData).forEach(([category, sector]) => {
     sector.careerProgression.levels.forEach(level => {
       level.roles.forEach(role => {
