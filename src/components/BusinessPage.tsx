@@ -208,7 +208,7 @@ const BusinessPage = () => {
               <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Business Hub</span>
             </div>
             <h1 className="text-5xl font-bold text-white mb-6 drop-shadow-sm">
-              Grow Your Business<br />in Yorkshire
+              Business Support<br />in South Yorkshire
             </h1>
             <p className="text-lg text-gray-200 mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
               Access funding, expert support, and resources to help your business thrive. Connect with Yorkshire's future workforce and shape the skills of tomorrow.

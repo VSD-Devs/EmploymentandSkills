@@ -131,6 +131,7 @@ const categories: TLevelCategory[] = [
 const TLevelsPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [expandedProvider, setExpandedProvider] = useState<string | null>(null)
 
   const filteredProviders = providers.filter(provider => {
     const matchesSearch = 
@@ -147,7 +148,7 @@ const TLevelsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-16 sm:py-24">
+      <div className="relative bg-[#111827] py-20">
         <div className="absolute inset-0">
           <Image
             src="/images/t-levels-hero.jpg"
@@ -172,7 +173,7 @@ const TLevelsPage = () => {
       </div>
 
       {/* What are T-Levels Section */}
-      <div className="bg-white py-16 sm:py-24">
+      <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -223,84 +224,57 @@ const TLevelsPage = () => {
       </div>
 
       {/* Categories Section */}
-      <div className="bg-gray-50 py-16 sm:py-24">
+      <div className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              T-Level Categories
+              Find T-Level Providers
             </h2>
             <p className="text-lg text-gray-600">
-              Explore different T-Level pathways available in South Yorkshire
+              Search and filter T-Level providers in South Yorkshire
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category) => (
-              <button
-                key={category.name}
-                onClick={() => setSelectedCategory(category.name)}
-                className={`p-6 rounded-xl text-left transition-all ${
-                  selectedCategory === category.name
-                    ? 'bg-emerald-50 border-2 border-emerald-500 shadow-lg'
-                    : 'bg-white border border-gray-200 hover:border-emerald-500 hover:shadow-md'
-                }`}
-              >
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{category.name}</h3>
-                <p className="text-gray-600 mb-4">{category.description}</p>
-                <div className="text-sm text-gray-500">
-                  {category.providers.length} providers
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Providers Section */}
-      <div className="bg-white py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Search and Filters */}
-          <div className="max-w-2xl mx-auto mb-16">
-            <div className="flex flex-col gap-4">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <input
-                  type="text"
-                  placeholder="Search courses, colleges or locations..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                />
-              </div>
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-                {['All', ...categories.map(c => c.name)].map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                      selectedCategory === cat
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
+          <div className="max-w-2xl mx-auto mb-12">
+            <div className="relative mb-6">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+              <input
+                type="text"
+                placeholder="Search by course, college or location..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              />
+            </div>
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+              {['All', ...categories.map(c => c.name)].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+                    selectedCategory === cat
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Provider Listings */}
-          <div className="space-y-8">
+          {/* Provider Cards */}
+          <div className="grid gap-6">
             {filteredProviders.map((provider) => (
               <div
                 key={provider.name}
-                className="bg-white rounded-xl border border-gray-200 overflow-hidden"
+                className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
               >
-                <div className="grid lg:grid-cols-12 gap-0">
-                  {/* College Info */}
-                  <div className="lg:col-span-4 xl:col-span-3 bg-gray-50 p-6">
-                    <div className="relative h-48 rounded-lg overflow-hidden mb-6">
+                <div className="grid lg:grid-cols-12 gap-6">
+                  {/* Left Column - Provider Info */}
+                  <div className="lg:col-span-3 p-6 bg-gray-50">
+                    <div className="relative h-48 rounded-lg overflow-hidden mb-4">
                       <Image
                         src={provider.imageUrl}
                         alt={provider.name}
@@ -308,43 +282,37 @@ const TLevelsPage = () => {
                         className="object-cover"
                       />
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
                       {provider.name}
                     </h3>
                     <div className="flex items-center gap-2 text-gray-600 mb-4">
                       <MapPin className="h-4 w-4" />
                       {provider.location}
                     </div>
-                    <div className="grid grid-cols-2 gap-4 py-4 border-t border-b border-gray-200 mb-6">
-                      <div>
-                        <div className="text-2xl font-bold text-emerald-600">{provider.courses.length}</div>
-                        <div className="text-sm text-gray-600">Courses</div>
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-emerald-600">2024</div>
-                        <div className="text-sm text-gray-600">Start Date</div>
-                      </div>
+                    <div className="flex items-center gap-2 text-gray-600 mb-4">
+                      <School className="h-4 w-4" />
+                      <span className="font-medium">{provider.courses.length} courses</span>
                     </div>
                     <a
                       href={`https://www.${provider.website}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-full px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 transition-colors"
+                      className="inline-flex items-center justify-center w-full px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
                     >
                       Visit Website
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </div>
 
-                  {/* Course Offerings */}
-                  <div className="lg:col-span-8 xl:col-span-9 p-6 lg:p-8">
+                  {/* Right Column - Course Info */}
+                  <div className="lg:col-span-9 p-6">
                     <div className="flex flex-wrap gap-2 mb-6">
                       {categories
                         .filter(cat => cat.providers.includes(provider.name))
                         .map(cat => (
                           <span 
                             key={cat.name}
-                            className="px-3 py-1 rounded-full text-sm bg-emerald-50 text-emerald-700 border border-emerald-100"
+                            className="px-3 py-1 rounded-full text-sm bg-emerald-50 text-emerald-700"
                           >
                             {cat.name}
                           </span>
@@ -352,24 +320,45 @@ const TLevelsPage = () => {
                       }
                     </div>
 
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {provider.courses.map((course) => (
-                        <div 
-                          key={course}
-                          className="p-4 rounded-lg bg-gray-50 border border-gray-100"
-                        >
-                          <div className="flex items-start gap-3">
-                            <GraduationCap className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-1" />
-                            <div>
-                              <p className="font-medium text-gray-900">{course}</p>
-                              <p className="text-sm text-gray-500 mt-1">
-                                Starting September 2024
-                              </p>
+                    <div className="mb-6">
+                      <h4 className="text-lg font-medium text-gray-900 mb-4">Available Courses</h4>
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {(expandedProvider === provider.name 
+                          ? provider.courses
+                          : provider.courses.slice(0, 6)
+                        ).map(course => (
+                          <div 
+                            key={course}
+                            className="p-4 rounded-lg bg-gray-50 border border-gray-100 hover:border-emerald-200 transition-colors"
+                          >
+                            <div className="flex items-start gap-3">
+                              <GraduationCap className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-1" />
+                              <div>
+                                <p className="font-medium text-gray-900">{course}</p>
+                                <p className="text-sm text-gray-500 mt-1">
+                                  Starting September 2024
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
+
+                    {provider.courses.length > 6 && (
+                      <button
+                        onClick={() => setExpandedProvider(
+                          expandedProvider === provider.name ? null : provider.name
+                        )}
+                        className="inline-flex items-center text-emerald-600 hover:text-emerald-700 text-sm font-medium"
+                      >
+                        {expandedProvider === provider.name ? (
+                          <>Show less <ArrowRight className="ml-1 h-4 w-4 rotate-90" /></>
+                        ) : (
+                          <>Show {provider.courses.length - 6} more courses <ArrowRight className="ml-1 h-4 w-4 -rotate-90" /></>
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -377,7 +366,7 @@ const TLevelsPage = () => {
           </div>
 
           {filteredProviders.length === 0 && (
-            <div className="text-center py-12">
+            <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
               <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-600 text-lg">
                 No providers found matching your search criteria.

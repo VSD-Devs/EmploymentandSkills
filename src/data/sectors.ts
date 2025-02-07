@@ -54,14 +54,6 @@ export const sectorData: SectorData = {
         'Mental Health',
         'Surgery'
       ]
-    },
-    greenJobs: {
-      title: 'Green health and social care',
-      description: 'Many health and social care companies are working to become more sustainable. There are new pathways beginning to take root including:',
-      roles: [
-        'Public health practitioner',
-        'Environmental health inspector'
-      ]
     }
   },
   'digital-tech': {
@@ -116,15 +108,6 @@ export const sectorData: SectorData = {
         'Data Analysis',
         'Cybersecurity',
         'Cloud Computing'
-      ]
-    },
-    greenJobs: {
-      title: 'Green technology',
-      description: 'The digital sector is playing a crucial role in sustainability through green technology initiatives:',
-      roles: [
-        'Green IT Specialist',
-        'Sustainability Software Developer',
-        'Clean Tech Project Manager'
       ]
     }
   },
@@ -181,15 +164,6 @@ export const sectorData: SectorData = {
         'CNC Operation',
         'Industrial Automation'
       ]
-    },
-    greenJobs: {
-      title: 'Sustainable Manufacturing',
-      description: 'Manufacturing is evolving to meet environmental challenges with new roles in sustainable production:',
-      roles: [
-        'Sustainable Production Engineer',
-        'Clean Technology Specialist',
-        'Circular Economy Manager'
-      ]
     }
   },
   'construction': {
@@ -244,15 +218,6 @@ export const sectorData: SectorData = {
         'Site management',
         'Equipment operation',
         'Quality control'
-      ]
-    },
-    greenJobs: {
-      title: 'Sustainable Construction',
-      description: 'The construction industry is embracing sustainable building practices and green technologies:',
-      roles: [
-        'Sustainable Building Specialist',
-        'Green Building Consultant',
-        'Environmental Compliance Manager'
       ]
     }
   },
@@ -309,15 +274,6 @@ export const sectorData: SectorData = {
         'Transport regulations',
         'Fleet management'
       ]
-    },
-    greenJobs: {
-      title: 'Green Logistics',
-      description: 'The logistics sector is transforming to reduce environmental impact through sustainable practices:',
-      roles: [
-        'Sustainable Transport Manager',
-        'Electric Fleet Coordinator',
-        'Green Supply Chain Specialist'
-      ]
     }
   },
   'creative-media': {
@@ -372,15 +328,6 @@ export const sectorData: SectorData = {
         'Animation',
         'Social media',
         'Content strategy'
-      ]
-    },
-    greenJobs: {
-      title: 'Sustainable Media',
-      description: 'The creative sector is embracing sustainable production methods and eco-friendly practices:',
-      roles: [
-        'Sustainable Production Manager',
-        'Eco-friendly Design Specialist',
-        'Green Screen Production Coordinator'
       ]
     }
   },
@@ -437,15 +384,6 @@ export const sectorData: SectorData = {
         'Revenue management',
         'Foreign languages'
       ]
-    },
-    greenJobs: {
-      title: 'Sustainable Tourism',
-      description: 'The hospitality sector is developing sustainable tourism practices and eco-friendly operations:',
-      roles: [
-        'Sustainable Tourism Manager',
-        'Eco-Hotel Coordinator',
-        'Green Events Specialist'
-      ]
     }
   },
   'business-services': {
@@ -500,15 +438,6 @@ export const sectorData: SectorData = {
         'HR practices',
         'Consulting',
         'Risk management'
-      ]
-    },
-    greenJobs: {
-      title: 'Sustainable Business',
-      description: 'The business services sector is evolving to support sustainable practices:',
-      roles: [
-        'Sustainability Consultant',
-        'ESG Manager',
-        'Corporate Responsibility Specialist'
       ]
     }
   },
@@ -565,15 +494,6 @@ export const sectorData: SectorData = {
         'Energy efficiency',
         'Environmental legislation'
       ]
-    },
-    greenJobs: {
-      title: 'Green Energy Innovation',
-      description: 'The clean energy sector is at the forefront of sustainable development:',
-      roles: [
-        'Solar Energy Specialist',
-        'Wind Farm Engineer',
-        'Carbon Reduction Manager'
-      ]
     }
   },
   'education': {
@@ -628,15 +548,6 @@ export const sectorData: SectorData = {
         'Assessment',
         'Special education',
         'Educational technology'
-      ]
-    },
-    greenJobs: {
-      title: 'Sustainable Education',
-      description: 'The education sector is incorporating sustainability into teaching and operations:',
-      roles: [
-        'Environmental Education Specialist',
-        'Sustainability Curriculum Developer',
-        'Green Schools Coordinator'
       ]
     }
   },
@@ -693,15 +604,6 @@ export const sectorData: SectorData = {
         'Investment management',
         'Financial software'
       ]
-    },
-    greenJobs: {
-      title: 'Sustainable Finance',
-      description: 'The financial sector is developing sustainable and ethical investment practices:',
-      roles: [
-        'ESG Investment Analyst',
-        'Sustainable Finance Manager',
-        'Green Finance Specialist'
-      ]
     }
   },
   'public-services': {
@@ -756,15 +658,6 @@ export const sectorData: SectorData = {
         'Stakeholder management',
         'Service delivery',
         'Governance'
-      ]
-    },
-    greenJobs: {
-      title: 'Sustainable Public Services',
-      description: 'Public services are leading the way in sustainable practices and policies:',
-      roles: [
-        'Environmental Policy Officer',
-        'Sustainability Programme Manager',
-        'Climate Action Coordinator'
       ]
     }
   }

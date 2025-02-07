@@ -21,12 +21,6 @@ export interface Skills {
   specialist: string[];
 }
 
-export interface GreenJobs {
-  title: string;
-  description: string;
-  roles: string[];
-}
-
 export interface Sector {
   slug: string;
   title: string;
@@ -34,7 +28,6 @@ export interface Sector {
   stats: Stat[];
   careerProgression: CareerProgression;
   skills: Skills;
-  greenJobs: GreenJobs;
 }
 
 export interface SectorData {

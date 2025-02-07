@@ -60,52 +60,136 @@ export default function SectorPageContent({ sector }: { sector: Sector }) {
             <span className="text-white text-sm font-semibold">Career Journey</span>
           </div>
           <h2 className="text-3xl font-bold text-zinc-900">Career progression in {sector.title.toLowerCase()}</h2>
-          <p className="text-lg text-zinc-700">Click on any role to explore detailed career paths and requirements</p>
+          <p className="text-lg text-zinc-700">See how your career could develop over time, with typical salaries and progression paths</p>
         </div>
         <div className="grid gap-6">
           {sector.careerProgression.levels.map((level, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-lg p-8 border border-zinc-200">
-              <div className="flex items-center mb-6">
-                <div className="bg-emerald-100 p-3 rounded-xl mr-4">
-                  {index === 0 ? (
-                    <GraduationCap className="w-6 h-6 text-emerald-700" />
-                  ) : index === 1 ? (
-                    <Briefcase className="w-6 h-6 text-emerald-700" />
-                  ) : (
-                    <Brain className="w-6 h-6 text-emerald-700" />
-                  )}
-                </div>
-                <h3 className="text-xl font-bold text-zinc-900">{level.title}</h3>
-              </div>
-              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {level.roles.map((role, roleIndex) => {
-                  const roleSlug = role.toLowerCase().replace(/\s+/g, '-');
-                  const hasDetailedInfo = roleData[roleSlug];
-                  
-                  return hasDetailedInfo ? (
-                    <Link
-                      key={roleIndex}
-                      href={`/pathways/${sector.slug}/roles/${roleSlug}`}
-                      className="group relative bg-emerald-50 hover:bg-emerald-100 rounded-lg p-6 transition-all duration-200 border border-emerald-200"
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-bold text-emerald-900">{role}</span>
-                        <span className="text-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <ArrowRight className="w-4 h-4" />
-                        </span>
+            <div key={index} className="relative">
+              <div className="bg-white rounded-xl shadow-lg p-8 border border-zinc-200">
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div className="bg-emerald-100 p-3 rounded-xl mr-4">
+                        {index === 0 ? (
+                          <GraduationCap className="w-6 h-6 text-emerald-700" />
+                        ) : index === 1 ? (
+                          <Briefcase className="w-6 h-6 text-emerald-700" />
+                        ) : (
+                          <Brain className="w-6 h-6 text-emerald-700" />
+                        )}
                       </div>
-                      <p className="text-sm text-emerald-800">View career paths</p>
-                    </Link>
-                  ) : (
-                    <div
-                      key={roleIndex}
-                      className="bg-zinc-50 rounded-lg p-6 border border-zinc-200"
-                    >
-                      <span className="font-bold text-zinc-900">{role}</span>
+                      <div>
+                        <h3 className="text-xl font-bold text-zinc-900">{level.title}</h3>
+                        <p className="text-zinc-600">
+                          {index === 0 ? (
+                            "Where most people start their career - typically 0-2 years experience"
+                          ) : index === 1 ? (
+                            "Progress to this level with 2-5 years experience"
+                          ) : (
+                            "Senior positions with 5+ years experience"
+                          )}
+                        </p>
+                      </div>
                     </div>
-                  );
-                })}
+                    <div className="text-right">
+                      <p className="text-sm text-zinc-600">Typical salary range</p>
+                      <p className="text-lg font-bold text-emerald-700">
+                        {index === 0 ? (
+                          "£18,000 - £25,000"
+                        ) : index === 1 ? (
+                          "£25,000 - £35,000"
+                        ) : (
+                          "£35,000 - £60,000+"
+                        )}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    {level.roles.map((role, roleIndex) => {
+                      const roleSlug = role.toLowerCase().replace(/\s+/g, '-');
+                      const hasDetailedInfo = roleData[roleSlug];
+                      
+                      return hasDetailedInfo ? (
+                        <Link
+                          key={roleIndex}
+                          href={`/pathways/${sector.slug}/roles/${roleSlug}`}
+                          className="group relative bg-emerald-50 hover:bg-emerald-100 rounded-lg p-6 transition-all duration-200 border border-emerald-200"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-bold text-emerald-900">{role}</span>
+                            <span className="text-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <ArrowRight className="w-4 h-4" />
+                            </span>
+                          </div>
+                          <p className="text-sm text-emerald-800">View career paths</p>
+                        </Link>
+                      ) : (
+                        <div
+                          key={roleIndex}
+                          className="bg-zinc-50 rounded-lg p-6 border border-zinc-200"
+                        >
+                          <span className="font-bold text-zinc-900">{role}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
+
+              {index < 2 && (
+                <div className="hidden md:block h-16 relative -mb-4">
+                  {/* Main progression line */}
+                  <div className="absolute left-1/2 -translate-x-1/2 w-[3px] h-full bg-gradient-to-b from-emerald-400 to-emerald-500">
+                    {/* Arrow head */}
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+                      <div className="w-4 h-4 bg-emerald-500 rotate-45 transform translate-y-1/2"></div>
+                    </div>
+                    {/* Progress marker */}
+                    <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 w-8 h-8 rounded-full border-4 border-emerald-500 bg-white shadow-md"></div>
+                  </div>
+                  
+                  {/* Time indicator - positioned to the right */}
+                  <div className="absolute top-1/2 left-[calc(50%+2rem)] -translate-y-1/2">
+                    <div className="bg-emerald-100 px-6 py-2 rounded-full shadow-sm">
+                      <div className="text-sm font-medium text-emerald-800">
+                        {index === 0 ? (
+                          <>
+                            <span className="font-bold">2-3 years</span>
+                            <span className="block text-xs text-emerald-600 mt-0.5">experience needed</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="font-bold">3-5 years</span>
+                            <span className="block text-xs text-emerald-600 mt-0.5">experience needed</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Mobile progression indicator - enhanced version */}
+              {index < 2 && (
+                <div className="md:hidden my-2 flex justify-center">
+                  <div className="flex flex-col items-center">
+                    <div className="relative h-12 w-[3px] bg-gradient-to-b from-emerald-400 to-emerald-500">
+                      {/* Arrow head for mobile */}
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+                        <div className="w-3 h-3 bg-emerald-500 rotate-45 transform translate-y-1/2"></div>
+                      </div>
+                      {/* Progress marker for mobile */}
+                      <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 w-6 h-6 rounded-full border-3 border-emerald-500 bg-white shadow-md"></div>
+                    </div>
+                    <div className="bg-emerald-100 px-4 py-1.5 rounded-full shadow-sm mt-4">
+                      <div className="text-sm font-medium text-emerald-800">
+                        {index === 0 ? '2-3 years' : '3-5 years'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -156,51 +240,6 @@ export default function SectorPageContent({ sector }: { sector: Sector }) {
           </div>
         </div>
       </div>
-
-      {/* Green Jobs Section */}
-      {sector.greenJobs && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="bg-teal-50 rounded-xl p-8 border border-teal-200">
-            <div className="flex items-center mb-6">
-              <div className="bg-teal-100 p-3 rounded-xl mr-4">
-                <Briefcase className="w-6 h-6 text-teal-700" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-teal-900">{sector.greenJobs.title}</h2>
-                <p className="text-teal-800 mt-1">{sector.greenJobs.description}</p>
-              </div>
-            </div>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {sector.greenJobs.roles.map((role, index) => {
-                const roleSlug = role.toLowerCase().replace(/\s+/g, '-');
-                const hasDetailedInfo = roleData[roleSlug];
-
-                return hasDetailedInfo ? (
-                  <Link
-                    key={index}
-                    href={`/pathways/${sector.slug}/roles/${roleSlug}`}
-                    className="group bg-white rounded-lg p-6 hover:bg-teal-100 transition-colors border border-teal-200"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-teal-900">{role}</span>
-                      <span className="text-teal-700 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </div>
-                  </Link>
-                ) : (
-                  <div
-                    key={index}
-                    className="bg-white rounded-lg p-6 border border-teal-200"
-                  >
-                    <span className="font-bold text-teal-900">{role}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 } 

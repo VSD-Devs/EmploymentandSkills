@@ -282,7 +282,7 @@ const YoungPeople = () => {
               <span className="text-xs sm:text-sm font-medium tracking-wide uppercase">Your Future Starts Here</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6 drop-shadow-sm">
-              Discover Your Path<br />in Yorkshire
+              Career Support<br />in South Yorkshire
             </h1>
             <p className="text-base sm:text-lg text-gray-200 mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
               Explore exciting opportunities for your future. Whether it's university, apprenticeships, or starting your career, we're here to help you make informed choices.

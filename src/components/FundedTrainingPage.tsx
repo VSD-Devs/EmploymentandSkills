@@ -125,7 +125,7 @@ const FundedTrainingPage = () => {
               Fully Funded Options
             </a>
             <a href="#partially-funded" className="py-4 text-sm font-medium text-gray-700 hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600">
-              Partially Funded Options
+              Subsidised Options
             </a>
           </div>
         </div>
