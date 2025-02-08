@@ -25,6 +25,7 @@ export interface Sector {
   slug: string;
   title: string;
   description: string;
+  category: string;
   stats: Stat[];
   careerProgression: CareerProgression;
   skills: Skills;

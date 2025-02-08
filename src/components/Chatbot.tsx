@@ -120,42 +120,49 @@ export default function Chatbot() {
       {/* Chat Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-emerald-600 text-white p-5 rounded-full shadow-lg hover:bg-emerald-700 transition-colors"
+        className="bg-emerald-600 text-white p-4 sm:p-5 rounded-full shadow-lg hover:bg-emerald-700 transition-colors"
         aria-label={isOpen ? 'Close chat' : 'Open chat with AI assistant'}
       >
         {isOpen ? (
-          <X className="w-8 h-8" />
+          <X className="w-6 h-6 sm:w-8 sm:h-8" />
         ) : (
-          <Bot className="w-8 h-8" />
+          <Bot className="w-6 h-6 sm:w-8 sm:h-8" />
         )}
       </button>
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="absolute bottom-20 right-0 w-[450px] h-[600px] bg-white rounded-xl shadow-xl flex flex-col border border-slate-200">
+        <div className="fixed sm:absolute inset-0 sm:inset-auto sm:bottom-20 sm:right-0 w-full sm:w-[450px] h-[100dvh] sm:h-[600px] bg-white sm:rounded-xl shadow-xl flex flex-col border-t sm:border border-slate-200 z-[60]">
           {/* Header */}
-          <div className="p-5 border-b border-slate-200 bg-emerald-50 rounded-t-xl flex items-center gap-3">
-            <Bot className="w-8 h-8 text-emerald-600" />
-            <div>
-              <h2 className="text-xl font-semibold text-slate-900">Pathways Assistant</h2>
+          <div className="sticky top-0 p-3 sm:p-5 border-b border-slate-200 bg-emerald-50 sm:rounded-t-xl flex items-center gap-3">
+            <Bot className="w-6 h-6 sm:w-8 sm:h-8 text-emerald-600" />
+            <div className="flex-1">
+              <h2 className="text-lg sm:text-xl font-semibold text-slate-900">Pathways Assistant</h2>
             </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="sm:hidden p-2 hover:bg-emerald-100 rounded-lg transition-colors"
+              aria-label="Close chat"
+            >
+              <X className="w-5 h-5 text-emerald-600" />
+            </button>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-5 space-y-5">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-4 sm:space-y-5">
             {messages.map((message, index) => (
-              <div key={index} className="space-y-3">
+              <div key={index} className="space-y-2 sm:space-y-3">
                 <div
                   className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] p-4 rounded-xl ${
+                    className={`max-w-[90%] sm:max-w-[85%] p-3 sm:p-4 rounded-xl ${
                       message.type === 'user'
                         ? 'bg-emerald-600 text-white'
                         : 'bg-slate-100 text-slate-900'
                     }`}
                   >
-                    <p className="text-base">{message.content}</p>
+                    <p className="text-sm sm:text-base">{message.content}</p>
                   </div>
                 </div>
 
@@ -166,10 +173,10 @@ export default function Chatbot() {
                       <Link
                         key={linkIndex}
                         href={link.url}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-50 text-emerald-700 rounded-full text-base hover:bg-emerald-100 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-emerald-50 text-emerald-700 rounded-full text-sm sm:text-base hover:bg-emerald-100 transition-colors"
                       >
                         {link.text}
-                        <ExternalLink className="w-4 h-4" />
+                        <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                       </Link>
                     ))}
                   </div>
@@ -177,14 +184,14 @@ export default function Chatbot() {
 
                 {/* Related Questions */}
                 {message.type === 'bot' && message.relatedQuestions && message.relatedQuestions.length > 0 && (
-                  <div className="ml-2 mt-3">
-                    <p className="text-base text-slate-600 mb-2">Related questions:</p>
-                    <div className="flex flex-col gap-2">
+                  <div className="ml-2 mt-2 sm:mt-3">
+                    <p className="text-sm sm:text-base text-slate-600 mb-2">Related questions:</p>
+                    <div className="flex flex-col gap-1.5 sm:gap-2">
                       {message.relatedQuestions.map((question, qIndex) => (
                         <button
                           key={qIndex}
                           onClick={() => handleQuestionClick(question)}
-                          className="text-left text-base text-emerald-600 hover:text-emerald-700 hover:underline"
+                          className="text-left text-sm sm:text-base text-emerald-600 hover:text-emerald-700 hover:underline"
                         >
                           {question}
                         </button>
@@ -198,8 +205,8 @@ export default function Chatbot() {
           </div>
 
           {/* Input */}
-          <div className="p-5 border-t border-slate-200">
-            <div className="flex gap-3">
+          <div className="sticky bottom-0 p-3 sm:p-5 border-t border-slate-200 bg-white">
+            <div className="flex gap-2 sm:gap-3">
               <input
                 ref={inputRef}
                 type="text"
@@ -207,16 +214,16 @@ export default function Chatbot() {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your question..."
-                className="flex-1 p-3 text-base border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="flex-1 p-2 sm:p-3 text-sm sm:text-base border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 aria-label="Chat input"
               />
               <button
                 onClick={() => handleSend()}
                 disabled={!inputValue.trim()}
-                className="bg-emerald-600 text-white p-3 rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-emerald-600 text-white p-2 sm:p-3 rounded-xl hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Send message"
               >
-                <Send className="w-6 h-6" />
+                <Send className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
           </div>
