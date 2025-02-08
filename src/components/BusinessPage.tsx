@@ -184,7 +184,7 @@ const BusinessPage = () => {
             priority
           />
           {/* Dark overlay for text legibility */}
-          <div className="absolute inset-0 bg-black/75" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
 
         {/* Dotted grid pattern with better contrast */}
@@ -201,18 +201,23 @@ const BusinessPage = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative z-10">
-            <div className="flex items-center gap-2 text-emerald-400 mb-4">
-              <div className="p-2 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-500/20">
-                <Building2 className="h-5 w-5" />
+            {/* Soft-edged square background */}
+            <div className="absolute -left-4 right-[30%] -inset-y-6 sm:-left-8 sm:right-[40%] sm:-inset-y-8 bg-black/60 backdrop-blur-sm rounded-[2rem] sm:rounded-[3rem]" />
+            
+            <div className="relative px-4 sm:px-8 py-6 sm:py-8">
+              <div className="flex items-center gap-2 text-emerald-400 mb-4">
+                <div className="p-2 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-500/20">
+                  <Building2 className="h-5 w-5" />
+                </div>
+                <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Business Hub</span>
               </div>
-              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Business Hub</span>
+              <h1 className="text-5xl font-bold text-white mb-6 drop-shadow-sm">
+                Business Support<br />in South Yorkshire
+              </h1>
+              <p className="text-lg text-gray-200 mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
+                Access funding, expert support, and resources to help your business thrive. Connect with Yorkshire's future workforce and shape the skills of tomorrow.
+              </p>
             </div>
-            <h1 className="text-5xl font-bold text-white mb-6 drop-shadow-sm">
-              Business Support<br />in South Yorkshire
-            </h1>
-            <p className="text-lg text-gray-200 mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-              Access funding, expert support, and resources to help your business thrive. Connect with Yorkshire's future workforce and shape the skills of tomorrow.
-            </p>
           </div>
         </div>
       </div>

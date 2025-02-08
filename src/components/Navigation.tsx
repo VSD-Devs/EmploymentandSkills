@@ -117,7 +117,7 @@ const Navigation = () => {
           <div className="hidden md:flex md:items-center md:space-x-1">
             <Link 
               href="/young-people"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
                 isActive('/young-people')
                   ? 'bg-blue-50 text-blue-600'
                   : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -127,7 +127,7 @@ const Navigation = () => {
             </Link>
             <Link 
               href="/adult-skills"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
                 isActive('/adult-skills')
                   ? 'bg-blue-50 text-blue-600'
                   : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -137,7 +137,7 @@ const Navigation = () => {
             </Link>
             <Link 
               href="/business"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
                 isActive('/business')
                   ? 'bg-blue-50 text-blue-600'
                   : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -147,7 +147,7 @@ const Navigation = () => {
             </Link>
             <Link 
               href="/educators"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
                 isActive('/educators')
                   ? 'bg-blue-50 text-blue-600'
                   : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -157,7 +157,7 @@ const Navigation = () => {
             </Link>
             <Link 
               href="/parents"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
                 isActive('/parents')
                   ? 'bg-blue-50 text-blue-600'
                   : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -167,7 +167,7 @@ const Navigation = () => {
             </Link>
             <Link 
               href="/events"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
                 isActive('/events')
                   ? 'bg-blue-50 text-blue-600'
                   : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -177,7 +177,7 @@ const Navigation = () => {
             </Link>
             <Link 
               href="/contact"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
                 isActive('/contact')
                   ? 'bg-blue-50 text-blue-600'
                   : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -263,7 +263,7 @@ const Navigation = () => {
             <nav className="space-y-2">
               <Link
                 href="/young-people"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
                   isActive('/young-people')
                     ? 'bg-blue-50 text-blue-600'
                     : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -274,7 +274,7 @@ const Navigation = () => {
               </Link>
               <Link
                 href="/adult-skills"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
                   isActive('/adult-skills')
                     ? 'bg-blue-50 text-blue-600'
                     : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -285,7 +285,7 @@ const Navigation = () => {
               </Link>
               <Link
                 href="/business"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
                   isActive('/business')
                     ? 'bg-blue-50 text-blue-600'
                     : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -296,7 +296,7 @@ const Navigation = () => {
               </Link>
               <Link
                 href="/educators"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
                   isActive('/educators')
                     ? 'bg-blue-50 text-blue-600'
                     : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -307,7 +307,7 @@ const Navigation = () => {
               </Link>
               <Link
                 href="/parents"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
                   isActive('/parents')
                     ? 'bg-blue-50 text-blue-600'
                     : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -318,7 +318,7 @@ const Navigation = () => {
               </Link>
               <Link
                 href="/events"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
                   isActive('/events')
                     ? 'bg-blue-50 text-blue-600'
                     : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
@@ -329,7 +329,7 @@ const Navigation = () => {
               </Link>
               <Link
                 href="/contact"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
                   isActive('/contact')
                     ? 'bg-blue-50 text-blue-600'
                     : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'

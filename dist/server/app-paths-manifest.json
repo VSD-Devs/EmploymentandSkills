@@ -1,8 +1,11 @@
 {
-  "/young-people/page": "app/young-people/page.js",
-  "/educators/schools/page": "app/educators/schools/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/educators/page": "app/educators/page.js",
+  "/educators/training-providers/page": "app/educators/training-providers/page.js",
   "/page": "app/page.js",
+  "/parents/page": "app/parents/page.js",
   "/business/page": "app/business/page.js",
-  "/recruitment-support/page": "app/recruitment-support/page.js",
-  "/educators/page": "app/educators/page.js"
+  "/adult-skills-funding/page": "app/adult-skills-funding/page.js",
+  "/adult-skills/page": "app/adult-skills/page.js",
+  "/young-people/page": "app/young-people/page.js"
 }

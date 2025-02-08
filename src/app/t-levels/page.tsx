@@ -148,24 +148,31 @@ const TLevelsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20">
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/t-levels-hero.jpg"
-            alt=""
+            alt="Students engaging in technical education and hands-on learning"
             fill
-            className="object-cover object-center"
+            className="object-cover object-center object-[center_25%] brightness-75"
             priority
           />
-          <div className="absolute inset-0 bg-black/75" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
+                <BookOpen className="h-4 w-4" />
+              </div>
+              <span className="text-sm font-medium tracking-wide uppercase">Technical Education</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               T-Levels in South Yorkshire
             </h1>
-            <p className="text-lg text-gray-200 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
               Discover industry-focused qualifications that combine classroom learning with real workplace experience
             </p>
           </div>

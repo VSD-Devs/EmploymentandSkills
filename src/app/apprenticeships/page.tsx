@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Briefcase, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, Quote } from 'lucide-react'
+import { Briefcase, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, Quote, ExternalLink, BookOpen, Users } from 'lucide-react'
 
 // Types
 interface Apprenticeship {
@@ -33,8 +33,8 @@ interface SuccessStory {
 // Sample data
 const apprenticeshipProcess = [
   {
-    title: 'Find Your Path',
-    description: 'Browse through our available apprenticeships and find the one that matches your interests and career goals.',
+    title: 'Search for an Apprenticeship',
+    description: 'Browse through the available apprenticeships and find the one that matches your interests and career goals.',
     icon: Search
   },
   {
@@ -148,69 +148,136 @@ const ApprenticeshipPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-16 sm:py-24">
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/apprenticeship-hero.jpg"
-            alt=""
+            alt="A skilled apprentice working with industrial brewing equipment, showcasing hands-on vocational training"
             fill
-            className="object-cover object-center"
+            className="object-cover object-center object-[center_25%] brightness-75"
             priority
           />
-          <div className="absolute inset-0 bg-black/75" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-              Apprenticeships
+            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
+                <GraduationCap className="h-4 w-4" />
+              </div>
+              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Apprenticeships</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Apprenticeships in South Yorkshire
             </h1>
-            <p className="text-lg text-gray-200 max-w-2xl mx-auto">
-              South Yorkshire's apprenticeship opportunities
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
+              Discover apprenticeship opportunities across South Yorkshire and get the support you need to succeed
             </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <a
+                href="https://www.instituteforapprenticeships.org/apprenticeship-standards/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
+              >
+                Browse Standards
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+              <Link
+                href="#current-vacancies"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+              >
+                View Vacancies
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* What is an Apprenticeship Section */}
+      {/* Quick Stats */}
+      <div className="relative -mt-8 mb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white rounded-lg p-4 shadow-md border border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-emerald-100">
+                  <GraduationCap className="h-5 w-5 text-emerald-600" />
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-gray-900">20%</p>
+                  <p className="text-sm text-gray-600">Off-the-job Training</p>
+                </div>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Dedicated time for learning and development during work hours</p>
+            </div>
+            <div className="bg-white rounded-lg p-4 shadow-md border border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-blue-100">
+                  <Clock className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-gray-900">12-48</p>
+                  <p className="text-sm text-gray-600">Months Duration</p>
+                </div>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Depending on the level and sector of your apprenticeship</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* South Yorkshire Apprenticeship Hub Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
+              <div className="flex items-center gap-2 text-blue-600 mb-4">
+                <span className="inline-block w-2 h-2 rounded-full bg-blue-600" />
+                <span className="text-sm font-medium tracking-wide uppercase">Your Local Support</span>
+              </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                What is an Apprenticeship?
+                South Yorkshire Apprenticeship Hub
               </h2>
               <div className="prose prose-lg text-gray-600">
                 <p>
-                  An apprenticeship is a real job where you learn, gain experience and get paid. You're an employee with a contract of employment and holiday leave.
-                </p>
-                <p>
-                  By the end of an apprenticeship, you'll have gained the skills and knowledge needed to either succeed in your chosen career or progress onto the next apprenticeship level.
+                  We're here to help you navigate your apprenticeship journey. Our dedicated team provides:
                 </p>
                 <ul className="space-y-3 mt-6">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-indigo-600 flex-shrink-0 mt-1" />
-                    <span>Earn a real wage while you learn</span>
+                    <CheckCircle2 className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                    <span>One-to-one support and guidance</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-indigo-600 flex-shrink-0 mt-1" />
-                    <span>Get paid holidays</span>
+                    <CheckCircle2 className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                    <span>Help finding the right apprenticeship</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-indigo-600 flex-shrink-0 mt-1" />
-                    <span>Receive training and gain qualifications</span>
+                    <CheckCircle2 className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                    <span>Application and interview preparation</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-indigo-600 flex-shrink-0 mt-1" />
-                    <span>Learn job-specific skills</span>
+                    <CheckCircle2 className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                    <span>Connections with local employers</span>
                   </li>
                 </ul>
+                <div className="mt-8">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors"
+                  >
+                    Get Support
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </div>
               </div>
             </div>
-            <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
+            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl">
               <Image
-                src="/images/apprentice-working.jpg"
-                alt="An apprentice working with their mentor"
+                src="/images/apprenticeship-hub.png"
+                alt="An apprentice receiving support and guidance from a mentor"
                 fill
                 className="object-cover"
               />
@@ -245,57 +312,25 @@ const ApprenticeshipPage = () => {
         </div>
       </div>
 
-      {/* Success Stories Section */}
-      <div className="bg-white py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Success Stories
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Hear from former apprentices who have built successful careers through our programme.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {successStories.map((story) => (
-              <div key={story.id} className="bg-gray-50 p-6 rounded-xl">
-                <div className="relative w-20 h-20 mb-4 rounded-full overflow-hidden">
-                  <Image
-                    src={story.imageUrl}
-                    alt={story.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <Quote className="h-8 w-8 text-indigo-600 mb-4" />
-                <p className="text-gray-600 mb-4">{story.quote}</p>
-                <div>
-                  <p className="font-bold text-gray-900">{story.name}</p>
-                  <p className="text-gray-600">{story.role}</p>
-                  <p className="text-gray-600">{story.company}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Current Vacancies Section */}
-      <div className="bg-gray-50 py-16 sm:py-24">
+      <div id="current-vacancies" className="bg-gray-50 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
+              <span className="text-sm font-medium tracking-wide uppercase">Latest Opportunities</span>
+            </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Current Vacancies
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Find your perfect apprenticeship opportunity in Yorkshire.
+              Find your perfect apprenticeship opportunity in South Yorkshire
             </p>
           </div>
 
           {/* Search and Filter */}
-          <div className="mb-8">
-            <div className="max-w-2xl mx-auto mb-6">
+          <div className="mb-12">
+            <div className="max-w-2xl mx-auto mb-8">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <input
@@ -303,21 +338,23 @@ const ApprenticeshipPage = () => {
                   placeholder="Search by title, company, or location..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
+                  aria-label="Search apprenticeships"
                 />
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-2 justify-center">
+            <div className="flex flex-wrap gap-3 justify-center">
               {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     selectedCategory === category
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-white text-gray-700 hover:bg-indigo-50'
+                      ? 'bg-emerald-600 text-white shadow-md'
+                      : 'bg-white text-gray-700 hover:bg-emerald-50 border border-gray-200'
                   }`}
+                  aria-pressed={selectedCategory === category}
                 >
                   {category}
                 </button>
@@ -330,25 +367,28 @@ const ApprenticeshipPage = () => {
             {filteredApprenticeships.map((apprenticeship) => (
               <div
                 key={apprenticeship.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 group"
               >
                 <div className="relative h-48">
                   <Image
                     src={apprenticeship.imageUrl}
-                    alt={apprenticeship.title}
+                    alt={`${apprenticeship.title} working environment`}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="flex items-center gap-2 text-white text-sm font-medium mb-1">
+                      <GraduationCap className="h-4 w-4" />
+                      {apprenticeship.level}
+                    </div>
+                    <h3 className="text-xl font-bold text-white">
+                      {apprenticeship.title}
+                    </h3>
+                  </div>
                 </div>
                 <div className="p-6">
-                  <div className="flex items-center gap-2 text-indigo-600 text-sm font-medium mb-2">
-                    <GraduationCap className="h-4 w-4" />
-                    {apprenticeship.level}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {apprenticeship.title}
-                  </h3>
-                  <div className="space-y-2 mb-4">
+                  <div className="space-y-3 mb-4">
                     <div className="flex items-center gap-2 text-gray-600">
                       <Building2 className="h-4 w-4" />
                       {apprenticeship.company}
@@ -362,52 +402,113 @@ const ApprenticeshipPage = () => {
                       {apprenticeship.duration}
                     </div>
                   </div>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-600 mb-6 line-clamp-2">
                     {apprenticeship.description}
                   </p>
-                  <Link
-                    href={`/apprenticeships/${apprenticeship.id}`}
-                    className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition-colors"
-                  >
-                    View Details
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
+                  <div className="flex items-center justify-between">
+                    <span className="text-emerald-600 font-medium">
+                      £{apprenticeship.salary}
+                    </span>
+                    <Link
+                      href={`/apprenticeships/${apprenticeship.id}`}
+                      className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 transition-colors"
+                    >
+                      View Details
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
           {filteredApprenticeships.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">
-                No apprenticeships found matching your search criteria.
+            <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-200">
+              <div className="mb-4">
+                <Search className="h-12 w-12 text-gray-400 mx-auto" />
+              </div>
+              <p className="text-gray-900 font-medium mb-2">
+                No apprenticeships found
+              </p>
+              <p className="text-gray-600">
+                Try adjusting your search criteria or browse all opportunities
               </p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Media Wall */}
+      {/* Success Stories Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-2 text-blue-600 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-blue-600" />
+              <span className="text-sm font-medium tracking-wide uppercase">Success Stories</span>
+            </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Apprenticeship Life
+              Meet Our Apprentices
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              See what it's like to be an apprentice in Yorkshire.
+              Discover how apprenticeships have transformed careers across South Yorkshire
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {successStories.map((story) => (
+              <div key={story.id} className="bg-gray-50 rounded-xl overflow-hidden">
+                <div className="relative h-64">
+                  <Image
+                    src={story.imageUrl}
+                    alt={story.name}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h3 className="text-xl font-bold text-white mb-1">{story.name}</h3>
+                    <p className="text-white/90 text-sm">{story.role}</p>
+                    <p className="text-white/80 text-sm">{story.company}</p>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <Quote className="h-8 w-8 text-blue-600 mb-4 opacity-50" />
+                  <p className="text-gray-600 italic leading-relaxed">
+                    {story.quote}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Media Wall */}
+      <div className="bg-gray-50 py-16 sm:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-2 text-violet-600 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-violet-600" />
+              <span className="text-sm font-medium tracking-wide uppercase">Apprenticeship Life</span>
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Life as an Apprentice
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              See what it's like to be an apprentice in South Yorkshire
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
-              <div key={index} className="relative aspect-square rounded-xl overflow-hidden">
+              <div key={index} className="relative aspect-square rounded-xl overflow-hidden group">
                 <Image
                   src={`/images/apprentice-life-${index}.jpg`}
                   alt={`Apprenticeship life image ${index}`}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
               </div>
             ))}
           </div>

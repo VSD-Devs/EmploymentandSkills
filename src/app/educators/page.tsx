@@ -17,80 +17,77 @@ export default function EducatorsPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero Section with Role Selection */}
-      <div className="relative bg-gradient-to-r from-emerald-600 to-teal-600">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/educator-hero.jpg"
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/95 to-zinc-900/90" />
-        </div>
+      <div className="relative bg-slate-900 py-24 overflow-hidden">
+        {/* Background pattern */}
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `radial-gradient(#94a3b8 1px, transparent 1px)`,
+            backgroundSize: '32px 32px',
+          }}
+        />
 
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-4 -right-4 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl" />
-          <div className="absolute -bottom-4 -left-4 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-8">
-              <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-              <span className="text-white text-sm font-medium">Education Hub</span>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative">
+            {/* Hero Content */}
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 text-emerald-400 mb-6 px-4 py-2 rounded-full bg-emerald-950/50 backdrop-blur-sm border border-emerald-800/50">
+                <GraduationCap className="h-4 w-4" />
+                <span className="text-sm font-medium tracking-wide uppercase">Education Hub</span>
+              </div>
+              
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
+                Shaping South Yorkshire's
+                <span className="text-emerald-400"> Future</span>
+              </h1>
+              
+              <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed">
+                Join us in building a skilled workforce for tomorrow. Access resources, funding, and support tailored to your role.
+              </p>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Shaping South Yorkshire's Future
-            </h1>
-            <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto">
-              Join us in building a skilled workforce for tomorrow. Access resources, funding, and support tailored to your role.
-            </p>
-          </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Training Provider Card */}
-            <Link 
-              href="/educators/training-providers"
-              className="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-8 transition-all hover:shadow-2xl hover:-translate-y-1 border border-white/10 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/0 via-emerald-600/0 to-emerald-600/5 group-hover:opacity-100 transition-all duration-300" />
-              <div className="relative z-10">
-                <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <GraduationCap className="h-8 w-8 text-emerald-600" />
+            {/* Role Selection Cards */}
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* Training Provider Card */}
+              <Link 
+                href="/educators/training-providers"
+                className="group relative bg-white/[0.03] backdrop-blur-sm rounded-2xl p-8 transition-all duration-300 hover:bg-white/[0.06] border border-white/10 overflow-hidden"
+              >
+                <div className="relative z-10">
+                  <div className="w-14 h-14 bg-emerald-950/50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-emerald-500/20">
+                    <GraduationCap className="h-7 w-7 text-emerald-400" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-white mb-4">Training Provider or College</h2>
+                  <p className="text-slate-300 mb-6 line-clamp-2">
+                    Access procurement opportunities, funding streams, and partnership programmes to deliver training across South Yorkshire.
+                  </p>
+                  <div className="flex items-center text-emerald-400 group-hover:text-emerald-300">
+                    <span className="font-medium">View opportunities</span>
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </div>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Training Provider or College</h2>
-                <p className="text-gray-600 mb-6">
-                  Access procurement opportunities, funding streams, and partnership programmes to deliver training across South Yorkshire.
-                </p>
-                <div className="flex items-center text-emerald-600 group-hover:text-emerald-500">
-                  <span className="font-medium">View opportunities</span>
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </div>
-              </div>
-            </Link>
+              </Link>
 
-            {/* School Card */}
-            <Link 
-              href="/educators/schools"
-              className="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-8 transition-all hover:shadow-2xl hover:-translate-y-1 border border-white/10 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/0 via-blue-600/0 to-blue-600/5 group-hover:opacity-100 transition-all duration-300" />
-              <div className="relative z-10">
-                <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Building2 className="h-8 w-8 text-blue-600" />
+              {/* School Card */}
+              <Link 
+                href="/educators/schools"
+                className="group relative bg-white/[0.03] backdrop-blur-sm rounded-2xl p-8 transition-all duration-300 hover:bg-white/[0.06] border border-white/10 overflow-hidden"
+              >
+                <div className="relative z-10">
+                  <div className="w-14 h-14 bg-blue-950/50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-blue-500/20">
+                    <Building2 className="h-7 w-7 text-blue-400" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-white mb-4">School</h2>
+                  <p className="text-slate-300 mb-6 line-clamp-2">
+                    Find training providers, access career resources, and connect with professionals to enhance your students' career education.
+                  </p>
+                  <div className="flex items-center text-blue-400 group-hover:text-blue-300">
+                    <span className="font-medium">Access resources</span>
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </div>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">School</h2>
-                <p className="text-gray-600 mb-6">
-                  Find training providers, access career resources, and connect with professionals to enhance your students' career education.
-                </p>
-                <div className="flex items-center text-blue-600 group-hover:text-blue-500">
-                  <span className="font-medium">Access resources</span>
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -179,8 +176,8 @@ export default function EducatorsPage() {
                 <div className="grid grid-cols-2 gap-6">
                   {[
                     { number: "250+", label: "Education Partners" },
-                    { number: "£15M+", label: "Annual Funding" },
-                    { number: "10k+", label: "Learners Supported" },
+                    { number: "£45M+", label: "Annual Funding" },
+                    { number: "20k+", label: "Learners Supported" },
                     { number: "95%", label: "Partner Satisfaction" }
                   ].map((stat, index) => (
                     <div key={index} className="text-center">

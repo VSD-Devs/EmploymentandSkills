@@ -16,35 +16,80 @@
       "static/chunks/main-app.js",
       "static/chunks/app/business/page.js"
     ],
-    "/funded-training/page": [
+    "/educators/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/funded-training/page.js"
-    ],
-    "/skills-bank/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/skills-bank/page.js"
-    ],
-    "/parents/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/parents/page.js"
+      "static/chunks/app/educators/page.js"
     ],
     "/young-people/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/young-people/page.js"
     ],
+    "/apprenticeships/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/apprenticeships/page.js"
+    ],
     "/adult-skills/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/adult-skills/page.js"
     ],
+    "/parents/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/parents/page.js"
+    ],
+    "/events/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/events/page.js"
+    ],
+    "/skills-bank/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/skills-bank/page.js"
+    ],
     "/t-levels/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/t-levels/page.js"
+    ],
+    "/educators/training-providers/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/educators/training-providers/page.js"
+    ],
+    "/our-region/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/our-region/page.js"
+    ],
+    "/community-schools/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/community-schools/page.js"
+    ],
+    "/contact/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/contact/page.js"
+    ],
+    "/recruitment-support/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/recruitment-support/page.js"
+    ],
+    "/educators/schools/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/educators/schools/page.js"
+    ],
+    "/funded-training/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/funded-training/page.js"
     ],
     "/pathways/page": [
       "static/chunks/webpack.js",
@@ -66,25 +111,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/pathways/[category]/roles/[role]/page.js"
     ],
-    "/events/page": [
+    "/adult-skills-funding/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/events/page.js"
-    ],
-    "/educators/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/educators/page.js"
-    ],
-    "/educators/schools/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/educators/schools/page.js"
-    ],
-    "/recruitment-support/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/recruitment-support/page.js"
+      "static/chunks/app/adult-skills-funding/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",

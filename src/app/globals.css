@@ -2,14 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom base styles */
+/* Base styles */
 @layer base {
   body {
     @apply antialiased text-gray-900;
   }
+
+  /* Default link styles */
+  a:not(.btn) {
+    text-decoration: none;
+  }
+
+  /* Accessibility styles - only applied when active */
+  .accessibility-active {
+    /* These styles will be overridden by inline styles */
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  .accessibility-active a:not(.btn) {
+    @apply underline decoration-2 underline-offset-2 hover:text-blue-600 focus:text-blue-600;
+  }
 }
 
-/* Custom component styles */
+/* Component styles */
 @layer components {
   .btn {
     @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-colors;
@@ -22,11 +39,28 @@
   .btn-secondary {
     @apply bg-white text-blue-600 hover:bg-blue-50;
   }
+
+  /* Accessibility toolbar styles */
+  .accessibility-toolbar {
+    @apply fixed right-4 top-24 z-50;
+  }
+
+  .accessibility-toolbar button {
+    @apply p-3 rounded-full shadow-lg;
+  }
+
+  .accessibility-toolbar-panel {
+    @apply mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-xl w-72;
+  }
 }
 
-/* Custom utility styles */
+/* Utility styles */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .skip-to-main {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-blue-600 focus:rounded-lg focus:shadow-lg;
   }
 } 
