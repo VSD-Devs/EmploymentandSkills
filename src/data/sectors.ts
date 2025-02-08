@@ -340,6 +340,7 @@ export const sectorData: SectorData = {
   'hospitality-tourism': {
     slug: 'hospitality-tourism',
     title: 'Hospitality & Tourism',
+    category: 'hospitality',
     description: `Yorkshire's tourism and hospitality sector offers exciting careers in hotels, restaurants, events, and visitor attractions.`,
     stats: [
       {
@@ -395,6 +396,7 @@ export const sectorData: SectorData = {
   'business-services': {
     slug: 'business-services',
     title: 'Business & Professional Services',
+    category: 'business',
     description: `South Yorkshire's business services sector offers diverse opportunities in consulting, management, HR, and professional services.`,
     stats: [
       {
@@ -450,6 +452,7 @@ export const sectorData: SectorData = {
   'clean-energy': {
     slug: 'clean-energy',
     title: 'Clean Energy & Environmental',
+    category: 'engineering',
     description: 'A rapidly growing sector in Yorkshire, focusing on renewable energy, sustainability, and environmental services.',
     stats: [
       {
@@ -505,6 +508,7 @@ export const sectorData: SectorData = {
   'education': {
     slug: 'education',
     title: 'Education & Training',
+    category: 'education',
     description: 'The education sector in Yorkshire provides opportunities in schools, colleges, universities, and training organisations.',
     stats: [
       {
@@ -560,6 +564,7 @@ export const sectorData: SectorData = {
   'financial-services': {
     slug: 'financial-services',
     title: 'Financial Services',
+    category: 'business',
     description: `Yorkshire's financial sector offers careers in banking, insurance, accounting, and fintech.`,
     stats: [
       {
@@ -615,6 +620,7 @@ export const sectorData: SectorData = {
   'public-services': {
     slug: 'public-services',
     title: 'Public Services',
+    category: 'business',
     description: 'Careers in local government, emergency services, and public sector organisations across Yorkshire.',
     stats: [
       {

@@ -1,9 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/young-people/page": "app/young-people/page.js",
-  "/adult-skills/page": "app/adult-skills/page.js",
-  "/business/page": "app/business/page.js",
-  "/parents/page": "app/parents/page.js",
-  "/pathways/[category]/page": "app/pathways/[category]/page.js",
-  "/pathways/[category]/roles/[role]/page": "app/pathways/[category]/roles/[role]/page.js"
-}
