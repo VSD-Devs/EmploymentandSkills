@@ -11,9 +11,14 @@ export interface CareerLevel {
   roles: string[];
 }
 
+export interface CareerProgressionLevel {
+  title: string;
+  roles: string[];
+}
+
 export interface CareerProgression {
   title: string;
-  levels: CareerLevel[];
+  levels: CareerProgressionLevel[];
 }
 
 export interface Skills {
@@ -27,8 +32,9 @@ export interface Sector {
   description: string;
   category: string;
   stats: Stat[];
-  careerProgression: CareerProgression;
   skills: Skills;
+  careerProgression: CareerProgression;
+  traits?: string[];
 }
 
 export interface SectorData {

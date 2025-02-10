@@ -393,25 +393,25 @@ export const sectorData: SectorData = {
       ]
     }
   },
-  'business-services': {
-    slug: 'business-services',
+  'business-finance': {
+    slug: 'business-finance',
     title: 'Business & Professional Services',
     category: 'business',
-    description: `South Yorkshire's business services sector offers diverse opportunities in consulting, management, HR, and professional services.`,
+    description: 'Yorkshire\'s business sector offers diverse opportunities in consulting, finance, management, and professional services, with strong growth in fintech and digital transformation.',
     stats: [
       {
         icon: 'building',
-        number: '2,500+',
+        number: '3,500+',
         label: 'Businesses'
       },
       {
         icon: 'users',
-        number: '55,000+',
+        number: '65,000+',
         label: 'Employee jobs'
       },
       {
         icon: 'banknote',
-        number: '£38,000',
+        number: '£35,000',
         label: 'Average earnings'
       }
     ],
@@ -420,32 +420,32 @@ export const sectorData: SectorData = {
       levels: [
         {
           title: 'Entry level',
-          roles: ['Business Administrator', 'HR Assistant', 'Junior Consultant']
+          roles: ['Business Development Executive', 'Marketing Assistant', 'Project Coordinator']
         },
         {
           title: 'Intermediate',
-          roles: ['Business Analyst', 'HR Advisor', 'Management Consultant']
+          roles: ['Account Manager', 'Business Analyst', 'Operations Manager']
         },
         {
           title: 'Advanced level',
-          roles: ['Business Director', 'HR Manager', 'Senior Consultant']
+          roles: ['Head of Operations', 'Commercial Director', 'Management Consultant']
         }
       ]
     },
     skills: {
       general: [
-        'Communication',
-        'Problem solving',
+        'Strategic thinking',
         'Project management',
+        'Communication',
         'Leadership',
-        'Strategic thinking'
+        'Problem solving'
       ],
       specialist: [
-        'Business analysis',
-        'Change management',
-        'HR practices',
-        'Consulting',
-        'Risk management'
+        'Data analysis',
+        'Digital marketing',
+        'Financial planning',
+        'Risk management',
+        'Business strategy'
       ]
     }
   },

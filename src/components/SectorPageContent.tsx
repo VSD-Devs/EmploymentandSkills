@@ -83,11 +83,11 @@ export default function SectorPageContent({ sector }: { sector: Sector }) {
                         <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-zinc-900">{level.title}</h3>
                         <p className="text-base sm:text-lg text-zinc-600 mt-1">
                           {index === 0 ? (
-                            "Where most people start their career - typically 0-2 years experience"
+                            "Entry level position"
                           ) : index === 1 ? (
-                            "Progress to this level with 2-5 years experience"
+                            "Mid-level position"
                           ) : (
-                            "Senior positions with 5+ years experience"
+                            "Senior level position"
                           )}
                         </p>
                       </div>
@@ -144,25 +144,6 @@ export default function SectorPageContent({ sector }: { sector: Sector }) {
                   <div className="absolute left-1/2 -translate-x-1/2 w-1 h-full bg-gradient-to-b from-emerald-400 to-emerald-500">
                     {/* Progress marker */}
                     <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full border-4 sm:border-[5px] border-emerald-500 bg-white shadow-md"></div>
-                  </div>
-                  
-                  {/* Time indicator */}
-                  <div className="absolute top-1/2 left-[calc(50%+2rem)] -translate-y-1/2">
-                    <div className="bg-emerald-100 px-5 sm:px-6 py-2 sm:py-3 rounded-full shadow-sm">
-                      <div className="text-base sm:text-lg font-medium text-emerald-800">
-                        {index === 0 ? (
-                          <>
-                            <span className="font-bold">2-3 years</span>
-                            <span className="block text-sm sm:text-base text-emerald-600 mt-1">experience needed</span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="font-bold">3-5 years</span>
-                            <span className="block text-sm sm:text-base text-emerald-600 mt-1">experience needed</span>
-                          </>
-                        )}
-                      </div>
-                    </div>
                   </div>
                 </div>
               )}

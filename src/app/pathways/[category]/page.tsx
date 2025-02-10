@@ -10,12 +10,9 @@ const validSlugs = [
   'construction',
   'logistics-transport',
   'creative-media',
-  'hospitality-tourism',
-  'business-services',
-  'clean-energy',
-  'education',
-  'financial-services',
-  'public-services'
+  'business-finance',
+  'education-training',
+  'hospitality-tourism'
 ];
 
 // Generate static params for all sectors

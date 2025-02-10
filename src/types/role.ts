@@ -23,6 +23,17 @@ export type Role = {
   skills: string[];
   dayToDay: string[];
   workEnvironment: string;
+  futureProspects: string[];
+  requiredQualifications: string[];
+  desiredQualifications: string[];
+  industryTrends: string[];
+  toolsAndTech: string[];
+  workSchedule: string;
+  remoteWorkOptions: string;
+  careerPathway: {
+    nextSteps: string[];
+    potentialRoles: string[];
+  };
 };
 
 export type RoleData = Record<string, Role>; 

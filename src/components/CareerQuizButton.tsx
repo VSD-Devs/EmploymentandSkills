@@ -1,13 +1,15 @@
 import { useState } from 'react'
 import { Sparkles } from 'lucide-react'
 import CareerQuiz from './CareerQuiz'
+import { ReactNode } from 'react'
 
 interface CareerQuizButtonProps {
   className?: string;
   variant?: 'primary' | 'secondary';
+  children?: ReactNode;
 }
 
-export default function CareerQuizButton({ className = '', variant = 'primary' }: CareerQuizButtonProps) {
+export default function CareerQuizButton({ className = '', variant = 'primary', children }: CareerQuizButtonProps) {
   const [isQuizOpen, setIsQuizOpen] = useState(false)
 
   const buttonStyles = {
@@ -18,11 +20,16 @@ export default function CareerQuizButton({ className = '', variant = 'primary' }
   return (
     <>
       <button
+        id="career-quiz-modal"
         onClick={() => setIsQuizOpen(true)}
         className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${buttonStyles[variant]} ${className}`}
       >
-        <Sparkles className="w-5 h-5" />
-        Take Career Quiz
+        {children || (
+          <>
+            <Sparkles className="w-5 h-5" />
+            Take Career Quiz
+          </>
+        )}
       </button>
 
       <CareerQuiz 

@@ -44,8 +44,7 @@ South Yorkshire Pathways              </h1>
 Career Pathways                  <ChevronRight className="ml-2 h-5 w-5" />
                 </Link>
                 <Link href="/our-region" className="bg-white/10 backdrop-blur-sm text-white px-6 py-3 rounded-lg text-base font-medium hover:bg-white/20 transition-colors border border-white/20 inline-flex items-center justify-center sm:justify-start">
-                  Why South Yorkshire?
-                </Link>
+Our region                </Link>
               </div>
             </div>
           </div>

@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/adult-skills/page": "app/adult-skills/page.js",
+  "/business/page": "app/business/page.js",
+  "/young-people/page": "app/young-people/page.js",
+  "/educators/page": "app/educators/page.js",
+  "/parents/page": "app/parents/page.js",
+  "/pathways/[category]/roles/[role]/page": "app/pathways/[category]/roles/[role]/page.js"
+}

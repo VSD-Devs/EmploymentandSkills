@@ -1,14 +1,36 @@
+'use client';
+
 import { Role } from '@/types/role';
-import { ArrowRight, GraduationCap, Briefcase, Brain, Calendar, Award, Building2 } from 'lucide-react';
+import { ArrowRight, GraduationCap, Briefcase, Brain, Calendar, Award, Building2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import CareerQuizButton from './CareerQuizButton';
 
 export default function RoleDetails({ role }: { role: Role }) {
+  const [showQuizReturn, setShowQuizReturn] = useState(false);
+
+  useEffect(() => {
+    // Check if we came from the career quiz
+    const hasQuizState = localStorage.getItem('careerQuizState') !== null;
+    setShowQuizReturn(hasQuizState);
+  }, []);
+
   return (
     <div className="min-h-screen bg-zinc-100">
       {/* Hero Section */}
       <div className="bg-zinc-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
+            {showQuizReturn && (
+              <div className="mb-6">
+                <CareerQuizButton variant="secondary" className="!bg-emerald-600 hover:!bg-emerald-500 !text-white !px-4 !py-2 !rounded-full">
+                  <div className="flex items-center space-x-2">
+                    <ArrowLeft className="w-4 h-4" />
+                    <span className="text-sm font-medium">Back to Quiz Results</span>
+                  </div>
+                </CareerQuizButton>
+              </div>
+            )}
             <div className="inline-flex items-center space-x-2 bg-zinc-800 px-4 py-2 rounded-full mb-6">
               <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
               <span className="text-white text-sm font-medium">Career Path</span>
