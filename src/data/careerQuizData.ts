@@ -28,6 +28,7 @@ export interface CareerPath {
 export interface Skill {
   name: string;
   description: string;
+  learning_resources: string[];
 }
 
 export interface CareerProfile {
@@ -261,7 +262,12 @@ export const careerProfiles: { [key: string]: CareerProfile } = {
     }],
     skills: [{
       name: 'Data Analysis',
-      description: 'Strong ability to analyze and interpret data'
+      description: 'Strong ability to analyze and interpret data',
+      learning_resources: [
+        'Take online courses in data analysis tools',
+        'Practice with real datasets',
+        'Learn SQL and data visualization'
+      ]
     }]
   },
   caring: {
@@ -293,7 +299,12 @@ export const careerProfiles: { [key: string]: CareerProfile } = {
     }],
     skills: [{
       name: 'Patient Care',
-      description: 'Excellence in providing patient-centered care'
+      description: 'Excellence in providing patient-centered care',
+      learning_resources: [
+        'Complete first aid certification',
+        'Study healthcare best practices',
+        'Practice communication skills'
+      ]
     }]
   },
   leadership: {
@@ -325,7 +336,12 @@ export const careerProfiles: { [key: string]: CareerProfile } = {
     }],
     skills: [{
       name: 'Team Leadership',
-      description: 'Proven ability to lead and motivate teams'
+      description: 'Proven ability to lead and motivate teams',
+      learning_resources: [
+        'Take leadership training courses',
+        'Volunteer for team lead roles',
+        'Study management techniques'
+      ]
     }]
   },
   practical: {
@@ -357,7 +373,12 @@ export const careerProfiles: { [key: string]: CareerProfile } = {
     }],
     skills: [{
       name: 'Technical Skills',
-      description: 'Strong practical and technical abilities'
+      description: 'Strong practical and technical abilities',
+      learning_resources: [
+        'Complete hands-on training',
+        'Practice with industry tools',
+        'Study technical documentation'
+      ]
     }]
   },
   creative: {
@@ -389,7 +410,12 @@ export const careerProfiles: { [key: string]: CareerProfile } = {
     }],
     skills: [{
       name: 'Creative Design',
-      description: 'Excellence in creative and innovative design'
+      description: 'Excellence in creative and innovative design',
+      learning_resources: [
+        'Build a design portfolio',
+        'Learn design software',
+        'Study design principles'
+      ]
     }]
   }
 };
