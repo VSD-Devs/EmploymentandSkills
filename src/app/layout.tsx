@@ -7,6 +7,7 @@ import ScrollToTop from '@/components/ScrollToTop'
 import { ThemeProvider } from 'next-themes'
 import AccessibilityToolbar from '@/components/AccessibilityToolbar'
 import Chatbot from '@/components/Chatbot'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -14,8 +15,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'South Yorkshire Pathways - Career Development in Yorkshire',
-  description: 'Connecting South Yorkshire\'s future workforce with opportunities for growth and development.',
+  title: 'Digital Career Hub',
+  description: 'Explore digital careers, apprenticeships, and educational pathways',
   manifest: '/manifest.json',
 }
 
@@ -44,6 +45,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <Chatbot />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

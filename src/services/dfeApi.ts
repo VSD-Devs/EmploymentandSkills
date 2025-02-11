@@ -1,6 +1,17 @@
 import axios from 'axios';
 
+// For server-side API calls
 const DFE_API_KEY = process.env.DFE_API_KEY;
+// For client-side API calls (if needed)
+const PUBLIC_DFE_API_KEY = process.env.NEXT_PUBLIC_DFE_API_KEY;
+
+// Use the appropriate key based on environment
+const API_KEY = DFE_API_KEY || PUBLIC_DFE_API_KEY;
+
+if (!API_KEY) {
+  console.error('DFE API Key is not set in environment variables');
+}
+
 const DFE_API_BASE_URL = 'https://api.apprenticeships.education.gov.uk/vacancies';
 
 export type VacancySort = 'AgeDesc' | 'AgeAsc' | 'DistanceDesc' | 'DistanceAsc' | 'ExpectedStartDateDesc' | 'ExpectedStartDateAsc';
@@ -71,13 +82,17 @@ export interface GetVacanciesParams {
 export const dfeApi = {
   async getVacancies(params: GetVacanciesParams): Promise<DfeVacancyResponse> {
     try {
+      if (!API_KEY) {
+        throw new Error('DFE API Key is not configured');
+      }
+
       // Debug log the full request details
       const requestConfig = {
         url: `${DFE_API_BASE_URL}/vacancy`,
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Ocp-Apim-Subscription-Key': DFE_API_KEY,
+          'Ocp-Apim-Subscription-Key': API_KEY,
           'X-Version': '1',
         },
         params,
@@ -87,11 +102,12 @@ export const dfeApi = {
         url: requestConfig.url,
         headers: {
           ...requestConfig.headers,
-          'Ocp-Apim-Subscription-Key': DFE_API_KEY ? `${DFE_API_KEY.substring(0, 3)}...${DFE_API_KEY.substring(DFE_API_KEY.length - 3)}` : 'NOT_SET'
+          'Ocp-Apim-Subscription-Key': API_KEY ? `${API_KEY.substring(0, 3)}...${API_KEY.substring(API_KEY.length - 3)}` : 'NOT_SET'
         },
         params: requestConfig.params,
         nodeEnv: process.env.NODE_ENV,
-        vercelEnv: process.env.VERCEL_ENV
+        vercelEnv: process.env.VERCEL_ENV,
+        isServer: typeof window === 'undefined'
       });
 
       const response = await axios.get(requestConfig.url, {
@@ -160,9 +176,13 @@ export const dfeApi = {
 
   async getVacancyByReference(reference: string) {
     try {
+      if (!API_KEY) {
+        throw new Error('DFE API Key is not configured');
+      }
+
       const response = await axios.get(`${DFE_API_BASE_URL}/vacancy/${reference}`, {
         headers: {
-          'Ocp-Apim-Subscription-Key': DFE_API_KEY,
+          'Ocp-Apim-Subscription-Key': API_KEY,
           'X-Version': '1',
         },
       });
@@ -176,9 +196,13 @@ export const dfeApi = {
 
   async getCourses() {
     try {
+      if (!API_KEY) {
+        throw new Error('DFE API Key is not configured');
+      }
+
       const response = await axios.get(`${DFE_API_BASE_URL}/referencedata/courses`, {
         headers: {
-          'Ocp-Apim-Subscription-Key': DFE_API_KEY,
+          'Ocp-Apim-Subscription-Key': API_KEY,
           'X-Version': '1',
         },
       });
