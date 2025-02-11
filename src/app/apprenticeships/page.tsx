@@ -85,6 +85,8 @@ const sortOptions = [
   { value: 'DistanceDesc', label: 'Furthest first' },
 ] as const;
 
+export const dynamic = 'force-dynamic'
+
 const ApprenticeshipPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -99,15 +101,36 @@ const ApprenticeshipPage = () => {
 
   useEffect(() => {
     const fetchVacancies = async () => {
+      setIsLoading(true);
+      setError(null);
       try {
         const params = new URLSearchParams();
         if (postcode) params.append('postcode', postcode);
         if (sortBy) params.append('sort', sortBy);
         
-        const response = await fetch(`/api/vacancies?${params.toString()}`);
+        const response = await fetch(`/api/vacancies?${params.toString()}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
+        
+        // Log debug information
+        if (data._debug) {
+          console.log('API Debug Info:', data._debug);
+        }
+        
         setVacancies(data.vacancies || []);
       } catch (err) {
+        console.error('Error fetching vacancies:', err);
         setError('Failed to load apprenticeship vacancies. Please try again later.');
       } finally {
         setIsLoading(false);

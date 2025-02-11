@@ -14,6 +14,19 @@ if (!API_KEY) {
 
 const DFE_API_BASE_URL = 'https://api.apprenticeships.education.gov.uk/vacancies';
 
+// Add environment checking
+const checkEnvironment = () => {
+  console.log('Environment Check:', {
+    NODE_ENV: process.env.NODE_ENV,
+    VERCEL_ENV: process.env.VERCEL_ENV,
+    IS_VERCEL: process.env.VERCEL === '1',
+    HAS_DFE_KEY: !!process.env.DFE_API_KEY,
+    DFE_KEY_LENGTH: process.env.DFE_API_KEY?.length,
+    VERCEL_URL: process.env.VERCEL_URL,
+    VERCEL_REGION: process.env.VERCEL_REGION
+  });
+};
+
 export type VacancySort = 'AgeDesc' | 'AgeAsc' | 'DistanceDesc' | 'DistanceAsc' | 'ExpectedStartDateDesc' | 'ExpectedStartDateAsc';
 
 export interface DfeVacancyResponse {
@@ -82,8 +95,17 @@ export interface GetVacanciesParams {
 export const dfeApi = {
   async getVacancies(params: GetVacanciesParams): Promise<DfeVacancyResponse> {
     try {
-      if (!API_KEY) {
-        throw new Error('DFE API Key is not configured');
+      // Check environment on each request
+      checkEnvironment();
+
+      if (!DFE_API_KEY) {
+        throw new Error('DFE API Key is not configured. Environment: ' + 
+          JSON.stringify({
+            NODE_ENV: process.env.NODE_ENV,
+            VERCEL_ENV: process.env.VERCEL_ENV,
+            IS_VERCEL: process.env.VERCEL === '1'
+          })
+        );
       }
 
       // Debug log the full request details
@@ -92,7 +114,7 @@ export const dfeApi = {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Ocp-Apim-Subscription-Key': API_KEY,
+          'Ocp-Apim-Subscription-Key': DFE_API_KEY,
           'X-Version': '1',
         },
         params,

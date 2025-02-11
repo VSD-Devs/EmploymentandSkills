@@ -3,6 +3,11 @@ import { dfeApi } from '@/services/dfeApi';
 import type { VacancySort } from '@/services/dfeApi';
 import { fallbackVacancies } from '@/data/fallbackVacancies';
 
+// Add dynamic configuration
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
+export const revalidate = 0
+
 // Simple cache object
 const cache: {
   [key: string]: {
