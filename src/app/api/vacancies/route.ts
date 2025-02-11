@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     if (!process.env.DFE_API_KEY) {
       console.error('DFE_API_KEY is not set in environment variables');
       return NextResponse.json(
-        { error: 'API configuration error' },
+        { error: 'API configuration error - Missing API key' },
         { status: 500 }
       );
     }
@@ -26,6 +26,14 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const postcode = searchParams.get('postcode');
     const sort = searchParams.get('sort') as VacancySort || 'AgeDesc';
+
+    // Log the incoming request details
+    console.log('Incoming vacancies request:', {
+      postcode,
+      sort,
+      apiKeyPresent: !!process.env.DFE_API_KEY,
+      apiKeyLength: process.env.DFE_API_KEY?.length,
+    });
 
     const cacheKey = `${postcode || 'default'}-${sort}`;
     const now = Date.now();
@@ -65,20 +73,38 @@ export async function GET(request: Request) {
 
     return NextResponse.json(response);
   } catch (error: any) {
-    console.error('Error in vacancies API route:', {
+    // Enhanced error logging
+    const errorDetails = {
       message: error.message,
       status: error.response?.status,
       data: error.response?.data,
-      config: {
-        url: error.config?.url,
-        headers: error.config?.headers ? { ...error.config.headers, 'Ocp-Apim-Subscription-Key': '[REDACTED]' } : undefined,
-      }
-    });
+      isAxiosError: error.isAxiosError,
+      config: error.config ? {
+        url: error.config.url,
+        method: error.config.method,
+        params: error.config.params,
+      } : undefined
+    };
+
+    console.error('Detailed error in vacancies API route:', errorDetails);
+
+    // If we get HTML instead of JSON, return a more specific error
+    if (error.response?.data && typeof error.response.data === 'string' && 
+        error.response.data.includes('<!DOCTYPE html>')) {
+      return NextResponse.json(
+        { 
+          error: 'Invalid API response',
+          details: 'The DFE API returned an HTML error page instead of JSON. This usually indicates an authentication or configuration issue.'
+        },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
       { 
         error: 'Failed to fetch vacancies',
-        details: error.response?.data || error.message
+        details: errorDetails.message,
+        status: errorDetails.status
       },
       { status: error.response?.status || 500 }
     );

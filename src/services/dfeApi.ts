@@ -71,17 +71,40 @@ export interface GetVacanciesParams {
 export const dfeApi = {
   async getVacancies(params: GetVacanciesParams): Promise<DfeVacancyResponse> {
     try {
+      // Log the request configuration (without sensitive data)
+      console.log('DFE API Request:', {
+        url: `${DFE_API_BASE_URL}/vacancy`,
+        params,
+        hasApiKey: !!DFE_API_KEY,
+      });
+
       const response = await axios.get(`${DFE_API_BASE_URL}/vacancy`, {
         headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
           'Ocp-Apim-Subscription-Key': DFE_API_KEY,
           'X-Version': '1',
         },
         params,
+        validateStatus: (status) => status < 500, // Handle 4xx errors in the catch block
       });
 
+      if (response.status !== 200) {
+        throw new Error(`DFE API returned status ${response.status}: ${JSON.stringify(response.data)}`);
+      }
+
+      if (typeof response.data === 'string') {
+        throw new Error(`Unexpected response format: ${response.data.substring(0, 100)}...`);
+      }
+
       return response.data;
-    } catch (error) {
-      console.error('Error fetching DfE vacancies:', error);
+    } catch (error: any) {
+      console.error('DFE API Error:', {
+        message: error.message,
+        status: error.response?.status,
+        responseData: error.response?.data,
+        url: error.config?.url,
+      });
       throw error;
     }
   },
