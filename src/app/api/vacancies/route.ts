@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { dfeApi } from '@/services/dfeApi';
 import type { VacancySort } from '@/services/dfeApi';
 import { fallbackVacancies } from '@/data/fallbackVacancies';
+import type { DfeVacancyResponse } from '@/types/vacancy';
 
 // Update dynamic configuration for Vercel
 export const dynamic = 'auto'
@@ -53,7 +54,12 @@ const RETRY_DELAY = 1000; // 1 second
 // Helper function to delay execution
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export async function GET(request: Request) {
+interface ErrorResponse {
+  message: string;
+  status: number;
+}
+
+export async function GET(request: Request): Promise<NextResponse<DfeVacancyResponse | ErrorResponse>> {
   // Create a debug info object that we'll send back with the response
   const debugInfo: DebugInfo = {
     environment: {
@@ -159,16 +165,9 @@ export async function GET(request: Request) {
     };
     return NextResponse.json(fallbackResponse, { headers });
   } catch (error: any) {
-    debugInfo.errors.push({
-      type: 'RouteHandler',
-      message: error.message,
-      stack: error.stack
-    });
-    debugInfo.usedFallback = true;
-    const errorResponse = {
-      ...fallbackVacancies,
-      _debug: debugInfo
-    };
-    return NextResponse.json(errorResponse, { headers });
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message, status: 500 }, { status: 500 });
+    }
+    return NextResponse.json({ message: 'An unknown error occurred', status: 500 }, { status: 500 });
   }
 } 

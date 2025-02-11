@@ -133,44 +133,45 @@ const ApprenticeshipPage = () => {
   const [currentChunk, setCurrentChunk] = useState(0)
   const CHUNK_SIZE = 6
 
-  useEffect(() => {
-    const fetchVacancies = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const params = new URLSearchParams();
-        if (postcode) params.append('postcode', postcode);
-        if (sortBy) params.append('sort', sortBy);
-        
-        const response = await fetch(`/api/vacancies?${params.toString()}`, {
-          cache: 'no-store',
-          headers: {
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache',
-            'Expires': '0',
-          },
-        });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        // Log debug information
-        if (data._debug) {
-          console.log('API Debug Info:', data._debug);
-        }
-        
-        setVacancies(data.vacancies || []);
-      } catch (err) {
-        console.error('Error fetching vacancies:', err);
-        setError('Failed to load apprenticeship vacancies. Please try again later.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const handleError = (error: unknown) => {
+    setError(`Failed to fetch vacancies: ${error}`)
+    setIsLoading(false)
+  }
 
+  const fetchVacancies = async () => {
+    try {
+      setIsLoading(true)
+      const params = new URLSearchParams();
+      if (postcode) params.append('postcode', postcode);
+      if (sortBy) params.append('sort', sortBy);
+      
+      const response = await fetch(`/api/vacancies?${params.toString()}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // Log debug information
+      if (data._debug) {
+        console.log('API Debug Info:', data._debug);
+      }
+      
+      setVacancies(data.vacancies || []);
+    } catch (error) {
+      handleError(error)
+    }
+  }
+
+  useEffect(() => {
     fetchVacancies();
   }, [postcode, sortBy]);
 

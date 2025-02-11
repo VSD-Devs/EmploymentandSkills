@@ -244,4 +244,9 @@ export const dfeApi = {
       throw error;
     }
   },
-}; 
+};
+
+const handleError = (error: unknown) => {
+  // Proper error handling instead of console.log
+  throw new Error(`API Error: ${error}`)
+} 

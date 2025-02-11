@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ChevronRight, X, ArrowLeft, Sparkles } from 'lucide-react'
+import { ChevronRight, X, ArrowLeft, Sparkles, ArrowRight } from 'lucide-react'
 import { quizQuestions, careerProfiles, sectorToRoles } from '../data/careerQuizData'
 import { sectorData } from '../data/sectors'
 import { careerPaths } from '../data/careerPaths'
@@ -22,7 +22,7 @@ const pathToSectorMap: { [key: string]: string } = {
 }
 
 interface CareerQuizProps {
-  // No props needed anymore
+  _unused?: never;
 }
 
 const CareerQuiz = () => {
