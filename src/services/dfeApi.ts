@@ -71,14 +71,9 @@ export interface GetVacanciesParams {
 export const dfeApi = {
   async getVacancies(params: GetVacanciesParams): Promise<DfeVacancyResponse> {
     try {
-      // Log the request configuration (without sensitive data)
-      console.log('DFE API Request:', {
+      // Debug log the full request details
+      const requestConfig = {
         url: `${DFE_API_BASE_URL}/vacancy`,
-        params,
-        hasApiKey: !!DFE_API_KEY,
-      });
-
-      const response = await axios.get(`${DFE_API_BASE_URL}/vacancy`, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -86,7 +81,33 @@ export const dfeApi = {
           'X-Version': '1',
         },
         params,
-        validateStatus: (status) => status < 500, // Handle 4xx errors in the catch block
+      };
+
+      console.log('DFE API Request Configuration:', {
+        url: requestConfig.url,
+        headers: {
+          ...requestConfig.headers,
+          'Ocp-Apim-Subscription-Key': DFE_API_KEY ? `${DFE_API_KEY.substring(0, 3)}...${DFE_API_KEY.substring(DFE_API_KEY.length - 3)}` : 'NOT_SET'
+        },
+        params: requestConfig.params,
+        nodeEnv: process.env.NODE_ENV,
+        vercelEnv: process.env.VERCEL_ENV
+      });
+
+      const response = await axios.get(requestConfig.url, {
+        headers: requestConfig.headers,
+        params: requestConfig.params,
+        validateStatus: null, // Allow any status code to pass through to our error handling
+        timeout: 10000, // 10 second timeout
+      });
+
+      // Log response status and headers
+      console.log('DFE API Response:', {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+        dataType: typeof response.data,
+        isHTML: typeof response.data === 'string' && response.data.includes('<!DOCTYPE html>'),
       });
 
       if (response.status !== 200) {
@@ -94,17 +115,45 @@ export const dfeApi = {
       }
 
       if (typeof response.data === 'string') {
+        if (response.data.includes('<!DOCTYPE html>')) {
+          throw new Error('DFE API returned HTML instead of JSON. Possible authentication issue.');
+        }
         throw new Error(`Unexpected response format: ${response.data.substring(0, 100)}...`);
+      }
+
+      // Validate response structure
+      if (!response.data || !Array.isArray(response.data.vacancies)) {
+        throw new Error(`Invalid response structure: ${JSON.stringify(response.data)}`);
       }
 
       return response.data;
     } catch (error: any) {
-      console.error('DFE API Error:', {
+      // Enhanced error logging
+      const errorDetails = {
         message: error.message,
+        name: error.name,
         status: error.response?.status,
-        responseData: error.response?.data,
-        url: error.config?.url,
-      });
+        statusText: error.response?.statusText,
+        responseHeaders: error.response?.headers,
+        responseType: error.response?.data ? typeof error.response.data : undefined,
+        responsePreview: error.response?.data ? 
+          (typeof error.response.data === 'string' ? 
+            error.response.data.substring(0, 200) : 
+            JSON.stringify(error.response.data).substring(0, 200)
+          ) : undefined,
+        config: error.config ? {
+          url: error.config.url,
+          method: error.config.method,
+          headers: {
+            ...error.config.headers,
+            'Ocp-Apim-Subscription-Key': 'REDACTED'
+          },
+          params: error.config.params,
+        } : undefined,
+        stack: error.stack
+      };
+
+      console.error('Detailed DFE API Error:', errorDetails);
       throw error;
     }
   },

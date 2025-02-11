@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { dfeApi } from '@/services/dfeApi';
 import type { VacancySort } from '@/services/dfeApi';
+import { fallbackVacancies } from '@/data/fallbackVacancies';
 
 // Simple cache object that works well with Vercel's serverless functions
 const cache: {
@@ -11,16 +12,38 @@ const cache: {
 } = {};
 
 const CACHE_DURATION = 1000 * 60 * 15; // 15 minutes
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000; // 1 second
+
+// Helper function to delay execution
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function GET(request: Request) {
+  // Add CORS headers
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  };
+
+  // Handle OPTIONS request for CORS
+  if (request.method === 'OPTIONS') {
+    return new NextResponse(null, { headers });
+  }
+
   try {
+    // Log environment info
+    console.log('Environment:', {
+      nodeEnv: process.env.NODE_ENV,
+      vercelEnv: process.env.VERCEL_ENV,
+      hasApiKey: !!process.env.DFE_API_KEY,
+      apiKeyLength: process.env.DFE_API_KEY?.length,
+    });
+
     // Check if API key is available
     if (!process.env.DFE_API_KEY) {
-      console.error('DFE_API_KEY is not set in environment variables');
-      return NextResponse.json(
-        { error: 'API configuration error - Missing API key' },
-        { status: 500 }
-      );
+      console.warn('DFE_API_KEY is not set, using fallback data');
+      return NextResponse.json(fallbackVacancies, { headers });
     }
 
     const { searchParams } = new URL(request.url);
@@ -29,10 +52,11 @@ export async function GET(request: Request) {
 
     // Log the incoming request details
     console.log('Incoming vacancies request:', {
+      url: request.url,
       postcode,
       sort,
-      apiKeyPresent: !!process.env.DFE_API_KEY,
-      apiKeyLength: process.env.DFE_API_KEY?.length,
+      method: request.method,
+      headers: Object.fromEntries(request.headers.entries()),
     });
 
     const cacheKey = `${postcode || 'default'}-${sort}`;
@@ -40,7 +64,8 @@ export async function GET(request: Request) {
 
     // Check cache first
     if (cache[cacheKey] && (now - cache[cacheKey].timestamp) < CACHE_DURATION) {
-      return NextResponse.json(cache[cacheKey].data);
+      console.log('Returning cached data for key:', cacheKey);
+      return NextResponse.json(cache[cacheKey].data, { headers });
     }
 
     // Base params
@@ -50,63 +75,63 @@ export async function GET(request: Request) {
       Sort: sort,
     };
 
-    // If postcode is provided, use it for location-based search
     if (postcode) {
-      // Using Sheffield coordinates for demo
       params.lat = 53.3811;
       params.lon = -1.4701;
       params.distanceInMiles = 50;
     } else {
-      // Default South Yorkshire search
       params.lat = 53.3811;
       params.lon = -1.4701;
       params.distanceInMiles = 20;
     }
 
-    const response = await dfeApi.getVacancies(params);
+    // Implement retry logic
+    let lastError: any;
+    for (let i = 0; i < MAX_RETRIES; i++) {
+      try {
+        console.log(`Attempt ${i + 1} to fetch vacancies`);
+        const response = await dfeApi.getVacancies(params);
+        
+        console.log('Successfully fetched vacancies:', {
+          totalVacancies: response.vacancies?.length,
+          total: response.total,
+          totalFiltered: response.totalFiltered,
+        });
 
-    // Update cache
-    cache[cacheKey] = {
-      data: response,
-      timestamp: now
-    };
+        cache[cacheKey] = {
+          data: response,
+          timestamp: now
+        };
 
-    return NextResponse.json(response);
-  } catch (error: any) {
-    // Enhanced error logging
-    const errorDetails = {
-      message: error.message,
-      status: error.response?.status,
-      data: error.response?.data,
-      isAxiosError: error.isAxiosError,
-      config: error.config ? {
-        url: error.config.url,
-        method: error.config.method,
-        params: error.config.params,
-      } : undefined
-    };
-
-    console.error('Detailed error in vacancies API route:', errorDetails);
-
-    // If we get HTML instead of JSON, return a more specific error
-    if (error.response?.data && typeof error.response.data === 'string' && 
-        error.response.data.includes('<!DOCTYPE html>')) {
-      return NextResponse.json(
-        { 
-          error: 'Invalid API response',
-          details: 'The DFE API returned an HTML error page instead of JSON. This usually indicates an authentication or configuration issue.'
-        },
-        { status: 500 }
-      );
+        return NextResponse.json(response, { headers });
+      } catch (error: any) {
+        lastError = error;
+        console.warn(`Attempt ${i + 1} failed:`, {
+          message: error.message,
+          status: error.response?.status,
+          data: error.response?.data,
+        });
+        
+        if (i < MAX_RETRIES - 1) {
+          await delay(RETRY_DELAY * (i + 1));
+        }
+      }
     }
 
-    return NextResponse.json(
-      { 
-        error: 'Failed to fetch vacancies',
-        details: errorDetails.message,
-        status: errorDetails.status
-      },
-      { status: error.response?.status || 500 }
-    );
+    console.error('All attempts to fetch vacancies failed:', {
+      error: lastError.message,
+      status: lastError.response?.status,
+    });
+    console.log('Falling back to static data');
+    
+    return NextResponse.json(fallbackVacancies, { headers });
+
+  } catch (error: any) {
+    console.error('Unhandled error in vacancies API route:', {
+      message: error.message,
+      stack: error.stack,
+    });
+    
+    return NextResponse.json(fallbackVacancies, { headers });
   }
 } 

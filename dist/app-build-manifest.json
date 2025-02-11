@@ -11,6 +11,16 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/young-people/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/young-people/page.js"
+    ],
+    "/apprenticeships/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/apprenticeships/page.js"
+    ],
     "/pathways/[category]/roles/[role]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -21,15 +31,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/pathways/[category]/layout.js"
     ],
-    "/young-people/page": [
+    "/adult-skills/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/young-people/page.js"
-    ],
-    "/apprenticeships/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/apprenticeships/page.js"
+      "static/chunks/app/adult-skills/page.js"
     ]
   }
 }
