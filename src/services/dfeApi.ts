@@ -1,12 +1,22 @@
 import axios from 'axios';
 
-// For server-side API calls
-const DFE_API_KEY = process.env.DFE_API_KEY;
-// For client-side API calls (if needed)
-const PUBLIC_DFE_API_KEY = process.env.NEXT_PUBLIC_DFE_API_KEY;
+// Get the appropriate API key based on environment
+const getApiKey = () => {
+  // Vercel Production
+  if (process.env.VERCEL_ENV === 'production') {
+    return process.env.VERCEL_DFE_API_KEY || process.env.DFE_API_KEY;
+  }
+  
+  // Vercel Preview
+  if (process.env.VERCEL_ENV === 'preview') {
+    return process.env.PREVIEW_DFE_API_KEY || process.env.DFE_API_KEY;
+  }
+  
+  // Vercel Development or Local
+  return process.env.DFE_API_KEY || process.env.NEXT_PUBLIC_DFE_API_KEY;
+};
 
-// Use the appropriate key based on environment
-const API_KEY = DFE_API_KEY || PUBLIC_DFE_API_KEY;
+const API_KEY = getApiKey();
 
 if (!API_KEY) {
   console.error('DFE API Key is not set in environment variables');
@@ -14,17 +24,32 @@ if (!API_KEY) {
 
 const DFE_API_BASE_URL = 'https://api.apprenticeships.education.gov.uk/vacancies';
 
-// Add environment checking
+// Enhanced environment checking
 const checkEnvironment = () => {
-  console.log('Environment Check:', {
+  const envInfo = {
     NODE_ENV: process.env.NODE_ENV,
     VERCEL_ENV: process.env.VERCEL_ENV,
     IS_VERCEL: process.env.VERCEL === '1',
     HAS_DFE_KEY: !!process.env.DFE_API_KEY,
+    HAS_VERCEL_DFE_KEY: !!process.env.VERCEL_DFE_API_KEY,
+    HAS_PREVIEW_DFE_KEY: !!process.env.PREVIEW_DFE_API_KEY,
+    HAS_PUBLIC_DFE_KEY: !!process.env.NEXT_PUBLIC_DFE_API_KEY,
     DFE_KEY_LENGTH: process.env.DFE_API_KEY?.length,
+    VERCEL_DFE_KEY_LENGTH: process.env.VERCEL_DFE_API_KEY?.length,
+    PREVIEW_DFE_KEY_LENGTH: process.env.PREVIEW_DFE_API_KEY?.length,
+    PUBLIC_DFE_KEY_LENGTH: process.env.NEXT_PUBLIC_DFE_API_KEY?.length,
     VERCEL_URL: process.env.VERCEL_URL,
-    VERCEL_REGION: process.env.VERCEL_REGION
-  });
+    VERCEL_REGION: process.env.VERCEL_REGION,
+    IS_SERVER: typeof window === 'undefined',
+    RUNTIME_ENV: process.env.RUNTIME_ENV || 'unknown',
+    SELECTED_KEY_SOURCE: getApiKey() === process.env.VERCEL_DFE_API_KEY ? 'VERCEL' :
+                        getApiKey() === process.env.PREVIEW_DFE_API_KEY ? 'PREVIEW' :
+                        getApiKey() === process.env.DFE_API_KEY ? 'REGULAR' :
+                        getApiKey() === process.env.NEXT_PUBLIC_DFE_API_KEY ? 'PUBLIC' : 'NONE'
+  };
+
+  console.log('🔍 Environment Check:', envInfo);
+  return envInfo;
 };
 
 export type VacancySort = 'AgeDesc' | 'AgeAsc' | 'DistanceDesc' | 'DistanceAsc' | 'ExpectedStartDateDesc' | 'ExpectedStartDateAsc';
@@ -96,16 +121,16 @@ export const dfeApi = {
   async getVacancies(params: GetVacanciesParams): Promise<DfeVacancyResponse> {
     try {
       // Check environment on each request
-      checkEnvironment();
+      const envInfo = checkEnvironment();
 
-      if (!DFE_API_KEY) {
-        throw new Error('DFE API Key is not configured. Environment: ' + 
-          JSON.stringify({
-            NODE_ENV: process.env.NODE_ENV,
-            VERCEL_ENV: process.env.VERCEL_ENV,
-            IS_VERCEL: process.env.VERCEL === '1'
-          })
-        );
+      if (!API_KEY) {
+        const error = new Error('DFE API Key is not configured');
+        console.error('🚨 API Key Missing:', {
+          error: error.message,
+          envInfo,
+          stack: error.stack
+        });
+        throw error;
       }
 
       // Debug log the full request details
@@ -114,84 +139,68 @@ export const dfeApi = {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Ocp-Apim-Subscription-Key': DFE_API_KEY,
+          'Ocp-Apim-Subscription-Key': API_KEY,
           'X-Version': '1',
         },
         params,
       };
 
-      console.log('DFE API Request Configuration:', {
+      console.log('📡 DFE API Request:', {
         url: requestConfig.url,
         headers: {
           ...requestConfig.headers,
-          'Ocp-Apim-Subscription-Key': API_KEY ? `${API_KEY.substring(0, 3)}...${API_KEY.substring(API_KEY.length - 3)}` : 'NOT_SET'
+          'Ocp-Apim-Subscription-Key': `${API_KEY.substring(0, 3)}...${API_KEY.substring(API_KEY.length - 3)}`
         },
         params: requestConfig.params,
-        nodeEnv: process.env.NODE_ENV,
-        vercelEnv: process.env.VERCEL_ENV,
-        isServer: typeof window === 'undefined'
+        envInfo
       });
 
       const response = await axios.get(requestConfig.url, {
         headers: requestConfig.headers,
         params: requestConfig.params,
-        validateStatus: null, // Allow any status code to pass through to our error handling
-        timeout: 10000, // 10 second timeout
+        validateStatus: null,
+        timeout: 10000,
       });
 
-      // Log response status and headers
-      console.log('DFE API Response:', {
+      console.log('✅ DFE API Response:', {
         status: response.status,
         statusText: response.statusText,
         headers: response.headers,
         dataType: typeof response.data,
         isHTML: typeof response.data === 'string' && response.data.includes('<!DOCTYPE html>'),
+        data: response.data ? 'Data present' : 'No data'
       });
 
       if (response.status !== 200) {
-        throw new Error(`DFE API returned status ${response.status}: ${JSON.stringify(response.data)}`);
+        const error = new Error(`DFE API Error: ${response.status}`);
+        console.error('🚨 API Error:', {
+          error: error.message,
+          status: response.status,
+          statusText: response.statusText,
+          data: response.data,
+          envInfo
+        });
+        throw error;
       }
 
       if (typeof response.data === 'string') {
-        if (response.data.includes('<!DOCTYPE html>')) {
-          throw new Error('DFE API returned HTML instead of JSON. Possible authentication issue.');
-        }
-        throw new Error(`Unexpected response format: ${response.data.substring(0, 100)}...`);
-      }
-
-      // Validate response structure
-      if (!response.data || !Array.isArray(response.data.vacancies)) {
-        throw new Error(`Invalid response structure: ${JSON.stringify(response.data)}`);
+        const error = new Error('Invalid response format');
+        console.error('🚨 Invalid Response:', {
+          error: error.message,
+          responseType: typeof response.data,
+          preview: response.data.substring(0, 100),
+          envInfo
+        });
+        throw error;
       }
 
       return response.data;
-    } catch (error: any) {
-      // Enhanced error logging
-      const errorDetails = {
-        message: error.message,
-        name: error.name,
-        status: error.response?.status,
-        statusText: error.response?.statusText,
-        responseHeaders: error.response?.headers,
-        responseType: error.response?.data ? typeof error.response.data : undefined,
-        responsePreview: error.response?.data ? 
-          (typeof error.response.data === 'string' ? 
-            error.response.data.substring(0, 200) : 
-            JSON.stringify(error.response.data).substring(0, 200)
-          ) : undefined,
-        config: error.config ? {
-          url: error.config.url,
-          method: error.config.method,
-          headers: {
-            ...error.config.headers,
-            'Ocp-Apim-Subscription-Key': 'REDACTED'
-          },
-          params: error.config.params,
-        } : undefined,
-        stack: error.stack
-      };
-
-      console.error('Detailed DFE API Error:', errorDetails);
+    } catch (error) {
+      console.error('🚨 Unhandled Error:', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        envInfo: checkEnvironment()
+      });
       throw error;
     }
   },
