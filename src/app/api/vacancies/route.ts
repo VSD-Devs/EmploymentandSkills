@@ -14,6 +14,15 @@ const CACHE_DURATION = 1000 * 60 * 15; // 15 minutes
 
 export async function GET(request: Request) {
   try {
+    // Check if API key is available
+    if (!process.env.DFE_API_KEY) {
+      console.error('DFE_API_KEY is not set in environment variables');
+      return NextResponse.json(
+        { error: 'API configuration error' },
+        { status: 500 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const postcode = searchParams.get('postcode');
     const sort = searchParams.get('sort') as VacancySort || 'AgeDesc';
@@ -55,11 +64,23 @@ export async function GET(request: Request) {
     };
 
     return NextResponse.json(response);
-  } catch (error) {
-    console.error('Error in vacancies API route:', error);
+  } catch (error: any) {
+    console.error('Error in vacancies API route:', {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+      config: {
+        url: error.config?.url,
+        headers: error.config?.headers ? { ...error.config.headers, 'Ocp-Apim-Subscription-Key': '[REDACTED]' } : undefined,
+      }
+    });
+
     return NextResponse.json(
-      { error: 'Failed to fetch vacancies' },
-      { status: 500 }
+      { 
+        error: 'Failed to fetch vacancies',
+        details: error.response?.data || error.message
+      },
+      { status: error.response?.status || 500 }
     );
   }
 } 
