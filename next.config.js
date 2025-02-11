@@ -24,7 +24,7 @@ const nextConfig = {
   // Enable more detailed logging
   logging: {
     level: 'verbose',
-    fetches: true
+    fetches: false
   },
   // Ensure we're not suppressing any console output
   onDemandEntries: {
