@@ -5,7 +5,6 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import ScrollToTop from '@/components/ScrollToTop'
 import { ThemeProvider } from 'next-themes'
-import AccessibilityToolbar from '@/components/AccessibilityToolbar'
 import Chatbot from '@/components/Chatbot'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
@@ -31,6 +30,27 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta httpEquiv="Cache-Control" content="public, max-age=31536000, immutable" />
         <meta name="theme-color" content="#10b981" />
+        <script 
+          src="https://website-widgets.pages.dev/dist/sienna.min.js" 
+          defer
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.addEventListener('load', function() {
+                if (window.Sienna) {
+                  window.Sienna.init({
+                    position: 'bottom-right',
+                    contrast: true,
+                    fontSize: true,
+                    textSpacing: true,
+                    dyslexic: true,
+                    saturation: true,
+                    linkHighlight: true
+                  });
+                }
+              });
+            `
+          }}
+        />
       </head>
       <body className="min-h-screen flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -39,7 +59,6 @@ export default function RootLayout({
           </a>
           <ScrollToTop />
           <Navigation />
-          <AccessibilityToolbar />
           <main id="main-content" className="flex-grow">
             {children}
           </main>

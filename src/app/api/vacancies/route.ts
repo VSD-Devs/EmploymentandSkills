@@ -107,11 +107,11 @@ export async function GET(request: Request) {
     if (postcode) {
       params.lat = 53.3811;
       params.lon = -1.4701;
-      params.distanceInMiles = 50;
+      params.distanceInMiles = 15;
     } else {
       params.lat = 53.3811;
       params.lon = -1.4701;
-      params.distanceInMiles = 20;
+      params.distanceInMiles = 15;
     }
 
     debugInfo.apiCallInfo = { params };

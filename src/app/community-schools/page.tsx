@@ -64,7 +64,6 @@ const CommunitySchoolsPage = () => {
   }
 
   useEffect(() => {
-    // Handle tab change effects if needed
     const section = document.getElementById(currentTab)
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' })
@@ -74,32 +73,50 @@ const CommunitySchoolsPage = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-16">
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/community-hero.jpg"
-            alt=""
+            alt="Community and schools partnership"
             fill
-            className="object-cover"
+            className="object-cover object-center brightness-75"
             priority
+            quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#111827]/80 to-[#111827]/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="flex items-center justify-center gap-2 text-emerald-400 mb-4">
-              <div className="p-2 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-500/20">
-                <GraduationCap className="h-5 w-5" />
+            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
+                <GraduationCap className="h-4 w-4" />
               </div>
               <span className="text-sm font-medium tracking-wide uppercase">Community &amp; Schools</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               Shape Yorkshire's Future Workforce
             </h1>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Choose how you want to make a difference in education
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto mb-8">
+              Partner with local schools and colleges to inspire the next generation. Your expertise can make a lasting impact on young people's careers.
             </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/opportunities"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
+              >
+                Give Your Time
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
+              <Link
+                href="#advisor"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+              >
+                Explore Ways to Help
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -131,31 +148,35 @@ const CommunitySchoolsPage = () => {
         </div>
       </div>
 
-      {/* Quick Stats Banner */}
+      {/* Quick Stats Banner - Moved to bottom */}
       <div className="bg-emerald-50 border-y border-emerald-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="grid grid-cols-3 gap-8">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                <Users className="w-5 h-5 text-emerald-600" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-900">Our Community Impact</h2>
+            <p className="text-gray-600 mt-2">Together, we're making a difference in Yorkshire's education</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex items-center gap-3 bg-white p-6 rounded-xl shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                <Users className="w-6 h-6 text-emerald-600" />
               </div>
               <div>
                 <div className="text-2xl font-bold text-emerald-600">200+</div>
                 <div className="text-sm text-gray-600">Active Volunteers</div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                <GraduationCap className="w-5 h-5 text-emerald-600" />
+            <div className="flex items-center gap-3 bg-white p-6 rounded-xl shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                <GraduationCap className="w-6 h-6 text-emerald-600" />
               </div>
               <div>
                 <div className="text-2xl font-bold text-emerald-600">50+</div>
                 <div className="text-sm text-gray-600">Partner Schools</div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                <HeartHandshake className="w-5 h-5 text-emerald-600" />
+            <div className="flex items-center gap-3 bg-white p-6 rounded-xl shadow-sm">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                <HeartHandshake className="w-6 h-6 text-emerald-600" />
               </div>
               <div>
                 <div className="text-2xl font-bold text-emerald-600">5,000+</div>

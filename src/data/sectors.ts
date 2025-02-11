@@ -672,5 +672,229 @@ export const sectorData: SectorData = {
         'Governance'
       ]
     }
+  },
+  'plumbing-heating': {
+    slug: 'plumbing-heating',
+    title: 'Plumbing & Heating',
+    category: 'trades',
+    description: 'A vital sector providing essential services in domestic and commercial plumbing, heating systems, and renewable energy installations.',
+    stats: [
+      {
+        icon: 'building',
+        number: '1,200+',
+        label: 'Businesses'
+      },
+      {
+        icon: 'users',
+        number: '15,000+',
+        label: 'Employee jobs'
+      },
+      {
+        icon: 'banknote',
+        number: '£32,000',
+        label: 'Average earnings'
+      }
+    ],
+    careerProgression: {
+      title: 'Career progression',
+      levels: [
+        {
+          title: 'Entry level',
+          roles: ['Plumbing Apprentice', 'Heating Engineer Assistant', 'Installation Helper']
+        },
+        {
+          title: 'Intermediate',
+          roles: ['Qualified Plumber', 'Heating Engineer', 'Gas Safe Engineer']
+        },
+        {
+          title: 'Advanced level',
+          roles: ['Master Plumber', 'Renewable Energy Specialist', 'Plumbing Business Owner']
+        }
+      ]
+    },
+    skills: {
+      general: [
+        'Problem solving',
+        'Customer service',
+        'Time management',
+        'Mathematics',
+        'Physical fitness'
+      ],
+      specialist: [
+        'Pipe fitting',
+        'Heating systems',
+        'Gas safety',
+        'Renewable technologies',
+        'Building regulations'
+      ]
+    }
+  },
+  'electrical': {
+    slug: 'electrical',
+    title: 'Electrical',
+    category: 'trades',
+    description: 'A dynamic sector covering domestic, commercial and industrial electrical installations, maintenance and renewable energy systems.',
+    stats: [
+      {
+        icon: 'building',
+        number: '1,500+',
+        label: 'Businesses'
+      },
+      {
+        icon: 'users',
+        number: '18,000+',
+        label: 'Employee jobs'
+      },
+      {
+        icon: 'banknote',
+        number: '£35,000',
+        label: 'Average earnings'
+      }
+    ],
+    careerProgression: {
+      title: 'Career progression',
+      levels: [
+        {
+          title: 'Entry level',
+          roles: ['Electrical Apprentice', 'Electrical Mate', 'Installation Assistant']
+        },
+        {
+          title: 'Intermediate',
+          roles: ['Qualified Electrician', 'Maintenance Electrician', 'Installation Electrician']
+        },
+        {
+          title: 'Advanced level',
+          roles: ['Master Electrician', 'Electrical Contractor', 'Electrical Business Owner']
+        }
+      ]
+    },
+    skills: {
+      general: [
+        'Problem solving',
+        'Attention to detail',
+        'Safety awareness',
+        'Mathematics',
+        'Communication'
+      ],
+      specialist: [
+        'Circuit testing',
+        'Electrical regulations',
+        'Smart systems',
+        'Renewable integration',
+        'Fault finding'
+      ]
+    }
+  },
+  'automotive': {
+    slug: 'automotive',
+    title: 'Automotive',
+    category: 'trades',
+    description: 'A sector combining traditional vehicle maintenance with cutting-edge electric and hybrid vehicle technology.',
+    stats: [
+      {
+        icon: 'building',
+        number: '900+',
+        label: 'Businesses'
+      },
+      {
+        icon: 'users',
+        number: '12,000+',
+        label: 'Employee jobs'
+      },
+      {
+        icon: 'banknote',
+        number: '£30,000',
+        label: 'Average earnings'
+      }
+    ],
+    careerProgression: {
+      title: 'Career progression',
+      levels: [
+        {
+          title: 'Entry level',
+          roles: ['Mechanic Apprentice', 'Service Technician', 'Parts Advisor']
+        },
+        {
+          title: 'Intermediate',
+          roles: ['Qualified Mechanic', 'Diagnostic Technician', 'MOT Tester']
+        },
+        {
+          title: 'Advanced level',
+          roles: ['Master Technician', 'Workshop Manager', 'Garage Owner']
+        }
+      ]
+    },
+    skills: {
+      general: [
+        'Problem solving',
+        'Customer service',
+        'Technical knowledge',
+        'Attention to detail',
+        'Digital literacy'
+      ],
+      specialist: [
+        'Diagnostics',
+        'Electric vehicles',
+        'Engine management',
+        'Hybrid systems',
+        'Vehicle electronics'
+      ]
+    }
+  },
+  'agriculture': {
+    slug: 'agriculture',
+    title: 'Agriculture & Horticulture',
+    category: 'trades',
+    description: 'A diverse sector combining traditional farming with modern agricultural technology and sustainable practices.',
+    stats: [
+      {
+        icon: 'building',
+        number: '2,500+',
+        label: 'Businesses'
+      },
+      {
+        icon: 'users',
+        number: '22,000+',
+        label: 'Employee jobs'
+      },
+      {
+        icon: 'banknote',
+        number: '£28,000',
+        label: 'Average earnings'
+      }
+    ],
+    careerProgression: {
+      title: 'Career progression',
+      levels: [
+        {
+          title: 'Entry level',
+          roles: ['Farm Worker', 'Horticulture Assistant', 'Agricultural Operative']
+        },
+        {
+          title: 'Intermediate',
+          roles: ['Skilled Farm Worker', 'Crop Specialist', 'Livestock Manager']
+        },
+        {
+          title: 'Advanced level',
+          roles: ['Farm Manager', 'Agricultural Consultant', 'Farm Business Owner']
+        }
+      ]
+    },
+    skills: {
+      general: [
+        'Physical stamina',
+        'Problem solving',
+        'Business awareness',
+        'Environmental awareness',
+        'Technology skills'
+      ],
+      specialist: [
+        'Crop management',
+        'Animal husbandry',
+        'Machinery operation',
+        'Sustainable farming',
+        'Precision agriculture'
+      ]
+    }
   }
 }; 

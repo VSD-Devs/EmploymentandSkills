@@ -207,6 +207,30 @@ export const sectorToRoles: { [key: string]: string[] } = {
     'registered-nurse',
     'specialist-practitioner'
   ],
+  'plumbing-heating': [
+    'qualified-plumber',
+    'heating-engineer',
+    'gas-safe-engineer',
+    'renewable-energy-specialist'
+  ],
+  'electrical': [
+    'qualified-electrician',
+    'electrical-contractor',
+    'installation-manager',
+    'electrical-designer'
+  ],
+  'automotive': [
+    'qualified-mechanic',
+    'diagnostic-technician',
+    'master-technician',
+    'workshop-manager'
+  ],
+  'agriculture': [
+    'farm-worker',
+    'crop-specialist',
+    'livestock-manager',
+    'farm-manager'
+  ],
   'business-finance': [
     'team-leader',
     'financial-advisor'

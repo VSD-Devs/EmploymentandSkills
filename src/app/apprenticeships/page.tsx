@@ -21,22 +21,30 @@ const apprenticeshipProcess = [
   {
     title: 'Search for an Apprenticeship',
     description: 'Browse through the available apprenticeships and find the one that matches your interests and career goals.',
-    icon: Search
+    icon: Search,
+    image: '/images/apprentice-search.jpg',
+    imageAlt: 'A young person exploring apprenticeship opportunities on a computer, representing the search phase'
   },
   {
     title: 'Apply',
     description: 'Submit your application through our simple online process. We will guide you every step of the way.',
-    icon: Briefcase
+    icon: Briefcase,
+    image: '/images/apprentice-apply.jpg',
+    imageAlt: 'A diverse group of young people getting application support from a careers adviser'
   },
   {
     title: 'Interview',
     description: 'Meet with potential employers and discuss your future role. We will help you prepare for your interviews.',
-    icon: Building2
+    icon: Building2,
+    image: '/images/apprentice-interview.jpg',
+    imageAlt: 'An apprenticeship candidate in a professional interview setting with local employers'
   },
   {
     title: 'Start Learning',
     description: 'Begin your apprenticeship journey, combining practical work experience with structured learning.',
-    icon: GraduationCap
+    icon: GraduationCap,
+    image: '/images/apprentice-learning.jpg',
+    imageAlt: 'An apprentice receiving hands-on training in their chosen field'
   }
 ]
 
@@ -69,11 +77,21 @@ const successStories: SuccessStory[] = [
 
 const categories = [
   'All',
+  'Agriculture, environmental and animal care',
+  'Business and administration',
+  'Care services',
+  'Catering and hospitality',
+  'Construction',
+  'Creative and design',
   'Digital',
-  'Technology',
-  'Engineering',
-  'Business',
-  'Healthcare'
+  'Education and childcare',
+  'Engineering and manufacturing',
+  'Hair and beauty',
+  'Health',
+  'Legal, finance and accounting',
+  'Protective services',
+  'Sales, marketing and procurement',
+  'Transport and logistics'
 ]
 
 type SortOption = 'AgeDesc' | 'AgeAsc' | 'DistanceAsc' | 'DistanceDesc';
@@ -85,6 +103,21 @@ const sortOptions = [
   { value: 'DistanceDesc', label: 'Furthest first' },
 ] as const;
 
+const salaryRanges = [
+  { min: 0, max: 10000, label: 'Up to £10,000' },
+  { min: 10000, max: 15000, label: '£10,000 - £15,000' },
+  { min: 15000, max: 20000, label: '£15,000 - £20,000' },
+  { min: 20000, max: 25000, label: '£20,000 - £25,000' },
+  { min: 25000, max: Infinity, label: '£25,000+' },
+];
+
+const southYorkshirePostcodes = [
+  { area: 'Sheffield', prefix: 'S' },
+  { area: 'Rotherham', prefix: 'S60-S66' },
+  { area: 'Barnsley', prefix: 'S70-S75' },
+  { area: 'Doncaster', prefix: 'DN' }
+];
+
 export const dynamic = 'force-dynamic'
 
 const ApprenticeshipPage = () => {
@@ -92,10 +125,11 @@ const ApprenticeshipPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [postcode, setPostcode] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('AgeDesc')
+  const [selectedSalaryRange, setSelectedSalaryRange] = useState<number>(-1)
+  const [showFilters, setShowFilters] = useState(false)
   const [vacancies, setVacancies] = useState<DfeVacancy[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [showFilters, setShowFilters] = useState(false)
   const [currentChunk, setCurrentChunk] = useState(0)
   const CHUNK_SIZE = 6
 
@@ -153,7 +187,31 @@ const ApprenticeshipPage = () => {
     const matchesCategory = selectedCategory === 'All' || 
       vacancy.course.route.toLowerCase().includes(selectedCategory.toLowerCase())
     
-    return matchesSearch && matchesCategory
+    // Filter by salary range
+    const matchesSalary = selectedSalaryRange === -1 || (() => {
+      const range = salaryRanges[selectedSalaryRange]
+      if (!range) return true
+      
+      const amount = vacancy.wage?.wageAmount
+      if (!amount) return false
+      
+      // Convert to annual salary if needed
+      let annualAmount = amount
+      if (vacancy.wage?.wageUnit === 'Weekly') {
+        annualAmount = amount * 52
+      } else if (vacancy.wage?.wageUnit === 'Monthly') {
+        annualAmount = amount * 12
+      }
+      
+      return annualAmount >= range.min && annualAmount <= range.max
+    })()
+
+    // Filter by South Yorkshire location
+    const matchesLocation = !postcode || southYorkshirePostcodes.some(area => 
+      vacancy.address.postcode.startsWith(area.prefix)
+    )
+    
+    return matchesSearch && matchesCategory && matchesSalary && matchesLocation
   })
 
   return (
@@ -240,6 +298,119 @@ const ApprenticeshipPage = () => {
         </div>
       </div>
 
+      {/* What is an Apprenticeship Section */}
+      <div className="bg-white py-16 sm:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="flex items-center gap-2 text-emerald-600 mb-4">
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                What is an Apprenticeship?
+              </h2>
+              <p className="text-xl leading-relaxed text-gray-600 mb-8">
+                An apprenticeship is a genuine job with structured training, combining practical work experience with dedicated study time. You'll earn whilst you learn, gaining valuable qualifications and real-world skills.
+              </p>
+
+              <div className="space-y-6 mb-8">
+                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Briefcase className="h-6 w-6 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Work Experience</h3>
+                      <p className="text-gray-600">
+                        Gain hands-on experience working alongside industry professionals. You'll spend 80% of your time learning on the job.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <BookOpen className="h-6 w-6 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Study Programme</h3>
+                      <p className="text-gray-600">
+                        Dedicate 20% of your time to learning through a structured training programme, either at college, university, or online.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
+                  <div className="flex gap-4">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Recognised Qualification</h3>
+                      <p className="text-gray-600">
+                        Complete your apprenticeship with a nationally recognised qualification, from GCSE equivalent up to master's degree level.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-emerald-50 rounded-xl p-6 border border-emerald-100">
+                <h4 className="font-semibold text-emerald-900 mb-4 flex items-center gap-2">
+                  <GraduationCap className="h-5 w-5 text-emerald-600" />
+                  Available Qualification Levels
+                </h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-white rounded-lg p-4 border border-emerald-100">
+                    <span className="text-lg font-bold text-emerald-600">Level 2-3</span>
+                    <p className="text-sm text-emerald-700 mt-1">GCSE to A-level equivalent</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-emerald-100">
+                    <span className="text-lg font-bold text-emerald-600">Level 4-5</span>
+                    <p className="text-sm text-emerald-700 mt-1">Foundation degree equivalent</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-emerald-100">
+                    <span className="text-lg font-bold text-emerald-600">Level 6</span>
+                    <p className="text-sm text-emerald-700 mt-1">Bachelor's degree equivalent</p>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-emerald-100">
+                    <span className="text-lg font-bold text-emerald-600">Level 7</span>
+                    <p className="text-sm text-emerald-700 mt-1">Master's degree equivalent</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="aspect-[4/5] rounded-2xl overflow-hidden">
+                <Image
+                  src="/images/apprenticeship-learning.jpg"
+                  alt="An apprentice receiving hands-on training whilst building their portfolio"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-6 -left-6 right-6 bg-white rounded-xl shadow-xl p-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <Users className="h-8 w-8 text-emerald-600" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Support Network</h4>
+                    <p className="text-sm text-gray-600">You'll have dedicated mentors throughout your journey</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Clock className="h-8 w-8 text-emerald-600" />
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Flexible Learning</h4>
+                    <p className="text-sm text-gray-600">Balance work and study with structured training</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* South Yorkshire Apprenticeship Hub Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -301,23 +472,81 @@ const ApprenticeshipPage = () => {
       <div className="bg-gray-50 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
+              <span className="text-sm font-medium tracking-wide uppercase">Your Journey Starts Here</span>
+            </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Four Simple Steps to Your Future Career
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Your path to success starts here. We will support you every step of the way.
+              We're here to guide you through every stage of your apprenticeship journey in South Yorkshire. Our local team provides personalised support to help you succeed.
             </p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-8">
             {apprenticeshipProcess.map((step, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-lg">
-                <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
-                  <step.icon className="h-6 w-6 text-emerald-600" />
+              <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div className="relative h-48 w-full">
+                  <Image
+                    src={step.image}
+                    alt={step.imageAlt}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+                <div className="p-6">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
+                    <step.icon className="h-6 w-6 text-emerald-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
+                  <p className="text-gray-600">{step.description}</p>
+                </div>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Section with Image */}
+      <div className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl">
+              <Image
+                src="/images/apprentice-success.jpg"
+                alt="Successful apprentices from South Yorkshire celebrating their achievements"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 text-emerald-600 mb-4">
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
+                <span className="text-sm font-medium tracking-wide uppercase">Why Choose an Apprenticeship?</span>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                Join South Yorkshire's Success Story
+              </h2>
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <p className="text-3xl font-bold text-emerald-600 mb-2">92%</p>
+                  <p className="text-gray-600">of apprentices go into work or further training</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-emerald-600 mb-2">£20k+</p>
+                  <p className="text-gray-600">average starting salary after qualification</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-emerald-600 mb-2">1,500+</p>
+                  <p className="text-gray-600">local employers offering apprenticeships</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-emerald-600 mb-2">89%</p>
+                  <p className="text-gray-600">satisfaction rate from our apprentices</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -372,22 +601,18 @@ const ApprenticeshipPage = () => {
 
               <div className="flex flex-wrap items-center gap-4">
                 <div className="flex-1">
-                  <div className="flex flex-wrap gap-3">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    aria-label="Select apprenticeship category"
+                  >
                     {categories.map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                          selectedCategory === category
-                            ? 'bg-emerald-600 text-white shadow-md'
-                            : 'bg-gray-50 text-gray-700 hover:bg-emerald-50 border border-gray-200'
-                        }`}
-                        aria-pressed={selectedCategory === category}
-                      >
+                      <option key={category} value={category}>
                         {category}
-                      </button>
+                      </option>
                     ))}
-                  </div>
+                  </select>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -396,7 +621,7 @@ const ApprenticeshipPage = () => {
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
                   >
                     <SlidersHorizontal className="h-4 w-4" />
-                    Filters
+                    Show as
                   </button>
 
                   <select
@@ -407,6 +632,19 @@ const ApprenticeshipPage = () => {
                     {sortOptions.map(option => (
                       <option key={option.value} value={option.value}>
                         {option.label}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    value={selectedSalaryRange}
+                    onChange={(e) => setSelectedSalaryRange(parseInt(e.target.value))}
+                    className="px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  >
+                    <option value={-1}>All Salaries</option>
+                    {salaryRanges.map((range, index) => (
+                      <option key={index} value={index}>
+                        {range.label}
                       </option>
                     ))}
                   </select>
@@ -574,13 +812,13 @@ const ApprenticeshipPage = () => {
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
               <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-              <span className="text-sm font-medium tracking-wide uppercase">Success Stories</span>
+              <span className="text-sm font-medium tracking-wide uppercase">Local Success Stories</span>
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Meet Our Apprentices
+              Meet Our South Yorkshire Apprentices
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover how apprenticeships have transformed careers across South Yorkshire
+              Discover how local people like you have transformed their careers through apprenticeships
             </p>
           </div>
 
