@@ -247,65 +247,49 @@ const YoungPeople = () => {
       onTouchEnd={handleTouchEnd}
     >
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-12 sm:py-24 overflow-hidden">
-        {/* Background Image */}
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/young-people.jpg"
-            alt=""
+            alt="Young people exploring career opportunities in South Yorkshire"
             fill
-            className="object-cover object-center"
+            className="object-cover object-center object-[center_25%] brightness-75"
             priority
+            quality={90}
           />
-          {/* Dark overlay for text legibility - reduced opacity */}
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
         </div>
 
-        {/* Dotted grid pattern */}
-        <div 
-          className="absolute inset-0 opacity-10 mix-blend-soft-light"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
-        
-        {/* Subtle light effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/20" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10">
-            {/* Soft-edged square background */}
-            <div className="absolute -left-4 right-[30%] -inset-y-6 sm:-left-8 sm:right-[40%] sm:-inset-y-8 bg-black/60 backdrop-blur-sm rounded-[2rem] sm:rounded-[3rem]" />
-            
-            <div className="relative px-4 sm:px-8 py-6 sm:py-8">
-              <div className="flex items-center gap-2 text-indigo-400 mb-4">
-                <div className="p-2 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-500/20">
-                  <Rocket className="h-4 w-4 sm:h-5 sm:w-5" />
-                </div>
-                <span className="text-xs sm:text-sm font-medium tracking-wide uppercase">Your Future Starts Here</span>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 text-indigo-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-400/20">
+                <Rocket className="h-4 w-4" />
               </div>
-              <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6 drop-shadow-sm">
-                Career Support<br />in South Yorkshire
-              </h1>
-              <p className="text-base sm:text-lg text-gray-200 mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-                Explore exciting opportunities for your future. Whether it's university, apprenticeships, or starting your career, we're here to help you make informed choices.
-              </p>
-              <div className="flex flex-wrap gap-3 sm:gap-4">
-                <button
-                  onClick={() => setIsQuizOpen(true)}
-                  className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-indigo-600 text-white text-sm sm:text-base rounded-xl hover:bg-indigo-500 transition-colors shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:shadow-indigo-500/30 backdrop-blur-sm"
-                >
-                  Take Career Quiz
-                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                </button>
-                <Link
-                  href="/explore"
-                  className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-white/10 text-white text-sm sm:text-base rounded-xl hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10 hover:border-white/20"
-                >
-                  Explore Options
-                </Link>
-              </div>
+              <span className="text-sm font-medium tracking-wide uppercase">Your Future Starts Here</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Career Support<br className="hidden sm:block" /> in South Yorkshire
+            </h1>
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
+              Explore exciting opportunities for your future. Whether it's university, apprenticeships, or starting your career, we're here to help you make informed choices.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <button
+                onClick={() => setIsQuizOpen(true)}
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition-colors"
+              >
+                Take Career Quiz
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </button>
+              <Link
+                href="/explore"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+              >
+                Explore Options
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>

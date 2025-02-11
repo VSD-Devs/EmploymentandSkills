@@ -68,30 +68,50 @@ const Parents = () => {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-24">
-        <div className="absolute inset-0 overflow-hidden">
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+        <div className="absolute inset-0">
           <Image
             src="/images/parent-hero.jpg"
-            alt=""
+            alt="Supporting parents and carers in guiding their children's career paths"
             fill
+            className="object-cover object-center object-[center_25%] brightness-75"
             priority
-            className="object-cover object-[center_35%] scale-110 md:scale-100 opacity-70"
             quality={90}
           />
-          <div className="absolute inset-0 bg-[#111827]/60 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10">
-            <div className="flex items-center gap-2 text-teal-400 mb-4">
-              <span className="inline-block w-2 h-2 rounded-full bg-teal-400" />
-              <span className="text-sm font-medium">Parents & Carers Guide</span>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 text-teal-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-teal-500/10 backdrop-blur-sm border border-teal-400/20">
+                <Users className="h-4 w-4" />
+              </div>
+              <span className="text-sm font-medium tracking-wide uppercase">Parents & Carers Guide</span>
             </div>
-            <h1 className="text-5xl font-bold text-white mb-6">
-              Support Your Child's<br />Career Journey
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Support Your Child's<br className="hidden sm:block" /> Career Journey
             </h1>
-            <p className="text-lg text-gray-400 mb-8 max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
               Guidance and resources to help your child make informed decisions about their future career path in Yorkshire's growing industries.
             </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <Link
+                href="/career-guidance"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-teal-600 text-white font-medium hover:bg-teal-500 transition-colors"
+              >
+                Get Started
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
+              <Link
+                href="/success-stories"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+              >
+                View Success Stories
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

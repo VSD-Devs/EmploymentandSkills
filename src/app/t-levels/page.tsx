@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { BookOpen, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, School } from 'lucide-react'
+import { BookOpen, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, School, ChevronDown } from 'lucide-react'
 
 // Types
 interface TLevelProvider {
@@ -102,48 +102,71 @@ const providers: TLevelProvider[] = [
     courses: [
       'Design and Development for Engineering and Manufacturing (Mechanical Engineering)'
     ]
+  },
+  {
+    name: 'Doncaster College',
+    website: 'don.ac.uk',
+    location: 'Doncaster',
+    imageUrl: '/images/providers/doncaster-college.jpg',
+    courses: [
+      'Building Services Engineering',
+      'Digital Production, Design and Development',
+      'Education and Childcare',
+      'Engineering and Manufacturing',
+      'Health and Science',
+      'Management and Administration'
+    ]
   }
 ]
 
 const categories: TLevelCategory[] = [
   {
     name: 'Digital & Technology',
-    description: 'Develop skills in software development, cyber security, and digital infrastructure.',
-    providers: ['Barnsley College', 'The Sheffield College', 'Longley Park Sixth Form']
+    description: 'Software development, cyber security, and digital infrastructure',
+    providers: ['Barnsley College', 'The Sheffield College', 'Longley Park Sixth Form', 'Doncaster College']
   },
   {
     name: 'Construction & Engineering',
-    description: 'Learn practical skills in construction, engineering, and manufacturing.',
-    providers: ['Barnsley College', 'The Sheffield College', 'RNN Group', 'UTC Sheffield City Centre']
+    description: 'Construction, engineering, manufacturing and building services',
+    providers: ['Barnsley College', 'The Sheffield College', 'RNN Group', 'UTC Sheffield City Centre', 'Doncaster College']
   },
   {
     name: 'Business & Administration',
-    description: 'Gain expertise in business management, accounting, and administration.',
-    providers: ['Barnsley College', 'RNN Group', 'Thomas Rotherham College']
+    description: 'Business management, accounting, and administration',
+    providers: ['Barnsley College', 'RNN Group', 'Thomas Rotherham College', 'Doncaster College']
   },
   {
     name: 'Health & Education',
-    description: 'Prepare for careers in healthcare, childcare, and education.',
-    providers: ['Barnsley College', 'The Sheffield College', 'Longley Park Sixth Form', 'RNN Group']
+    description: 'Healthcare, childcare, and education',
+    providers: ['Barnsley College', 'The Sheffield College', 'Longley Park Sixth Form', 'RNN Group', 'Doncaster College']
+  },
+  {
+    name: 'Creative & Design',
+    description: 'Media, fashion, textiles and creative production',
+    providers: ['Barnsley College', 'The Sheffield College']
   }
 ]
 
 const TLevelsPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [expandedProvider, setExpandedProvider] = useState<string | null>(null)
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([])
+  const [expandedProviders, setExpandedProviders] = useState<string[]>([])
 
-  const filteredProviders = providers.filter(provider => {
-    const matchesSearch = 
-      provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      provider.courses.some(course => course.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      provider.location.toLowerCase().includes(searchTerm.toLowerCase())
-    
-    const matchesCategory = selectedCategory === 'All' || 
-      categories.find(cat => cat.name === selectedCategory)?.providers.includes(provider.name)
-    
-    return matchesSearch && matchesCategory
-  })
+  const toggleCategory = (categoryName: string) => {
+    setExpandedCategories(prev => 
+      prev.includes(categoryName) 
+        ? prev.filter(cat => cat !== categoryName)
+        : [...prev, categoryName]
+    )
+  }
+
+  const toggleProvider = (providerName: string) => {
+    setExpandedProviders(prev => 
+      prev.includes(providerName) 
+        ? prev.filter(p => p !== providerName)
+        : [...prev, providerName]
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -235,148 +258,189 @@ const TLevelsPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Find T-Level Providers
+              Explore T-Level Subjects
             </h2>
             <p className="text-lg text-gray-600">
-              Search and filter T-Level providers in South Yorkshire
+              Choose a subject area to see available courses and providers
             </p>
           </div>
 
-          {/* Search and Filters */}
+          {/* Search */}
           <div className="max-w-2xl mx-auto mb-12">
-            <div className="relative mb-6">
+            <div className="relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
               <input
                 type="text"
-                placeholder="Search by course, college or location..."
+                placeholder="Search subjects, courses or providers..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="w-full pl-12 pr-4 py-3 rounded-full bg-white border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
               />
             </div>
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-              {['All', ...categories.map(c => c.name)].map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                    selectedCategory === cat
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
           </div>
 
-          {/* Provider Cards */}
-          <div className="grid gap-6">
-            {filteredProviders.map((provider) => (
-              <div
-                key={provider.name}
-                className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <div className="grid lg:grid-cols-12 gap-6">
-                  {/* Left Column - Provider Info */}
-                  <div className="lg:col-span-3 p-6 bg-gray-50">
-                    <div className="relative h-48 rounded-lg overflow-hidden mb-4">
-                      <Image
-                        src={provider.imageUrl}
-                        alt={provider.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {provider.name}
-                    </h3>
-                    <div className="flex items-center gap-2 text-gray-600 mb-4">
-                      <MapPin className="h-4 w-4" />
-                      {provider.location}
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600 mb-4">
-                      <School className="h-4 w-4" />
-                      <span className="font-medium">{provider.courses.length} courses</span>
-                    </div>
-                    <a
-                      href={`https://www.${provider.website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-full px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
+          {/* Subject Categories */}
+          <div className="space-y-4">
+            {categories
+              .filter(category =>
+                searchTerm === '' ||
+                category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                category.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                providers.some(provider =>
+                  category.providers.includes(provider.name) &&
+                  (provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    provider.courses.some(course =>
+                      course.toLowerCase().includes(searchTerm.toLowerCase())
+                    ))
+                )
+              )
+              .map((category) => {
+                const categoryProviders = providers.filter(provider =>
+                  category.providers.includes(provider.name)
+                )
+
+                return (
+                  <div
+                    key={category.name}
+                    className="bg-white rounded-xl border border-gray-200 overflow-hidden"
+                  >
+                    {/* Category Header */}
+                    <button
+                      onClick={() => toggleCategory(category.name)}
+                      className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
                     >
-                      Visit Website
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </a>
-                  </div>
-
-                  {/* Right Column - Course Info */}
-                  <div className="lg:col-span-9 p-6">
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {categories
-                        .filter(cat => cat.providers.includes(provider.name))
-                        .map(cat => (
-                          <span 
-                            key={cat.name}
-                            className="px-3 py-1 rounded-full text-sm bg-emerald-50 text-emerald-700"
-                          >
-                            {cat.name}
-                          </span>
-                        ))
-                      }
-                    </div>
-
-                    <div className="mb-6">
-                      <h4 className="text-lg font-medium text-gray-900 mb-4">Available Courses</h4>
-                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {(expandedProvider === provider.name 
-                          ? provider.courses
-                          : provider.courses.slice(0, 6)
-                        ).map(course => (
-                          <div 
-                            key={course}
-                            className="p-4 rounded-lg bg-gray-50 border border-gray-100 hover:border-emerald-200 transition-colors"
-                          >
-                            <div className="flex items-start gap-3">
-                              <GraduationCap className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-1" />
-                              <div>
-                                <p className="font-medium text-gray-900">{course}</p>
-                                <p className="text-sm text-gray-500 mt-1">
-                                  Starting September 2024
-                                </p>
-                              </div>
-                            </div>
+                      <div className="flex items-start gap-4">
+                        <div className="mt-1">
+                          <GraduationCap className="h-6 w-6 text-emerald-600" />
+                        </div>
+                        <div className="text-left">
+                          <h3 className="text-xl font-bold text-gray-900">
+                            {category.name}
+                          </h3>
+                          <p className="text-gray-600 mt-1">
+                            {category.description}
+                          </p>
+                          <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
+                            <School className="h-4 w-4" />
+                            <span>{categoryProviders.length} providers</span>
+                            <span className="mx-2">•</span>
+                            <span>
+                              {categoryProviders.reduce((acc, provider) => 
+                                acc + provider.courses.length, 0
+                              )} courses
+                            </span>
                           </div>
-                        ))}
+                        </div>
                       </div>
-                    </div>
+                      <ChevronDown
+                        className={`h-5 w-5 text-gray-400 transition-transform ${
+                          expandedCategories.includes(category.name) ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
 
-                    {provider.courses.length > 6 && (
-                      <button
-                        onClick={() => setExpandedProvider(
-                          expandedProvider === provider.name ? null : provider.name
-                        )}
-                        className="inline-flex items-center text-emerald-600 hover:text-emerald-700 text-sm font-medium"
-                      >
-                        {expandedProvider === provider.name ? (
-                          <>Show less <ArrowRight className="ml-1 h-4 w-4 rotate-90" /></>
-                        ) : (
-                          <>Show {provider.courses.length - 6} more courses <ArrowRight className="ml-1 h-4 w-4 -rotate-90" /></>
-                        )}
-                      </button>
+                    {/* Expanded Content */}
+                    {expandedCategories.includes(category.name) && (
+                      <div className="border-t border-gray-200">
+                        <div className="divide-y divide-gray-200">
+                          {categoryProviders.map((provider) => (
+                            <div key={provider.name} className="bg-gray-50">
+                              <button
+                                onClick={() => toggleProvider(provider.name)}
+                                className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-100/50 transition-colors"
+                              >
+                                <div className="flex items-center gap-4">
+                                  <div className="relative h-10 w-10 rounded-lg overflow-hidden bg-white">
+                                    <Image
+                                      src={provider.imageUrl}
+                                      alt={provider.name}
+                                      fill
+                                      className="object-cover"
+                                    />
+                                  </div>
+                                  <div className="text-left">
+                                    <h4 className="font-medium text-gray-900">
+                                      {provider.name}
+                                    </h4>
+                                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                                      <MapPin className="h-4 w-4" />
+                                      {provider.location}
+                                    </div>
+                                  </div>
+                                </div>
+                                <ChevronDown
+                                  className={`h-5 w-5 text-gray-400 transition-transform ${
+                                    expandedProviders.includes(provider.name) ? 'rotate-180' : ''
+                                  }`}
+                                />
+                              </button>
+
+                              {/* Provider Courses */}
+                              {expandedProviders.includes(provider.name) && (
+                                <div className="px-6 pb-4">
+                                  <div className="space-y-3 mt-2">
+                                    {provider.courses
+                                      .filter(course =>
+                                        searchTerm === '' ||
+                                        course.toLowerCase().includes(searchTerm.toLowerCase())
+                                      )
+                                      .map(course => (
+                                        <div
+                                          key={course}
+                                          className="flex items-center justify-between gap-4 p-4 bg-white rounded-lg border border-gray-200"
+                                        >
+                                          <div className="flex items-start gap-3">
+                                            <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-1" />
+                                            <div>
+                                              <h5 className="font-medium text-gray-900">
+                                                {course}
+                                              </h5>
+                                              <p className="text-sm text-gray-500 mt-1">
+                                                Starting September 2024 • 2 Years
+                                              </p>
+                                            </div>
+                                          </div>
+                                          <a
+                                            href={`https://www.${provider.website}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center px-4 py-2 text-sm bg-emerald-50 text-emerald-700 rounded-full hover:bg-emerald-100 transition-colors"
+                                          >
+                                            Learn More
+                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                          </a>
+                                        </div>
+                                      ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     )}
                   </div>
-                </div>
-              </div>
-            ))}
+                )
+              })}
           </div>
 
-          {filteredProviders.length === 0 && (
-            <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
+          {/* No Results */}
+          {categories.filter(category =>
+            searchTerm === '' ||
+            category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            category.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            providers.some(provider =>
+              category.providers.includes(provider.name) &&
+              (provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                provider.courses.some(course =>
+                  course.toLowerCase().includes(searchTerm.toLowerCase())
+                ))
+            )
+          ).length === 0 && (
+            <div className="text-center py-12">
               <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-600 text-lg">
-                No providers found matching your search criteria.
+                No matches found for your search
               </p>
             </div>
           )}

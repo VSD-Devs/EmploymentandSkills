@@ -29,81 +29,62 @@ export default function EventsPageContent() {
     return (
         <div className="bg-white">
             {/* Hero Section */}
-            <div className="relative bg-[#111827] py-12 sm:py-24 overflow-hidden">
-                {/* Background Image */}
+            <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
                 <div className="absolute inset-0">
                     <Image
                         src="/images/events-hero.jpg"
-                        alt=""
+                        alt="Networking and career events in South Yorkshire"
                         fill
-                        className="object-cover object-center"
+                        className="object-cover object-center object-[center_25%] brightness-75"
                         priority
+                        quality={90}
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
                 </div>
 
-                {/* Dotted grid pattern */}
-                <div 
-                    className="absolute inset-0 opacity-10 mix-blend-soft-light"
-                    style={{
-                        backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 0)`,
-                        backgroundSize: '40px 40px'
-                    }}
-                />
-                
-                {/* Subtle light effect */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/20" />
-
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="relative z-10">
-                        {/* Soft-edged square background */}
-                        <div className="absolute -left-4 right-[30%] -inset-y-6 sm:-left-8 sm:right-[40%] sm:-inset-y-8 bg-black/75 backdrop-blur-md rounded-[2rem] sm:rounded-[3rem]" />
-                        
-                        <div className="relative px-4 sm:px-8 py-6 sm:py-8">
-                            <div className="flex items-center gap-2 text-indigo-400 mb-4">
-                                <div className="p-2 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-500/20">
-                                    <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
-                                </div>
-                                <span className="text-xs sm:text-sm font-medium tracking-wide uppercase">Events & Workshops</span>
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center">
+                        <div className="inline-flex items-center gap-2 text-indigo-300 mb-4">
+                            <div className="p-1.5 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-400/20">
+                                <Calendar className="h-4 w-4" />
                             </div>
-                            <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6 drop-shadow-sm">
-                                Discover Opportunities<br />in South Yorkshire
-                            </h1>
-                            <p className="text-base sm:text-lg text-gray-200 mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-                                Join our events and workshops to develop your skills, network with professionals, and explore career opportunities across the region.
+                            <span className="text-sm font-medium tracking-wide uppercase">Events & Workshops</span>
+                        </div>
+                        <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+                            Connect with Opportunities<br className="hidden sm:block" /> in South Yorkshire
+                        </h1>
+                        <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto mb-8">
+                            Join our events and workshops to develop your skills, network with professionals, and explore career opportunities across the region.
+                        </p>
+
+                        {/* Enhanced Audience Selection */}
+                        <div className="max-w-sm mx-auto">
+                            <div className="relative">
+                                <select
+                                    value={selectedAudience}
+                                    onChange={(e) => setSelectedAudience(e.target.value as EventAudience | 'all')}
+                                    className="w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm text-white px-5 py-3 text-base font-medium focus:border-indigo-400 focus:ring-indigo-400 cursor-pointer hover:border-white/30 transition-colors appearance-none"
+                                >
+                                    <option value="all" className="text-gray-900">Find events for...</option>
+                                    {eventAudiences
+                                        .filter(audience => audience !== 'All')
+                                        .map((audience) => (
+                                            <option key={audience} value={audience} className="text-gray-900">
+                                                {audience === 'Businesses' ? 'Business' :
+                                                 audience === 'Parents' ? 'Parent' :
+                                                 audience === 'Job Seekers' ? 'Job Seeker' :
+                                                 audience === 'Students' ? 'Student' :
+                                                 audience === 'Training Providers' ? 'Training Provider' :
+                                                 audience}
+                                            </option>
+                                        ))}
+                                </select>
+                                <ChevronRight className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
+                            </div>
+                            <p className="mt-2 text-gray-300 text-sm">
+                                Select your role to see relevant events
                             </p>
-
-                            {/* Audience Selection */}
-                            <div className="max-w-sm">
-                                <label htmlFor="hero-audience" className="block text-gray-200 text-sm font-medium mb-2">
-                                    Tell us who you are to find relevant events
-                                </label>
-                                <div className="relative">
-                                    <select
-                                        id="hero-audience"
-                                        value={selectedAudience}
-                                        onChange={(e) => setSelectedAudience(e.target.value as EventAudience | 'all')}
-                                        className="w-full rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm text-white px-4 py-3 text-base font-medium focus:border-indigo-400 focus:ring-indigo-400 cursor-pointer hover:border-white/30 transition-colors appearance-none"
-                                    >
-                                        <option value="all" className="text-gray-900">I am a...</option>
-                                        {eventAudiences
-                                            .filter(audience => audience !== 'All')
-                                            .map((audience) => (
-                                                <option key={audience} value={audience} className="text-gray-900">
-                                                    {audience === 'Businesses' ? 'Business' :
-                                                     audience === 'Parents' ? 'Parent' :
-                                                     audience === 'Job Seekers' ? 'Job Seeker' :
-                                                     audience === 'Students' ? 'Student' :
-                                                     audience === 'Training Providers' ? 'Training Provider' :
-                                                     audience}
-                                                </option>
-                                            ))}
-                                    </select>
-                                    <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
-                                </div>
-                                <p className="mt-2 text-gray-300 text-sm">
-                                    Select your role to see events tailored for you
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>

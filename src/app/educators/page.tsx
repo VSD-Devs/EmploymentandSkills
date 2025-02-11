@@ -16,76 +16,49 @@ import {
 export default function EducatorsPage() {
   return (
     <main className="min-h-screen bg-white">
-      {/* Hero Section with Role Selection */}
-      <div className="relative bg-slate-900 py-24 overflow-hidden">
-        {/* Background pattern */}
-        <div 
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: `radial-gradient(#94a3b8 1px, transparent 1px)`,
-            backgroundSize: '32px 32px',
-          }}
-        />
+      {/* Hero Section */}
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/educator-hero.jpg"
+            alt="Education and training facilities in South Yorkshire"
+            fill
+            className="object-cover object-center object-[center_25%] brightness-75"
+            priority
+            quality={90}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
+        </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative">
-            {/* Hero Content */}
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 text-emerald-400 mb-6 px-4 py-2 rounded-full bg-emerald-950/50 backdrop-blur-sm border border-emerald-800/50">
-                <GraduationCap className="h-4 w-4" />
-                <span className="text-sm font-medium tracking-wide uppercase">Education Hub</span>
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
+                <BookOpen className="h-4 w-4" />
               </div>
-              
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
-                Shaping South Yorkshire's
-                <span className="text-emerald-400"> Future</span>
-              </h1>
-              
-              <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-12 leading-relaxed">
-                Join us in building a skilled workforce for tomorrow. Access resources, funding, and support tailored to your role.
-              </p>
+              <span className="text-sm font-medium tracking-wide uppercase">Education Hub</span>
             </div>
-
-            {/* Role Selection Cards */}
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Training Provider Card */}
-              <Link 
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Shaping South Yorkshire's Future Workforce
+            </h1>
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
+              Join us in building a skilled workforce for tomorrow. Access resources, funding, and support tailored to your role in education.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <Link
                 href="/educators/training-providers"
-                className="group relative bg-white/[0.03] backdrop-blur-sm rounded-2xl p-8 transition-all duration-300 hover:bg-white/[0.06] border border-white/10 overflow-hidden"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
               >
-                <div className="relative z-10">
-                  <div className="w-14 h-14 bg-emerald-950/50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-emerald-500/20">
-                    <GraduationCap className="h-7 w-7 text-emerald-400" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-white mb-4">Training Provider or College</h2>
-                  <p className="text-slate-300 mb-6 line-clamp-2">
-                    Access procurement opportunities, funding streams, and partnership programmes to deliver training across South Yorkshire.
-                  </p>
-                  <div className="flex items-center text-emerald-400 group-hover:text-emerald-300">
-                    <span className="font-medium">View opportunities</span>
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </div>
+                Training Providers
+                <Users className="ml-2 h-4 w-4" />
               </Link>
-
-              {/* School Card */}
-              <Link 
+              <Link
                 href="/educators/schools"
-                className="group relative bg-white/[0.03] backdrop-blur-sm rounded-2xl p-8 transition-all duration-300 hover:bg-white/[0.06] border border-white/10 overflow-hidden"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
               >
-                <div className="relative z-10">
-                  <div className="w-14 h-14 bg-blue-950/50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border border-blue-500/20">
-                    <Building2 className="h-7 w-7 text-blue-400" />
-                  </div>
-                  <h2 className="text-2xl font-bold text-white mb-4">School</h2>
-                  <p className="text-slate-300 mb-6 line-clamp-2">
-                    Find training providers, access career resources, and connect with professionals to enhance your students' career education.
-                  </p>
-                  <div className="flex items-center text-blue-400 group-hover:text-blue-300">
-                    <span className="font-medium">Access resources</span>
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </div>
+                Schools & Colleges
+                <Building2 className="ml-2 h-4 w-4" />
               </Link>
             </div>
           </div>

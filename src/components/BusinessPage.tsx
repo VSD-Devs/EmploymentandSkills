@@ -173,50 +173,49 @@ const BusinessPage = () => {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-24 overflow-hidden">
-        {/* Background Image */}
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-business.jpg"
-            alt=""
+            alt="Business support and development opportunities in South Yorkshire"
             fill
-            className="object-cover object-center"
+            className="object-cover object-center object-[center_25%] brightness-75"
             priority
+            quality={90}
           />
-          {/* Dark overlay for text legibility */}
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
         </div>
 
-        {/* Dotted grid pattern with better contrast */}
-        <div 
-          className="absolute inset-0 opacity-10 mix-blend-soft-light"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.2) 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
-        
-        {/* Subtle light effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/20" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10">
-            {/* Soft-edged square background */}
-            <div className="absolute -left-4 right-[30%] -inset-y-6 sm:-left-8 sm:right-[40%] sm:-inset-y-8 bg-black/60 backdrop-blur-sm rounded-[2rem] sm:rounded-[3rem]" />
-            
-            <div className="relative px-4 sm:px-8 py-6 sm:py-8">
-              <div className="flex items-center gap-2 text-emerald-400 mb-4">
-                <div className="p-2 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-500/20">
-                  <Building2 className="h-5 w-5" />
-                </div>
-                <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Business Hub</span>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
+                <Building2 className="h-4 w-4" />
               </div>
-              <h1 className="text-5xl font-bold text-white mb-6 drop-shadow-sm">
-                Business Support<br />in South Yorkshire
-              </h1>
-              <p className="text-lg text-gray-200 mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-                Access funding, expert support, and resources to help your business thrive. Connect with Yorkshire's future workforce and shape the skills of tomorrow.
-              </p>
+              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Business Hub</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Business Support<br className="hidden sm:block" /> in South Yorkshire
+            </h1>
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
+              Access funding, expert support, and resources to help your business thrive. Connect with Yorkshire's future workforce and shape the skills of tomorrow.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <Link
+                href="/funded-training"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
+              >
+                Access Funding
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+              <Link
+                href="/business-support"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+              >
+                Get Support
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { CheckCircle2, Users, ChevronRight } from 'lucide-react'
+import { CheckCircle2, Users, ChevronRight, GraduationCap, BookOpen } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Newsletter from './Newsletter'
@@ -71,52 +71,49 @@ const AdultSkills = () => {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-12 sm:py-24">
-        <div className="absolute inset-0 overflow-hidden">
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+        <div className="absolute inset-0">
           <Image
             src="/images/adult-skills-hero.jpg"
-            alt=""
+            alt="Professional development and training opportunities in South Yorkshire"
             fill
+            className="object-cover object-center object-[center_25%] brightness-75"
             priority
-            className="object-cover"
             quality={90}
           />
-          {/* Dark overlay for text legibility */}
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10">
-            {/* Soft-edged square background */}
-            <div className="absolute -left-4 right-[30%] -inset-y-6 sm:-left-8 sm:right-[40%] sm:-inset-y-8 bg-black/60 backdrop-blur-sm rounded-[2rem] sm:rounded-[3rem]" />
-            
-            <div className="relative px-4 sm:px-8 py-6 sm:py-8">
-              <div className="flex items-center gap-2 text-emerald-400 mb-4">
-                <div className="p-2 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-500/20">
-                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-400" />
-                </div>
-                <span className="text-sm font-medium">Adult Skills & Training</span>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
+                <GraduationCap className="h-4 w-4" />
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-                Transform Your Career<br className="hidden sm:block" /> in Yorkshire
-              </h1>
-              <p className="text-base sm:text-lg text-gray-200 mb-6 sm:mb-8 max-w-2xl leading-relaxed drop-shadow-sm">
-                Access funded support, training, and resources to help you thrive in Yorkshires growing industries. Whether you are looking to upskill, change careers, or get back into work, we are here to help.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 mt-6 sm:mt-8">
-                <button
-                  onClick={() => setIsQuizOpen(true)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-base sm:text-lg shadow-lg hover:shadow-xl"
-                >
-                  Take Career Quiz
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </button>
-                <Link
-                  href="/explore"
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors text-base sm:text-lg border border-white/10 hover:border-white/20"
-                >
-                  Explore Options
-                </Link>
-              </div>
+              <span className="text-sm font-medium tracking-wide uppercase">Adult Skills & Training</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Transform Your Career<br className="hidden sm:block" /> in Yorkshire
+            </h1>
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
+              Access funded support, training, and resources to help you thrive in Yorkshire's growing industries. Whether you are looking to upskill, change careers, or get back into work, we are here to help.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <button
+                onClick={() => setIsQuizOpen(true)}
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
+              >
+                Take Career Quiz
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </button>
+              <Link
+                href="/explore"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+              >
+                Explore Options
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>
