@@ -31,6 +31,11 @@ const nextConfig = {
     maxInactiveAge: 60 * 60 * 1000,
     pagesBufferLength: 5,
   },
+  // Remove trailingSlash as it can cause issues with Vercel's edge network
+  trailingSlash: false,
+  // Use standard output for Vercel
+  output: 'export',
+  // Remove problematic rewrites
   experimental: {
     // Enable more detailed server timing metrics
     serverActions: {
