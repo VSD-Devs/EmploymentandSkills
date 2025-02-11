@@ -1,26 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Briefcase, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, Quote, ExternalLink, BookOpen, Users } from 'lucide-react'
+import { Briefcase, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, Quote, ExternalLink, BookOpen, Users, SlidersHorizontal } from 'lucide-react'
+import { DfeVacancy } from '@/services/dfeApi'
 
 // Types
-interface Apprenticeship {
-  id: string
-  title: string
-  company: string
-  location: string
-  level: string
-  duration: string
-  salary: string
-  description: string
-  requirements: string[]
-  applicationDeadline: string
-  category: string
-  imageUrl: string
-}
-
 interface SuccessStory {
   id: string
   name: string
@@ -81,47 +67,6 @@ const successStories: SuccessStory[] = [
   }
 ]
 
-// Apprenticeship listings data remains the same as before
-const apprenticeships: Apprenticeship[] = [
-  {
-    id: '1',
-    title: 'Digital Marketing Apprentice',
-    company: 'Yorkshire Digital Solutions',
-    location: 'Leeds',
-    level: 'Level 3',
-    duration: '18 months',
-    salary: '£18,000 per year',
-    description: 'Join our dynamic marketing team and learn the latest digital marketing techniques whilst earning a qualification.',
-    requirements: [
-      'GCSEs in English and Maths (Grade 4/C or above)',
-      'Strong communication skills',
-      'Creative mindset'
-    ],
-    applicationDeadline: '30 June 2024',
-    category: 'Digital',
-    imageUrl: '/images/digital-marketing.jpg'
-  },
-  {
-    id: '2',
-    title: 'Software Development Apprentice',
-    company: 'Tech Innovators Ltd',
-    location: 'Sheffield',
-    level: 'Level 4',
-    duration: '24 months',
-    salary: '£20,000 per year',
-    description: 'Learn to code and develop software solutions while working on real projects with our experienced development team.',
-    requirements: [
-      'A-Level or equivalent in IT/Computing',
-      'Problem-solving abilities',
-      'Team player mindset'
-    ],
-    applicationDeadline: '15 July 2024',
-    category: 'Technology',
-    imageUrl: '/images/software-dev.jpg'
-  },
-  // Add more apprenticeships as needed
-]
-
 const categories = [
   'All',
   'Digital',
@@ -131,16 +76,72 @@ const categories = [
   'Healthcare'
 ]
 
+type SortOption = 'AgeDesc' | 'AgeAsc' | 'DistanceAsc' | 'DistanceDesc';
+
+const sortOptions = [
+  { value: 'AgeDesc', label: 'Newest first' },
+  { value: 'AgeAsc', label: 'Oldest first' },
+  { value: 'DistanceAsc', label: 'Nearest first' },
+  { value: 'DistanceDesc', label: 'Furthest first' },
+] as const;
+
 const ApprenticeshipPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [postcode, setPostcode] = useState('')
+  const [sortBy, setSortBy] = useState<SortOption>('AgeDesc')
+  const [vacancies, setVacancies] = useState<DfeVacancy[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [showFilters, setShowFilters] = useState(false)
+  const [currentChunk, setCurrentChunk] = useState(0)
+  const CHUNK_SIZE = 6
 
-  const filteredApprenticeships = apprenticeships.filter(apprenticeship => {
-    const matchesSearch = apprenticeship.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      apprenticeship.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      apprenticeship.location.toLowerCase().includes(searchTerm.toLowerCase())
+  useEffect(() => {
+    const fetchVacancies = async () => {
+      try {
+        const params = new URLSearchParams()
+        if (postcode) params.append('postcode', postcode)
+        if (sortBy) params.append('sort', sortBy)
+        
+        const response = await fetch(`/api/vacancies?${params.toString()}`)
+        const data = await response.json()
+        
+        if (data.error) {
+          throw new Error(data.error)
+        }
+        
+        // Debug log to check wage data
+        console.log('Vacancies wage data:', data.vacancies?.map((v: DfeVacancy) => ({
+          ref: v.vacancyReference,
+          wage: v.wage,
+          wageText: v.wage?.wageAdditionalInformation
+        })))
+        
+        setVacancies(data.vacancies || [])
+      } catch (err) {
+        setError('Failed to load apprenticeship vacancies. Please try again later.')
+        console.error('Error fetching vacancies:', err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchVacancies()
+  }, [postcode, sortBy])
+
+  useEffect(() => {
+    setCurrentChunk(0)
+  }, [searchTerm, selectedCategory, postcode, sortBy])
+
+  const filteredVacancies = vacancies.filter(vacancy => {
+    const matchesSearch = 
+      vacancy.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      vacancy.employerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      vacancy.address.postcode.toLowerCase().includes(searchTerm.toLowerCase())
     
-    const matchesCategory = selectedCategory === 'All' || apprenticeship.category === selectedCategory
+    const matchesCategory = selectedCategory === 'All' || 
+      vacancy.course.route.toLowerCase().includes(selectedCategory.toLowerCase())
     
     return matchesSearch && matchesCategory
   })
@@ -215,8 +216,8 @@ const ApprenticeshipPage = () => {
             </div>
             <div className="bg-white rounded-lg p-4 shadow-md border border-gray-100">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-blue-100">
-                  <Clock className="h-5 w-5 text-blue-600" />
+                <div className="p-2 rounded-lg bg-emerald-100">
+                  <Clock className="h-5 w-5 text-emerald-600" />
                 </div>
                 <div>
                   <p className="text-xl font-bold text-gray-900">12-48</p>
@@ -234,8 +235,8 @@ const ApprenticeshipPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="flex items-center gap-2 text-blue-600 mb-4">
-                <span className="inline-block w-2 h-2 rounded-full bg-blue-600" />
+              <div className="flex items-center gap-2 text-emerald-600 mb-4">
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
                 <span className="text-sm font-medium tracking-wide uppercase">Your Local Support</span>
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
@@ -247,26 +248,26 @@ const ApprenticeshipPage = () => {
                 </p>
                 <ul className="space-y-3 mt-6">
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                    <CheckCircle2 className="h-6 w-6 text-emerald-600 flex-shrink-0 mt-1" />
                     <span>One-to-one support and guidance</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                    <CheckCircle2 className="h-6 w-6 text-emerald-600 flex-shrink-0 mt-1" />
                     <span>Help finding the right apprenticeship</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                    <CheckCircle2 className="h-6 w-6 text-emerald-600 flex-shrink-0 mt-1" />
                     <span>Application and interview preparation</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                    <CheckCircle2 className="h-6 w-6 text-emerald-600 flex-shrink-0 mt-1" />
                     <span>Connections with local employers</span>
                   </li>
                 </ul>
                 <div className="mt-8">
                   <Link
                     href="/contact"
-                    className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors"
+                    className="inline-flex items-center px-6 py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
                   >
                     Get Support
                     <ArrowRight className="ml-2 h-5 w-5" />
@@ -291,7 +292,6 @@ const ApprenticeshipPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              The Apprenticeship Journey
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Your path to success starts here. We will support you every step of the way.
@@ -301,8 +301,8 @@ const ApprenticeshipPage = () => {
           <div className="grid md:grid-cols-4 gap-8">
             {apprenticeshipProcess.map((step, index) => (
               <div key={index} className="bg-white p-6 rounded-xl shadow-lg">
-                <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
-                  <step.icon className="h-6 w-6 text-indigo-600" />
+                <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
+                  <step.icon className="h-6 w-6 text-emerald-600" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
                 <p className="text-gray-600">{step.description}</p>
@@ -315,6 +315,7 @@ const ApprenticeshipPage = () => {
       {/* Current Vacancies Section */}
       <div id="current-vacancies" className="bg-gray-50 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
               <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
@@ -328,101 +329,220 @@ const ApprenticeshipPage = () => {
             </p>
           </div>
 
-          {/* Search and Filter */}
-          <div className="mb-12">
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <input
-                  type="text"
-                  placeholder="Search by title, company, or location..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-xl bg-white border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm"
-                  aria-label="Search apprenticeships"
-                />
+          {/* Search and Filters */}
+          <div className="mb-8">
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="grid md:grid-cols-2 gap-4 mb-6">
+                {/* Search Input */}
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <input
+                    type="text"
+                    placeholder="Search by title, company, or location..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    aria-label="Search apprenticeships"
+                  />
+                </div>
+
+                {/* Postcode Input */}
+                <div className="relative">
+                  <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <input
+                    type="text"
+                    placeholder="Enter your postcode..."
+                    value={postcode}
+                    onChange={(e) => setPostcode(e.target.value.toUpperCase())}
+                    className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    aria-label="Enter postcode"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="flex-1">
+                  <div className="flex flex-wrap gap-3">
+                    {categories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => setSelectedCategory(category)}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          selectedCategory === category
+                            ? 'bg-emerald-600 text-white shadow-md'
+                            : 'bg-gray-50 text-gray-700 hover:bg-emerald-50 border border-gray-200'
+                        }`}
+                        aria-pressed={selectedCategory === category}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
+                  >
+                    <SlidersHorizontal className="h-4 w-4" />
+                    Filters
+                  </button>
+
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as SortOption)}
+                    className="px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  >
+                    {sortOptions.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
-
-            <div className="flex flex-wrap gap-3 justify-center">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    selectedCategory === category
-                      ? 'bg-emerald-600 text-white shadow-md'
-                      : 'bg-white text-gray-700 hover:bg-emerald-50 border border-gray-200'
-                  }`}
-                  aria-pressed={selectedCategory === category}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
           </div>
+
+          {/* Loading State */}
+          {isLoading && (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading apprenticeships...</p>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <div className="text-center py-12 bg-red-50 rounded-xl border border-red-100">
+              <p className="text-red-600">{error}</p>
+            </div>
+          )}
 
           {/* Vacancies Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredApprenticeships.map((apprenticeship) => (
-              <div
-                key={apprenticeship.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 group"
-              >
-                <div className="relative h-48">
-                  <Image
-                    src={apprenticeship.imageUrl}
-                    alt={`${apprenticeship.title} working environment`}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-2 text-white text-sm font-medium mb-1">
-                      <GraduationCap className="h-4 w-4" />
-                      {apprenticeship.level}
-                    </div>
-                    <h3 className="text-xl font-bold text-white">
-                      {apprenticeship.title}
-                    </h3>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <div className="space-y-3 mb-4">
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <Building2 className="h-4 w-4" />
-                      {apprenticeship.company}
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <MapPin className="h-4 w-4" />
-                      {apprenticeship.location}
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <Clock className="h-4 w-4" />
-                      {apprenticeship.duration}
-                    </div>
-                  </div>
-                  <p className="text-gray-600 mb-6 line-clamp-2">
-                    {apprenticeship.description}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-emerald-600 font-medium">
-                      £{apprenticeship.salary}
-                    </span>
-                    <Link
-                      href={`/apprenticeships/${apprenticeship.id}`}
-                      className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 transition-colors"
+          {!isLoading && !error && (
+            <div className="space-y-6">
+              <div className="overflow-x-auto pb-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-w-full">
+                  {filteredVacancies
+                    .slice(currentChunk * CHUNK_SIZE, (currentChunk + 1) * CHUNK_SIZE)
+                    .map((vacancy) => (
+                    <div
+                      key={vacancy.vacancyReference}
+                      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 group w-full"
                     >
-                      View Details
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </div>
+                      <div className="p-6">
+                        <div className="mb-4">
+                          <div className="flex items-center gap-2 text-emerald-600 mb-2">
+                            <GraduationCap className="h-5 w-5" />
+                            <span className="text-sm font-medium">{vacancy.apprenticeshipLevel}</span>
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 mb-2">
+                            {vacancy.title}
+                          </h3>
+                          <p className="text-gray-600 line-clamp-2 mb-4">
+                            {vacancy.description}
+                          </p>
+                        </div>
+                        <div className="space-y-3 border-t border-gray-100 pt-4 mb-4">
+                          <div className="flex items-center gap-2 text-gray-600">
+                            <Building2 className="h-4 w-4 flex-shrink-0" />
+                            <span className="line-clamp-1">{vacancy.employerName}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-600">
+                            <MapPin className="h-4 w-4 flex-shrink-0" />
+                            <span>
+                              {vacancy.address.postcode}
+                              {vacancy.distance !== undefined && (
+                                <span className="text-gray-500 ml-1">
+                                  ({Math.round(vacancy.distance * 10) / 10} miles)
+                                </span>
+                              )}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-600">
+                            <Clock className="h-4 w-4 flex-shrink-0" />
+                            <span>{vacancy.expectedDuration}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                          <span className="text-emerald-600 font-medium">
+                            {(() => {
+                              const wage = vacancy.wage;
+                              if (!wage) return 'Salary details on application';
+
+                              // Include additional wage information if available
+                              const additionalInfo = wage.wageAdditionalInformation 
+                                ? ` (${wage.wageAdditionalInformation})`
+                                : '';
+
+                              switch (wage.wageType) {
+                                case 'Custom':
+                                  if (wage.wageAmount) {
+                                    const amount = wage.wageAmount.toLocaleString('en-GB');
+                                    const unit = wage.wageUnit !== 'Unspecified' 
+                                      ? ` ${wage.wageUnit.toLowerCase()}`
+                                      : '';
+                                    return `£${amount}${unit}${additionalInfo}`;
+                                  }
+                                  return wage.wageAdditionalInformation || 'Salary details on application';
+                                case 'CompetitiveSalary':
+                                  return `Competitive salary${additionalInfo}`;
+                                case 'ApprenticeshipMinimum':
+                                  return `Apprenticeship minimum wage${additionalInfo}`;
+                                case 'NationalMinimum':
+                                  return `National minimum wage${additionalInfo}`;
+                                default:
+                                  return wage.wageAdditionalInformation || 'Salary details on application';
+                              }
+                            })()}
+                          </span>
+                          <a
+                            href={vacancy.vacancyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 transition-colors"
+                          >
+                            View Details
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
+              
+              {/* Pagination Controls */}
+              {filteredVacancies.length > CHUNK_SIZE && (
+                <div className="flex justify-center gap-4 mt-8">
+                  <button
+                    onClick={() => setCurrentChunk(prev => Math.max(0, prev - 1))}
+                    disabled={currentChunk === 0}
+                    className="px-4 py-2 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label="View previous vacancies"
+                  >
+                    Previous
+                  </button>
+                  <span className="flex items-center text-gray-600">
+                    Page {currentChunk + 1} of {Math.ceil(filteredVacancies.length / CHUNK_SIZE)}
+                  </span>
+                  <button
+                    onClick={() => setCurrentChunk(prev => Math.min(Math.ceil(filteredVacancies.length / CHUNK_SIZE) - 1, prev + 1))}
+                    disabled={currentChunk >= Math.ceil(filteredVacancies.length / CHUNK_SIZE) - 1}
+                    className="px-4 py-2 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label="View next vacancies"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
 
-          {filteredApprenticeships.length === 0 && (
+          {/* Empty State */}
+          {!isLoading && !error && filteredVacancies.length === 0 && (
             <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-200">
               <div className="mb-4">
                 <Search className="h-12 w-12 text-gray-400 mx-auto" />
@@ -442,8 +562,8 @@ const ApprenticeshipPage = () => {
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-2 text-blue-600 mb-4">
-              <span className="inline-block w-2 h-2 rounded-full bg-blue-600" />
+            <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
               <span className="text-sm font-medium tracking-wide uppercase">Success Stories</span>
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -472,7 +592,7 @@ const ApprenticeshipPage = () => {
                   </div>
                 </div>
                 <div className="p-6">
-                  <Quote className="h-8 w-8 text-blue-600 mb-4 opacity-50" />
+                  <Quote className="h-8 w-8 text-emerald-600 mb-4 opacity-50" />
                   <p className="text-gray-600 italic leading-relaxed">
                     {story.quote}
                   </p>
@@ -487,8 +607,8 @@ const ApprenticeshipPage = () => {
       <div className="bg-gray-50 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-2 text-violet-600 mb-4">
-              <span className="inline-block w-2 h-2 rounded-full bg-violet-600" />
+            <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
               <span className="text-sm font-medium tracking-wide uppercase">Apprenticeship Life</span>
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -518,4 +638,4 @@ const ApprenticeshipPage = () => {
   )
 }
 
-export default ApprenticeshipPage 
+export default ApprenticeshipPage

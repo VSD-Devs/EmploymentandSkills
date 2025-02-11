@@ -5,12 +5,12 @@ import {
   GraduationCap, 
   Building2, 
   Users, 
-  Target,
   BookOpen,
   ArrowRight,
-  Lightbulb,
   BarChart3,
-  Network
+  Network,
+  CheckCircle2,
+  FileText
 } from 'lucide-react'
 
 export default function EducatorsPage() {
@@ -18,48 +18,69 @@ export default function EducatorsPage() {
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+        {/* Background Image and Overlays */}
         <div className="absolute inset-0">
           <Image
             src="/images/educator-hero.jpg"
             alt="Education and training facilities in South Yorkshire"
             fill
-            className="object-cover object-center object-[center_25%] brightness-75"
+            className="object-cover object-center brightness-[0.7] saturate-[0.85]"
             priority
             quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/80 to-transparent" />
         </div>
 
+        {/* Hero Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
-              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
-                <BookOpen className="h-4 w-4" />
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                <FileText className="h-4 w-4 text-blue-300" />
+                <span className="text-sm font-medium text-blue-100">South Yorkshire Education Hub</span>
               </div>
-              <span className="text-sm font-medium tracking-wide uppercase">Education Hub</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Shaping South Yorkshire's Future Workforce
-            </h1>
-            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
-              Join us in building a skilled workforce for tomorrow. Access resources, funding, and support tailored to your role in education.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
-              <Link
-                href="/educators/training-providers"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
-              >
-                Training Providers
-                <Users className="ml-2 h-4 w-4" />
-              </Link>
-              <Link
-                href="/educators/schools"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
-              >
-                Schools & Colleges
-                <Building2 className="ml-2 h-4 w-4" />
-              </Link>
+
+              {/* Main Content */}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+                Shaping South Yorkshire's<br className="hidden sm:block" /> Future Workforce
+              </h1>
+              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+                Join us in building a skilled workforce for tomorrow. Access resources, funding, and support tailored to your role in education.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link
+                  href="/educators/training-providers"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors group"
+                >
+                  Training Providers
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href="/educators/schools"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20 group"
+                >
+                  Schools & Colleges
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Quick Stats */}
+              <div className="mt-12 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+                {[
+                  { number: "250+", label: "Education Partners" },
+                  { number: "£45M+", label: "Annual Funding" },
+                  { number: "20k+", label: "Learners Supported" }
+                ].map((stat, index) => (
+                  <div key={index} className="text-center px-4 py-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10">
+                    <div className="text-xl sm:text-2xl font-bold text-white mb-1">{stat.number}</div>
+                    <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -70,7 +91,7 @@ export default function EducatorsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Partner With Us?</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Join a network of education providers helping to shape South Yorkshire's future workforce
             </p>
           </div>
@@ -78,38 +99,33 @@ export default function EducatorsPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                icon: Lightbulb,
+                icon: GraduationCap,
                 title: "Innovation Support",
-                description: "Access cutting-edge teaching resources and methodologies",
-                color: "emerald"
+                description: "Access cutting-edge teaching resources and methodologies"
               },
               {
                 icon: BarChart3,
                 title: "Growth Opportunities",
-                description: "Expand your reach with funded training programmes",
-                color: "blue"
+                description: "Expand your reach with funded training programmes"
               },
               {
                 icon: Network,
                 title: "Industry Connections",
-                description: "Connect with leading employers in South Yorkshire",
-                color: "purple"
+                description: "Connect with leading employers in South Yorkshire"
               },
               {
                 icon: Users,
                 title: "Community Impact",
-                description: "Make a real difference in learners' lives",
-                color: "rose"
+                description: "Make a real difference in learners' lives"
               }
             ].map((feature, index) => (
-              <div key={index} className="relative group">
-                <div className={`absolute inset-0 bg-${feature.color}-100 rounded-2xl transform transition-transform group-hover:scale-105`} />
-                <div className="relative p-6 flex flex-col items-center text-center">
-                  <div className={`w-12 h-12 bg-${feature.color}-100 rounded-xl flex items-center justify-center mb-4`}>
-                    <feature.icon className={`h-6 w-6 text-${feature.color}-600`} />
+              <div key={index} className="group">
+                <div className="relative p-6 bg-white rounded-xl border border-gray-200 shadow-sm transition-shadow hover:shadow-md">
+                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-50 transition-colors">
+                    <feature.icon className="h-6 w-6 text-gray-600 group-hover:text-blue-600 transition-colors" />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
+                  <p className="text-gray-600 text-sm">{feature.description}</p>
                 </div>
               </div>
             ))}
@@ -117,13 +133,13 @@ export default function EducatorsPage() {
         </div>
       </div>
 
-      {/* Strategy Overview - Updated with better visuals */}
+      {/* Strategy Overview */}
       <div className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Skills Strategy</h2>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="text-lg text-gray-600 mb-8">
                 Building a stronger, more inclusive skills system that drives economic growth and creates opportunities for all across South Yorkshire.
               </p>
               <div className="space-y-6">
@@ -134,31 +150,28 @@ export default function EducatorsPage() {
                   "Data-driven decision making and evaluation"
                 ].map((item, index) => (
                   <div key={index} className="flex items-start gap-4">
-                    <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                      <ChevronRight className="h-4 w-4 text-emerald-600" />
+                    <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-4 w-4 text-blue-600" />
                     </div>
                     <p className="text-gray-600">{item}</p>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-3xl transform -rotate-3" />
-              <div className="relative bg-white rounded-2xl shadow-lg p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Statistics</h3>
-                <div className="grid grid-cols-2 gap-6">
-                  {[
-                    { number: "250+", label: "Education Partners" },
-                    { number: "£45M+", label: "Annual Funding" },
-                    { number: "20k+", label: "Learners Supported" },
-                    { number: "95%", label: "Partner Satisfaction" }
-                  ].map((stat, index) => (
-                    <div key={index} className="text-center">
-                      <div className="text-3xl font-bold text-emerald-600 mb-2">{stat.number}</div>
-                      <div className="text-sm text-gray-600">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Statistics</h3>
+              <div className="grid grid-cols-2 gap-6">
+                {[
+                  { number: "250+", label: "Education Partners" },
+                  { number: "£45M+", label: "Annual Funding" },
+                  { number: "20k+", label: "Learners Supported" },
+                  { number: "95%", label: "Partner Satisfaction" }
+                ].map((stat, index) => (
+                  <div key={index} className="text-center">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">{stat.number}</div>
+                    <div className="text-sm text-gray-600">{stat.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

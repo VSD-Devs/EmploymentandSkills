@@ -11,50 +11,25 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/business/page": [
+    "/pathways/[category]/roles/[role]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/business/page.js"
+      "static/chunks/app/pathways/[category]/roles/[role]/page.js"
     ],
-    "/educators/page": [
+    "/pathways/[category]/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/educators/page.js"
-    ],
-    "/parents/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/parents/page.js"
-    ],
-    "/events/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/events/page.js"
+      "static/chunks/app/pathways/[category]/layout.js"
     ],
     "/young-people/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/young-people/page.js"
     ],
-    "/t-levels/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/t-levels/page.js"
-    ],
-    "/adult-skills/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/adult-skills/page.js"
-    ],
     "/apprenticeships/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/apprenticeships/page.js"
-    ],
-    "/contact/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/contact/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",

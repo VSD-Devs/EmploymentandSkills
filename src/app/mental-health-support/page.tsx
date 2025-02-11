@@ -24,7 +24,8 @@ import {
   ArrowLeft, 
   User, 
   MapPin, 
-  HeartHandshake 
+  HeartHandshake, 
+  ChevronLeft 
 } from 'lucide-react'
 
 // Define form data type
@@ -207,65 +208,76 @@ const MentalHealthSupport = () => {
   }
 
   return (
-    <div className="bg-white">
-      {/* Hero Section - Optimized height for mobile */}
-      <div className="relative bg-[#111827] py-12 md:py-24">
-        <div className="absolute inset-0 overflow-hidden">
+    <main className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+        {/* Background Image and Overlays */}
+        <div className="absolute inset-0">
           <Image
             src="/images/mental-health-hero.jpg"
-            alt=""
+            alt="Mental health and wellbeing support services in South Yorkshire"
             fill
+            className="object-cover object-center brightness-[0.7] saturate-[0.85]"
             priority
-            className="object-cover opacity-30"
             quality={90}
           />
-          <div className="absolute inset-0 bg-[#111827]/60 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/80 to-transparent" />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10">
-            <div className="flex items-center gap-2 text-purple-400 mb-4">
-              <span className="text-sm font-medium tracking-wide uppercase">Working Win Programme</span>
-            </div>
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6">
-              Here for You on Your Work & Wellbeing Journey
-            </h1>
-            <p className="text-base md:text-lg text-white mb-6 md:mb-8 max-w-2xl leading-relaxed">
-              If you are living with a physical or mental health condition in South Yorkshire, Working Win is here to support you with guidance, confidence and care, every step of the way.
-            </p>
-            <div className="flex flex-wrap gap-3 md:gap-4">
-              <button
-                onClick={() => setShowEligibilityChecker(true)}
-                className="inline-flex items-center px-6 py-3 md:px-8 md:py-4 bg-purple-600 text-white rounded-xl hover:bg-purple-500 transition-all duration-300 shadow-lg text-sm md:text-base"
-              >
-                <HelpCircle className="mr-2 h-5 w-5" />
-                <span>Is Working Win Right for Me?</span>
-              </button>
-              <Link
-                href="#apply"
-                className="inline-flex items-center px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10 text-sm md:text-base"
-              >
-                Apply Now
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Quick Stats - Mobile & Desktop */}
-      <div className="py-6 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between max-w-lg mx-auto">
-            {[
-              { number: '2,500+', label: 'Supported' },
-              { number: '94%', label: 'Success' },
-              { number: '12mo', label: 'Duration' }
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-xl md:text-2xl font-bold text-purple-600">{stat.number}</div>
-                <div className="text-xs md:text-sm text-gray-600">{stat.label}</div>
+        {/* Hero Content */}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                <Heart className="h-4 w-4 text-purple-300" />
+                <span className="text-sm font-medium text-purple-100">WorkingWin Health Support</span>
               </div>
-            ))}
+
+              {/* Main Content */}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+                Supporting Your Mental Health<br className="hidden sm:block" /> and Wellbeing Journey
+              </h1>
+              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+                Access free, confidential support to help manage your mental health and wellbeing. Our specialist team is here to support your journey to better health and employment.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button
+                  onClick={() => setShowEligibilityChecker(true)}
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-500 transition-colors group"
+                >
+                  Check Your Eligibility
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+                <Link
+                  href="#contact"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20 group"
+                >
+                  Contact Support Team
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Quick Stats */}
+              <div className="mt-12 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+                {[
+                  { number: "5,000+", label: "People Supported", icon: Users },
+                  { number: "97%", label: "Success Rate", icon: Sparkles },
+                  { number: "12m", label: "Duration of Support", icon: Clock }
+                ].map((stat, index) => (
+                  <div key={index} className="text-center px-4 py-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10">
+                    <div className="flex items-center justify-center mb-2">
+                      <stat.icon className="h-5 w-5 text-purple-300" />
+                    </div>
+                    <div className="text-xl sm:text-2xl font-bold text-white mb-1">{stat.number}</div>
+                    <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -600,51 +612,37 @@ const MentalHealthSupport = () => {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
 
-            <div className="flex justify-between items-center">
-              {formStep > 1 && (
-                <button
-                  type="button"
-                  onClick={handlePrevStep}
-                  className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
-                >
-                  <ArrowLeft className="mr-2 h-5 w-5" />
-                  <span className="hidden sm:inline">Previous</span>
-                </button>
-              )}
-              {formStep < formSteps.length ? (
-                <button
-                  type="button"
-                  onClick={handleNextStep}
-                  className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors ml-auto"
-                >
-                  <span className="hidden sm:inline">Next</span>
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="inline-flex items-center px-8 py-4 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-all duration-300 text-lg font-medium shadow-lg hover:shadow-xl hover:shadow-purple-500/20 transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none ml-auto"
-                  disabled={formSubmitted}
-                >
-                  {formSubmitted ? (
-                    <>
-                      <span className="mr-2">Processing...</span>
-                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                    </>
-                  ) : (
-                    <>
-                      Submit Application
-                      <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
-                    </>
+                {/* Form Navigation */}
+                <div className="flex flex-col sm:flex-row items-center gap-4 pt-8 border-t border-gray-200">
+                  {formStep > 1 && (
+                    <button
+                      onClick={handlePrevStep}
+                      className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-purple-600 hover:text-purple-500 border-2 border-purple-200 hover:border-purple-300 rounded-xl transition-colors"
+                    >
+                      <ChevronLeft className="mr-2 h-5 w-5" />
+                      Previous Step
+                    </button>
                   )}
-                </button>
-              )}
+                  {formStep < formSteps.length ? (
+                    <button
+                      onClick={handleNextStep}
+                      className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-500 transition-colors"
+                    >
+                      Next Step
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-500 transition-colors"
+                    >
+                      Submit Application
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </form>
         </div>
@@ -805,7 +803,7 @@ const MentalHealthSupport = () => {
           </div>
         </div>
       )}
-    </div>
+    </main>
   )
 }
 

@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Building2, GraduationCap, BookOpen, Users, PlusCircle, ArrowRight, Briefcase } from 'lucide-react'
+import { Building2, GraduationCap, BookOpen, Users, ArrowRight, Building } from 'lucide-react'
 
 export default function RecruitmentSupportPage() {
   return (
-    <div className="bg-white">
-      {/* Hero Section - Shorter */}
+    <div className="bg-zinc-50">
+      {/* Hero Section */}
       <div className="relative bg-[#111827] py-16 overflow-hidden">
         <div className="absolute inset-0">
           <Image
@@ -28,165 +28,132 @@ export default function RecruitmentSupportPage() {
             <span className="text-sm font-medium tracking-wide uppercase">Recruitment Support</span>
           </div>
           <h1 className="text-4xl font-bold text-white mb-4">
-            Find and Develop Your Perfect Team
+            Build Your Perfect Team in South Yorkshire
           </h1>
           <p className="text-lg text-gray-200 max-w-2xl">
-            Access fully-funded training programmes and recruitment support to build your workforce in Yorkshire.
+            Access local authority support, fully-funded training programmes, and recruitment guidance to develop your workforce.
           </p>
         </div>
       </div>
 
-      {/* Main Content - Grid Layout */}
-      <div className="py-12">
+      {/* Main Content */}
+      <div className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-3 gap-6">
+          {/* Support Options */}
+          <div className="grid lg:grid-cols-2 gap-8">
             {/* Apprenticeships Card */}
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-              <div className="relative h-48">
-                <Image
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80"
-                  alt="Professional mentoring an apprentice"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                <div className="absolute bottom-4 left-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/20 backdrop-blur-sm border border-blue-400/20">
-                    <GraduationCap className="w-4 h-4 text-blue-400" />
-                    <span className="text-sm font-medium text-white">Apprenticeships</span>
-                  </div>
+            <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
+              <div className="p-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 mb-6">
+                  <GraduationCap className="w-4 h-4 text-emerald-600" />
+                  <span className="text-sm font-medium text-emerald-600">Apprenticeships</span>
                 </div>
-              </div>
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">Apprenticeship Levy Support</h2>
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start gap-2">
-                    <ArrowRight className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600">Access full funding for training through the levy</span>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Apprenticeship Support</h2>
+                <p className="text-gray-600 mb-6">Access guidance and funding to develop your workforce through apprenticeships, with support from your local authority.</p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-3">
+                    <ArrowRight className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600">Full funding available through the apprenticeship levy</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600">Develop existing staff through higher-level apprenticeships</span>
+                  <li className="flex items-start gap-3">
+                    <ArrowRight className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600">Support with apprenticeship standards and assessment</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600">Get guidance on standards and assessment</span>
+                  <li className="flex items-start gap-3">
+                    <ArrowRight className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600">Guidance on developing existing staff through higher-level apprenticeships</span>
                   </li>
                 </ul>
-                <Link
-                  href="/register-interest"
-                  className="inline-flex items-center px-4 py-2 rounded-xl text-white bg-blue-600 hover:bg-blue-500 transition-colors shadow-lg hover:shadow-xl w-full justify-center"
-                >
-                  Get Started
-                  <PlusCircle className="ml-2 h-5 w-5" />
-                </Link>
               </div>
             </div>
 
             {/* Skills Bootcamps Card */}
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-              <div className="relative h-48">
-                <Image
-                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80"
-                  alt="Skills bootcamp training session"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                <div className="absolute bottom-4 left-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/20 backdrop-blur-sm border border-purple-400/20">
-                    <BookOpen className="w-4 h-4 text-purple-400" />
-                    <span className="text-sm font-medium text-white">Skills Bootcamps</span>
-                  </div>
+            <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
+              <div className="p-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 mb-6">
+                  <BookOpen className="w-4 h-4 text-blue-600" />
+                  <span className="text-sm font-medium text-blue-600">Skills Training</span>
                 </div>
-              </div>
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">Fast-Track Training</h2>
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start gap-2">
-                    <ArrowRight className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Fast-Track Training Programmes</h2>
+                <p className="text-gray-600 mb-6">Connect with local training providers and access funded programmes to upskill your workforce quickly.</p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-3">
+                    <ArrowRight className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                     <span className="text-gray-600">Digital, technical, and construction skills courses</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600">Flexible training around work schedules</span>
+                  <li className="flex items-start gap-3">
+                    <ArrowRight className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600">Flexible training schedules to suit your business</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600">Industry-recognised qualifications</span>
-                  </li>
-                </ul>
-                <Link
-                  href="/register-interest"
-                  className="inline-flex items-center px-4 py-2 rounded-xl text-white bg-purple-600 hover:bg-purple-500 transition-colors shadow-lg hover:shadow-xl w-full justify-center"
-                >
-                  Learn More
-                  <PlusCircle className="ml-2 h-5 w-5" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Post Vacancy Card */}
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-              <div className="relative h-48">
-                <Image
-                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80"
-                  alt="Business team meeting"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                <div className="absolute bottom-4 left-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/20 backdrop-blur-sm border border-emerald-400/20">
-                    <Briefcase className="w-4 h-4 text-emerald-400" />
-                    <span className="text-sm font-medium text-white">Post Vacancy</span>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">Advertise Positions</h2>
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start gap-2">
-                    <ArrowRight className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600">Reach qualified candidates across Yorkshire</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600">Get matched with suitable candidates</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <ArrowRight className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-600">Full recruitment process guidance</span>
+                  <li className="flex items-start gap-3">
+                    <ArrowRight className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600">Industry-recognised qualifications and certifications</span>
                   </li>
                 </ul>
-                <Link
-                  href="/post-vacancy"
-                  className="inline-flex items-center px-4 py-2 rounded-xl text-white bg-emerald-600 hover:bg-emerald-500 transition-colors shadow-lg hover:shadow-xl w-full justify-center"
-                >
-                  Post a Vacancy
-                  <PlusCircle className="ml-2 h-5 w-5" />
-                </Link>
               </div>
             </div>
           </div>
 
-          {/* Contact Banner */}
-          <div className="mt-12 bg-gray-50 rounded-2xl p-8 border border-gray-100">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Need Help Choosing?</h2>
-                <p className="text-gray-600">
-                  Our recruitment specialists can guide you through the best options for your business.
-                </p>
-              </div>
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-6 py-3 rounded-xl text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl whitespace-nowrap"
-              >
-                Book a Consultation
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+          {/* Local Authority Support Section */}
+          <div className="mt-16">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Your Local Authority Support</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Each local authority in South Yorkshire offers dedicated support to help businesses with recruitment and workforce development.
+              </p>
             </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  name: 'Sheffield',
+                  link: 'https://www.sheffield.gov.uk/business',
+                },
+                {
+                  name: 'Rotherham',
+                  link: 'https://www.rotherham.gov.uk/business',
+                },
+                {
+                  name: 'Doncaster',
+                  link: 'https://www.doncaster.gov.uk/business',
+                },
+                {
+                  name: 'Barnsley',
+                  link: 'https://www.barnsley.gov.uk/business',
+                }
+              ].map((authority) => (
+                <Link
+                  key={authority.name}
+                  href={authority.link}
+                  className="group bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-lg bg-gray-50 group-hover:bg-gray-100 transition-colors">
+                      <Building className="w-6 h-6 text-gray-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">{authority.name}</h3>
+                      <p className="text-sm text-gray-600">Contact your local team</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact Banner */}
+          <div className="mt-16 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">Ready to Get Started?</h2>
+            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+              Contact your local authority's business support team to discuss your recruitment needs and discover available funding opportunities.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center px-6 py-3 rounded-xl text-gray-900 bg-white hover:bg-gray-50 transition-colors shadow-lg hover:shadow-xl"
+            >
+              Get in Touch
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
           </div>
         </div>
       </div>
