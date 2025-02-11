@@ -100,39 +100,26 @@ const ApprenticeshipPage = () => {
   useEffect(() => {
     const fetchVacancies = async () => {
       try {
-        const params = new URLSearchParams()
-        if (postcode) params.append('postcode', postcode)
-        if (sortBy) params.append('sort', sortBy)
+        const params = new URLSearchParams();
+        if (postcode) params.append('postcode', postcode);
+        if (sortBy) params.append('sort', sortBy);
         
-        const response = await fetch(`/api/vacancies?${params.toString()}`)
-        const data = await response.json()
-        
-        if (data.error) {
-          throw new Error(data.error)
-        }
-        
-        // Debug log to check wage data
-        console.log('Vacancies wage data:', data.vacancies?.map((v: DfeVacancy) => ({
-          ref: v.vacancyReference,
-          wage: v.wage,
-          wageText: v.wage?.wageAdditionalInformation
-        })))
-        
-        setVacancies(data.vacancies || [])
+        const response = await fetch(`/api/vacancies?${params.toString()}`);
+        const data = await response.json();
+        setVacancies(data.vacancies || []);
       } catch (err) {
-        setError('Failed to load apprenticeship vacancies. Please try again later.')
-        console.error('Error fetching vacancies:', err)
+        setError('Failed to load apprenticeship vacancies. Please try again later.');
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchVacancies()
-  }, [postcode, sortBy])
+    fetchVacancies();
+  }, [postcode, sortBy]);
 
   useEffect(() => {
-    setCurrentChunk(0)
-  }, [searchTerm, selectedCategory, postcode, sortBy])
+    setCurrentChunk(0);
+  }, [searchTerm, selectedCategory, postcode, sortBy]);
 
   const filteredVacancies = vacancies.filter(vacancy => {
     const matchesSearch = 

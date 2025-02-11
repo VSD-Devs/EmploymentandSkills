@@ -1,5 +1,0 @@
-{
-  "/apprenticeships/page": "app/apprenticeships/page.js",
-  "/young-people/page": "app/young-people/page.js",
-  "/pathways/[category]/roles/[role]/page": "app/pathways/[category]/roles/[role]/page.js"
-}

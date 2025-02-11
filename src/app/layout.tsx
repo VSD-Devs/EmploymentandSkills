@@ -16,6 +16,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'South Yorkshire Pathways - Career Development in Yorkshire',
   description: 'Connecting South Yorkshire\'s future workforce with opportunities for growth and development.',
+  manifest: '/manifest.json',
 }
 
 export default function RootLayout({
