@@ -92,7 +92,7 @@ const TABS_CONFIG: TabsType = {
         "Discover the exciting world of university education. From choosing the right course to understanding student life, we'll help you make informed decisions about your future.",
         "Learn about different universities, entry requirements, and how to make your UCAS application stand out."
       ],
-      image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80',
+      image: '/images/university-hub.jpg',
       alt: 'Students collaborating in a university library',
       link: '/university',
       cta: 'Explore Universities'
@@ -108,7 +108,7 @@ const TABS_CONFIG: TabsType = {
         "T-Levels are new qualifications that combine classroom learning with industry placements. Perfect for those who want a practical, hands-on approach to learning.",
         "Discover how T-Levels can give you the skills and knowledge that employers are looking for, with real workplace experience built into your course."
       ],
-      image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80',
+      image: '/images/tlevels-hub.jpg',
       alt: 'Students in technical training',
       link: '/t-levels',
       cta: 'Explore T-Levels'
@@ -124,7 +124,7 @@ const TABS_CONFIG: TabsType = {
         "Get hands-on experience while gaining qualifications with an apprenticeship. We'll show you how to find the perfect apprenticeship opportunity and help you understand the application process.",
         "Discover different levels of apprenticeships available and which industries are looking for apprentices in Yorkshire."
       ],
-      image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&q=80',
+      image: '/images/apprenticeship-hub.jpg',
       alt: 'Young apprentice learning practical skills',
       link: '/apprenticeships',
       cta: 'Find Apprenticeships'
@@ -140,7 +140,7 @@ const TABS_CONFIG: TabsType = {
         "Not sure what career path to take? Our career planning tools and resources help you explore different options and find what suits you best.",
         "Take our career quiz, explore different industries, and learn about the skills needed for different jobs."
       ],
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+      image: '/images/careers-hub.jpg',
       alt: 'Young people in a career planning session',
       link: '/career-planning',
       cta: 'Start Planning'
@@ -156,7 +156,7 @@ const TABS_CONFIG: TabsType = {
         "Develop the skills that employers are looking for. From digital skills to professional qualifications, we'll help you identify and access the training you need.",
         "Find free courses, workshops, and training opportunities to boost your CV and employability."
       ],
-      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80',
+      image: '/images/skills-hub.jpg',
       alt: 'Young person learning new skills',
       link: '/skills-training',
       cta: 'Discover Training'
@@ -172,7 +172,7 @@ const TABS_CONFIG: TabsType = {
         "Access free, confidential advice from our career experts. Whether you need help with applications, interviews, or making decisions about your future, we're here to support you.",
         "Connect with mentors, attend workshops, and get personalised guidance for your journey."
       ],
-      image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80',
+      image: '/images/support-hub.jpg',
       alt: 'Career advisor meeting with young person',
       link: '/support',
       cta: 'Get Support'
@@ -185,8 +185,16 @@ const YoungPeople = () => {
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
   const [isQuizOpen, setIsQuizOpen] = useState(false)
+  const [imageLoadError, setImageLoadError] = useState<{[key: string]: boolean}>({})
 
   const tabs = useMemo(() => TABS_CONFIG, [])
+
+  const handleImageError = (key: string) => {
+    setImageLoadError(prev => ({
+      ...prev,
+      [key]: true
+    }))
+  }
 
   // Handle touch swipe for mobile navigation
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -256,6 +264,7 @@ const YoungPeople = () => {
             className="object-cover object-center object-[center_25%] brightness-75"
             priority
             quality={90}
+            onError={() => handleImageError('hero')}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
@@ -389,10 +398,11 @@ const YoungPeople = () => {
                         <h2 className="text-2xl font-bold text-gray-900 mb-4">{tab.description}</h2>
                         <div className="relative h-[200px] rounded-xl overflow-hidden shadow-lg mb-4">
                           <Image
-                            src={tab.content.image}
+                            src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
                             alt={tab.content.alt}
                             fill
                             className="object-cover"
+                            onError={() => handleImageError(key)}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                         </div>
@@ -415,10 +425,11 @@ const YoungPeople = () => {
                       {/* Desktop: Original layout */}
                       <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
                         <Image
-                          src={tab.content.image}
+                          src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
                           alt={tab.content.alt}
                           fill
                           className="object-cover"
+                          onError={() => handleImageError(key)}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                         <div className="absolute bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
@@ -466,10 +477,11 @@ const YoungPeople = () => {
                         <h2 className="text-2xl font-bold text-gray-900 mb-4">{tab.description}</h2>
                         <div className="relative h-[200px] rounded-xl overflow-hidden shadow-lg mb-4">
                           <Image
-                            src={tab.content.image}
+                            src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
                             alt={tab.content.alt}
                             fill
                             className="object-cover"
+                            onError={() => handleImageError(key)}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                         </div>
@@ -513,10 +525,11 @@ const YoungPeople = () => {
                       </div>
                       <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl md:order-2">
                         <Image
-                          src={tab.content.image}
+                          src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
                           alt={tab.content.alt}
                           fill
                           className="object-cover"
+                          onError={() => handleImageError(key)}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                         <div className="absolute bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
