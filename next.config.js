@@ -15,35 +15,27 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24, // 24 hours
   },
   devIndicators: {
-    buildActivity: true // Enable build activity indicator
+    buildActivity: true
   },
-  // Enable React Strict Mode for better development
   reactStrictMode: true,
-  // Enable production source maps for better debugging
   productionBrowserSourceMaps: true,
-  // Enable more detailed logging
   logging: {
     level: 'verbose',
-    fetches: false
+    fetches: {
+      fullUrl: true
+    }
   },
-  // Ensure we're not suppressing any console output
   onDemandEntries: {
     maxInactiveAge: 60 * 60 * 1000,
     pagesBufferLength: 5,
   },
-  // Remove trailingSlash as it can cause issues with Vercel's edge network
   trailingSlash: false,
-  // Use standard output for Vercel
-  output: 'export',
-  // Remove problematic rewrites
   experimental: {
-    // Enable more detailed server timing metrics
     serverActions: {
       bodySizeLimit: '2mb'
     },
-    // Enable more detailed error logging
     webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'TTFB', 'INP'],
   }
 }
 
-module.exports = nextConfig 
+module.exports = nextConfig

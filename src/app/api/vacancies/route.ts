@@ -3,10 +3,10 @@ import { dfeApi } from '@/services/dfeApi';
 import type { VacancySort } from '@/services/dfeApi';
 import { fallbackVacancies } from '@/data/fallbackVacancies';
 
-// Add dynamic configuration
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'force-no-store'
-export const revalidate = 0
+// Update dynamic configuration for Vercel
+export const dynamic = 'auto'
+export const dynamicParams = true
+export const revalidate = 300 // revalidate every 5 minutes
 
 // Simple cache object
 const cache: {
