@@ -5,8 +5,21 @@ import { Search, MapPin, Building2, GraduationCap, ChevronRight, Filter, BookOpe
 import Image from 'next/image'
 import Link from 'next/link'
 
+interface Course {
+  id: number;
+  title: string;
+  provider: string;
+  location: string;
+  type: string;
+  duration: string;
+  startDate: string;
+  description: string;
+  fundingInfo: string;
+  image: string;
+}
+
 // Placeholder course data - to be replaced with real data later
-const COURSES = [
+const COURSES: Course[] = [
   {
     id: 1,
     title: 'Digital Skills Bootcamp',
@@ -45,7 +58,12 @@ const COURSES = [
   }
 ]
 
-const CourseCard = ({ course, onViewMore }) => {
+interface CourseCardProps {
+  course: Course;
+  onViewMore: (course: Course) => void;
+}
+
+const CourseCard = ({ course, onViewMore }: CourseCardProps) => {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group">
       <div className="relative h-48">
@@ -90,7 +108,15 @@ const CourseCard = ({ course, onViewMore }) => {
   )
 }
 
-const FundingOption = ({ title, description, icon: Icon, image, features }) => (
+interface FundingOptionProps {
+  title: string;
+  description: string;
+  icon: React.ElementType;
+  image: string;
+  features: string[];
+}
+
+const FundingOption = ({ title, description, icon: Icon, image, features }: FundingOptionProps) => (
   <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group">
     <div className="relative h-40">
       <Image
@@ -129,7 +155,7 @@ const CoursesPage = () => {
   const [selectedLocation, setSelectedLocation] = useState('All')
   const [selectedProvider, setSelectedProvider] = useState('All')
 
-  const handleViewMore = (course) => {
+  const handleViewMore = (course: Course) => {
     // To be implemented - could open a modal or navigate to a detailed view
     console.log('View more:', course)
   }
