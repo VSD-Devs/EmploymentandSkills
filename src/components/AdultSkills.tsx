@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { CheckCircle2, Users, ChevronRight, GraduationCap, BookOpen } from 'lucide-react'
+import { CheckCircle2, Users, ChevronRight, GraduationCap, BookOpen, Briefcase } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Newsletter from './Newsletter'
@@ -11,7 +11,8 @@ import CareerQuiz from './CareerQuiz'
 const IMAGES = {
   employmentSupport: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80",
   fundedTraining: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80",
-  mentalHealth: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&q=80"
+  mentalHealth: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&q=80",
+  apprenticeship: "/images/apprenticeship-hub.jpg"
 }
 
 const colorClasses = {
@@ -38,6 +39,14 @@ const colorClasses = {
     badge: 'bg-purple-50 text-purple-700',
     gradient: 'from-purple-50 to-white',
     nav: 'hover:bg-purple-50/80'
+  },
+  violet: {
+    button: 'border-violet-500 bg-violet-50',
+    icon: 'bg-violet-100 text-violet-600',
+    link: 'bg-violet-600 hover:bg-violet-500',
+    badge: 'bg-violet-50 text-violet-700',
+    gradient: 'from-violet-50 to-white',
+    nav: 'hover:bg-violet-50/80'
   }
 } as const
 
@@ -55,6 +64,13 @@ const sections = {
     description: 'Professional Development',
     icon: <Users className="w-6 h-6" />,
     color: 'emerald' as const
+  },
+  apprenticeship: {
+    id: 'apprenticeship',
+    title: 'Apprenticeships',
+    description: 'Career Change & Progression',
+    icon: <Briefcase className="w-6 h-6" />,
+    color: 'violet' as const
   },
   wellbeing: {
     id: 'wellbeing',
@@ -337,6 +353,105 @@ const AdultSkills = () => {
                     <div className="text-gray-600">Successfully completed our training programmes</div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Apprenticeships Section */}
+      <div id="apprenticeship" className="relative bg-gray-50">
+        {/* Top wave divider */}
+        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
+          <svg
+            viewBox="0 0 1440 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute bottom-0 w-full h-full text-gray-50"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
+              <Image
+                src={IMAGES.apprenticeship}
+                alt="Adult apprenticeship opportunities"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-violet-50 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Briefcase className="h-7 w-7 text-violet-600" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900 text-xl mb-1">No Age Limit</div>
+                    <div className="text-gray-600">Apprenticeships available at all levels</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 text-violet-600 mb-3 sm:mb-4">
+                <span className="inline-block w-2 h-2 rounded-full bg-violet-600" />
+                <span className="text-sm font-medium tracking-wide uppercase">Career Change & Progression</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Apprenticeships</h2>
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+                It's never too late to start an apprenticeship. Gain recognised qualifications whilst earning a salary in your chosen industry.
+              </p>
+              <div className="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
+                <div className="grid gap-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-5 w-5 text-violet-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Higher & Degree Apprenticeships</h3>
+                      <p className="text-gray-600">Earn while you study up to degree level in your chosen field</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-5 w-5 text-violet-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Career Change Support</h3>
+                      <p className="text-gray-600">Dedicated guidance for adults transitioning to new industries</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-5 w-5 text-violet-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Flexible Learning</h3>
+                      <p className="text-gray-600">Balance work, study and life commitments with flexible programmes</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
+                <Link
+                  href="/apprenticeships"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-violet-600 text-white rounded-xl hover:bg-violet-500 transition-colors text-base sm:text-lg shadow-sm"
+                >
+                  Find Apprenticeships
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Link>
+                <Link
+                  href="/apprenticeships#levels"
+                  className="w-full sm:w-auto inline-flex items-center justify-center text-violet-600 font-medium hover:text-violet-500 group text-base sm:text-lg"
+                >
+                  Explore Levels
+                  <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Link>
               </div>
             </div>
           </div>

@@ -98,9 +98,7 @@ const sortOptions = [
   { value: 'AgeDesc', label: 'Newest first' },
   { value: 'AgeAsc', label: 'Oldest first' },
   { value: 'DistanceAsc', label: 'Nearest first' },
-  { value: 'DistanceDesc', label: 'Furthest first' },
-  { value: 'SalaryDesc', label: 'Highest salary first' },
-  { value: 'SalaryAsc', label: 'Lowest salary first' },
+  { value: 'DistanceDesc', label: 'Furthest first' }
 ] as const;
 
 type SortOption = typeof sortOptions[number]['value'];
@@ -477,14 +475,13 @@ const ApprenticeshipPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-              <span className="text-sm font-medium tracking-wide uppercase">Your Journey Starts Here</span>
+              <span className="text-sm font-medium tracking-wide uppercase">How It works</span>
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Four Simple Steps to Your Future Career
+              The Process
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We're here to guide you through every stage of your apprenticeship journey in South Yorkshire. Our local team provides personalised support to help you succeed.
+              We're here to guide you through every stage of your apprenticeship journey in South Yorkshire. Our Advisors provide personalised support to help you succeed.
             </p>
           </div>
 
@@ -562,7 +559,11 @@ const ApprenticeshipPage = () => {
 
               <div className="flex flex-wrap items-center gap-4">
                 <div className="flex-1">
+                  <label htmlFor="category-select" className="block text-sm font-medium text-gray-600 mb-2">
+                    Apprenticeship Category
+                  </label>
                   <select
+                    id="category-select"
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                     className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
@@ -576,32 +577,23 @@ const ApprenticeshipPage = () => {
                   </select>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => setShowFilters(!showFilters)}
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
+                <div className="flex-1">
+                  <label htmlFor="sort-select" className="block text-sm font-medium text-gray-600 mb-2">
+                    Sort by
+                  </label>
+                  <select
+                    id="sort-select"
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as SortOption)}
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    aria-label="Sort apprenticeships"
                   >
-                    <SlidersHorizontal className="h-4 w-4" />
-                    Show as
-                  </button>
-
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm font-medium text-gray-600">
-                      Sort by
-                    </span>
-
-                    <select
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value as SortOption)}
-                      className="px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                    >
-                      {sortOptions.map(option => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                    {sortOptions.map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>              
                 </div>
               </div>
             </div>

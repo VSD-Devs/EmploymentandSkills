@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import CareerQuizButton from './CareerQuizButton'
 
@@ -185,7 +185,7 @@ Our region                </Link>
           </div>
 
           {/* Career Quiz Banner */}
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl overflow-hidden shadow-lg">
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl overflow-hidden shadow-lg mb-8">
             <div className="px-6 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
               <div className="flex-1 text-center sm:text-left">
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Not sure where to start?</h2>
@@ -195,6 +195,25 @@ Our region                </Link>
                 variant="secondary"
                 className="w-full sm:w-auto whitespace-nowrap"
               />
+            </div>
+          </div>
+
+          {/* Labour Market Intelligence Banner */}
+          <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 rounded-2xl overflow-hidden shadow-lg">
+            <div className="px-6 sm:px-8 py-6">
+              <div className="text-center">
+                <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Labour Market Intelligence</h2>
+                <p className="text-white/90 text-sm sm:text-base mb-6">
+                  Get real-time insights into South Yorkshire's employment landscape, skills demands, and economic trends
+                </p>
+                <Link 
+                  href="/our-region/labour-market" 
+                  className="inline-flex items-center px-6 py-3 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+                >
+                  View Market Intelligence
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

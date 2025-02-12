@@ -86,31 +86,30 @@ const FundedTrainingPage = () => {
 
   return (
     <div className="bg-white">
-      {/* Hero Section - Made more official looking */}
-      <div className="relative bg-[#1a365d] py-24 sm:py-32">
+      {/* Hero Section */}
+      <div className="relative bg-[#111827] py-24">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-business.jpg"
-            alt=""
+            alt="Business team working together"
             fill
-            className="object-cover object-center opacity-20"
+            className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1a365d]/90 to-[#1a365d]/90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#111827]/95 to-[#111827]/90" />
         </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-emerald-300 mb-6">
-              <div className="p-2.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-500/20">
-                <Building2 className="h-6 w-6" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 text-emerald-400 mb-4">
+              <div className="p-2 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-500/20">
+                <Building2 className="h-5 w-5" />
               </div>
-              <span className="text-base font-medium tracking-wide uppercase">South Yorkshire Combined Authority</span>
+              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Combined Authority</span>
             </div>
-            <h1 className="text-4xl sm:text-6xl font-bold text-white mb-8 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Access Funded Training for Your Business
             </h1>
-            <p className="text-xl sm:text-2xl text-gray-100 max-w-3xl mx-auto leading-relaxed font-light">
+            <p className="text-xl text-gray-300 mb-8">
               Discover a range of fully and partially funded training opportunities to upskill your workforce and drive business growth in Yorkshire.
             </p>
           </div>

@@ -10,8 +10,15 @@ import {
   BarChart3,
   Network,
   CheckCircle2,
-  FileText
+  FileText,
+  TrendingUp,
+  Target,
+  Lightbulb,
+  Scale,
+  Heart,
+  Leaf
 } from 'lucide-react'
+import { sectorData } from '@/data/sectors'
 
 export default function EducatorsPage() {
   return (
@@ -66,20 +73,6 @@ export default function EducatorsPage() {
                   Schools & Colleges
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
-              </div>
-
-              {/* Quick Stats */}
-              <div className="mt-12 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
-                {[
-                  { number: "250+", label: "Education Partners" },
-                  { number: "£45M+", label: "Annual Funding" },
-                  { number: "20k+", label: "Learners Supported" }
-                ].map((stat, index) => (
-                  <div key={index} className="text-center px-4 py-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10">
-                    <div className="text-xl sm:text-2xl font-bold text-white mb-1">{stat.number}</div>
-                    <div className="text-xs sm:text-sm text-gray-400">{stat.label}</div>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
@@ -158,22 +151,255 @@ export default function EducatorsPage() {
                 ))}
               </div>
             </div>
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Key Statistics</h3>
-              <div className="grid grid-cols-2 gap-6">
+          </div>
+        </div>
+      </div>
+
+      {/* South Yorkshire Plan for Good Growth Section */}
+      <div className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 text-blue-600 mb-4">
+              <Target className="h-5 w-5" />
+              <span className="text-sm font-medium tracking-wide uppercase">Regional Strategy</span>
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              South Yorkshire Plan for Good Growth
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Our vision for inclusive, sustainable growth that benefits all of South Yorkshire's people and businesses
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Scale,
+                title: "Innovation & Enterprise",
+                description: "Building a stronger, more innovative economy through research, development and enterprise support.",
+                color: "blue"
+              },
+              {
+                icon: Heart,
+                title: "People & Skills",
+                description: "Developing a skilled workforce through high-quality education and training opportunities.",
+                color: "emerald"
+              },
+              {
+                icon: Leaf,
+                title: "Sustainable Growth",
+                description: "Creating sustainable communities and transitioning to a net-zero carbon economy.",
+                color: "amber"
+              }
+            ].map((pillar, index) => (
+              <div key={index} className={`bg-${pillar.color}-50 rounded-xl p-8 border border-${pillar.color}-100`}>
+                <div className={`w-12 h-12 bg-${pillar.color}-100 rounded-lg flex items-center justify-center mb-6`}>
+                  <pillar.icon className={`h-6 w-6 text-${pillar.color}-600`} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{pillar.title}</h3>
+                <p className="text-gray-600">{pillar.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Skills Strategy Section */}
+      <div className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 text-blue-600 mb-4">
+                <Lightbulb className="h-5 w-5" />
+                <span className="text-sm font-medium tracking-wide uppercase">Skills Strategy</span>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                South Yorkshire Skills Strategy 2021-2030
+              </h2>
+              <p className="text-lg text-gray-600 mb-8">
+                Our comprehensive approach to developing the skills needed for economic growth and social inclusion.
+              </p>
+              
+              <div className="space-y-6">
                 {[
-                  { number: "250+", label: "Education Partners" },
-                  { number: "£45M+", label: "Annual Funding" },
-                  { number: "20k+", label: "Learners Supported" },
-                  { number: "95%", label: "Partner Satisfaction" }
-                ].map((stat, index) => (
-                  <div key={index} className="text-center">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">{stat.number}</div>
-                    <div className="text-sm text-gray-600">{stat.label}</div>
+                  {
+                    title: "World-class technical education",
+                    description: "Delivering high-quality technical education aligned with employer needs"
+                  },
+                  {
+                    title: "Adult skills and lifelong learning",
+                    description: "Supporting adults to upskill and retrain throughout their careers"
+                  },
+                  {
+                    title: "Employer engagement",
+                    description: "Working closely with employers to identify and meet skills needs"
+                  },
+                  {
+                    title: "Digital skills",
+                    description: "Ensuring everyone has the digital skills needed for work and life"
+                  }
+                ].map((priority, index) => (
+                  <div key={index} className="bg-white rounded-lg p-6 shadow-sm">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{priority.title}</h3>
+                    <p className="text-gray-600">{priority.description}</p>
                   </div>
                 ))}
               </div>
             </div>
+            
+            <div className="relative h-[600px] rounded-2xl overflow-hidden">
+              <Image
+                src="/images/skills-strategy.jpg"
+                alt="Students and tutors collaborating in a modern learning environment"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+              <div className="absolute bottom-8 left-8 right-8 text-white">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                    <div className="text-2xl font-bold mb-1">75%</div>
+                    <div className="text-sm">of employers report skills gaps</div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                    <div className="text-2xl font-bold mb-1">£1.7bn</div>
+                    <div className="text-sm">investment in skills by 2030</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Labour Market Intelligence Section */}
+      <div className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 text-blue-600 mb-4">
+              <TrendingUp className="h-5 w-5" />
+              <span className="text-sm font-medium tracking-wide uppercase">Labour Market Intelligence</span>
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Regional Skills Demand
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Real-time insights into South Yorkshire's employment and skills landscape
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {Object.entries(sectorData)
+              .slice(0, 6)
+              .map(([key, sector]) => (
+                <div key={key} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">{sector.title}</h3>
+                    <div className="space-y-4">
+                      {sector.stats.map((stat, index) => (
+                        <div key={index} className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                            <span className="text-blue-600">{stat.icon}</span>
+                          </div>
+                          <div>
+                            <div className="font-semibold text-gray-900">{stat.number}</div>
+                            <div className="text-sm text-gray-600">{stat.label}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-6 pt-6 border-t border-gray-100">
+                      <h4 className="font-semibold text-gray-900 mb-2">In-demand skills:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {sector.skills.specialist.slice(0, 3).map((skill, index) => (
+                          <span
+                            key={index}
+                            className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link
+              href="/our-region"
+              className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors"
+            >
+              View Full Regional Analysis
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Support for Education Providers */}
+      <div className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Support for Education Providers
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Access resources and support to help deliver high-quality education and training
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <Link
+              href="/educators/training-providers"
+              className="group relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div className="absolute inset-0">
+                <Image
+                  src="/images/training-providers.jpg"
+                  alt="Training provider delivering session"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/40" />
+              </div>
+              <div className="relative p-8">
+                <h3 className="text-2xl font-bold text-white mb-4">Training Providers</h3>
+                <p className="text-white/90 mb-6">
+                  Resources and support for delivering apprenticeships and vocational training
+                </p>
+                <div className="inline-flex items-center text-white">
+                  Learn more
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+
+            <Link
+              href="/educators/schools"
+              className="group relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div className="absolute inset-0">
+                <Image
+                  src="/images/schools.jpg"
+                  alt="School classroom session"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/40" />
+              </div>
+              <div className="relative p-8">
+                <h3 className="text-2xl font-bold text-white mb-4">Schools & Colleges</h3>
+                <p className="text-white/90 mb-6">
+                  Support for careers education and employer engagement
+                </p>
+                <div className="inline-flex items-center text-white">
+                  Learn more
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

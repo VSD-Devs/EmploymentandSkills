@@ -16,7 +16,17 @@ interface Message {
 }
 
 export default function Chatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => {
+    // Check if this is the first visit
+    if (typeof window !== 'undefined') {
+      const hasVisited = localStorage.getItem('hasVisitedBefore');
+      if (!hasVisited) {
+        localStorage.setItem('hasVisitedBefore', 'true');
+        return true; // Open chat on first visit
+      }
+    }
+    return false;
+  });
   const [messages, setMessages] = useState<Message[]>([
     {
       type: 'bot',

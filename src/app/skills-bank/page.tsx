@@ -291,7 +291,7 @@ export default function Page() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Application Process</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Four simple steps to access funding for your business training
+What's the process?
             </p>
           </div>
           <div className="space-y-8">

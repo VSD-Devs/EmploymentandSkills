@@ -180,18 +180,25 @@ export default function PathwaysPage() {
                 <Link
                   key={slug}
                   href={`/pathways/${slug}`}
-                  className="group relative bg-white rounded-3xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-zinc-200/50 h-[180px]"
+                  className="group relative bg-white rounded-3xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-zinc-200/50 h-[280px] flex flex-col"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-emerald-800 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                  <div className="relative z-10 h-full p-8 flex items-center">
-                    <div className="flex items-center gap-5">
+                  <div className="relative z-10 h-full p-8 flex flex-col">
+                    <div className="flex items-center gap-5 mb-4">
                       <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center transition-colors group-hover:bg-white/20 flex-shrink-0">
                         <div className="w-4 h-4 rounded-full bg-emerald-600 group-hover:bg-white transition-colors"></div>
                       </div>
                       <h3 className="text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors">
                         {sector.title}
                       </h3>
+                    </div>
+                    <p className="text-zinc-600 group-hover:text-white/90 transition-colors line-clamp-3">
+                      {sector.description}
+                    </p>
+                    <div className="mt-auto flex items-center text-emerald-600 group-hover:text-white transition-colors font-medium">
+                      Explore careers
+                      <ArrowRight className="ml-2 w-4 h-4" />
                     </div>
                   </div>
                 </Link>
