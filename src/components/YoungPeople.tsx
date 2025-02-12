@@ -180,6 +180,27 @@ const TABS_CONFIG: TabsType = {
   }
 }
 
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+  
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="relative bg-white rounded-lg p-6">
+        <button onClick={onClose} className="absolute top-4 right-4">
+          Close
+        </button>
+        {/* Modal content */}
+      </div>
+    </div>
+  );
+};
+
 const YoungPeople = () => {
   const [activeTab, setActiveTab] = useState<string>('university')
   const [touchStart, setTouchStart] = useState(0)
@@ -563,7 +584,7 @@ const YoungPeople = () => {
 }
 
 // Add this to your global CSS or a new styles module
-const styles = `
+const _styles = `
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }

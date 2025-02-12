@@ -1,9 +1,9 @@
 'use client'
 
 import React from 'react'
-import { Clock, CheckCircle2, Users, ChevronRight, Phone, Mail, BookOpen, GraduationCap, Lightbulb } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
+import { ChevronRight, Users, BookOpen, GraduationCap, Lightbulb } from 'lucide-react'
 import Newsletter from './Newsletter'
 
 // Image constants to ensure consistent loading and prevent typos

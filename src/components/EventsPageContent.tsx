@@ -1,12 +1,14 @@
 'use client';
 
+import React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { ChevronRight, Calendar } from 'lucide-react'
+import EventFilters from './EventFilters'
 import { useState } from 'react';
 import { sampleEvents, eventAudiences } from '@/data/events';
 import { format, parseISO } from 'date-fns';
 import { EventCategory, EventLocation, EventAudience } from '@/types/event';
-import EventFilters from './EventFilters';
-import Image from 'next/image';
-import { Calendar, MapPin, Users, ChevronRight, Filter } from 'lucide-react';
 import Newsletter from './Newsletter';
 
 export default function EventsPageContent() {

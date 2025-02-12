@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { ChevronRight, Target, Users, Lightbulb, MapPin } from 'lucide-react'
+import { ChevronRight, Target, Users, MapPin } from 'lucide-react'
 import Newsletter from './Newsletter'
 import { OptimizedImage } from './OptimizedImage'
 

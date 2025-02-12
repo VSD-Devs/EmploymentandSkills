@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, ArrowRight, GraduationCap, Clock, Briefcase, ChevronRight, ChevronUp, Menu, Filter } from 'lucide-react';
+import { Search, ArrowRight, GraduationCap, Clock, Briefcase, ChevronRight, ChevronUp, Menu } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { sectorData } from '@/data/sectors';
@@ -11,7 +11,7 @@ export default function PathwaysPage() {
   const typedSectors: Record<string, Sector> = sectorData;
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showQuickNav, setShowQuickNav] = useState(false);
-  const [activeSection, setActiveSection] = useState('sectors');
+  const [_activeSection, setActiveSection] = useState('sectors');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -61,7 +61,7 @@ export default function PathwaysPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const scrollToSection = (sectionId: string) => {
+  const _scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });

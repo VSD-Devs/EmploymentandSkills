@@ -3,7 +3,18 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Clock, Users, ChevronRight, GraduationCap, Briefcase, MessageSquare, Building2, BookOpen, PenTool, Calendar, MapPin, Quote } from 'lucide-react'
+import { Clock, Users, ChevronRight, GraduationCap, Briefcase, MessageSquare, Building2, BookOpen, PenTool, Calendar, Quote } from 'lucide-react'
+
+type ColorOption = 'blue' | 'emerald' | 'purple'
+
+interface Opportunity {
+  title: string
+  description: string
+  icon: React.ReactNode
+  duration: string
+  impact: string
+  color: ColorOption
+}
 
 const marketplaceListings = [
   {
@@ -38,7 +49,7 @@ const marketplaceListings = [
   }
 ]
 
-const opportunities = [
+const opportunities: Opportunity[] = [
   {
     title: 'Mock Interviews',
     description: 'Help students prepare for their future careers by conducting practice interviews and providing valuable feedback.',
@@ -132,7 +143,14 @@ const colorClasses = {
 }
 
 const OpportunitiesPage = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string;
+    email: string;
+    company: string;
+    role: string;
+    interests: string[];
+    message: string;
+  }>({
     name: '',
     email: '',
     company: '',
@@ -161,7 +179,7 @@ const OpportunitiesPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission - integrate with your backend
+    // eslint-disable-next-line no-console
     console.log('Form submitted:', formData)
   }
 

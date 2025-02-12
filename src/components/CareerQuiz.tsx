@@ -1,12 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ChevronRight, Sparkles } from 'lucide-react'
+import { ChevronRight, X, ArrowLeft, Sparkles } from 'lucide-react'
 import { quizQuestions, careerProfiles, sectorToRoles } from '../data/careerQuizData'
 import { sectorData } from '../data/sectors'
 import { roleData } from '@/data/roles'
-import CareerQuizResults from './CareerQuizResults'
+import type { CareerProfile } from '../data/careerQuizData'
+
+// Add type definitions
+type Trait = string;
+type SectorSlug = string;
+
+interface ProfileData {
+  description: string;
+  traits: Trait[];
+  recommendedSectors: SectorSlug[];
+}
 
 // Map quiz paths to sector slugs
 const pathToSectorMap: { [key: string]: string } = {
@@ -20,12 +30,31 @@ const pathToSectorMap: { [key: string]: string } = {
   'hospitality': 'hospitality-tourism'
 }
 
-const CareerQuiz = () => {
+interface CareerQuizProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<string[][]>([])
   const [showResults, setShowResults] = useState(false)
   const [showIntermediate, setShowIntermediate] = useState(false)
   const [stage, setStage] = useState<1 | 2>(1)
+
+  // Load saved state on mount
+  useEffect(() => {
+    if (isOpen) {
+      const savedState = localStorage.getItem('careerQuizState')
+      if (savedState) {
+        const { answers, stage, showResults } = JSON.parse(savedState)
+        setAnswers(answers)
+        setStage(stage)
+        setShowResults(true)
+        localStorage.removeItem('careerQuizState') // Clear after restoring
+      }
+    }
+  }, [isOpen])
 
   const traitDescriptions: { [key: string]: string } = {
     analytical: 'strong analytical and logical thinking abilities',
@@ -45,6 +74,18 @@ const CareerQuiz = () => {
     organised: 'strong organisational abilities'
   }
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
+
   const handleAnswer = (paths: string[]) => {
     const newAnswers = [...answers, paths]
     
@@ -60,6 +101,17 @@ const CareerQuiz = () => {
     }
   }
 
+  // Save state before navigating to role
+  const handleRoleClick = () => {
+    const stateToSave = {
+      answers,
+      stage,
+      showResults: true
+    }
+    localStorage.setItem('careerQuizState', JSON.stringify(stateToSave))
+    onClose()
+  }
+
   const startSecondStage = () => {
     setStage(2)
     setShowIntermediate(false)
@@ -70,6 +122,11 @@ const CareerQuiz = () => {
     if (quizContainer) {
       quizContainer.scrollTop = 0
     }
+  }
+
+  const skipSecondStage = () => {
+    setShowResults(true)
+    setShowIntermediate(false)
   }
 
   const resetQuiz = () => {
@@ -213,7 +270,7 @@ const CareerQuiz = () => {
     
     const sector = roleToSector[roleSlug];
     if (!sector) {
-      // Handle missing sector mapping silently
+      console.error(`No sector mapping found for role: ${roleSlug}`);
       return 'digital-tech';
     }
     return sector;
@@ -355,7 +412,7 @@ const CareerQuiz = () => {
                 <Link
                   key={roleSlug}
                   href={`/pathways/${getRoleSector(roleSlug)}/roles/${roleSlug}`}
-                  onClick={resetQuiz}
+                  onClick={handleRoleClick}
                   className="block bg-emerald-600 hover:bg-emerald-500 transition-all duration-300 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   <div className="p-8">
@@ -503,6 +560,7 @@ const CareerQuiz = () => {
           <Link
             href="/pathways"
             className="inline-flex items-center text-lg text-white bg-emerald-600 px-8 py-4 rounded-xl hover:bg-emerald-500 transition-colors shadow-lg hover:shadow-xl"
+            onClick={onClose}
           >
             Explore All Pathways
             <ChevronRight className="ml-2 h-6 w-6" />
@@ -515,98 +573,147 @@ const CareerQuiz = () => {
   // Filter questions based on current stage
   const currentStageQuestions = quizQuestions.filter(q => q.stage === stage)
 
+  if (!isOpen) return null
+
   return (
-    <div className="bg-white rounded-3xl shadow-xl border border-zinc-100">
-      <div className="quiz-scroll-container">
-        <div className="p-6 md:p-8 lg:p-12">
-          {showResults ? (
-            <div>
-              <h2 className="text-3xl font-bold text-zinc-900 mb-8">Your Career Recommendations</h2>
-              <p className="text-lg text-zinc-600 mb-10">
-                Based on your answers, here are the career paths that might interest you:
-              </p>
-              
-              {renderResults()}
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center overflow-hidden">
+      <div className="relative w-full md:w-auto md:max-w-6xl mx-4 my-4 md:my-8">
+        {/* Desktop close button - Updated positioning and z-index */}
+        <button
+          onClick={() => {
+            resetQuiz()
+            onClose()
+          }}
+          className="hidden md:flex items-center justify-center absolute -top-4 -right-4 w-12 h-12 bg-zinc-900 text-white hover:bg-zinc-800 rounded-full transition-colors shadow-lg border-2 border-white z-50"
+          aria-label="Close quiz"
+        >
+          <X className="h-6 w-6" />
+        </button>
+
+        <div className="relative bg-white md:rounded-3xl shadow-2xl overflow-hidden">
+          {/* Mobile-friendly header with back/close button */}
+          <div className="sticky top-0 z-20 bg-white border-b border-zinc-100 px-6 py-5 md:hidden">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => {
+                  if (currentQuestion > (stage === 1 ? 0 : 5) && !showResults && !showIntermediate) {
+                    setCurrentQuestion(currentQuestion - 1)
+                  } else {
+                    resetQuiz()
+                    onClose()
+                  }
+                }}
+                className="p-2.5 -ml-2.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-colors"
+                aria-label={currentQuestion > (stage === 1 ? 0 : 5) ? "Previous question" : "Close quiz"}
+              >
+                <ArrowLeft className="h-7 w-7" />
+              </button>
+              <span className="font-medium text-lg text-zinc-900">Career Quiz {stage === 2 ? '- Stage 2' : ''}</span>
+              <button
+                onClick={() => {
+                  resetQuiz()
+                  onClose()
+                }}
+                className="p-2.5 -mr-2.5 text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 rounded-full transition-colors"
+                aria-label="Close quiz"
+              >
+                <X className="h-7 w-7" />
+              </button>
             </div>
-          ) : showIntermediate ? (
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-zinc-900 mb-6">
-                Great progress! Ready for more insights?
-              </h2>
-              <p className="text-lg text-zinc-600 mb-8">
-                You've completed the first stage of questions. Continue to stage 2 for more personalised career recommendations.
-              </p>
-              <div className="flex flex-col md:flex-row gap-4 justify-center">
-                <button
-                  onClick={startSecondStage}
-                  className="px-8 py-4 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition-colors font-medium text-lg"
-                >
-                  Continue to Stage 2
-                </button>
-                <button
-                  onClick={() => setShowResults(true)}
-                  className="px-8 py-4 bg-zinc-100 text-zinc-900 rounded-xl hover:bg-zinc-200 transition-colors font-medium text-lg"
-                >
-                  See Current Results
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div>
-              {/* Progress indicator */}
-              <div className="mb-10">
-                <div className="hidden md:flex items-center justify-between mb-8">
-                  <h2 className="text-3xl font-bold text-zinc-900">
-                    Question {stage === 1 ? currentQuestion + 1 : currentQuestion - 4} 
-                    <span className="text-zinc-400 ml-3">
-                      (Stage {stage} of 2)
-                    </span>
+          </div>
+
+          <div className="max-h-[85vh] overflow-y-auto quiz-scroll-container">
+            <div className="p-6 md:p-12">
+              {showResults ? (
+                <div>
+                  <h2 className="text-3xl font-bold text-zinc-900 mb-8">Your Career Recommendations</h2>
+                  <p className="text-lg text-zinc-600 mb-10">
+                    Based on your answers, here are the career paths that might interest you:
+                  </p>
+                  
+                  {renderResults()}
+                </div>
+              ) : showIntermediate ? (
+                <div className="text-center">
+                  <h2 className="text-3xl font-bold text-zinc-900 mb-6">
+                    Great progress! Ready for more insights?
                   </h2>
-                  <span className="text-lg text-zinc-500">
-                    {stage === 1 ? currentQuestion + 1 : currentQuestion - 4} of 5
-                  </span>
-                </div>
-                <div className="w-full bg-zinc-200 rounded-full h-3">
-                  <div
-                    className="bg-emerald-600 h-3 rounded-full transition-all duration-300"
-                    style={{ 
-                      width: `${((stage === 1 ? currentQuestion + 1 : currentQuestion - 4) / 5) * 100}%` 
-                    }}
-                  ></div>
-                </div>
-              </div>
-
-              <div className="mb-10">
-                <h3 className="text-2xl font-semibold text-zinc-900 mb-8">
-                  {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].question}
-                </h3>
-                <div className="grid gap-4">
-                  {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].options.map((option) => (
+                  <p className="text-lg text-zinc-600 mb-8">
+                    You've completed the first stage of questions. Continue to stage 2 for more personalised career recommendations.
+                  </p>
+                  <div className="flex flex-col md:flex-row gap-4 justify-center">
                     <button
-                      key={option.id}
-                      onClick={() => handleAnswer(option.paths)}
-                      className="text-left p-6 rounded-xl border-2 border-zinc-200 hover:border-emerald-500 hover:bg-emerald-50 transition-colors active:bg-emerald-100"
+                      onClick={startSecondStage}
+                      className="px-8 py-4 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition-colors font-medium text-lg"
                     >
-                      <span className="text-lg font-medium text-zinc-900">{option.text}</span>
+                      Continue to Stage 2
                     </button>
-                  ))}
+                    <button
+                      onClick={() => setShowResults(true)}
+                      className="px-8 py-4 bg-zinc-100 text-zinc-900 rounded-xl hover:bg-zinc-200 transition-colors font-medium text-lg"
+                    >
+                      See Current Results
+                    </button>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  {/* Progress indicator */}
+                  <div className="mb-10">
+                    <div className="hidden md:flex items-center justify-between mb-8">
+                      <h2 className="text-3xl font-bold text-zinc-900">
+                        Question {stage === 1 ? currentQuestion + 1 : currentQuestion - 4} 
+                        <span className="text-zinc-400 ml-3">
+                          (Stage {stage} of 2)
+                        </span>
+                      </h2>
+                      <span className="text-lg text-zinc-500">
+                        {stage === 1 ? currentQuestion + 1 : currentQuestion - 4} of 5
+                      </span>
+                    </div>
+                    <div className="w-full bg-zinc-200 rounded-full h-3">
+                      <div
+                        className="bg-emerald-600 h-3 rounded-full transition-all duration-300"
+                        style={{ 
+                          width: `${((stage === 1 ? currentQuestion + 1 : currentQuestion - 4) / 5) * 100}%` 
+                        }}
+                      ></div>
+                    </div>
+                  </div>
 
-              <div className="hidden md:flex justify-between items-center pt-8 border-t border-zinc-100">
-                <button
-                  onClick={() => setCurrentQuestion(Math.max(stage === 1 ? 0 : 5, currentQuestion - 1))}
-                  disabled={currentQuestion === (stage === 1 ? 0 : 5)}
-                  className="text-lg text-zinc-600 font-medium hover:text-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Previous
-                </button>
-                <div className="text-base text-zinc-500">
-                  Your answers are saved automatically
+                  <div className="mb-10">
+                    <h3 className="text-2xl font-semibold text-zinc-900 mb-8">
+                      {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].question}
+                    </h3>
+                    <div className="grid gap-4">
+                      {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].options.map((option) => (
+                        <button
+                          key={option.id}
+                          onClick={() => handleAnswer(option.paths)}
+                          className="text-left p-6 rounded-xl border-2 border-zinc-200 hover:border-emerald-500 hover:bg-emerald-50 transition-colors active:bg-emerald-100"
+                        >
+                          <span className="text-lg font-medium text-zinc-900">{option.text}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="hidden md:flex justify-between items-center pt-8 border-t border-zinc-100">
+                    <button
+                      onClick={() => setCurrentQuestion(Math.max(stage === 1 ? 0 : 5, currentQuestion - 1))}
+                      disabled={currentQuestion === (stage === 1 ? 0 : 5)}
+                      className="text-lg text-zinc-600 font-medium hover:text-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Previous
+                    </button>
+                    <div className="text-base text-zinc-500">
+                      Your answers are saved automatically
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

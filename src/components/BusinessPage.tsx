@@ -72,7 +72,7 @@ type TabsType = {
 }
 
 const BusinessPage = () => {
-  const [activeTab, setActiveTab] = useState('skills')
+  const [_activeTab, _setActiveTab] = useState('overview')
 
   const tabs: TabsType = {
     skills: {

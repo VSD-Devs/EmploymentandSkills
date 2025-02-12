@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
+import CareerQuizButton from './CareerQuizButton'
 
 const Hero = () => {
   return (
@@ -190,13 +191,10 @@ Our region                </Link>
                 <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Not sure where to start?</h2>
                 <p className="text-white/90 text-sm sm:text-base">Take our quick quiz to find opportunities that match your interests</p>
               </div>
-              <Link 
-                href="/career-quiz"
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors px-6 py-3 rounded-xl text-white font-medium w-full sm:w-auto whitespace-nowrap"
-              >
-                Start Career Quiz
-                <ChevronRight className="w-5 h-5" />
-              </Link>
+              <CareerQuizButton 
+                variant="secondary"
+                className="w-full sm:w-auto whitespace-nowrap"
+              />
             </div>
           </div>
         </div>

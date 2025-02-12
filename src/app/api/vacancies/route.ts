@@ -63,11 +63,9 @@ interface VacancySearchParams {
 }
 
 const CACHE_DURATION = 1000 * 60 * 15; // 15 minutes
-const MAX_RETRIES = 3;
-const RETRY_DELAY = 1000; // 1 second
-
-// Helper function to delay execution
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const _MAX_RETRIES = 3;
+const _RETRY_DELAY = 1000; // 1 second
+const _delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function GET(request: Request) {
   // Create a debug info object that we'll send back with the response
@@ -132,56 +130,46 @@ export async function GET(request: Request) {
 
     debugInfo.apiCallInfo = { params };
 
-    for (let i = 0; i < MAX_RETRIES; i++) {
-      try {
-        debugInfo.apiCallInfo.attempt = i + 1;
-        const response = await dfeApi.getVacancies(params);
-        
-        cache[cacheKey] = {
-          data: response,
-          timestamp: now
+    const response = await dfeApi.getVacancies(params);
+    let vacancies = response.vacancies;
+
+    // Handle salary sorting
+    if (sort === 'SalaryDesc' || sort === 'SalaryAsc') {
+      vacancies = vacancies.sort((a, b) => {
+        const getSalaryAmount = (vacancy: DfeVacancy) => {
+          const wage = vacancy.wage;
+          if (!wage || !wage.wageAmount) return 0;
+          
+          // Convert all wages to annual amount
+          let amount = wage.wageAmount;
+          if (wage.wageUnit === 'Weekly') {
+            amount *= 52;
+          } else if (wage.wageUnit === 'Monthly') {
+            amount *= 12;
+          }
+          return amount;
         };
 
-        const successResponse = {
-          ...response,
-          _debug: { ...debugInfo, success: true }
-        };
-        return NextResponse.json(successResponse, { headers });
-      } catch (error) {
-        interface ApiError extends Error {
-          response?: {
-            status?: number;
-            data?: unknown;
-          };
-        }
-        
-        const typedError = error as ApiError;
-        const errorInfo = {
-          attempt: i + 1,
-          message: typedError.message,
-          status: typedError.response?.status,
-          data: typedError.response?.data
-        };
-        debugInfo.errors.push(errorInfo);
+        const salaryA = getSalaryAmount(a);
+        const salaryB = getSalaryAmount(b);
 
-        if (i === MAX_RETRIES - 1) {
-          debugInfo.usedFallback = true;
-          const fallbackResponse = {
-            ...fallbackVacancies,
-            _debug: debugInfo
-          };
-          return NextResponse.json(fallbackResponse, { headers });
-        }
-        await delay(RETRY_DELAY * (i + 1));
-      }
+        return sort === 'SalaryDesc' ? salaryB - salaryA : salaryA - salaryB;
+      });
     }
 
-    debugInfo.usedFallback = true;
-    const fallbackResponse = {
-      ...fallbackVacancies,
+    const result = {
+      vacancies,
+      total: response.total,
       _debug: debugInfo
     };
-    return NextResponse.json(fallbackResponse, { headers });
+
+    // Cache the results
+    cache[cacheKey] = {
+      data: result,
+      timestamp: now
+    };
+
+    return NextResponse.json(result, { headers });
   } catch (error) {
     interface ApiError extends Error {
       response?: {

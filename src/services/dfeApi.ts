@@ -1,5 +1,18 @@
 import axios from 'axios';
 
+// Logging utilities
+const logDebug = (message: string, data: unknown) => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(message, data);
+  }
+};
+
+const logError = (message: string, error: unknown) => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.error(message, error);
+  }
+};
+
 // Get the appropriate API key based on environment
 const getApiKey = () => {
   // Vercel Production
@@ -19,7 +32,7 @@ const getApiKey = () => {
 const API_KEY = getApiKey();
 
 if (!API_KEY) {
-  console.error('DFE API Key is not set in environment variables');
+  logError('DFE API Key is not set in environment variables', null);
 }
 
 const DFE_API_BASE_URL = 'https://api.apprenticeships.education.gov.uk/vacancies';
@@ -48,11 +61,19 @@ const checkEnvironment = () => {
                         getApiKey() === process.env.NEXT_PUBLIC_DFE_API_KEY ? 'PUBLIC' : 'NONE'
   };
 
-  console.log('🔍 Environment Check:', envInfo);
+  logDebug('🔍 Environment Check:', envInfo);
   return envInfo;
 };
 
-export type VacancySort = 'AgeDesc' | 'AgeAsc' | 'DistanceDesc' | 'DistanceAsc' | 'ExpectedStartDateDesc' | 'ExpectedStartDateAsc';
+export type VacancySort = 
+  | 'AgeDesc' 
+  | 'AgeAsc' 
+  | 'DistanceDesc' 
+  | 'DistanceAsc' 
+  | 'ExpectedStartDateDesc' 
+  | 'ExpectedStartDateAsc'
+  | 'SalaryDesc'
+  | 'SalaryAsc';
 
 export interface DfeVacancyResponse {
   vacancies: DfeVacancy[];
@@ -117,6 +138,16 @@ export interface GetVacanciesParams {
   Sort?: VacancySort;
 }
 
+// Replace all console.log/error calls with handleError
+const handleError = (error: Error, context: string): never => {
+  // In production, this would log to a monitoring service
+  if (process.env.NODE_ENV !== 'production') {
+    // Only log in development
+    console.error(`[DFE API] ${context}:`, error);
+  }
+  throw new Error(`${context}: ${error.message}`);
+};
+
 export const dfeApi = {
   async getVacancies(params: GetVacanciesParams): Promise<DfeVacancyResponse> {
     try {
@@ -124,13 +155,7 @@ export const dfeApi = {
       const envInfo = checkEnvironment();
 
       if (!API_KEY) {
-        const error = new Error('DFE API Key is not configured');
-        console.error('🚨 API Key Missing:', {
-          error: error.message,
-          envInfo,
-          stack: error.stack
-        });
-        throw error;
+        return handleError(new Error('DFE API Key is not configured'), 'Failed to fetch data from DFE API');
       }
 
       // Debug log the full request details
@@ -145,7 +170,7 @@ export const dfeApi = {
         params,
       };
 
-      console.log('📡 DFE API Request:', {
+      logDebug('📡 DFE API Request:', {
         url: requestConfig.url,
         headers: {
           ...requestConfig.headers,
@@ -162,7 +187,7 @@ export const dfeApi = {
         timeout: 10000,
       });
 
-      console.log('✅ DFE API Response:', {
+      logDebug('✅ DFE API Response:', {
         status: response.status,
         statusText: response.statusText,
         headers: response.headers,
@@ -196,12 +221,7 @@ export const dfeApi = {
 
       return response.data;
     } catch (error) {
-      console.error('🚨 Unhandled Error:', {
-        error: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : undefined,
-        envInfo: checkEnvironment()
-      });
-      throw error;
+      return handleError(error as Error, 'Failed to fetch data from DFE API');
     }
   },
 
@@ -220,8 +240,7 @@ export const dfeApi = {
 
       return response.data;
     } catch (error) {
-      console.error('Error fetching DfE vacancy:', error);
-      throw error;
+      handleError(error as Error, 'Error fetching DfE vacancy');
     }
   },
 
@@ -240,8 +259,58 @@ export const dfeApi = {
 
       return response.data;
     } catch (error) {
-      console.error('Error fetching DfE courses:', error);
-      throw error;
+      handleError(error as Error, 'Error fetching DfE courses');
     }
   },
-}; 
+};
+
+interface VacancySearchParams {
+  [key: string]: string | undefined
+}
+
+interface VacancySearchResponse {
+  data: DfeVacancy[]
+  total: number
+  page: number
+  perPage: number
+}
+
+interface VacancyDetail {
+  id: string
+  title: string
+  description: string
+  employer: string
+  location: string
+  salary: string
+  closingDate: string
+  startDate: string
+  [key: string]: string | number | boolean | object
+}
+
+export async function fetchVacancies(params: VacancySearchParams): Promise<VacancySearchResponse> {
+  try {
+    const searchParams = Object.entries(params)
+      .filter(([_, value]) => value !== undefined)
+      .reduce((acc, [key, value]) => ({ ...acc, [key]: String(value) }), {})
+      
+    const response = await fetch(`${process.env.NEXT_PUBLIC_DFE_API_URL}/vacancies?${new URLSearchParams(searchParams)}`)
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`)
+    }
+    return await response.json()
+  } catch (error) {
+    throw new Error(`Failed to fetch vacancies: ${error}`)
+  }
+}
+
+export async function fetchVacancyDetails(vacancyReference: string): Promise<VacancyDetail> {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_DFE_API_URL}/vacancies/${vacancyReference}`)
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`)
+    }
+    return await response.json()
+  } catch (error) {
+    throw new Error(`Failed to fetch vacancy details: ${error}`)
+  }
+} 

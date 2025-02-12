@@ -1,6 +1,5 @@
 import React from 'react';
 import { 
-  GraduationCap, 
   Rocket, 
   Building2, 
   Users,
@@ -8,8 +7,6 @@ import {
   ArrowUpRight,
   MapPin,
   Bell,
-  BookOpen,
-  BarChart3
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';

@@ -1,9 +1,10 @@
 'use client'
 
+import React from 'react'
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { BookOpen, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, School, ChevronDown } from 'lucide-react'
+import { BookOpen, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, School, ChevronDown, ChevronRight } from 'lucide-react'
 
 // Types
 interface TLevelProvider {

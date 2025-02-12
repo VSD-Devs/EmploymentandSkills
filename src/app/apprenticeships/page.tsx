@@ -77,21 +77,33 @@ const successStories: SuccessStory[] = [
 
 const categories = [
   'All',
+  'Agriculture, environmental and animal care',
+  'Business and administration',
+  'Care services',
+  'Catering and hospitality',
+  'Construction and the built environment',
+  'Creative and design',
   'Digital',
-  'Technology',
-  'Engineering',
-  'Business',
-  'Healthcare'
+  'Education and early years',
+  'Engineering and manufacturing',
+  'Hair and beauty',
+  'Health and science',
+  'Legal, finance and accounting',
+  'Protective services',
+  'Sales, marketing and procurement',
+  'Transport and logistics'
 ]
-
-type SortOption = 'AgeDesc' | 'AgeAsc' | 'DistanceAsc' | 'DistanceDesc';
 
 const sortOptions = [
   { value: 'AgeDesc', label: 'Newest first' },
   { value: 'AgeAsc', label: 'Oldest first' },
   { value: 'DistanceAsc', label: 'Nearest first' },
   { value: 'DistanceDesc', label: 'Furthest first' },
+  { value: 'SalaryDesc', label: 'Highest salary first' },
+  { value: 'SalaryAsc', label: 'Lowest salary first' },
 ] as const;
+
+type SortOption = typeof sortOptions[number]['value'];
 
 const salaryRanges = [
   { min: 0, max: 10000, label: 'Up to £10,000' },
@@ -500,49 +512,6 @@ const ApprenticeshipPage = () => {
         </div>
       </div>
 
-      {/* Stats Section with Image */}
-      <div className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl">
-              <Image
-                src="/images/apprentice-success.jpg"
-                alt="Successful apprentices from South Yorkshire celebrating their achievements"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-2 text-emerald-600 mb-4">
-                <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-                <span className="text-sm font-medium tracking-wide uppercase">Why Choose an Apprenticeship?</span>
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                Join South Yorkshire's Success Story
-              </h2>
-              <div className="grid grid-cols-2 gap-8">
-                <div>
-                  <p className="text-3xl font-bold text-emerald-600 mb-2">92%</p>
-                  <p className="text-gray-600">of apprentices go into work or further training</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold text-emerald-600 mb-2">£20k+</p>
-                  <p className="text-gray-600">average starting salary after qualification</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold text-emerald-600 mb-2">1,500+</p>
-                  <p className="text-gray-600">local employers offering apprenticeships</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold text-emerald-600 mb-2">89%</p>
-                  <p className="text-gray-600">satisfaction rate from our apprentices</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Current Vacancies Section */}
       <div id="current-vacancies" className="bg-gray-50 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -593,22 +562,18 @@ const ApprenticeshipPage = () => {
 
               <div className="flex flex-wrap items-center gap-4">
                 <div className="flex-1">
-                  <div className="flex flex-wrap gap-3">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    aria-label="Select apprenticeship category"
+                  >
                     {categories.map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                          selectedCategory === category
-                            ? 'bg-emerald-600 text-white shadow-md'
-                            : 'bg-gray-50 text-gray-700 hover:bg-emerald-50 border border-gray-200'
-                        }`}
-                        aria-pressed={selectedCategory === category}
-                      >
+                      <option key={category} value={category}>
                         {category}
-                      </button>
+                      </option>
                     ))}
-                  </div>
+                  </select>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -620,30 +585,23 @@ const ApprenticeshipPage = () => {
                     Show as
                   </button>
 
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as SortOption)}
-                    className="px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                  >
-                    {sortOptions.map(option => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm font-medium text-gray-600">
+                      Sort by
+                    </span>
 
-                  <select
-                    value={selectedSalaryRange}
-                    onChange={(e) => setSelectedSalaryRange(parseInt(e.target.value))}
-                    className="px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                  >
-                    <option value={-1}>All Salaries</option>
-                    {salaryRanges.map((range, index) => (
-                      <option key={index} value={index}>
-                        {range.label}
-                      </option>
-                    ))}
-                  </select>
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value as SortOption)}
+                      className="px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    >
+                      {sortOptions.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
