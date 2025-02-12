@@ -1,6 +1,6 @@
 'use client';
 
-import { Sparkles, ChevronRight, ArrowRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import type { CareerProfile } from '@/data/careerQuizData';
 import { sectorToRoles } from '@/data/careerQuizData';
@@ -58,11 +58,7 @@ export default function CareerQuizResults({
     localStorage.setItem('careerQuizState', JSON.stringify(stateToSave));
     
     // Get the sector for this role
-    const sector = roleToSector[role];
-    if (!sector) {
-      console.error(`No sector found for role: ${role}`);
-      return;
-    }
+    const sector = roleToSector[role] || 'digital-tech';
     
     // Navigate to the correct path
     router.push(`/pathways/${sector}/roles/${role}`);

@@ -1,15 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { sampleEvents, eventAudiences } from '@/data/events';
 import { format, parseISO } from 'date-fns';
 import { EventCategory, EventLocation, EventAudience } from '@/types/event';
 import EventFilters from './EventFilters';
 import Image from 'next/image';
-import { Calendar, MapPin, Users, ChevronRight, Filter, Search } from 'lucide-react';
+import { Calendar, MapPin, Users, ChevronRight, Filter } from 'lucide-react';
 import Newsletter from './Newsletter';
-import EventCard from './EventCard';
-import { Event } from '@/types/event';
 
 export default function EventsPageContent() {
     const [selectedCategory, setSelectedCategory] = useState<EventCategory | 'all'>('all');

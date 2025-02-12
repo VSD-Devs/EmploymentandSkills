@@ -1,18 +1,24 @@
 import { NextResponse } from 'next/server';
 import { dfeApi } from '@/services/dfeApi';
-import type { VacancySort } from '@/services/dfeApi';
+import type { VacancySort, DfeVacancy } from '@/services/dfeApi';
 import { fallbackVacancies } from '@/data/fallbackVacancies';
-import type { DfeVacancyResponse } from '@/types/vacancy';
 
 // Update dynamic configuration for Vercel
 export const dynamic = 'auto'
 export const dynamicParams = true
 export const revalidate = 300 // revalidate every 5 minutes
 
+// Define API response type
+interface ApiResponse {
+  vacancies: DfeVacancy[];
+  total: number;
+  _debug?: DebugInfo;
+}
+
 // Simple cache object
 const cache: {
   [key: string]: {
-    data: any;
+    data: ApiResponse;
     timestamp: number;
   };
 } = {};
@@ -31,7 +37,7 @@ interface DebugInfo {
     url?: string;
   };
   apiCallInfo: {
-    params?: any;
+    params?: VacancySearchParams;
     attempt?: number;
   };
   errors: Array<{
@@ -39,12 +45,21 @@ interface DebugInfo {
     attempt?: number;
     message: string;
     status?: number;
-    data?: any;
+    data?: unknown;
     stack?: string;
   }>;
   usedFallback: boolean;
   source?: string;
   success?: boolean;
+}
+
+interface VacancySearchParams {
+  pageSize: number;
+  postedInLastNumberOfDays: number;
+  Sort: VacancySort;
+  lat?: number;
+  lon?: number;
+  distanceInMiles?: number;
 }
 
 const CACHE_DURATION = 1000 * 60 * 15; // 15 minutes
@@ -54,12 +69,7 @@ const RETRY_DELAY = 1000; // 1 second
 // Helper function to delay execution
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-interface ErrorResponse {
-  message: string;
-  status: number;
-}
-
-export async function GET(request: Request): Promise<NextResponse<DfeVacancyResponse | ErrorResponse>> {
+export async function GET(request: Request) {
   // Create a debug info object that we'll send back with the response
   const debugInfo: DebugInfo = {
     environment: {
@@ -104,7 +114,7 @@ export async function GET(request: Request): Promise<NextResponse<DfeVacancyResp
       return NextResponse.json(response, { headers });
     }
 
-    const params: any = {
+    const params: VacancySearchParams = {
       pageSize: 100,
       postedInLastNumberOfDays: 30,
       Sort: sort,
@@ -137,12 +147,20 @@ export async function GET(request: Request): Promise<NextResponse<DfeVacancyResp
           _debug: { ...debugInfo, success: true }
         };
         return NextResponse.json(successResponse, { headers });
-      } catch (error: any) {
+      } catch (error) {
+        interface ApiError extends Error {
+          response?: {
+            status?: number;
+            data?: unknown;
+          };
+        }
+        
+        const typedError = error as ApiError;
         const errorInfo = {
           attempt: i + 1,
-          message: error.message,
-          status: error.response?.status,
-          data: error.response?.data
+          message: typedError.message,
+          status: typedError.response?.status,
+          data: typedError.response?.data
         };
         debugInfo.errors.push(errorInfo);
 
@@ -164,10 +182,25 @@ export async function GET(request: Request): Promise<NextResponse<DfeVacancyResp
       _debug: debugInfo
     };
     return NextResponse.json(fallbackResponse, { headers });
-  } catch (error: any) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message, status: 500 }, { status: 500 });
+  } catch (error) {
+    interface ApiError extends Error {
+      response?: {
+        status?: number;
+        data?: unknown;
+      };
     }
-    return NextResponse.json({ message: 'An unknown error occurred', status: 500 }, { status: 500 });
+    
+    const typedError = error as ApiError;
+    debugInfo.errors.push({
+      type: 'RouteHandler',
+      message: typedError.message,
+      stack: typedError.stack
+    });
+    debugInfo.usedFallback = true;
+    const errorResponse = {
+      ...fallbackVacancies,
+      _debug: debugInfo
+    };
+    return NextResponse.json(errorResponse, { headers });
   }
 } 

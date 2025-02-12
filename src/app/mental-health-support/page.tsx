@@ -1,10 +1,12 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
+import React from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { 
-  ChevronRight, 
+  ChevronRight,
+  ChevronLeft,
   Heart, 
   Phone, 
   Mail, 
@@ -12,20 +14,13 @@ import {
   Brain, 
   Sparkles, 
   Clock, 
-  CheckCircle2, 
-  Target, 
-  Briefcase, 
-  ArrowRight, 
-  FileCheck, 
-  Building2, 
-  GraduationCap, 
-  X, 
-  HelpCircle, 
-  ArrowLeft, 
-  User, 
-  MapPin, 
-  HeartHandshake, 
-  ChevronLeft 
+  CheckCircle2,
+  Target,
+  ArrowRight,
+  FileCheck,
+  X,
+  MessageSquare,
+  HelpCircle
 } from 'lucide-react'
 
 // Define form data type
@@ -44,7 +39,7 @@ type FormData = {
   [key: string]: string // Add index signature
 }
 
-const MentalHealthSupport = () => {
+const MentalHealthSupportPage = () => {
   const [formStep, setFormStep] = useState(1)
   const [showEligibilityChecker, setShowEligibilityChecker] = useState(false)
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -101,22 +96,22 @@ const MentalHealthSupport = () => {
     {
       title: "Personal Details",
       fields: ["fullName", "email", "phone", "dateOfBirth"],
-      icon: User
+      icon: Users
     },
     {
       title: "Location",
       fields: ["address", "city", "postcode"],
-      icon: MapPin
+      icon: MessageSquare
     },
     {
       title: "Employment & Health",
       fields: ["employmentStatus", "healthCondition"],
-      icon: Briefcase
+      icon: MessageSquare
     },
     {
       title: "Support Requirements",
       fields: ["supportNeeded", "hearAboutUs"],
-      icon: HeartHandshake
+      icon: MessageSquare
     }
   ]
 
@@ -304,7 +299,7 @@ const MentalHealthSupport = () => {
                     description: 'One-to-one guidance from a dedicated Employment Specialist who will help identify your goals and develop a realistic action plan.'
                   },
                   {
-                    icon: Briefcase,
+                    icon: MessageSquare,
                     title: 'In-Work Support',
                     description: 'Ongoing assistance to help manage health conditions at work, ensuring you can thrive in your current role.'
                   },
@@ -318,7 +313,7 @@ const MentalHealthSupport = () => {
                     <div className="absolute -inset-4 bg-purple-50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative flex items-start gap-4">
                       <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
-                        {React.createElement(feature.icon, { className: "h-5 w-5 md:h-6 md:w-6 text-purple-600" })}
+                        <feature.icon className="h-5 w-5 md:h-6 md:w-6 text-purple-600" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-gray-900 text-base md:text-lg mb-2 group-hover:text-purple-700 transition-colors duration-300">
@@ -415,7 +410,7 @@ const MentalHealthSupport = () => {
                     { icon: ChevronRight, text: 'Must not be enrolled in another DWP employment programme' }
                   ].map((item, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      {React.createElement(item.icon, { className: "h-5 w-5 text-purple-600 mt-1 flex-shrink-0" })}
+                      <item.icon className="h-5 w-5 text-purple-600 mt-1 flex-shrink-0" />
                       <span className="text-gray-700">{item.text}</span>
                     </li>
                   ))}
@@ -678,7 +673,7 @@ const MentalHealthSupport = () => {
                 <div className="relative bg-gray-800/50 backdrop-blur rounded-xl p-8 border border-gray-700">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center">
-                      {React.createElement(contact.icon, { className: "h-6 w-6 text-purple-400" })}
+                      <contact.icon className="h-6 w-6 text-purple-400" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-300 text-lg mb-2">{contact.title}</h3>
@@ -807,4 +802,4 @@ const MentalHealthSupport = () => {
   )
 }
 
-export default MentalHealthSupport
+export default MentalHealthSupportPage

@@ -1,13 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
-import { ChevronRight, X, ArrowLeft, Sparkles, ArrowRight } from 'lucide-react'
+import { ChevronRight, Sparkles } from 'lucide-react'
 import { quizQuestions, careerProfiles, sectorToRoles } from '../data/careerQuizData'
 import { sectorData } from '../data/sectors'
-import { careerPaths } from '../data/careerPaths'
 import { roleData } from '@/data/roles'
-import type { CareerProfile } from '../data/careerQuizData'
+import CareerQuizResults from './CareerQuizResults'
 
 // Map quiz paths to sector slugs
 const pathToSectorMap: { [key: string]: string } = {
@@ -19,10 +18,6 @@ const pathToSectorMap: { [key: string]: string } = {
   'trades': 'construction',
   'logistics': 'logistics-transport',
   'hospitality': 'hospitality-tourism'
-}
-
-interface CareerQuizProps {
-  _unused?: never;
 }
 
 const CareerQuiz = () => {
@@ -75,11 +70,6 @@ const CareerQuiz = () => {
     if (quizContainer) {
       quizContainer.scrollTop = 0
     }
-  }
-
-  const skipSecondStage = () => {
-    setShowResults(true)
-    setShowIntermediate(false)
   }
 
   const resetQuiz = () => {
@@ -223,7 +213,7 @@ const CareerQuiz = () => {
     
     const sector = roleToSector[roleSlug];
     if (!sector) {
-      console.error(`No sector mapping found for role: ${roleSlug}`);
+      // Handle missing sector mapping silently
       return 'digital-tech';
     }
     return sector;

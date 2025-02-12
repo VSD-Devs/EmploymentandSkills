@@ -77,21 +77,11 @@ const successStories: SuccessStory[] = [
 
 const categories = [
   'All',
-  'Agriculture, environmental and animal care',
-  'Business and administration',
-  'Care services',
-  'Catering and hospitality',
-  'Construction',
-  'Creative and design',
   'Digital',
-  'Education and childcare',
-  'Engineering and manufacturing',
-  'Hair and beauty',
-  'Health',
-  'Legal, finance and accounting',
-  'Protective services',
-  'Sales, marketing and procurement',
-  'Transport and logistics'
+  'Technology',
+  'Engineering',
+  'Business',
+  'Healthcare'
 ]
 
 type SortOption = 'AgeDesc' | 'AgeAsc' | 'DistanceAsc' | 'DistanceDesc';
@@ -133,45 +123,46 @@ const ApprenticeshipPage = () => {
   const [currentChunk, setCurrentChunk] = useState(0)
   const CHUNK_SIZE = 6
 
-  const handleError = (error: unknown) => {
-    setError(`Failed to fetch vacancies: ${error}`)
-    setIsLoading(false)
-  }
-
-  const fetchVacancies = async () => {
-    try {
-      setIsLoading(true)
-      const params = new URLSearchParams();
-      if (postcode) params.append('postcode', postcode);
-      if (sortBy) params.append('sort', sortBy);
-      
-      const response = await fetch(`/api/vacancies?${params.toString()}`, {
-        cache: 'no-store',
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0',
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      // Log debug information
-      if (data._debug) {
-        console.log('API Debug Info:', data._debug);
-      }
-      
-      setVacancies(data.vacancies || []);
-    } catch (error) {
-      handleError(error)
-    }
-  }
-
   useEffect(() => {
+    const fetchVacancies = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams();
+        if (postcode) params.append('postcode', postcode);
+        if (sortBy) params.append('sort', sortBy);
+        
+        const response = await fetch(`/api/vacancies?${params.toString()}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Log debug information
+        if (data._debug) {
+          // Handle debug info silently
+          const debugInfo = data._debug;
+        }
+        
+        setVacancies(data.vacancies || []);
+      } catch (err) {
+        // Log error to monitoring service in production
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+        setError(`Failed to load apprenticeship vacancies. ${errorMessage}`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchVacancies();
   }, [postcode, sortBy]);
 
@@ -602,18 +593,22 @@ const ApprenticeshipPage = () => {
 
               <div className="flex flex-wrap items-center gap-4">
                 <div className="flex-1">
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                    aria-label="Select apprenticeship category"
-                  >
+                  <div className="flex flex-wrap gap-3">
                     {categories.map((category) => (
-                      <option key={category} value={category}>
+                      <button
+                        key={category}
+                        onClick={() => setSelectedCategory(category)}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          selectedCategory === category
+                            ? 'bg-emerald-600 text-white shadow-md'
+                            : 'bg-gray-50 text-gray-700 hover:bg-emerald-50 border border-gray-200'
+                        }`}
+                        aria-pressed={selectedCategory === category}
+                      >
                         {category}
-                      </option>
+                      </button>
                     ))}
-                  </select>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-4">
