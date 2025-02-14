@@ -107,10 +107,10 @@ const AdultSkills = () => {
               <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
                 <GraduationCap className="h-4 w-4" />
               </div>
-              <span className="text-sm font-medium tracking-wide uppercase">Adult Skills & Training</span>
+              <span className="text-sm font-medium tracking-wide uppercase">Adult Employment & Skills Support</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Transform Your Career<br className="hidden sm:block" /> in Yorkshire
+              Build Your Career<br className="hidden sm:block" /> in South Yorkshire
             </h1>
             <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
               Access funded support, training, and resources to help you thrive in Yorkshire's growing industries. Whether you are looking to upskill, change careers, or get back into work, we are here to help.
@@ -124,10 +124,10 @@ const AdultSkills = () => {
                 <ChevronRight className="ml-2 h-4 w-4" />
               </button>
               <Link
-                href="/explore"
+                href="/plan-your-career"
                 className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
               >
-                Explore Options
+                Start Planning
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
             </div>

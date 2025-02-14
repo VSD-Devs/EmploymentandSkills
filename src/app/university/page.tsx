@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { GraduationCap, Trophy, Users, Building2, MapPin, Star, ArrowUpRight, BookOpen, Beaker, Globe } from 'lucide-react'
+import { GraduationCap, Trophy, Users, Building2, MapPin, Star, ArrowUpRight, BookOpen, Beaker, Globe, CheckCircle, Rocket } from 'lucide-react'
 
 const UniversityPage = () => {
   const universities = [
@@ -17,26 +17,26 @@ const UniversityPage = () => {
         {
           icon: <Trophy className="w-5 h-5" />,
           title: 'Teaching Excellence',
-          description: 'Silver TEF Award for teaching quality'
+          description: 'Silver TEF Award | 86% student satisfaction'
         },
         {
           icon: <Users className="w-5 h-5" />,
           title: 'Student Community',
-          description: '30,000+ students from 100+ countries'
+          description: '32,000 students | 4,000 international'
         },
         {
           icon: <Building2 className="w-5 h-5" />,
-          title: 'Modern Facilities',
-          description: '£100m campus investment'
+          title: 'Industry Links',
+          description: '1,800+ employer partnerships'
         }
       ],
       highlights: [
-        'Practical, career-focused courses',
-        'Strong industry partnerships',
-        'City centre location',
-        'Professional placements',
-        'Modern learning facilities',
-        'Excellent student support'
+        '300+ undergraduate courses',
+        '£140m annual research income',
+        'Top 10 for nursing education',
+        '95% graduate employment rate',
+        'Degree apprenticeships available',
+        'State-of-the-art facilities'
       ],
       colour: 'purple'
     },
@@ -81,8 +81,8 @@ const UniversityPage = () => {
       <div className="relative bg-[#111827] py-24">
         <div className="absolute inset-0 overflow-hidden">
           <Image
-            src="/images/university-hero.jpg"
-            alt=""
+            src="/images/sy-graduation-ceremony.jpg"
+            alt="South Yorkshire graduation ceremony"
             fill
             priority
             className="object-cover opacity-30"
@@ -93,14 +93,40 @@ const UniversityPage = () => {
           <div className="text-center">
             <div className="flex items-center justify-center gap-2 text-blue-400 mb-4">
               <GraduationCap className="h-6 w-6" />
-              <span className="text-sm font-medium tracking-wide uppercase">Universities in South Yorkshire</span>
+              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Universities</span>
             </div>
             <h1 className="text-4xl font-bold text-white mb-6">
-              Our Regional Universities
+              South Yorkshire's Higher Education Network
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Explore South Yorkshire's leading universities and find the right path for your future studies
+              Proudly supporting 60,000+ students across 2 world-class universities in the Sheffield City Region
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* South Yorkshire by Numbers */}
+      <div className="bg-slate-50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">South Yorkshire by Numbers</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Key facts about our higher education sector
+            </p>
+          </div>
+          <div className="grid md:grid-cols-4 gap-8 text-center">
+            {[
+              { icon: <GraduationCap className="h-8 w-8 mx-auto" />, title: "Total Students", value: "60,000+" },
+              { icon: <Trophy className="h-8 w-8 mx-auto" />, title: "Graduate Retention", value: "78% stay in region" },
+              { icon: <BookOpen className="h-8 w-8 mx-auto" />, title: "Courses Offered", value: "1,200+ programmes" },
+              { icon: <Rocket className="h-8 w-8 mx-auto" />, title: "Graduate Startups", value: "200+ annually" },
+            ].map((stat, index) => (
+              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
+                <div className="text-blue-600 mb-4">{stat.icon}</div>
+                <div className="text-2xl font-bold text-gray-900 mb-2">{stat.value}</div>
+                <div className="text-gray-600">{stat.title}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -193,6 +219,56 @@ const UniversityPage = () => {
         </div>
       </div>
 
+      {/* Why Study in South Yorkshire */}
+      <div className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="md:flex gap-12 items-center">
+            <div className="md:w-1/2 mb-8 md:mb-0">
+              <Image
+                src="/images/sy-student-life.jpg"
+                alt="Student life in South Yorkshire"
+                width={600}
+                height={400}
+                className="rounded-xl shadow-lg"
+              />
+            </div>
+            <div className="md:w-1/2">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">Why Study in South Yorkshire?</h2>
+              <ul className="space-y-4 text-gray-600">
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span>£200m+ annual investment in university facilities</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span>Strong industry partnerships with local employers</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span>Vibrant student cities with affordable living costs</span>
+                </li>
+              </ul>
+              <div className="mt-8 grid grid-cols-2 gap-4">
+                <Image
+                  src="/sy-mca-logo.svg"
+                  alt="South Yorkshire Mayoral Combined Authority"
+                  width={180}
+                  height={80}
+                  className="object-contain"
+                />
+                <Image
+                  src="/sheffield-city-region-logo.svg"
+                  alt="Sheffield City Region"
+                  width={180}
+                  height={80}
+                  className="object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Additional Resources Section */}
       <div className="bg-gray-50 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -233,6 +309,72 @@ const UniversityPage = () => {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Career Pathways Section */}
+      <div className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Popular Career Pathways
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Explore courses that lead to in-demand local careers
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Digital & Tech",
+                careers: ["Software Developer", "Data Analyst", "Cyber Security"],
+                icon: "💻",
+                colour: "bg-blue-100"
+              },
+              {
+                title: "Health & Social Care",
+                careers: ["Nurse", "Social Worker", "Physiotherapist"],
+                icon: "🏥",
+                colour: "bg-green-100"
+              },
+              {
+                title: "Advanced Manufacturing",
+                careers: ["Engineering", "Product Design", "Robotics"],
+                icon: "🔧",
+                colour: "bg-orange-100"
+              }
+            ].map((pathway, index) => (
+              <div key={index} className="p-6 rounded-xl">
+                <div className={`${pathway.colour} w-12 h-12 rounded-lg flex items-center justify-center text-2xl mb-4`}>
+                  {pathway.icon}
+                </div>
+                <h3 className="text-xl font-semibold mb-4">{pathway.title}</h3>
+                <ul className="space-y-2 text-gray-600">
+                  {pathway.careers.map((career, idx) => (
+                    <li key={idx} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gray-400" />
+                      {career}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Student Quote Section */}
+      <div className="bg-indigo-50 py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <blockquote className="text-xl text-gray-900">
+            <p className="mb-4">
+              "My degree gave me direct access to Sheffield's tech scene through industry placements. 
+              I had a job offer before graduating!"
+            </p>
+            <footer className="text-gray-600">
+              - Sarah, Computer Science Graduate now at local startup
+            </footer>
+          </blockquote>
         </div>
       </div>
     </div>

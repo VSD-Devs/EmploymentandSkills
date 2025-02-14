@@ -50,7 +50,7 @@ export default function EducatorsPage() {
               </div>
 
               {/* Main Content */}
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+              <h1 className="text-3xl sm:text-4xl lg:text-3xl font-bold text-white mb-6">
                 Shaping South Yorkshire's<br className="hidden sm:block" /> Future Workforce
               </h1>
               <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">

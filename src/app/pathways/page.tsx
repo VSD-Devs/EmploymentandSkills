@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, ArrowRight, GraduationCap, Clock, Briefcase, ChevronRight, ChevronUp, Menu } from 'lucide-react';
+import { Search, ArrowRight, GraduationCap, Clock, Briefcase, ChevronRight, ChevronUp, Menu, Code2, Stethoscope, Factory, Paintbrush2, Building2, BookOpen, Utensils } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { sectorData } from '@/data/sectors';
@@ -176,33 +176,48 @@ export default function PathwaysPage() {
             
             {/* Sectors Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {filteredSectors.map(([slug, sector]) => (
-                <Link
-                  key={slug}
-                  href={`/pathways/${slug}`}
-                  className="group relative bg-white rounded-3xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-zinc-200/50 h-[280px] flex flex-col"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-emerald-800 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-                  <div className="relative z-10 h-full p-8 flex flex-col">
-                    <div className="flex items-center gap-5 mb-4">
-                      <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center transition-colors group-hover:bg-white/20 flex-shrink-0">
-                        <div className="w-4 h-4 rounded-full bg-emerald-600 group-hover:bg-white transition-colors"></div>
+              {filteredSectors.map(([slug, sector]) => {
+                // Create icon mapping for sectors
+                const sectorIcons = {
+                  digital: Code2,
+                  health: Stethoscope,
+                  engineering: Factory,
+                  creative: Paintbrush2,
+                  business: Briefcase,
+                  construction: Building2,
+                  education: BookOpen,
+                  hospitality: Utensils
+                };
+                
+                const IconComponent = sectorIcons[sector.category] || Briefcase;
+
+                return (
+                  <Link
+                    key={slug}
+                    href={`/pathways/${slug}`}
+                    className="group relative bg-white rounded-3xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-zinc-200/50 h-[280px] flex flex-col"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/80 to-emerald-800/80 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                    <div className="relative z-10 h-full p-6 flex flex-col">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center transition-colors group-hover:bg-white/20">
+                          <IconComponent className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors" />
+                        </div>
+                        <h3 className="text-xl font-bold text-zinc-900 group-hover:text-white transition-colors">
+                          {sector.title}
+                        </h3>
                       </div>
-                      <h3 className="text-2xl font-bold text-zinc-900 group-hover:text-white transition-colors">
-                        {sector.title}
-                      </h3>
+                      <p className="text-zinc-600 group-hover:text-white/90 transition-colors line-clamp-3 text-sm leading-relaxed">
+                        {sector.description}
+                      </p>
+                      <div className="mt-auto flex items-center text-emerald-600 group-hover:text-white transition-colors font-medium text-sm">
+                        Explore careers
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </div>
                     </div>
-                    <p className="text-zinc-600 group-hover:text-white/90 transition-colors line-clamp-3">
-                      {sector.description}
-                    </p>
-                    <div className="mt-auto flex items-center text-emerald-600 group-hover:text-white transition-colors font-medium">
-                      Explore careers
-                      <ArrowRight className="ml-2 w-4 h-4" />
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* No Results Message */}

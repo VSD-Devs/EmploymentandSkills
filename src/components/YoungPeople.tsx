@@ -142,8 +142,8 @@ const TABS_CONFIG: TabsType = {
       ],
       image: '/images/careers-hub.jpg',
       alt: 'Young people in a career planning session',
-      link: '/career-planning',
-      cta: 'Start Planning'
+      link: '/plan-your-career',
+      cta: 'Plan Your Career'
     }
   },
   skills: {
@@ -314,10 +314,10 @@ const YoungPeople = () => {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </button>
               <Link
-                href="/explore"
+                href="/plan-your-career"
                 className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
               >
-                Explore Options
+                Start Planning
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </div>
