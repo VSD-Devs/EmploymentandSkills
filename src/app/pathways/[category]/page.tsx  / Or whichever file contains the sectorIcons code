@@ -1,0 +1,9 @@
+import { Briefcase } from 'lucide-react'
+
+const sectorIcons = {
+  technology: Monitor,
+  healthcare: HeartPulse,
+  engineering: Wrench,
+  business: Briefcase,
+  // ... other categories
+} 

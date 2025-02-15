@@ -64,7 +64,8 @@ const programmes = [
       'Innovation audits',
       'University facilities access',
       'Research collaboration'
-    ]
+    ],
+    id: 'syip'
   },
   {
     title: 'Launchpad',
@@ -76,7 +77,8 @@ const programmes = [
       'Workshops and events',
       'Peer networking',
       'Business planning support'
-    ]
+    ],
+    id: 'launchpad'
   }
 ]
 
@@ -237,7 +239,7 @@ export default function StartupSupportPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {programmes.map((programme) => (
-              <div key={programme.title} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+              <div key={programme.link} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                 <div className="relative h-48">
                   <Image
                     src={programme.id === 'syip' ? "/images/business-hub.jpg" : "/images/startup-workshop.jpg"}

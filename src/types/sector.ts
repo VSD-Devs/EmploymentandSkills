@@ -1,4 +1,4 @@
-import { LucideIcon } from 'lucide-react';
+// import { LucideIcon } from 'lucide-react'; // Remove if not used
 
 export interface Stat {
   icon: string;

@@ -13,7 +13,6 @@ import {
   ArrowLeft,
   Network,
   Heart,
-  Handshake,
   Building2,
   GraduationCap,
   HelpingHand
@@ -130,7 +129,7 @@ const IntegratedSupportPage = () => {
                 description: "Access debt advice, benefits guidance, and healthcare referrals through our network."
               },
               {
-                icon: Handshake,
+                icon: Users,
                 title: "Community Resources",
                 description: "Benefit from peer support groups and community-based activities to support your wellbeing."
               }
