@@ -1,3 +1,6 @@
+'use client'
+
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { 
@@ -10,38 +13,61 @@ import {
   MessageSquare,
   GraduationCap
 } from 'lucide-react'
+import SchoolMarketplace from '@/components/SchoolMarketplace'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
-export default function SchoolsPage() {
+const EducatorsSchoolsPage = () => {
   return (
-    <main className="bg-white">
+    <main className="min-h-screen bg-white">
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Educators', href: '/educators' },
+        { label: 'Schools', href: '/educators/schools' },
+      ]} />
+
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-emerald-600 to-emerald-800 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative z-10">
-            <div className="flex items-center gap-2 text-emerald-50 mb-4">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-50" />
-              <span className="text-sm font-medium">For Schools</span>
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+        <div className="absolute inset-0">
+          <Image
+            src="/images/educators-schools-hero.jpg"
+            alt="Educators supporting schools in South Yorkshire"
+            fill
+            className="object-cover object-center brightness-75"
+            priority
+            quality={90}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
+                <GraduationCap className="h-4 w-4" />
+              </div>
+              <span className="text-sm font-medium tracking-wide uppercase">For Schools</span>
             </div>
-            <h1 className="text-4xl font-bold text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               Enhance Your Career Education Programme
             </h1>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl">
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
               Access resources and connect with training providers to deliver outstanding careers guidance and work-related learning.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
               <Link 
                 href="#marketplace"
-                className="bg-white text-emerald-600 px-6 py-3 rounded-lg text-base font-medium hover:bg-white/90 transition-colors inline-flex items-center"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
               >
                 Post Opportunity
-                <ChevronRight className="ml-2 h-5 w-5" />
+                <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
               <Link
                 href="/educators"
-                className="bg-emerald-700 text-white px-6 py-3 rounded-lg text-base font-medium hover:bg-emerald-600 transition-colors inline-flex items-center"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
               >
                 Back to Selection
-                <ChevronRight className="ml-2 h-5 w-5" />
+                <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
             </div>
           </div>
@@ -110,62 +136,8 @@ export default function SchoolsPage() {
         </div>
       </div>
 
-      {/* School Marketplace */}
-      <div id="marketplace" className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Opportunities To Support Local Schools</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Connect with training providers for career talks, mock interviews, and workshops.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {marketplaceListings.map((listing, index) => (
-              <div key={index} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-sm font-medium">
-                      {listing.type}
-                    </span>
-                    <span className="text-sm text-gray-500">{listing.date}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{listing.title}</h3>
-                  <p className="text-gray-600 mb-4">{listing.description}</p>
-                  <div className="space-y-2 mb-6">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Building2 className="h-4 w-4" />
-                      <span>{listing.school}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Users className="h-4 w-4" />
-                      <span>{listing.yearGroup}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Calendar className="h-4 w-4" />
-                      <span>{listing.timing}</span>
-                    </div>
-                  </div>
-                  <Link
-                    href={listing.href}
-                    className="block w-full text-center bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-500 transition-colors"
-                  >
-                    Express Interest
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <Link
-              href="/educators/post-opportunity"
-              className="inline-flex items-center bg-white border-2 border-emerald-600 text-emerald-600 px-6 py-3 rounded-lg hover:bg-emerald-50 transition-colors"
-            >
-              Post an Opportunity
-              <ChevronRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-      </div>
+      {/* Replace the marketplace section with the component */}
+      <SchoolMarketplace listings={marketplaceListings} />
 
       {/* Resources Section */}
       <div className="py-16">
@@ -255,4 +227,6 @@ const marketplaceListings = [
     date: 'Posted 3 days ago',
     href: '/educators/marketplace/engineering-workshop'
   }
-] 
+]
+
+export default EducatorsSchoolsPage 

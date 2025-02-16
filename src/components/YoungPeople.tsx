@@ -82,22 +82,6 @@ type TabsType = {
 
 // Move tabs object outside component
 const TABS_CONFIG: TabsType = {
-  university: {
-    icon: <GraduationCap className="w-6 h-6" />,
-    color: 'indigo',
-    title: 'University',
-    description: 'Explore Higher Education',
-    content: {
-      text: [
-        "Discover the exciting world of university education. From choosing the right course to understanding student life, we'll help you make informed decisions about your future.",
-        "Learn about different universities, entry requirements, and how to make your UCAS application stand out."
-      ],
-      image: '/images/university-hub.jpg',
-      alt: 'Students collaborating in a university library',
-      link: '/university',
-      cta: 'Explore Universities'
-    }
-  },
   tlevels: {
     icon: <BookOpen className="w-6 h-6" />,
     color: 'emerald',
@@ -130,20 +114,20 @@ const TABS_CONFIG: TabsType = {
       cta: 'Find Apprenticeships'
     }
   },
-  careers: {
-    icon: <Rocket className="w-6 h-6" />,
-    color: 'fuchsia',
-    title: 'Career Planning',
-    description: 'Find Your Path',
+  university: {
+    icon: <GraduationCap className="w-6 h-6" />,
+    color: 'indigo',
+    title: 'University',
+    description: 'Explore Higher Education',
     content: {
       text: [
-        "Not sure what career path to take? Our career planning tools and resources help you explore different options and find what suits you best.",
-        "Take our career quiz, explore different industries, and learn about the skills needed for different jobs."
+        "Discover the exciting world of university education. From choosing the right course to understanding student life, we'll help you make informed decisions about your future.",
+        "Learn about different universities, entry requirements, and how to make your UCAS application stand out."
       ],
-      image: '/images/careers-hub.jpg',
-      alt: 'Young people in a career planning session',
-      link: '/plan-your-career',
-      cta: 'Plan Your Career'
+      image: '/images/university-hub.jpg',
+      alt: 'Students collaborating in a university library',
+      link: '/university',
+      cta: 'Explore Universities'
     }
   },
   skills: {
@@ -160,6 +144,22 @@ const TABS_CONFIG: TabsType = {
       alt: 'Young person learning new skills',
       link: '/skills-training',
       cta: 'Discover Training'
+    }
+  },
+  careers: {
+    icon: <Rocket className="w-6 h-6" />,
+    color: 'fuchsia',
+    title: 'Career Planning',
+    description: 'Find Your Path',
+    content: {
+      text: [
+        "Not sure what career path to take? Our career planning tools and resources help you explore different options and find what suits you best.",
+        "Take our career quiz, explore different industries, and learn about the skills needed for different jobs."
+      ],
+      image: '/images/careers-hub.jpg',
+      alt: 'Young people in a career planning session',
+      link: '/plan-your-career',
+      cta: 'Plan Your Career'
     }
   },
   support: {
@@ -202,7 +202,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 };
 
 const YoungPeople = () => {
-  const [activeTab, setActiveTab] = useState<string>('university')
+  const [activeTab, setActiveTab] = useState<string>('')
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
   const [isQuizOpen, setIsQuizOpen] = useState(false)

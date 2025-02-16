@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Briefcase, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, Quote, ExternalLink, BookOpen, Users, SlidersHorizontal } from 'lucide-react'
+import { Briefcase, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, Quote, ExternalLink, BookOpen, Users, SlidersHorizontal, ChevronRight } from 'lucide-react'
 import { DfeVacancy } from '@/services/dfeApi'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 // Types
 interface SuccessStory {
@@ -217,7 +218,13 @@ const ApprenticeshipPage = () => {
   })
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-white">
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Apprenticeships', href: '/apprenticeships' },
+      ]} />
+
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
@@ -241,7 +248,7 @@ const ApprenticeshipPage = () => {
               <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Apprenticeships</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Apprenticeships in South Yorkshire
+              <span className="bg-emerald-600 px-2 py-1 rounded">Apprenticeships in South Yorkshire</span>
             </h1>
             <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
               Discover apprenticeship opportunities across South Yorkshire and get the support you need to succeed
@@ -303,13 +310,15 @@ const ApprenticeshipPage = () => {
       {/* What is an Apprenticeship Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+<h2 className="relative text-3xl font-bold text-gray-900 mb-6 text-left">
+  <span className="relative z-10 leading-tight px-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu">What is an Apprenticeship?</span>
+</h2>
+          </div>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center gap-2 text-emerald-600 mb-4">
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                What is an Apprenticeship?
-              </h2>
               <p className="text-xl leading-relaxed text-gray-600 mb-8">
                 An apprenticeship is a genuine job with structured training, combining practical work experience with dedicated study time. You'll earn whilst you learn, gaining valuable qualifications and real-world skills.
               </p>
@@ -416,15 +425,19 @@ const ApprenticeshipPage = () => {
       {/* South Yorkshire Apprenticeship Hub Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="relative text-3xl font-bold text-gray-900 mb-6 inline-flex flex-col max-w-md mx-auto">
+            <span className="relative z-10 leading-tight px-2">South Yorkshire Apprenticeship Hub</span>
+            <span 
+              className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+              aria-hidden="true"
+            ></span>
+          </h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center gap-2 text-emerald-600 mb-4">
                 <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
                 <span className="text-sm font-medium tracking-wide uppercase">Your Local Support</span>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                South Yorkshire Apprenticeship Hub
-              </h2>
               <div className="prose prose-lg text-gray-600">
                 <p>
                   We're here to help you navigate your apprenticeship journey. Our dedicated team provides:
@@ -473,19 +486,24 @@ const ApprenticeshipPage = () => {
       {/* The Process Section */}
       <div className="bg-gray-50 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center">
+            <h2 className="relative text-3xl font-bold text-gray-900 mb-12">
+              <span className="relative z-10 leading-tight px-2">The Process</span>
+              <span 
+                className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+                aria-hidden="true"
+              ></span>
+            </h2>
             <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
               <span className="text-sm font-medium tracking-wide uppercase">How It works</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              The Process
-            </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               We're here to guide you through every stage of your apprenticeship journey in South Yorkshire. Our Advisors provide personalised support to help you succeed.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="mt-12">
+            <div className="grid md:grid-cols-4 gap-8 items-stretch">
             {apprenticeshipProcess.map((step, index) => (
               <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
                 <div className="relative h-48 w-full">
@@ -505,6 +523,7 @@ const ApprenticeshipPage = () => {
                 </div>
               </div>
             ))}
+            </div>
           </div>
         </div>
       </div>
@@ -512,15 +531,21 @@ const ApprenticeshipPage = () => {
       {/* Current Vacancies Section */}
       <div id="current-vacancies" className="bg-gray-50 py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="relative text-3xl font-bold text-gray-900 mb-6">
+              <span className="relative z-10 leading-tight px-2">Current Vacancies</span>
+              <span 
+                className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+                aria-hidden="true"
+              ></span>
+            </h2>
+          </div>
           {/* Section Header */}
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
               <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
               <span className="text-sm font-medium tracking-wide uppercase">Latest Opportunities</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Current Vacancies
-            </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Find your perfect apprenticeship opportunity in South Yorkshire
             </p>
@@ -755,14 +780,17 @@ const ApprenticeshipPage = () => {
       {/* Success Stories Section */}
       <div className="bg-white py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="relative text-3xl font-bold text-gray-900 mb-6 inline-flex flex-col max-w-md mx-auto">
+            <span className="relative z-10 leading-tight px-2">Meet Our South Yorkshire Apprentices</span>
+            <span 
+              className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+              aria-hidden="true"
+            ></span>
+          </h2>
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
               <span className="text-sm font-medium tracking-wide uppercase">Local Success Stories</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Meet Our South Yorkshire Apprentices
-            </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Discover how local people like you have transformed their careers through apprenticeships
             </p>
@@ -828,7 +856,7 @@ const ApprenticeshipPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

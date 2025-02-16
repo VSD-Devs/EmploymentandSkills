@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, Building2, GraduationCap, BookOpen, LineChart, Globe2, ArrowRight } from 'lucide-react'
 import Newsletter from './Newsletter'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 const colorClasses = {
   emerald: {
@@ -72,7 +73,9 @@ type TabsType = {
 }
 
 const BusinessPage = () => {
-  const [_activeTab, _setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab] = useState<string>('')
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
 
   const tabs: TabsType = {
     skills: {
@@ -170,8 +173,70 @@ const BusinessPage = () => {
     }
   }
 
+  // Handle touch swipe for mobile navigation
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    const SWIPE_THRESHOLD = 50
+    const touchDiff = touchStart - touchEnd
+
+    if (Math.abs(touchDiff) > SWIPE_THRESHOLD) {
+      const tabKeys = Object.keys(tabs)
+      const currentIndex = tabKeys.indexOf(activeTab)
+      
+      if (touchDiff > 0 && currentIndex < tabKeys.length - 1) {
+        // Swipe left
+        setActiveTab(tabKeys[currentIndex + 1])
+        document.getElementById(tabKeys[currentIndex + 1])?.scrollIntoView({ behavior: 'smooth' })
+      } else if (touchDiff < 0 && currentIndex > 0) {
+        // Swipe right
+        setActiveTab(tabKeys[currentIndex - 1])
+        document.getElementById(tabKeys[currentIndex - 1])?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+
+  // Handle scroll to update active tab
+  const handleScroll = useCallback(() => {
+    const sections = Object.keys(tabs).map(key => document.getElementById(key))
+    const scrollPosition = window.scrollY + window.innerHeight / 2
+
+    sections.forEach((section) => {
+      if (section) {
+        const sectionTop = section.offsetTop
+        const sectionBottom = sectionTop + section.offsetHeight
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          setActiveTab(section.id)
+        }
+      }
+    })
+  }, [tabs])
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [handleScroll])
+
   return (
-    <div className="bg-white">
+    <div 
+      className="bg-white"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Business Support', href: '/business-support' },
+      ]} />
+
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
@@ -230,16 +295,33 @@ const BusinessPage = () => {
                 <a 
                   key={key}
                   href={`#${key}`} 
-                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl ${colorClasses[tab.color].nav}`}
+                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl transition-colors ${
+                    activeTab === key 
+                      ? `${colorClasses[tab.color].button} text-${tab.color}-600 shadow-md` 
+                      : `${colorClasses[tab.color].nav} text-gray-600`
+                  }`}
+                  onClick={() => setActiveTab(key)}
                 >
                   <div className="relative z-10 flex flex-col items-center gap-1">
-                    <div className={`h-6 w-6 text-gray-600 group-hover:text-${tab.color}-600 group-hover:scale-105`}>
+                    <div className={`h-6 w-6 ${
+                      activeTab === key 
+                        ? `text-${tab.color}-600` 
+                        : 'text-gray-600 group-hover:text-${tab.color}-600'
+                    } transition-colors`}>
                       {tab.icon}
                     </div>
-                    <span className={`text-sm sm:text-base font-medium text-gray-900 group-hover:text-${tab.color}-600 whitespace-nowrap`}>
+                    <span className={`text-sm sm:text-base font-medium ${
+                      activeTab === key 
+                        ? `text-${tab.color}-600` 
+                        : 'text-gray-900 group-hover:text-${tab.color}-600'
+                    } whitespace-nowrap transition-colors`}>
                       {tab.title}
                     </span>
-                    <div className={`h-0.5 w-0 bg-${tab.color}-600 group-hover:w-full transition-all duration-50`} />
+                    <div className={`h-0.5 ${
+                      activeTab === key 
+                        ? `w-full bg-${tab.color}-600` 
+                        : `w-0 bg-${tab.color}-600 group-hover:w-full`
+                    } transition-all duration-200`} />
                   </div>
                 </a>
               ))}

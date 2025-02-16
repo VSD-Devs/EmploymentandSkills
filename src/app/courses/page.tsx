@@ -5,6 +5,7 @@ import { Search, MapPin, Building2, GraduationCap, ChevronRight, Filter, BookOpe
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 interface Course {
   id: number;
@@ -194,6 +195,7 @@ const FundingOption = ({ title, description, image, features }: FundingOptionPro
         alt={title}
         fill
         className="object-cover"
+        style={{ objectPosition: 'top left' }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
     </div>
@@ -202,22 +204,29 @@ const FundingOption = ({ title, description, image, features }: FundingOptionPro
         <h2 className="relative text-2xl font-bold text-gray-900">
           <span className="relative z-10 line-clamp-2 leading-tight block">{title}</span>
           <span 
-            className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+            className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
             aria-hidden="true"
           ></span>
         </h2>
       </div>
       <p className="text-lg text-gray-700 mb-6 leading-relaxed min-h-[4rem]">{description}</p>
-      <ul className="space-y-4">
+      <ul className="space-y-4 mb-8">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start gap-3 text-gray-700">
-            <div className="h-6 w-6 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 mt-1">
-              <ChevronRight className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+            <div className="h-6 w-6 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+              <ChevronRight className="h-4 w-4 text-blue-600" aria-hidden="true" />
             </div>
             <span className="text-lg">{feature}</span>
           </li>
         ))}
       </ul>
+      <Link
+        href="#"
+        className="inline-flex items-center justify-center w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+      >
+        Learn More
+        <ChevronRight className="ml-2 h-4 w-4" />
+      </Link>
     </div>
   </div>
 )
@@ -256,20 +265,26 @@ const CoursesPage = () => {
   })
 
   return (
-    <div className="bg-gray-100">
+    <main className="min-h-screen bg-white">
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Business Support', href: '/business-support' },
+        { label: 'Funded Training', href: '/funded-training' },
+        { label: 'Skills Bank', href: '/courses' },
+      ]} />
+
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-24 min-h-[500px] flex items-center">
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/education.webp"
-            alt="Training and courses in South Yorkshire"
+            src="/images/training-provider.jpg"
+            alt="Courses available in South Yorkshire"
             fill
-            className="object-cover object-center brightness-50"
+            className="object-cover object-center brightness-75"
             priority
             quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827] via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-blue-900/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -280,8 +295,8 @@ const CoursesPage = () => {
               </div>
               <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
             </div>
-            <h1 className="text-3xl sm:text-3xl font-bold text-white mb-6">
-              Funded Training<br />
+            <h1 className="relative text-3xl font-bold text-white mb-6">
+              <span className="relative z-10 line-clamp-2 leading-tight block">Funded Training</span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto mb-8">
               Access free courses, bootcamps, and qualifications to advance your career in South Yorkshire's growing industries.
@@ -289,7 +304,7 @@ const CoursesPage = () => {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="#courses"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-500 transition-colors"
               >
                 Browse Courses
                 <ChevronRight className="ml-2 h-5 w-5" />
@@ -347,21 +362,25 @@ const CoursesPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="inline-flex items-center gap-3 text-emerald-600 mb-6">
-                <div className="p-2 rounded-xl bg-emerald-50">
+              <div className="inline-flex items-center gap-3 text-blue-600 mb-6">
+                <div className="p-2 rounded-xl bg-blue-50">
                   <GraduationCap className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <span className="text-base font-semibold tracking-wide uppercase">Check Your Eligibility</span>
               </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-8 leading-tight">
-                See if You Qualify for<br />Funded Training
+              <h2 className="relative text-4xl font-bold text-gray-900 mb-8 leading-tight">
+                <span className="relative z-10 line-clamp-2 leading-tight block">See if You Qualify for<br />Funded Training</span>
+                <span 
+                  className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+                  aria-hidden="true"
+                ></span>
               </h2>
               <div className="bg-white rounded-2xl p-8 mb-8 shadow-sm border border-gray-100">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-6">Basic Requirements:</h3>
                 <ul className="space-y-6">
                   <li className="flex items-start gap-4">
-                    <div className="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-emerald-600" aria-hidden="true" />
+                    <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-5 w-5 text-blue-600" aria-hidden="true" />
                     </div>
                     <div>
                       <span className="text-xl text-gray-900">Aged 19 or over</span>
@@ -369,8 +388,8 @@ const CoursesPage = () => {
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
-                    <div className="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-emerald-600" aria-hidden="true" />
+                    <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-5 w-5 text-blue-600" aria-hidden="true" />
                     </div>
                     <div>
                       <span className="text-xl text-gray-900">South Yorkshire Resident</span>
@@ -378,8 +397,8 @@ const CoursesPage = () => {
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
-                    <div className="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-emerald-600" aria-hidden="true" />
+                    <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-5 w-5 text-blue-600" aria-hidden="true" />
                     </div>
                     <div>
                       <span className="text-xl text-gray-900">Right to Work</span>
@@ -387,15 +406,15 @@ const CoursesPage = () => {
                     </div>
                   </li>
                 </ul>
-                <div className="mt-8 p-6 bg-emerald-50 rounded-xl">
-                  <p className="text-lg text-emerald-800">
+                <div className="mt-8 p-6 bg-blue-50 rounded-xl">
+                  <p className="text-lg text-blue-800">
                     Additional criteria may apply depending on the programme. Contact our team for specific eligibility checks.
                   </p>
                 </div>
               </div>
               <Link
                 href="/contact"
-                className="inline-flex items-center px-8 py-4 rounded-xl bg-emerald-600 text-white text-lg font-medium hover:bg-emerald-500 transition-colors focus:outline-none focus:ring-4 focus:ring-emerald-500/20"
+                className="inline-flex items-center px-8 py-4 rounded-xl bg-blue-600 text-white text-lg font-medium hover:bg-blue-500 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-500/20"
               >
                 Contact Our Team
                 <ChevronRight className="ml-2 h-6 w-6" aria-hidden="true" />
@@ -418,7 +437,13 @@ const CoursesPage = () => {
       {/* Search and Filters */}
       <div id="courses" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Available Courses</h2>
+          <h2 className="relative text-3xl font-bold text-gray-900 mb-4 max-w-md mx-auto">
+            <span className="relative z-10 line-clamp-2 leading-tight block">Available Courses</span>
+            <span 
+              className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+              aria-hidden="true"
+            ></span>
+          </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Browse our range of fully funded courses and find the perfect opportunity to develop your skills.
           </p>
@@ -516,7 +541,7 @@ const CoursesPage = () => {
           ))}
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

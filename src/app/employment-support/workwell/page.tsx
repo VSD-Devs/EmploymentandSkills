@@ -17,6 +17,7 @@ import {
   MessageSquare,
   Stethoscope
 } from 'lucide-react'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 const WorkWellPage = () => {
   const [formData, setFormData] = useState({
@@ -47,16 +48,12 @@ const WorkWellPage = () => {
 
   return (
     <main className="min-h-screen bg-white">
-      {/* Back Button */}
-      <div className="fixed top-4 left-4 z-50">
-        <Link
-          href="/employment-support"
-          className="inline-flex items-center px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2 text-gray-600" />
-          <span className="text-gray-600 font-medium">Back to Programmes</span>
-        </Link>
-      </div>
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Employment Support', href: '/employment-support' },
+        { label: 'WorkWell Service', href: '/employment-support/workwell' },
+      ]} />
 
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">

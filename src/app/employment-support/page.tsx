@@ -21,6 +21,7 @@ import {
   HelpCircle,
   GraduationCap
 } from 'lucide-react'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 // Define form data type
 type FormData = {
@@ -220,6 +221,12 @@ const EmploymentSupportPage = () => {
 
   return (
     <main className="min-h-screen bg-white">
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Employment Support', href: '/employment-support' },
+      ]} />
+
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">

@@ -14,8 +14,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Digital Career Hub',
-  description: 'Explore digital careers, apprenticeships, and educational pathways',
+title: 'Yorkshire Pathways',
+description: 'Discover apprenticeship opportunities and educational pathways in Yorkshire',
   manifest: '/manifest.json',
 }
 
@@ -69,4 +69,4 @@ export default function RootLayout({
       </body>
     </html>
   )
-} 
+}

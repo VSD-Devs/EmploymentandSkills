@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Building2, Clock, Users, GraduationCap, Briefcase, ChevronRight, HeartHandshake } from 'lucide-react'
+import SchoolMarketplace from '@/components/SchoolMarketplace'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 const sections = {
   advisor: {
@@ -56,6 +58,39 @@ const colorClasses = {
   }
 } as const
 
+const communityListings = [
+  {
+    type: 'Community Talk',
+    title: 'Local Business Insights',
+    description: 'Share your business journey with local students',
+    school: 'Sheffield High School',
+    yearGroup: 'Year 11',
+    timing: 'March 2024',
+    date: 'Posted 3 days ago',
+    href: '/community/marketplace/local-business'
+  },
+  {
+    type: 'Workshop',
+    title: 'Entrepreneurship Skills',
+    description: 'Teach students about starting a business',
+    school: 'King Edward VII School',
+    yearGroup: 'Year 12',
+    timing: 'April 2024',
+    date: 'Posted 1 week ago',
+    href: '/community/marketplace/entrepreneurship'
+  },
+  {
+    type: 'Career Talk',
+    title: 'Creative Industries',
+    description: 'Discuss careers in media and creative arts',
+    school: 'Tapton School',
+    yearGroup: 'Year 10',
+    timing: 'May 2024',
+    date: 'Posted 2 days ago',
+    href: '/community/marketplace/creative-industries'
+  }
+]
+
 const CommunitySchoolsPage = () => {
   const [currentTab, setCurrentTab] = useState('advisor')
   
@@ -71,20 +106,25 @@ const CommunitySchoolsPage = () => {
   }, [currentTab])
 
   return (
-    <div className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white">
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Community', href: '/community-schools' },
+      ]} />
+
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/community-hero.jpg"
-            alt="Community and schools partnership"
+            src="/images/community-schools-hero.jpg"
+            alt="Community schools in South Yorkshire"
             fill
             className="object-cover object-center brightness-75"
             priority
             quality={90}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,9 +141,9 @@ const CommunitySchoolsPage = () => {
             <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto mb-8">
               Partner with local schools and colleges to inspire the next generation. Your expertise can make a lasting impact on young people's careers.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
               <Link
-                href="/opportunities"
+                href="/give-an-hour"
                 className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
               >
                 Give Your Time
@@ -121,7 +161,7 @@ const CommunitySchoolsPage = () => {
         </div>
       </div>
 
-      {/* Enhanced Sticky Navigation Banner */}
+      {/* Enhanced Sticky Navigation Banner - Moved above cards */}
       <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-start sm:justify-center min-w-max">
@@ -148,12 +188,158 @@ const CommunitySchoolsPage = () => {
         </div>
       </div>
 
+      {/* Overview Section - Adjusted margin to prevent underlap */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-12 relative z-10">
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-lg transition-all">
+            <div className="relative h-48">
+              <Image
+                src="/images/enterprise-advisor.jpg"
+                alt="Enterprise advisor session"
+                fill
+                className="object-cover"
+                style={{ objectPosition: 'top left' }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+            </div>
+            <div className="p-8">
+              <div className="h-[4.5rem] mb-4">
+                <h2 className="relative text-2xl font-bold text-gray-900">
+                  <span className="relative z-10 line-clamp-2 leading-tight block">Enterprise Advisor</span>
+                  <span 
+                    className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+                    aria-hidden="true"
+                  ></span>
+                </h2>
+              </div>
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed min-h-[4rem]">
+                Join our network of senior business volunteers working directly with school leadership teams.
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3 text-gray-700">
+                  <div className="h-6 w-6 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+                  </div>
+                  <span className="text-lg">Strategic planning support</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-700">
+                  <div className="h-6 w-6 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+                  </div>
+                  <span className="text-lg">Leadership engagement</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-700">
+                  <div className="h-6 w-6 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-4 w-4 text-emerald-600" aria-hidden="true" />
+                  </div>
+                  <span className="text-lg">Network access</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-lg transition-all">
+            <div className="relative h-48">
+              <Image
+                src="/images/give-hour.jpg"
+                alt="Give an hour session"
+                fill
+                className="object-cover"
+                style={{ objectPosition: 'top left' }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+            </div>
+            <div className="p-8">
+              <div className="h-[4.5rem] mb-4">
+                <h2 className="relative text-2xl font-bold text-gray-900">
+                  <span className="relative z-10 line-clamp-2 leading-tight block">Give an Hour</span>
+                  <span 
+                    className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-purple-100 via-purple-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+                    aria-hidden="true"
+                  ></span>
+                </h2>
+              </div>
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed min-h-[4rem]">
+                Share your career journey and insights with young people. Just one hour can inspire the next generation.
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3 text-gray-700">
+                  <div className="h-6 w-6 rounded-full bg-purple-50 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-4 w-4 text-purple-600" aria-hidden="true" />
+                  </div>
+                  <span className="text-lg">Career talks</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-700">
+                  <div className="h-6 w-6 rounded-full bg-purple-50 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-4 w-4 text-purple-600" aria-hidden="true" />
+                  </div>
+                  <span className="text-lg">Mentoring sessions</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-700">
+                  <div className="h-6 w-6 rounded-full bg-purple-50 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-4 w-4 text-purple-600" aria-hidden="true" />
+                  </div>
+                  <span className="text-lg">Virtual options</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-lg transition-all">
+            <div className="relative h-48">
+              <Image
+                src="/images/cornerstone.jpg"
+                alt="Cornerstone employer meeting"
+                fill
+                className="object-cover"
+                style={{ objectPosition: 'top left' }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+            </div>
+            <div className="p-8">
+              <div className="h-[4.5rem] mb-4">
+                <h2 className="relative text-2xl font-bold text-gray-900">
+                  <span className="relative z-10 line-clamp-2 leading-tight block">Cornerstone Employer</span>
+                  <span 
+                    className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+                    aria-hidden="true"
+                  ></span>
+                </h2>
+              </div>
+              <p className="text-lg text-gray-700 mb-6 leading-relaxed min-h-[4rem]">
+                Take a leading role in transforming careers education in Yorkshire as a Cornerstone Employer.
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3 text-gray-700">
+                  <div className="h-6 w-6 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-4 w-4 text-blue-600" aria-hidden="true" />
+                  </div>
+                  <span className="text-lg">Strategic leadership</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-700">
+                  <div className="h-6 w-6 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-4 w-4 text-blue-600" aria-hidden="true" />
+                  </div>
+                  <span className="text-lg">Talent pipeline</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-700">
+                  <div className="h-6 w-6 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+                    <ChevronRight className="h-4 w-4 text-blue-600" aria-hidden="true" />
+                  </div>
+                  <span className="text-lg">Community impact</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Quick Stats Banner - Moved to bottom */}
       <div className="bg-emerald-50 border-y border-emerald-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900">Our Community Impact</h2>
-            <p className="text-gray-600 mt-2">Together, we're making a difference in Yorkshire's education</p>
+            <p className="text-gray-600 mt-2">Together, we're making a difference in South Yorkshire's education</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex items-center gap-3 bg-white p-6 rounded-xl shadow-sm">
@@ -170,7 +356,7 @@ const CommunitySchoolsPage = () => {
                 <GraduationCap className="w-6 h-6 text-emerald-600" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-emerald-600">50+</div>
+                <div className="text-2xl font-bold text-emerald-600">110+</div>
                 <div className="text-sm text-gray-600">Partner Schools</div>
               </div>
             </div>
@@ -314,10 +500,10 @@ const CommunitySchoolsPage = () => {
             </div>
             <div className="flex items-center gap-6">
               <Link
-                href="/register-interest"
+                href="/give-an-hour"
                 className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-500 transition-colors text-lg shadow-sm"
               >
-                Give Your Time
+                Give An Hour
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Link>
               <Link
@@ -415,7 +601,7 @@ const CommunitySchoolsPage = () => {
             </div>
             <div className="flex items-center gap-6">
               <Link
-                href="/register-interest"
+                href="/cornerstone-employer"
                 className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors text-lg shadow-sm"
               >
                 Become a Cornerstone
@@ -432,7 +618,9 @@ const CommunitySchoolsPage = () => {
           </div>
         </div>
       </div>
-    </div>
+
+      <SchoolMarketplace listings={communityListings} showPostOpportunity={false} />
+    </main>
   )
 }
 

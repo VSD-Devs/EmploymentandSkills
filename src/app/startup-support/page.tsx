@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Building2, Lightbulb, ClipboardList, Rocket, LineChart, Calendar, Users, BookOpen, MapPin } from 'lucide-react'
 import Newsletter from '@/components/Newsletter'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 const stages = [
   {
@@ -106,11 +107,17 @@ const events = [
   }
 ]
 
-export default function StartupSupportPage() {
+const StartupSupportPage = () => {
   const [activeStage, setActiveStage] = useState('idea')
 
   return (
     <div className="bg-white">
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Startup Support', href: '/startup-support' },
+      ]} />
+
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
@@ -149,7 +156,7 @@ export default function StartupSupportPage() {
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="md:w-1/2">
               <Image
-                src="/images/local-entrepreneurs.jpg"
+                src="/images/SYIP.jpg"
                 alt="Local entrepreneurs collaborating in Sheffield"
                 className="rounded-xl shadow-lg"
                 width={600}
@@ -239,7 +246,7 @@ export default function StartupSupportPage() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {programmes.map((programme) => (
-              <div key={programme.link} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+              <div key={programme.link} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow overflow-hidden">
                 <div className="relative h-48">
                   <Image
                     src={programme.id === 'syip' ? "/images/business-hub.jpg" : "/images/startup-workshop.jpg"}
@@ -264,7 +271,7 @@ export default function StartupSupportPage() {
                   </ul>
                   <Link
                     href={programme.link}
-                    className="inline-flex items-center text-indigo-600 hover:text-indigo-500"
+                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
                   >
                     Learn more
                     <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -371,7 +378,7 @@ export default function StartupSupportPage() {
       {/* Community Section */}
       <div className="relative bg-gray-900 py-20">
         <Image
-          src="/images/sy-community.jpg"
+          src="/images/SYIP.jpg"
           alt="South Yorkshire business community event"
           fill
           className="object-cover opacity-20"
@@ -399,4 +406,6 @@ export default function StartupSupportPage() {
       <Newsletter />
     </div>
   )
-} 
+}
+
+export default StartupSupportPage 

@@ -56,12 +56,12 @@ const TrainingProviders = () => {
 
   return (
     <div className="bg-white">
-      {/* Hero Section */}
+      {/* Hero Section - Added back */}
       <div className="relative bg-zinc-900 py-24">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-yorkshire.jpg"
-            alt=""
+            alt="South Yorkshire landscape"
             fill
             className="object-cover opacity-20"
             priority
@@ -76,20 +76,18 @@ const TrainingProviders = () => {
               <span className="text-white text-sm font-medium">Training Providers</span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-              Partner with SYMCA
+              Opportunities in South Yorkshire
             </h1>
             <p className="text-xl text-white/90 mb-8 leading-relaxed">
               Deliver high-quality training across South Yorkshire and help build a skilled workforce for our region's future.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a 
-                href="https://procontract.due-north.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#frameworks"
                 className="bg-emerald-600 text-white px-6 py-3 rounded-lg text-base font-medium hover:bg-emerald-500 transition-colors inline-flex items-center"
               >
-                View Opportunities on ProContract
-                <ArrowUpRight className="ml-2 h-5 w-5" />
+                View Frameworks
+                <ChevronRight className="ml-2 h-5 w-5" />
               </a>
               <Link
                 href="/our-region"
@@ -103,12 +101,105 @@ const TrainingProviders = () => {
         </div>
       </div>
 
-      {/* Stay Updated Section */}
+      {/* Frameworks Section */}
+      <div id="frameworks" className="py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Training Frameworks</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover our current frameworks and how you can get involved in delivering quality training across South Yorkshire.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {frameworks.map((framework) => (
+              <div
+                key={framework.title}
+                className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-shadow"
+              >
+                <div className={`w-12 h-12 rounded-xl bg-${framework.color}-100 flex items-center justify-center mb-6`}>
+                  <framework.icon className={`h-6 w-6 text-${framework.color}-600`} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{framework.title}</h3>
+                <p className="text-gray-600 mb-6">{framework.description}</p>
+                <ul className="space-y-3 mb-8">
+                  {framework.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-gray-600">
+                      <ChevronRight className={`h-5 w-5 text-${framework.color}-600 flex-shrink-0`} />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={framework.href}
+                  className={`inline-flex items-center text-${framework.color}-600 font-medium hover:text-${framework.color}-500`}
+                >
+                  Learn more
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Programme Details Section */}
+      <div className="bg-gray-50 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">About Our Programmes</h2>
+              <p className="text-gray-600 text-lg mb-8">
+                Our training programmes are designed to meet the specific needs of South Yorkshire's workforce and employers. We focus on:
+              </p>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                    <Users className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Skills Development</h3>
+                    <p className="text-gray-600">Equipping individuals with in-demand skills for today's job market</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                    <Building2 className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Partnerships</h3>
+                    <p className="text-gray-600">Working closely with businesses to design relevant training</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                    <Rocket className="h-5 w-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Economic Growth</h3>
+                    <p className="text-gray-600">Supporting the region's economic development through skills training</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative h-[400px] rounded-2xl overflow-hidden">
+              <Image
+                src="/images/training-programmes.jpg"
+                alt="Training session in progress"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ProContract Section */}
       <div className="bg-emerald-50 border-y border-emerald-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Stay Updated with Opportunities</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Access Opportunities via ProContract</h2>
               <p className="text-gray-600 mb-6">
                 All procurement opportunities are advertised through ProContract. Register to receive notifications about:
               </p>
@@ -162,49 +253,7 @@ const TrainingProviders = () => {
         </div>
       </div>
 
-      {/* Current Frameworks */}
-      <div className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Training Frameworks</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover our current frameworks and how you can get involved in delivering quality training across South Yorkshire.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {frameworks.map((framework) => (
-              <div
-                key={framework.title}
-                className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-shadow"
-              >
-                <div className={`w-12 h-12 rounded-xl bg-${framework.color}-100 flex items-center justify-center mb-6`}>
-                  <framework.icon className={`h-6 w-6 text-${framework.color}-600`} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{framework.title}</h3>
-                <p className="text-gray-600 mb-6">{framework.description}</p>
-                <ul className="space-y-3 mb-8">
-                  {framework.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-gray-600">
-                      <ChevronRight className={`h-5 w-5 text-${framework.color}-600 flex-shrink-0`} />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href={framework.href}
-                  className={`inline-flex items-center text-${framework.color}-600 font-medium hover:text-${framework.color}-500`}
-                >
-                  Learn more
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Regional Context */}
+      {/* Regional Context Section */}
       <div className="bg-zinc-50 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">

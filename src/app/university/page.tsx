@@ -3,15 +3,16 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { GraduationCap, Trophy, Users, Building2, MapPin, Star, ArrowUpRight, BookOpen, Beaker, Globe, CheckCircle, Rocket } from 'lucide-react'
+import { GraduationCap, Trophy, Users, Building2, MapPin, Star, ArrowUpRight, BookOpen, Beaker, Globe, CheckCircle, Rocket, ChevronRight, Laptop, Stethoscope, Cog, Briefcase } from 'lucide-react'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 const UniversityPage = () => {
   const universities = [
     {
       name: 'Sheffield Hallam University',
       description: 'A modern university focused on real-world experience and professional career development. Known for strong industry connections and practical learning approaches.',
-      image: '/images/shu-campus.jpg',
-      url: 'https://www.shu.ac.uk/courses?page=0&perPage=25&query=&yearOfEntry=2025%2F26',
+      image: '/images/shu.jpg',
+      url: 'https://www.shu.ac.uk/courses',
       location: 'Sheffield City Centre & Collegiate Campus',
       facts: [
         {
@@ -29,21 +30,12 @@ const UniversityPage = () => {
           title: 'Industry Links',
           description: '1,800+ employer partnerships'
         }
-      ],
-      highlights: [
-        '300+ undergraduate courses',
-        '£140m annual research income',
-        'Top 10 for nursing education',
-        '95% graduate employment rate',
-        'Degree apprenticeships available',
-        'State-of-the-art facilities'
-      ],
-      colour: 'purple'
+      ]
     },
     {
       name: 'University of Sheffield',
       description: 'A world-renowned Russell Group university known for research excellence and innovative teaching. Offering a wide range of courses across multiple disciplines.',
-      image: '/images/uos-campus.jpg',
+      image: '/images/uniofsheffield.jpeg',
       url: 'https://www.sheffield.ac.uk/courses',
       location: 'Sheffield City Centre & Western Bank',
       facts: [
@@ -62,90 +54,88 @@ const UniversityPage = () => {
           title: 'Global Community',
           description: '29,000 students from 150 countries'
         }
-      ],
-      highlights: [
-        'Russell Group member',
-        'World-class research facilities',
-        'Award-winning Students\' Union',
-        'Global reputation',
-        'Research-led teaching',
-        'Strong graduate prospects'
-      ],
-      colour: 'blue'
+      ]
+    }
+  ]
+
+  const pathways = [
+    {
+      title: "Digital & Technology",
+      description: "Develop skills in software development, data analysis, and cyber security",
+      icon: <Laptop className="w-6 h-6" />,
+      colour: "blue"
+    },
+    {
+      title: "Healthcare & Medicine",
+      description: "Train for careers in nursing, medicine, and allied health professions",
+      icon: <Stethoscope className="w-6 h-6" />,
+      colour: "green"
+    },
+    {
+      title: "Engineering & Manufacturing",
+      description: "Learn about advanced manufacturing, robotics, and sustainable engineering",
+      icon: <Cog className="w-6 h-6" />,
+      colour: "orange"
     }
   ]
 
   return (
-    <div className="bg-white">
+    <main className="min-h-screen bg-white">
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'University', href: '/university' },
+      ]} />
+
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-24">
-        <div className="absolute inset-0 overflow-hidden">
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+        <div className="absolute inset-0">
           <Image
-            src="/images/sy-graduation-ceremony.jpg"
-            alt="South Yorkshire graduation ceremony"
+            src="/images/university-hero.jpg"
+            alt="University opportunities in South Yorkshire"
             fill
+            className="object-cover object-center brightness-[0.7] saturate-[0.85]"
             priority
-            className="object-cover opacity-30"
+            quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#111827]/80 to-[#111827]/60 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/80 to-transparent" />
         </div>
+
+        {/* Hero Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-2 text-blue-400 mb-4">
-              <GraduationCap className="h-6 w-6" />
-              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Universities</span>
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                <GraduationCap className="h-5 w-5 text-blue-400" />
+                <span className="text-sm font-medium tracking-wide text-blue-400 uppercase">Higher Education</span>
+              </div>
+              <h1 className="text-4xl font-bold text-white mb-6">
+                Discover Your Future at South Yorkshire's Universities
+              </h1>
+              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                Join over 60,000 students at our world-class universities, offering innovative courses and excellent career prospects
+              </p>
             </div>
-            <h1 className="text-4xl font-bold text-white mb-6">
-              South Yorkshire's Higher Education Network
-            </h1>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Proudly supporting 60,000+ students across 2 world-class universities in the Sheffield City Region
-            </p>
           </div>
         </div>
       </div>
 
-      {/* South Yorkshire by Numbers */}
+      {/* Universities Section */}
       <div className="bg-slate-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">South Yorkshire by Numbers</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Universities</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Key facts about our higher education sector
+              Choose from two prestigious universities, each offering unique strengths and opportunities
             </p>
           </div>
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            {[
-              { icon: <GraduationCap className="h-8 w-8 mx-auto" />, title: "Total Students", value: "60,000+" },
-              { icon: <Trophy className="h-8 w-8 mx-auto" />, title: "Graduate Retention", value: "78% stay in region" },
-              { icon: <BookOpen className="h-8 w-8 mx-auto" />, title: "Courses Offered", value: "1,200+ programmes" },
-              { icon: <Rocket className="h-8 w-8 mx-auto" />, title: "Graduate Startups", value: "200+ annually" },
-            ].map((stat, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-                <div className="text-blue-600 mb-4">{stat.icon}</div>
-                <div className="text-2xl font-bold text-gray-900 mb-2">{stat.value}</div>
-                <div className="text-gray-600">{stat.title}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
-      {/* Universities Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="grid md:grid-cols-2 gap-8">
-          {universities.map((uni, index) => (
-            <div key={index} className="group relative">
-              {/* Decorative background */}
-              <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${
-                uni.colour === 'purple' 
-                  ? 'from-purple-50 to-purple-100/50' 
-                  : 'from-blue-50 to-blue-100/50'
-              } transform transition-transform duration-300 group-hover:scale-[1.02]`} />
-              
-              <div className="relative p-8 rounded-2xl">
-                {/* University Image */}
-                <div className="relative h-64 rounded-xl overflow-hidden mb-8">
+          <div className="grid md:grid-cols-2 gap-8">
+            {universities.map((uni, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-sm overflow-hidden">
+                <div className="relative h-64">
                   <Image
                     src={uni.image}
                     alt={uni.name}
@@ -153,158 +143,39 @@ const UniversityPage = () => {
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-4 left-4">
-                    <div className="flex items-center gap-2 text-white">
-                      <MapPin className="h-5 w-5" />
-                      <span className="text-sm font-medium">{uni.location}</span>
-                    </div>
+                  <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white">
+                    <MapPin className="h-5 w-5" />
+                    <span className="text-sm font-medium">{uni.location}</span>
                   </div>
                 </div>
 
-                {/* University Info */}
-                <div className="space-y-6">
-                  <h2 className="text-2xl font-bold text-gray-900">{uni.name}</h2>
-                  <p className="text-gray-600">{uni.description}</p>
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{uni.name}</h3>
+                  <p className="text-gray-600 mb-6">{uni.description}</p>
 
-                  {/* Facts Grid */}
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-3 gap-4 mb-6">
                     {uni.facts.map((fact, factIndex) => (
                       <div key={factIndex} className="space-y-2">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                          uni.colour === 'purple' ? 'bg-purple-100 text-purple-600' : 'bg-blue-100 text-blue-600'
-                        }`}>
+                        <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
                           {fact.icon}
                         </div>
                         <div>
-                          <div className="font-medium text-gray-900">{fact.title}</div>
-                          <div className="text-sm text-gray-600">{fact.description}</div>
+                          <div className="font-medium text-gray-900 text-sm">{fact.title}</div>
+                          <div className="text-xs text-gray-600">{fact.description}</div>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  {/* Highlights */}
-                  <div className="space-y-3">
-                    <h3 className="font-semibold text-gray-900">Key Highlights</h3>
-                    <ul className="grid grid-cols-2 gap-2">
-                      {uni.highlights.map((highlight, highlightIndex) => (
-                        <li key={highlightIndex} className="flex items-center gap-2 text-sm text-gray-600">
-                          <div className={`w-1.5 h-1.5 rounded-full ${
-                            uni.colour === 'purple' ? 'bg-purple-400' : 'bg-blue-400'
-                          }`} />
-                          {highlight}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* CTA Button */}
                   <Link
                     href={uni.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-all ${
-                      uni.colour === 'purple' 
-                        ? 'bg-purple-600 hover:bg-purple-500' 
-                        : 'bg-blue-600 hover:bg-blue-500'
-                    } shadow-lg hover:shadow-xl group`}
+                    className="inline-flex items-center px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors"
                   >
-                    <span>Explore Courses</span>
-                    <ArrowUpRight className="ml-2 h-5 w-5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <span>View Courses</span>
+                    <ChevronRight className="ml-2 h-5 w-5" />
                   </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Why Study in South Yorkshire */}
-      <div className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="md:flex gap-12 items-center">
-            <div className="md:w-1/2 mb-8 md:mb-0">
-              <Image
-                src="/images/sy-student-life.jpg"
-                alt="Student life in South Yorkshire"
-                width={600}
-                height={400}
-                className="rounded-xl shadow-lg"
-              />
-            </div>
-            <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Why Study in South Yorkshire?</h2>
-              <ul className="space-y-4 text-gray-600">
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span>£200m+ annual investment in university facilities</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span>Strong industry partnerships with local employers</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span>Vibrant student cities with affordable living costs</span>
-                </li>
-              </ul>
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                <Image
-                  src="/sy-mca-logo.svg"
-                  alt="South Yorkshire Mayoral Combined Authority"
-                  width={180}
-                  height={80}
-                  className="object-contain"
-                />
-                <Image
-                  src="/sheffield-city-region-logo.svg"
-                  alt="Sheffield City Region"
-                  width={180}
-                  height={80}
-                  className="object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Additional Resources Section */}
-      <div className="bg-gray-50 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Additional Resources</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Discover more about studying in Sheffield and get help with your university application
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <BookOpen className="h-6 w-6" />,
-                title: 'Course Guides',
-                description: 'Detailed information about different courses and entry requirements'
-              },
-              {
-                icon: <Building2 className="h-6 w-6" />,
-                title: 'Accommodation',
-                description: 'Find the perfect student accommodation in Sheffield'
-              },
-              {
-                icon: <Users className="h-6 w-6" />,
-                title: 'Student Life',
-                description: 'Learn about life as a student in Sheffield'
-              }
-            ].map((resource, index) => (
-              <div key={index} className="relative group">
-                <div className="absolute inset-0 rounded-2xl bg-white shadow-lg transform transition-transform duration-300 group-hover:scale-[1.02]" />
-                <div className="relative p-6 rounded-xl">
-                  <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 mb-4">
-                    {resource.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{resource.title}</h3>
-                  <p className="text-gray-600">{resource.description}</p>
                 </div>
               </div>
             ))}
@@ -316,68 +187,90 @@ const UniversityPage = () => {
       <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Popular Career Pathways
-            </h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Popular Career Pathways</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Explore courses that lead to in-demand local careers
+              Explore courses aligned with South Yorkshire's growing industries
             </p>
           </div>
+
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Digital & Tech",
-                careers: ["Software Developer", "Data Analyst", "Cyber Security"],
-                icon: "💻",
-                colour: "bg-blue-100"
-              },
-              {
-                title: "Health & Social Care",
-                careers: ["Nurse", "Social Worker", "Physiotherapist"],
-                icon: "🏥",
-                colour: "bg-green-100"
-              },
-              {
-                title: "Advanced Manufacturing",
-                careers: ["Engineering", "Product Design", "Robotics"],
-                icon: "🔧",
-                colour: "bg-orange-100"
-              }
-            ].map((pathway, index) => (
-              <div key={index} className="p-6 rounded-xl">
-                <div className={`${pathway.colour} w-12 h-12 rounded-lg flex items-center justify-center text-2xl mb-4`}>
+            {pathways.map((pathway, index) => (
+              <div key={index} className="bg-slate-50 rounded-xl p-6">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-${pathway.colour}-600 bg-${pathway.colour}-100 mb-4`}>
                   {pathway.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-4">{pathway.title}</h3>
-                <ul className="space-y-2 text-gray-600">
-                  {pathway.careers.map((career, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                      {career}
-                    </li>
-                  ))}
-                </ul>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{pathway.title}</h3>
+                <p className="text-gray-600">{pathway.description}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Student Quote Section */}
-      <div className="bg-indigo-50 py-16">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <blockquote className="text-xl text-gray-900">
-            <p className="mb-4">
-              "My degree gave me direct access to Sheffield's tech scene through industry placements. 
-              I had a job offer before graduating!"
-            </p>
-            <footer className="text-gray-600">
-              - Sarah, Computer Science Graduate now at local startup
-            </footer>
-          </blockquote>
+      {/* Support Section */}
+      <div className="bg-slate-50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">Supporting Your Journey</h2>
+              <div className="space-y-4">
+                {[
+                  { icon: <BookOpen className="w-5 h-5" />, text: "Course guidance and application support" },
+                  { icon: <Building2 className="w-5 h-5" />, text: "Modern accommodation options" },
+                  { icon: <Users className="w-5 h-5" />, text: "Vibrant student communities" },
+                  { icon: <Briefcase className="w-5 h-5" />, text: "Career development services" }
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="mt-1 w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
+                      {item.icon}
+                    </div>
+                    <p className="text-gray-600">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative h-[400px] rounded-xl overflow-hidden">
+              <Image
+                src="/images/student-support.jpg"
+                alt="Student support services"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* CTA Section */}
+      <div className="bg-blue-600 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">Ready to Start Your Journey?</h2>
+          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            Explore courses, compare universities, and find the perfect path for your future
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="https://www.shu.ac.uk/courses"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 rounded-lg bg-white text-blue-600 hover:bg-blue-50 transition-colors"
+            >
+              <span>Sheffield Hallam Courses</span>
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Link>
+            <Link
+              href="https://www.sheffield.ac.uk/courses"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 rounded-lg bg-white text-blue-600 hover:bg-blue-50 transition-colors"
+            >
+              <span>University of Sheffield Courses</span>
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </main>
   )
 }
 

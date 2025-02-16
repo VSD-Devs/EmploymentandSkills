@@ -123,12 +123,12 @@ const providers: TLevelProvider[] = [
 const categories: TLevelCategory[] = [
   {
     name: 'Digital & Technology',
-    description: 'Software development, cyber security, and digital infrastructure',
+    description: 'Cyber security and digital infrastructure',
     providers: ['Barnsley College', 'The Sheffield College', 'Longley Park Sixth Form', 'Doncaster College']
   },
   {
     name: 'Construction & Engineering',
-    description: 'Construction, engineering, manufacturing and building services',
+    description: 'Construction, engineering, manufacturing, and building services',
     providers: ['Barnsley College', 'The Sheffield College', 'RNN Group', 'UTC Sheffield City Centre', 'Doncaster College']
   },
   {
@@ -143,7 +143,7 @@ const categories: TLevelCategory[] = [
   },
   {
     name: 'Creative & Design',
-    description: 'Media, fashion, textiles and creative production',
+    description: 'Media, fashion, textiles, and creative production',
     providers: ['Barnsley College', 'The Sheffield College']
   }
 ]
@@ -171,6 +171,33 @@ const TLevelsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Breadcrumbs Overlay */}
+      <nav className="absolute top-20 left-0 z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ol className="flex items-center space-x-2 bg-white/80 rounded-lg p-2 inline-block">
+            <li>
+              <Link 
+                href="/" 
+                className="text-gray-800 hover:text-gray-900 flex items-center text-sm transition-colors"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <ChevronRight className="h-4 w-4 text-gray-600" />
+            </li>
+            <li>
+              <Link 
+                href="/t-levels" 
+                className="text-gray-800 hover:text-gray-900 flex items-center text-sm transition-colors"
+              >
+                T-Levels
+              </Link>
+            </li>
+          </ol>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
@@ -275,7 +302,7 @@ const TLevelsPage = () => {
                 placeholder="Search subjects, courses or providers..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-full bg-white border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="w-full pl-12 pr-4 py-3 rounded-full bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-md"
               />
             </div>
           </div>
@@ -303,7 +330,7 @@ const TLevelsPage = () => {
                 return (
                   <div
                     key={category.name}
-                    className="bg-white rounded-xl border border-gray-200 overflow-hidden"
+                    className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-lg transition-shadow hover:shadow-xl"
                   >
                     {/* Category Header */}
                     <button
@@ -412,6 +439,9 @@ const TLevelsPage = () => {
                                           </a>
                                         </div>
                                       ))}
+                                    {provider.courses.length === 0 && (
+                                      <p className="text-gray-500 text-sm">No courses available for this provider.</p>
+                                    )}
                                   </div>
                                 </div>
                               )}

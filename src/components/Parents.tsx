@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, Users, BookOpen, GraduationCap, Lightbulb } from 'lucide-react'
 import Newsletter from './Newsletter'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 // Image constants to ensure consistent loading and prevent typos
 const IMAGES = {
@@ -67,6 +68,12 @@ const colorClasses = {
 const Parents = () => {
   return (
     <div className="bg-white">
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Parents & Carers', href: '/parents' },
+      ]} />
+
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">

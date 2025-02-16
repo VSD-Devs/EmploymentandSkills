@@ -1,11 +1,16 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2, Building2, MapPin, Building, LineChart, GraduationCap } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Building2, MapPin, Building, LineChart, GraduationCap, HelpCircle } from 'lucide-react'
+import SkillsBankEligibilityChecker from '@/components/SkillsBankEligibilityChecker'
+import SkillsBankEligibilityModal from '@/components/SkillsBankEligibilityModal'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export default function Page() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const applicationSteps = [
     {
       title: 'Online Application',
@@ -69,17 +74,26 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-white">
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Business Support', href: '/business-support' },
+        { label: 'Funded Training', href: '/funded-training' },
+        { label: 'Skills Bank', href: '/skills-bank' },
+      ]} />
+
       {/* Hero Section */}
-      <section className="relative bg-[#111827] py-24">
+      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-business.jpg"
-            alt="Business team working together"
+            src="/images/skills-bank-hero.jpg"
+            alt="Skills bank opportunities in South Yorkshire"
             fill
-            className="object-cover"
+            className="object-cover object-center brightness-75"
             priority
+            quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#111827]/95 to-[#111827]/90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -89,20 +103,20 @@ export default function Page() {
               </div>
               <span className="text-sm font-medium tracking-wide uppercase">Skills Bank</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-6">
               Receive up to 60% Funding towards training costs for your business
             </h1>
             <p className="text-xl text-gray-300 mb-8">
               Skills Bank provides funding for businesses that can demonstrate how training will support their growth plans and build resilience.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link
-                href="#apply"
+              <button
+                onClick={() => setIsModalOpen(true)}
                 className="inline-flex items-center px-6 py-3 rounded-xl bg-emerald-600 text-white hover:bg-emerald-500 transition-colors"
               >
-                Apply for Funding
+                Check Your Eligibility
                 <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
+              </button>
               <Link
                 href="#benefits"
                 className="inline-flex items-center px-6 py-3 rounded-xl bg-white/10 text-white hover:bg-white/20 transition-colors"
@@ -112,7 +126,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* Key Benefits */}
       <section id="benefits" className="py-20">
@@ -246,13 +260,18 @@ export default function Page() {
         </div>
       </section>
 
+      <SkillsBankEligibilityModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+
       {/* Why Skills Bank */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <Image
-                src="/images/hero-yorkshire.jpg"
+                src="/images/skills-bank-learning2.jpg"
                 alt="South Yorkshire building"
                 width={600}
                 height={400}
@@ -310,6 +329,87 @@ What's the process?
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 text-emerald-600 mb-4">
+              <div className="p-2 rounded-lg bg-emerald-100">
+                <HelpCircle className="h-5 w-5" />
+              </div>
+              <span className="text-sm font-medium tracking-wide uppercase">FAQs</span>
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Quick answers to common questions about Skills Bank funding
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              {
+                question: 'Can a new business be supported through Skills Bank?',
+                answer: 'New businesses can be supported through Skills Bank providing they have been trading for at least 12 months.'
+              },
+              {
+                question: 'Can Skills Bank support a charity or third sector organisation?',
+                answer: 'Skills Bank funding is set aside for businesses that can provide a business case to show growth.'
+              },
+              {
+                question: 'Can national employers be approached?',
+                answer: 'The expectation is that the employer has a permanent base within South Yorkshire.'
+              },
+              {
+                question: 'Is there any training that cannot be supported?',
+                answer: 'Skills Bank will not usually support certain types of training.'
+              },
+              {
+                question: 'Is there a restriction on the value of financial support?',
+                answer: 'The Subsidy Control Regime applies with a ceiling of approximately £350,000.'
+              },
+              {
+                question: 'Do employees need to live in South Yorkshire?',
+                answer: 'No, the employer must be based in South Yorkshire and this must be the employee\'s official base of work.'
+              }
+            ].map((faq, index) => (
+              <div key={index} className="bg-gray-50 rounded-lg shadow-md">
+                <button
+                  className="flex justify-between items-center w-full p-4 text-left text-gray-900 font-semibold hover:bg-emerald-100 transition-colors"
+                  onClick={() => {
+                    const answerElement = document.getElementById(`faq-answer-${index}`);
+                    if (answerElement) {
+                      answerElement.classList.toggle('hidden');
+                    }
+                  }}
+                >
+                  <span className="text-lg">{faq.question}</span>
+                  <HelpCircle className="h-5 w-5 text-emerald-600" />
+                </button>
+                <p id={`faq-answer-${index}`} className="hidden p-4 text-gray-600 text-base">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <div className="bg-emerald-50 rounded-xl p-8 border border-emerald-100">
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Still have questions?</h3>
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto text-lg">
+                Our Skills Advisors are here to help. Get in touch for personalised guidance on your Skills Bank application.
+              </p>
+              <Link
+                href="#contact"
+                className="inline-flex items-center px-6 py-3 rounded-xl bg-emerald-600 text-white hover:bg-emerald-500 transition-colors"
+              >
+                Contact Our Advisors
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

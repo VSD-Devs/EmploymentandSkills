@@ -1,34 +1,141 @@
+'use client'
+
+import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { 
   ChevronRight, 
-  GraduationCap, 
-  Building2, 
-  Users, 
+  GraduationCap,
+  Building2,
+  Users,
   BookOpen,
   ArrowRight,
-  BarChart3,
-  Network,
-  CheckCircle2,
-  FileText,
-  TrendingUp,
   Target,
+  Briefcase,
+  FileText,
   Lightbulb,
-  Scale,
-  Heart,
-  Leaf
+  CheckCircle2,
+  Calendar,
+  Network
 } from 'lucide-react'
-import { sectorData } from '@/data/sectors'
+import Newsletter from '@/components/Newsletter'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
-export default function EducatorsPage() {
+const IMAGES = {
+  trainingProviders: "/images/training-provider.jpg",
+  schools: "/images/schools.jpg",
+  strategy: "/images/skills-strategy.jpg",
+  hero: "/images/educator-hero.jpg"
+}
+
+const colorClasses = {
+  blue: {
+    button: 'border-blue-500 bg-blue-50',
+    icon: 'bg-blue-100 text-blue-600',
+    link: 'bg-blue-600 hover:bg-blue-500',
+    badge: 'bg-blue-50 text-blue-700',
+    gradient: 'from-blue-50 to-white',
+    nav: 'hover:bg-blue-50/80'
+  },
+  emerald: {
+    button: 'border-emerald-500 bg-emerald-50',
+    icon: 'bg-emerald-100 text-emerald-600',
+    link: 'bg-emerald-600 hover:bg-emerald-500',
+    badge: 'bg-emerald-50 text-emerald-700',
+    gradient: 'from-emerald-50 to-white',
+    nav: 'hover:bg-emerald-50/80'
+  }
+} as const
+
+const EducatorsPage = () => {
+  const [activeTab, setActiveTab] = useState<string>('')
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+
+  // Define tabs configuration
+  const tabs = {
+    collegesAndProviders: {
+      id: 'collegesAndProviders',
+      title: 'Colleges & Training Providers',
+      description: 'Deliver Skills Training and Career Education',
+      icon: <Briefcase className="w-6 h-6" />,
+      color: 'blue' as const
+    },
+    schools: {
+      id: 'schools',
+      title: 'Schools',
+      description: 'Career Education',
+      icon: <GraduationCap className="w-6 h-6" />,
+      color: 'emerald' as const
+    }
+  }
+
+  // Add touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    const SWIPE_THRESHOLD = 50
+    const touchDiff = touchStart - touchEnd
+
+    if (Math.abs(touchDiff) > SWIPE_THRESHOLD) {
+      const tabKeys = Object.keys(tabs)
+      const currentIndex = tabKeys.indexOf(activeTab)
+      
+      if (touchDiff > 0 && currentIndex < tabKeys.length - 1) {
+        setActiveTab(tabKeys[currentIndex + 1])
+        document.getElementById(tabKeys[currentIndex + 1])?.scrollIntoView({ behavior: 'smooth' })
+      } else if (touchDiff < 0 && currentIndex > 0) {
+        setActiveTab(tabKeys[currentIndex - 1])
+        document.getElementById(tabKeys[currentIndex - 1])?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+
+  // Add scroll handler
+  const handleScroll = useCallback(() => {
+    const sections = Object.keys(tabs).map(key => document.getElementById(key))
+    const scrollPosition = window.scrollY + window.innerHeight / 2
+
+    sections.forEach((section) => {
+      if (section) {
+        const sectionTop = section.offsetTop
+        const sectionBottom = sectionTop + section.offsetHeight
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          setActiveTab(section.id)
+        }
+      }
+    })
+  }, [tabs])
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [handleScroll])
+
   return (
-    <main className="min-h-screen bg-white">
+    <div className="bg-white"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Educators', href: '/educators' },
+      ]} />
+
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
-        {/* Background Image and Overlays */}
         <div className="absolute inset-0">
           <Image
-            src="/images/educator-hero.jpg"
+            src={IMAGES.hero}
             alt="Education and training facilities in South Yorkshire"
             fill
             className="object-cover object-center brightness-[0.7] saturate-[0.85]"
@@ -39,231 +146,255 @@ export default function EducatorsPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/80 to-transparent" />
         </div>
 
-        {/* Hero Content */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-                <FileText className="h-4 w-4 text-blue-300" />
-                <span className="text-sm font-medium text-blue-100">South Yorkshire Education Hub</span>
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 text-blue-300 mb-4">
+              <div className="p-1.5 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-400/20">
+                <FileText className="h-4 w-4" />
               </div>
-
-              {/* Main Content */}
-              <h1 className="text-3xl sm:text-4xl lg:text-3xl font-bold text-white mb-6">
-                Shaping South Yorkshire's<br className="hidden sm:block" /> Future Workforce
-              </h1>
-              <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
-                Join us in building a skilled workforce for tomorrow. Access resources, funding, and support tailored to your role in education.
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  href="/educators/training-providers"
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors group"
-                >
-                  Training Providers
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  href="/educators/schools"
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20 group"
-                >
-                  Schools & Colleges
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
+              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Education Hub</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Shaping South Yorkshire's<br className="hidden sm:block" /> Future Workforce
+            </h1>
+            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
+              Join us in building a skilled workforce for tomorrow. Access resources, funding, and support tailored to your role in education.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <Link
+                href="#collegesAndProviders"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors"
+              >
+                Colleges & Training Providers
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
+              <Link
+                href="#schools"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+              >
+                Schools
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="py-24 bg-gradient-to-b from-white to-gray-50">
+      {/* Sticky Navigation */}
+      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Partner With Us?</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Join a network of education providers helping to shape South Yorkshire's future workforce
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: GraduationCap,
-                title: "Innovation Support",
-                description: "Access cutting-edge teaching resources and methodologies"
-              },
-              {
-                icon: BarChart3,
-                title: "Growth Opportunities",
-                description: "Expand your reach with funded training programmes"
-              },
-              {
-                icon: Network,
-                title: "Industry Connections",
-                description: "Connect with leading employers in South Yorkshire"
-              },
-              {
-                icon: Users,
-                title: "Community Impact",
-                description: "Make a real difference in learners' lives"
-              }
-            ].map((feature, index) => (
-              <div key={index} className="group">
-                <div className="relative p-6 bg-white rounded-xl border border-gray-200 shadow-sm transition-shadow hover:shadow-md">
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-50 transition-colors">
-                    <feature.icon className="h-6 w-6 text-gray-600 group-hover:text-blue-600 transition-colors" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-600 text-sm">{feature.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Strategy Overview */}
-      <div className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Skills Strategy</h2>
-              <p className="text-lg text-gray-600 mb-8">
-                Building a stronger, more inclusive skills system that drives economic growth and creates opportunities for all across South Yorkshire.
-              </p>
-              <div className="space-y-6">
-                {[
-                  "Young people equipped with skills for the future",
-                  "Adults accessing retraining and upskilling opportunities",
-                  "Employers at the heart of the skills system",
-                  "Data-driven decision making and evaluation"
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="h-4 w-4 text-blue-600" />
+          <div className="flex justify-start sm:justify-center min-w-max">
+            <div className="flex space-x-1 py-1">
+              {Object.values(tabs).map((tab) => (
+                <a 
+                  key={tab.id}
+                  href={`#${tab.id}`} 
+                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl transition-colors ${
+                    activeTab === tab.id 
+                      ? `${colorClasses[tab.color].button} text-${tab.color}-600 shadow-md` 
+                      : `${colorClasses[tab.color].nav} text-gray-600`
+                  }`}
+                  onClick={() => setActiveTab(tab.id)}
+                >
+                  <div className="relative z-10 flex flex-col items-center gap-1">
+                    <div className={`h-6 w-6 ${
+                      activeTab === tab.id 
+                        ? `text-${tab.color}-600` 
+                        : 'text-gray-600 group-hover:text-${tab.color}-600'
+                    } transition-colors`}>
+                      {tab.icon}
                     </div>
-                    <p className="text-gray-600">{item}</p>
+                    <span className={`text-sm sm:text-base font-medium ${
+                      activeTab === tab.id 
+                        ? `text-${tab.color}-600` 
+                        : 'text-gray-900 group-hover:text-${tab.color}-600'
+                    } whitespace-nowrap transition-colors`}>
+                      {tab.title}
+                    </span>
+                    <div className={`h-0.5 ${
+                      activeTab === tab.id 
+                        ? `w-full bg-${tab.color}-600` 
+                        : `w-0 bg-${tab.color}-600 group-hover:w-full`
+                    } transition-all duration-200`} />
                   </div>
-                ))}
-              </div>
+                </a>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* South Yorkshire Plan for Good Growth Section */}
-      <div className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 text-blue-600 mb-4">
-              <Target className="h-5 w-5" />
-              <span className="text-sm font-medium tracking-wide uppercase">Regional Strategy</span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              South Yorkshire Plan for Good Growth
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Our vision for inclusive, sustainable growth that benefits all of South Yorkshire's people and businesses
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Scale,
-                title: "Innovation & Enterprise",
-                description: "Building a stronger, more innovative economy through research, development and enterprise support.",
-                color: "blue"
-              },
-              {
-                icon: Heart,
-                title: "People & Skills",
-                description: "Developing a skilled workforce through high-quality education and training opportunities.",
-                color: "emerald"
-              },
-              {
-                icon: Leaf,
-                title: "Sustainable Growth",
-                description: "Creating sustainable communities and transitioning to a net-zero carbon economy.",
-                color: "amber"
-              }
-            ].map((pillar, index) => (
-              <div key={index} className={`bg-${pillar.color}-50 rounded-xl p-8 border border-${pillar.color}-100`}>
-                <div className={`w-12 h-12 bg-${pillar.color}-100 rounded-lg flex items-center justify-center mb-6`}>
-                  <pillar.icon className={`h-6 w-6 text-${pillar.color}-600`} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{pillar.title}</h3>
-                <p className="text-gray-600">{pillar.description}</p>
-              </div>
-            ))}
-          </div>
+      {/* Colleges & Training Providers Section */}
+      <div id="collegesAndProviders" className="relative bg-gray-50">
+        {/* Top wave divider */}
+        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
+          <svg
+            viewBox="0 0 1440 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute bottom-0 w-full h-full text-gray-50"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
+              fill="currentColor"
+            />
+          </svg>
         </div>
-      </div>
-
-      {/* Skills Strategy Section */}
-      <div className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 text-blue-600 mb-4">
-                <Lightbulb className="h-5 w-5" />
-                <span className="text-sm font-medium tracking-wide uppercase">Skills Strategy</span>
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                South Yorkshire Skills Strategy 2021-2030
-              </h2>
-              <p className="text-lg text-gray-600 mb-8">
-                Our comprehensive approach to developing the skills needed for economic growth and social inclusion.
-              </p>
-              
-              <div className="space-y-6">
-                {[
-                  {
-                    title: "World-class technical education",
-                    description: "Delivering high-quality technical education aligned with employer needs"
-                  },
-                  {
-                    title: "Adult skills and lifelong learning",
-                    description: "Supporting adults to upskill and retrain throughout their careers"
-                  },
-                  {
-                    title: "Employer engagement",
-                    description: "Working closely with employers to identify and meet skills needs"
-                  },
-                  {
-                    title: "Digital skills",
-                    description: "Ensuring everyone has the digital skills needed for work and life"
-                  }
-                ].map((priority, index) => (
-                  <div key={index} className="bg-white rounded-lg p-6 shadow-sm">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{priority.title}</h3>
-                    <p className="text-gray-600">{priority.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="relative h-[600px] rounded-2xl overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
               <Image
-                src="/images/skills-strategy.jpg"
-                alt="Students and tutors collaborating in a modern learning environment"
+                src={IMAGES.trainingProviders}
+                alt="Colleges and training providers delivering quality education"
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8 text-white">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                    <div className="text-2xl font-bold mb-1">75%</div>
-                    <div className="text-sm">of employers report skills gaps</div>
+              <div className="absolute bottom-4 sm:bottom-8 -right-12 bg-white rounded-xl p-4 sm:p-6 shadow-xl max-w-[280px] sm:max-w-sm transform -translate-x-8 sm:-translate-x-20 backdrop-blur-sm border border-gray-100">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Target className="h-6 w-6 sm:h-7 sm:w-7 text-blue-600" />
                   </div>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                    <div className="text-2xl font-bold mb-1">£1.7bn</div>
-                    <div className="text-sm">investment in skills by 2030</div>
+                  <div>
+                    <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">£1.7bn Investment</div>
+                    <div className="text-sm sm:text-base text-gray-600">In skills development by 2030</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 text-blue-600 mb-3 sm:mb-4">
+                <span className="text-sm font-medium tracking-wide uppercase">For Colleges & Training Providers</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Deliver Quality Training</h2>
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+                Partner with us to deliver high-quality training programmes that meet employer needs and support economic growth in South Yorkshire.
+              </p>
+              <div className="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
+                <div className="grid gap-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Access Funding</h3>
+                      <p className="text-gray-600">Deliver funded training programmes through Skills Bank and Skills Bootcamps</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Quality Framework</h3>
+                      <p className="text-gray-600">Access support to meet our quality standards and enhance your provision</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Networks</h3>
+                      <p className="text-gray-600">Connect with employers and understand their training needs</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
+                <Link
+                  href="/educators/training-providers"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors text-base sm:text-lg shadow-sm"
+                >
+                  Become a Provider
+                  <ChevronRight className="ml-2 h-5 w-5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Schools Section */}
+      <div id="schools" className="relative bg-white">
+        {/* Top wave divider */}
+        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
+          <svg
+            viewBox="0 0 1440 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute bottom-0 w-full h-full text-white"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div>
+              <div className="flex items-center gap-2 text-emerald-600 mb-3 sm:mb-4">
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
+                <span className="text-sm font-medium tracking-wide uppercase">For Schools</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Career Education Support</h2>
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+                Access resources and support to deliver outstanding careers guidance and work-related learning opportunities for your students.
+              </p>
+              <div className="space-y-6 mb-8">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <Calendar className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Provider Access</h3>
+                    <p className="text-gray-600">Support to meet Provider Access Legislation requirements</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <Network className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Engagement</h3>
+                    <p className="text-gray-600">Connect with local employers for work experience and insights</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                    <Lightbulb className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Career Resources</h3>
+                    <p className="text-gray-600">Teaching materials and labour market information</p>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/educators/schools"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-base sm:text-lg shadow-sm"
+              >
+                Access Support
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden">
+              <Image
+                src={IMAGES.schools}
+                alt="School career guidance session"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Users className="h-7 w-7 text-emerald-600" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900 text-xl mb-1">100+ Schools</div>
+                    <div className="text-gray-600">Supported across South Yorkshire</div>
                   </div>
                 </div>
               </div>
@@ -272,137 +403,10 @@ export default function EducatorsPage() {
         </div>
       </div>
 
-      {/* Labour Market Intelligence Section */}
-      <div className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 text-blue-600 mb-4">
-              <TrendingUp className="h-5 w-5" />
-              <span className="text-sm font-medium tracking-wide uppercase">Labour Market Intelligence</span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Regional Skills Demand
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Real-time insights into South Yorkshire's employment and skills landscape
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {Object.entries(sectorData)
-              .slice(0, 6)
-              .map(([key, sector]) => (
-                <div key={key} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">{sector.title}</h3>
-                    <div className="space-y-4">
-                      {sector.stats.map((stat, index) => (
-                        <div key={index} className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
-                            <span className="text-blue-600">{stat.icon}</span>
-                          </div>
-                          <div>
-                            <div className="font-semibold text-gray-900">{stat.number}</div>
-                            <div className="text-sm text-gray-600">{stat.label}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="mt-6 pt-6 border-t border-gray-100">
-                      <h4 className="font-semibold text-gray-900 mb-2">In-demand skills:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {sector.skills.specialist.slice(0, 3).map((skill, index) => (
-                          <span
-                            key={index}
-                            className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link
-              href="/our-region"
-              className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors"
-            >
-              View Full Regional Analysis
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Support for Education Providers */}
-      <div className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Support for Education Providers
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Access resources and support to help deliver high-quality education and training
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <Link
-              href="/educators/training-providers"
-              className="group relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
-            >
-              <div className="absolute inset-0">
-                <Image
-                  src="/images/training-providers.jpg"
-                  alt="Training provider delivering session"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/40" />
-              </div>
-              <div className="relative p-8">
-                <h3 className="text-2xl font-bold text-white mb-4">Training Providers</h3>
-                <p className="text-white/90 mb-6">
-                  Resources and support for delivering apprenticeships and vocational training
-                </p>
-                <div className="inline-flex items-center text-white">
-                  Learn more
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/educators/schools"
-              className="group relative bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
-            >
-              <div className="absolute inset-0">
-                <Image
-                  src="/images/schools.jpg"
-                  alt="School classroom session"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/40" />
-              </div>
-              <div className="relative p-8">
-                <h3 className="text-2xl font-bold text-white mb-4">Schools & Colleges</h3>
-                <p className="text-white/90 mb-6">
-                  Support for careers education and employer engagement
-                </p>
-                <div className="inline-flex items-center text-white">
-                  Learn more
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </main>
+      {/* Newsletter Section */}
+      <Newsletter />
+    </div>
   )
-} 
+}
+
+export default EducatorsPage
