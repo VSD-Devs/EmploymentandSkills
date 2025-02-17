@@ -1,5 +1,4 @@
 // Remove unused imports or prefix with an underscore if needed
-import axios from 'axios'; // Remove if not used
 // const NOMIS_API_BASE = 'https://www.nomisweb.co.uk/api/v01/dataset'; // Remove if not used
 // const ONS_API_BASE = 'https://api.beta.ons.gov.uk/v1'; // Remove if not used
 
