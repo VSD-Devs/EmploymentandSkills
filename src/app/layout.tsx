@@ -12,12 +12,18 @@ import { Analytics } from "@vercel/analytics/react"
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-inter',
 })
 
 export const metadata: Metadata = {
-title: 'Yorkshire Pathways',
-description: 'Discover apprenticeship opportunities and educational pathways in Yorkshire',
+  title: 'Yorkshire Pathways',
+  description: 'Discover apprenticeship opportunities and educational pathways in Yorkshire',
   manifest: '/manifest.json',
+  themeColor: '#10b981',
+  viewport: 'width=device-width, initial-scale=1',
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({
@@ -26,14 +32,28 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={inter.className}>
-      <head>
-        <link rel="manifest" href="/manifest.json" />
-        <meta httpEquiv="Cache-Control" content="public, max-age=31536000, immutable" />
-        <meta name="theme-color" content="#10b981" />
+    <html lang="en" className={`${inter.variable}`}>
+      <body className="min-h-screen flex flex-col">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <a href="#main-content" className="skip-to-main">
+            Skip to main content
+          </a>
+          <ScrollToTop />
+          <Navigation />
+          <main id="main-content" className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+          <Chatbot />
+          <SpeedInsights />
+          <Analytics />
+        </ThemeProvider>
         <script 
           src="https://website-widgets.pages.dev/dist/sienna.min.js" 
           defer
+          async
+        />
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               window.addEventListener('load', function() {
@@ -52,22 +72,6 @@ export default function RootLayout({
             `
           }}
         />
-      </head>
-      <body className="min-h-screen flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <a href="#main-content" className="skip-to-main">
-            Skip to main content
-          </a>
-          <ScrollToTop />
-          <Navigation />
-          <main id="main-content" className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-          <Chatbot />
-          <SpeedInsights />
-          <Analytics />
-        </ThemeProvider>
       </body>
     </html>
   )
