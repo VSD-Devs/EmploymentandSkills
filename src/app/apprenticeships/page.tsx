@@ -126,8 +126,7 @@ const ApprenticeshipPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [postcode, setPostcode] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('AgeDesc')
-  const [selectedSalaryRange, setSelectedSalaryRange] = useState<number>(-1)
-  const [showFilters, setShowFilters] = useState(false)
+  const [selectedSalaryRange, setSelectedSalaryRange] = useState('')
   const [vacancies, setVacancies] = useState<DfeVacancy[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -191,22 +190,15 @@ const ApprenticeshipPage = () => {
       vacancy.course.route.toLowerCase().includes(selectedCategory.toLowerCase())
     
     // Filter by salary range
-    const matchesSalary = selectedSalaryRange === -1 || (() => {
-      const range = salaryRanges[selectedSalaryRange]
-      if (!range) return true
+    const matchesSalary = selectedSalaryRange === '' || (() => {
+      const index = parseInt(selectedSalaryRange, 10);
+      const range = salaryRanges[index];
+      if (!range) return true;
       
-      const amount = vacancy.wage?.wageAmount
-      if (!amount) return false
+      const amount = vacancy.wage?.wageAmount;
+      if (!amount) return false;
       
-      // Convert to annual salary if needed
-      let annualAmount = amount
-      if (vacancy.wage?.wageUnit === 'Weekly') {
-        annualAmount = amount * 52
-      } else if (vacancy.wage?.wageUnit === 'Monthly') {
-        annualAmount = amount * 12
-      }
-      
-      return annualAmount >= range.min && annualAmount <= range.max
+      return amount >= range.min && amount <= range.max;
     })()
 
     // Filter by South Yorkshire location

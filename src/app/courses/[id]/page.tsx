@@ -120,11 +120,7 @@ const COURSES = [
 ]
 
 export default function CoursePage() {
-  const params = useParams();
-  const id = params?.id as string;
-  
-  if (!id) return <div>Course not found</div>;
-
+  const { id } = useParams() as { id: string };
   const course = COURSES.find(c => c.id === parseInt(id));
   const [isEligibilityModalOpen, setIsEligibilityModalOpen] = useState(false);
 

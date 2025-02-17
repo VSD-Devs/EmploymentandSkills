@@ -77,7 +77,7 @@ const BusinessPage = () => {
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
 
-  const tabs: TabsType = {
+  const tabs = useMemo(() => ({
     skills: {
       icon: <LineChart className="w-6 h-6" />,
       color: 'blue',
@@ -171,7 +171,7 @@ const BusinessPage = () => {
         cta: 'Explore Markets'
       }
     }
-  }
+  }), [])
 
   // Handle touch swipe for mobile navigation
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -291,40 +291,43 @@ const BusinessPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-start sm:justify-center min-w-max">
             <div className="flex space-x-1 py-1">
-              {Object.entries(tabs).map(([key, tab]) => (
-                <a 
-                  key={key}
-                  href={`#${key}`} 
-                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl transition-colors ${
-                    activeTab === key 
-                      ? `${colorClasses[tab.color].button} text-${tab.color}-600 shadow-md` 
-                      : `${colorClasses[tab.color].nav} text-gray-600`
-                  }`}
-                  onClick={() => setActiveTab(key)}
-                >
-                  <div className="relative z-10 flex flex-col items-center gap-1">
-                    <div className={`h-6 w-6 ${
+              {Object.entries(tabs).map(([key, tab]) => {
+                const color = tab.color as keyof typeof colorClasses;
+                return (
+                  <a 
+                    key={key}
+                    href={`#${key}`} 
+                    className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl transition-colors ${
                       activeTab === key 
-                        ? `text-${tab.color}-600` 
-                        : 'text-gray-600 group-hover:text-${tab.color}-600'
-                    } transition-colors`}>
-                      {tab.icon}
+                        ? `${colorClasses[color as keyof typeof colorClasses].button} text-${color}-600 shadow-md` 
+                        : `${colorClasses[color as keyof typeof colorClasses].nav} text-gray-600`
+                    }`}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    <div className="relative z-10 flex flex-col items-center gap-1">
+                      <div className={`h-6 w-6 ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-600 group-hover:text-${color}-600'
+                      } transition-colors`}>
+                        {tab.icon}
+                      </div>
+                      <span className={`text-sm sm:text-base font-medium ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-900 group-hover:text-${color}-600'
+                      } whitespace-nowrap transition-colors`}>
+                        {tab.title}
+                      </span>
+                      <div className={`h-0.5 ${
+                        activeTab === key 
+                          ? `w-full bg-${color}-600` 
+                          : `w-0 bg-${color}-600 group-hover:w-full`
+                      } transition-all duration-200`} />
                     </div>
-                    <span className={`text-sm sm:text-base font-medium ${
-                      activeTab === key 
-                        ? `text-${tab.color}-600` 
-                        : 'text-gray-900 group-hover:text-${tab.color}-600'
-                    } whitespace-nowrap transition-colors`}>
-                      {tab.title}
-                    </span>
-                    <div className={`h-0.5 ${
-                      activeTab === key 
-                        ? `w-full bg-${tab.color}-600` 
-                        : `w-0 bg-${tab.color}-600 group-hover:w-full`
-                    } transition-all duration-200`} />
-                  </div>
-                </a>
-              ))}
+                  </a>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -355,15 +358,15 @@ const BusinessPage = () => {
           <div className="relative py-24">
             {/* Decorative elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
-              <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
+              <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color as keyof typeof colorClasses].gradient} opacity-20 blur-3xl`} />
+              <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color as keyof typeof colorClasses].gradient} opacity-20 blur-3xl`} />
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 {/* Mobile: Stack content on top of image */}
                 <div className="md:hidden">
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as keyof typeof colorClasses].button} mb-6`}>
                     {tab.icon}
                     <span className="text-sm font-medium">{tab.title}</span>
                   </div>
@@ -386,7 +389,7 @@ const BusinessPage = () => {
                   </div>
                   <Link
                     href={tab.content.link}
-                    className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                    className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as keyof typeof colorClasses].link} shadow-lg hover:shadow-xl`}
                   >
                     {tab.content.cta}
                     <ChevronRight className="ml-2 h-5 w-5" />
@@ -397,7 +400,7 @@ const BusinessPage = () => {
                 {index % 2 === 0 ? (
                   <>
                     <div className="hidden md:block">
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as keyof typeof colorClasses].button} mb-6`}>
                         {tab.icon}
                         <span className="text-sm font-medium">{tab.title}</span>
                       </div>
@@ -411,7 +414,7 @@ const BusinessPage = () => {
                       </div>
                       <Link
                         href={tab.content.link}
-                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as keyof typeof colorClasses].link} shadow-lg hover:shadow-xl`}
                       >
                         {tab.content.cta}
                         <ChevronRight className="ml-2 h-5 w-5" />
@@ -427,7 +430,7 @@ const BusinessPage = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                       <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
                         <div className="flex items-center gap-4">
-                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color as keyof typeof colorClasses].icon}`}>
                             {tab.icon}
                           </div>
                           <div>
@@ -450,7 +453,7 @@ const BusinessPage = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                       <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
                         <div className="flex items-center gap-4">
-                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color as keyof typeof colorClasses].icon}`}>
                             {tab.icon}
                           </div>
                           <div>
@@ -461,7 +464,7 @@ const BusinessPage = () => {
                       </div>
                     </div>
                     <div className="hidden md:block">
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as keyof typeof colorClasses].button} mb-6`}>
                         {tab.icon}
                         <span className="text-sm font-medium">{tab.title}</span>
                       </div>
@@ -475,7 +478,7 @@ const BusinessPage = () => {
                       </div>
                       <Link
                         href={tab.content.link}
-                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as keyof typeof colorClasses].link} shadow-lg hover:shadow-xl`}
                       >
                         {tab.content.cta}
                         <ChevronRight className="ml-2 h-5 w-5" />

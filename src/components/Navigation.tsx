@@ -6,7 +6,7 @@ import { Menu, X, Search } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { performSearch } from '@/utils/search'
 import SearchResults from './SearchResults'
-import { Poppins } from 'next/font/google'
+import { cn } from "@/lib/utils";
 
 interface SearchResult {
   title: string
@@ -14,16 +14,6 @@ interface SearchResult {
   url: string
   category: string
 }
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '600'],
-})
-
-const montserrat = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '600'],
-})
 
 const Navigation = () => {
   const pathname = usePathname()
@@ -120,7 +110,9 @@ const Navigation = () => {
               <div className="w-8 h-8 bg-blue-600 group-hover:bg-blue-700 rotate-45 flex items-center justify-center transition-colors">
                 <div className="-rotate-45 text-white font-bold text-lg">SY</div>
               </div>
-              <span className={`${montserrat.className} text-lg font-bold tracking-tight text-slate-800 group-hover:text-blue-600 transition-colors`}>PATHWAYS</span>
+              <span className="text-lg font-bold tracking-tight text-slate-800 group-hover:text-blue-600 transition-colors">
+                PATHWAYS
+              </span>
             </Link>
           </div>
 
