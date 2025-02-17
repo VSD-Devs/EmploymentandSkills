@@ -7,6 +7,7 @@ import ScrollToTop from '@/components/ScrollToTop'
 import { ThemeProvider } from 'next-themes'
 import Chatbot from '@/components/Chatbot'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -65,6 +66,7 @@ export default function RootLayout({
           <Footer />
           <Chatbot />
           <SpeedInsights />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
