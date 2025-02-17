@@ -6,6 +6,7 @@ import { Menu, X, Search } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { performSearch } from '@/utils/search'
 import SearchResults from './SearchResults'
+import { Poppins } from 'next/font/google'
 
 interface SearchResult {
   title: string
@@ -13,6 +14,16 @@ interface SearchResult {
   url: string
   category: string
 }
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+})
+
+const montserrat = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+})
 
 const Navigation = () => {
   const pathname = usePathname()
@@ -107,9 +118,9 @@ const Navigation = () => {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2 group">
               <div className="w-8 h-8 bg-blue-600 group-hover:bg-blue-700 rotate-45 flex items-center justify-center transition-colors">
-                <div className="-rotate-45 text-white font-bold">Y</div>
+                <div className="-rotate-45 text-white font-bold text-lg">SY</div>
               </div>
-              <span className="text-xl font-bold tracking-tight text-slate-800 group-hover:text-blue-600 transition-colors">YORKSHIRE PATHWAYS</span>
+              <span className={`${montserrat.className} text-lg font-bold tracking-tight text-slate-800 group-hover:text-blue-600 transition-colors`}>PATHWAYS</span>
             </Link>
           </div>
 
@@ -246,9 +257,8 @@ const Navigation = () => {
           <div className="p-4 border-b border-slate-200 flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2" onClick={() => setIsOpen(false)}>
               <div className="w-8 h-8 bg-blue-600 rotate-45 flex items-center justify-center">
-                <div className="-rotate-45 text-white font-bold">Y</div>
+                <div className="-rotate-45 text-white font-bold text-lg">SY</div>
               </div>
-              <span className="text-lg font-bold text-slate-800">YORKSHIRE PATHWAYS</span>
             </Link>
             <button
               onClick={() => setIsOpen(false)}

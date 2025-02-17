@@ -271,7 +271,7 @@ const BusinessPage = () => {
                 href="/funded-training"
                 className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
               >
-                Access Funding
+                Funded Training
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link

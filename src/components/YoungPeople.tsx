@@ -161,22 +161,6 @@ const TABS_CONFIG: TabsType = {
       link: '/plan-your-career',
       cta: 'Plan Your Career'
     }
-  },
-  support: {
-    icon: <Users className="w-6 h-6" />,
-    color: 'rose',
-    title: 'Support Services',
-    description: 'Get Expert Help',
-    content: {
-      text: [
-        "Access free, confidential advice from our career experts. Whether you need help with applications, interviews, or making decisions about your future, we're here to support you.",
-        "Connect with mentors, attend workshops, and get personalised guidance for your journey."
-      ],
-      image: '/images/support-hub.jpg',
-      alt: 'Career advisor meeting with young person',
-      link: '/support',
-      cta: 'Get Support'
-    }
   }
 }
 

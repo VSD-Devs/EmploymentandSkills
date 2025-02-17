@@ -1,7 +1,6 @@
 'use client'
 
-import React from 'react'
-import { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { BookOpen, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, School, ChevronDown, ChevronRight } from 'lucide-react'
@@ -64,7 +63,7 @@ const providers: TLevelProvider[] = [
     name: 'Longley Park Sixth Form',
     website: 'longleypark.ac.uk',
     location: 'Sheffield',
-    imageUrl: '/images/providers/longley-park.jpg',
+    imageUrl: '/images/providers/longleypark.jpg',
     courses: [
       'Education and Early Years',
       'Management and Administration – Team Leadership',
@@ -75,7 +74,7 @@ const providers: TLevelProvider[] = [
     name: 'RNN Group',
     website: 'rnngroup.co.uk',
     location: 'Rotherham',
-    imageUrl: '/images/providers/rnn-group.jpg',
+    imageUrl: '/images/providers/rotherhamcollege.jpg',
     courses: [
       'Animal Care',
       'Business and Administration',
@@ -90,16 +89,17 @@ const providers: TLevelProvider[] = [
     name: 'Thomas Rotherham College (TRC)',
     website: 'sheffieldprogress.co.uk',
     location: 'Rotherham',
-    imageUrl: '/images/providers/trc.jpg',
+    imageUrl: '/images/providers/thomasrotherham.jpg',
     courses: [
-      'Sales, Marketing and Procurement'
+      'Sales, Marketing and Procurement',
+      'T Level Technical Qualification in Education and Early Years - Level 3'
     ]
   },
   {
     name: 'UTC Sheffield City Centre',
     website: 'utcsheffield.org.uk',
     location: 'Sheffield',
-    imageUrl: '/images/providers/utc-sheffield.jpg',
+    imageUrl: '/images/providers/sheffieldutc.jpg',
     courses: [
       'Design and Development for Engineering and Manufacturing (Mechanical Engineering)'
     ]
@@ -108,7 +108,7 @@ const providers: TLevelProvider[] = [
     name: 'Doncaster College',
     website: 'don.ac.uk',
     location: 'Doncaster',
-    imageUrl: '/images/providers/doncaster-college.jpg',
+    imageUrl: '/images/providers/doncastercollege.jpg',
     courses: [
       'Building Services Engineering',
       'Digital Production, Design and Development',
@@ -150,21 +150,40 @@ const categories: TLevelCategory[] = [
 
 const TLevelsPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [expandedCategories, setExpandedCategories] = useState<string[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null)
   const [expandedProviders, setExpandedProviders] = useState<string[]>([])
 
-  const toggleCategory = (categoryName: string) => {
-    setExpandedCategories(prev => 
-      prev.includes(categoryName) 
-        ? prev.filter(cat => cat !== categoryName)
-        : [...prev, categoryName]
-    )
-  }
+  // Get unique locations from providers
+  const locations = useMemo(() => {
+    const locs = providers.map(p => p.location)
+    return Array.from(new Set(locs))
+  }, [])
 
-  const toggleProvider = (providerName: string) => {
+  // Filtered providers based on selections
+  const filteredProviders = useMemo(() => {
+    return providers.filter(provider => {
+      const matchesCategory = selectedCategory 
+        ? categories.find(cat => cat.name === selectedCategory)?.providers.includes(provider.name) 
+        : true
+      
+      const matchesLocation = selectedLocation
+        ? provider.location === selectedLocation
+        : true
+
+      const matchesSearch = searchTerm
+        ? provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          provider.courses.some(course => course.toLowerCase().includes(searchTerm.toLowerCase()))
+        : true
+
+      return matchesCategory && matchesLocation && matchesSearch
+    })
+  }, [selectedCategory, selectedLocation, searchTerm])
+
+  const toggleProviderCourses = (providerName: string) => {
     setExpandedProviders(prev => 
-      prev.includes(providerName) 
-        ? prev.filter(p => p !== providerName)
+      prev.includes(providerName)
+        ? prev.filter(name => name !== providerName)
         : [...prev, providerName]
     )
   }
@@ -242,31 +261,57 @@ const TLevelsPage = () => {
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 What are T-Levels?
               </h2>
-              <div className="prose prose-lg text-gray-600">
-                <p>
+              <div className="space-y-6">
+                <p className="text-lg leading-relaxed text-gray-600">
                   T-Levels are new qualifications for students aged 16 to 19 who have completed their GCSEs. They are equivalent to 3 A-Levels and combine classroom theory with practical learning and industry experience.
                 </p>
-                <p>
-                  A T-Level course includes:
-                </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-emerald-600 flex-shrink-0 mt-1" />
-                    <span>Technical knowledge and practical skills specific to your chosen industry</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-emerald-600 flex-shrink-0 mt-1" />
-                    <span>An industry placement of at least 45 days</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-emerald-600 flex-shrink-0 mt-1" />
-                    <span>Relevant English, maths and digital skills</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-emerald-600 flex-shrink-0 mt-1" />
-                    <span>Common workplace skills</span>
-                  </li>
-                </ul>
+                
+                <div className="bg-emerald-50 p-6 rounded-xl">
+                  <h3 className="text-xl font-semibold text-emerald-800 mb-4">
+                    A T-Level course includes:
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 p-2 bg-emerald-100 rounded-lg">
+                        <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Technical knowledge and practical skills</p>
+                        <p className="text-sm text-gray-600">Specific to your chosen industry</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 p-2 bg-emerald-100 rounded-lg">
+                        <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Industry placement</p>
+                        <p className="text-sm text-gray-600">At least 45 days of real workplace experience</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 p-2 bg-emerald-100 rounded-lg">
+                        <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Core skills</p>
+                        <p className="text-sm text-gray-600">English, maths, and digital skills</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 p-2 bg-emerald-100 rounded-lg">
+                        <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Workplace skills</p>
+                        <p className="text-sm text-gray-600">Essential skills for career success</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
@@ -276,205 +321,163 @@ const TLevelsPage = () => {
                 fill
                 className="object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Categories Section */}
-      <div className="bg-gray-50 py-16">
+      {/* Enhanced Directory Section */}
+      <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Explore T-Level Subjects
+              Find T-Level Courses
             </h2>
             <p className="text-lg text-gray-600">
-              Choose a subject area to see available courses and providers
+              Explore available T-Level courses across South Yorkshire
             </p>
           </div>
 
-          {/* Search */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <input
-                type="text"
-                placeholder="Search subjects, courses or providers..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-full bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-md"
-              />
+          {/* Filters */}
+          <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Category Filter */}
+            <div>
+              <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
+                Subject Area
+              </label>
+              <select
+                id="category"
+                value={selectedCategory || ''}
+                onChange={(e) => setSelectedCategory(e.target.value || null)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">All Subjects</option>
+                {categories.map(category => (
+                  <option key={category.name} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Location Filter */}
+            <div>
+              <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
+                Location
+              </label>
+              <select
+                id="location"
+                value={selectedLocation || ''}
+                onChange={(e) => setSelectedLocation(e.target.value || null)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">All Locations</option>
+                {locations.map(location => (
+                  <option key={location} value={location}>
+                    {location}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Search */}
+            <div>
+              <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-2">
+                Search
+              </label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <input
+                  type="text"
+                  id="search"
+                  placeholder="Search courses or providers..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                />
+              </div>
             </div>
           </div>
 
-          {/* Subject Categories */}
-          <div className="space-y-4">
-            {categories
-              .filter(category =>
-                searchTerm === '' ||
-                category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                category.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                providers.some(provider =>
-                  category.providers.includes(provider.name) &&
-                  (provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    provider.courses.some(course =>
-                      course.toLowerCase().includes(searchTerm.toLowerCase())
-                    ))
-                )
-              )
-              .map((category) => {
-                const categoryProviders = providers.filter(provider =>
-                  category.providers.includes(provider.name)
-                )
-
-                return (
-                  <div
-                    key={category.name}
-                    className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-lg transition-shadow hover:shadow-xl"
-                  >
-                    {/* Category Header */}
-                    <button
-                      onClick={() => toggleCategory(category.name)}
-                      className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="mt-1">
-                          <GraduationCap className="h-6 w-6 text-emerald-600" />
-                        </div>
-                        <div className="text-left">
-                          <h3 className="text-xl font-bold text-gray-900">
-                            {category.name}
-                          </h3>
-                          <p className="text-gray-600 mt-1">
-                            {category.description}
-                          </p>
-                          <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
-                            <School className="h-4 w-4" />
-                            <span>{categoryProviders.length} providers</span>
-                            <span className="mx-2">•</span>
-                            <span>
-                              {categoryProviders.reduce((acc, provider) => 
-                                acc + provider.courses.length, 0
-                              )} courses
-                            </span>
-                          </div>
-                        </div>
+          {/* Provider Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProviders.map(provider => {
+              const isExpanded = expandedProviders.includes(provider.name)
+              
+              return (
+                <div key={provider.name} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col">
+                  <div className="relative h-48">
+                    <Image
+                      src={provider.imageUrl}
+                      alt={provider.name}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/30 to-transparent" />
+                    <div className="absolute bottom-4 left-4">
+                      <h3 className="text-xl font-bold text-white">{provider.name}</h3>
+                      <div className="flex items-center gap-2 text-sm text-white/90">
+                        <MapPin className="h-4 w-4" />
+                        {provider.location}
                       </div>
-                      <ChevronDown
-                        className={`h-5 w-5 text-gray-400 transition-transform ${
-                          expandedCategories.includes(category.name) ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-
-                    {/* Expanded Content */}
-                    {expandedCategories.includes(category.name) && (
-                      <div className="border-t border-gray-200">
-                        <div className="divide-y divide-gray-200">
-                          {categoryProviders.map((provider) => (
-                            <div key={provider.name} className="bg-gray-50">
-                              <button
-                                onClick={() => toggleProvider(provider.name)}
-                                className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-100/50 transition-colors"
-                              >
-                                <div className="flex items-center gap-4">
-                                  <div className="relative h-10 w-10 rounded-lg overflow-hidden bg-white">
-                                    <Image
-                                      src={provider.imageUrl}
-                                      alt={provider.name}
-                                      fill
-                                      className="object-cover"
-                                    />
-                                  </div>
-                                  <div className="text-left">
-                                    <h4 className="font-medium text-gray-900">
-                                      {provider.name}
-                                    </h4>
-                                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                                      <MapPin className="h-4 w-4" />
-                                      {provider.location}
-                                    </div>
-                                  </div>
-                                </div>
-                                <ChevronDown
-                                  className={`h-5 w-5 text-gray-400 transition-transform ${
-                                    expandedProviders.includes(provider.name) ? 'rotate-180' : ''
-                                  }`}
-                                />
-                              </button>
-
-                              {/* Provider Courses */}
-                              {expandedProviders.includes(provider.name) && (
-                                <div className="px-6 pb-4">
-                                  <div className="space-y-3 mt-2">
-                                    {provider.courses
-                                      .filter(course =>
-                                        searchTerm === '' ||
-                                        course.toLowerCase().includes(searchTerm.toLowerCase())
-                                      )
-                                      .map(course => (
-                                        <div
-                                          key={course}
-                                          className="flex items-center justify-between gap-4 p-4 bg-white rounded-lg border border-gray-200"
-                                        >
-                                          <div className="flex items-start gap-3">
-                                            <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-1" />
-                                            <div>
-                                              <h5 className="font-medium text-gray-900">
-                                                {course}
-                                              </h5>
-                                              <p className="text-sm text-gray-500 mt-1">
-                                                Starting September 2024 • 2 Years
-                                              </p>
-                                            </div>
-                                          </div>
-                                          <a
-                                            href={`https://www.${provider.website}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center px-4 py-2 text-sm bg-emerald-50 text-emerald-700 rounded-full hover:bg-emerald-100 transition-colors"
-                                          >
-                                            Learn More
-                                            <ArrowRight className="ml-2 h-4 w-4" />
-                                          </a>
-                                        </div>
-                                      ))}
-                                    {provider.courses.length === 0 && (
-                                      <p className="text-gray-500 text-sm">No courses available for this provider.</p>
-                                    )}
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                    </div>
                   </div>
-                )
-              })}
-          </div>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <button
+                      onClick={() => toggleProviderCourses(provider.name)}
+                      className="w-full text-left"
+                    >
+                      <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center justify-between">
+                        Available Courses
+                        <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${
+                          isExpanded ? 'rotate-180' : ''
+                        }`} />
+                      </h4>
+                    </button>
+                    
+                    <div className="space-y-3 flex-1">
+                      {provider.courses.slice(0, isExpanded ? provider.courses.length : 3).map(course => (
+                        <div key={course} className="flex items-center gap-3">
+                          <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0" />
+                          <span className="text-sm text-gray-700">{course}</span>
+                        </div>
+                      ))}
+                      
+                      {!isExpanded && provider.courses.length > 3 && (
+                        <button
+                          onClick={() => toggleProviderCourses(provider.name)}
+                          className="text-sm text-emerald-600 hover:text-emerald-700"
+                        >
+                          Show all {provider.courses.length} courses
+                        </button>
+                      )}
+                    </div>
+                    
+                    <a
+                      href={`https://www.${provider.website}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-6 w-full inline-flex items-center justify-center px-4 py-2 bg-emerald-50 text-emerald-700 rounded-md hover:bg-emerald-100 transition-colors"
+                    >
+                      Visit Website
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </a>
+                  </div>
+                </div>
+              )
+            })}
 
-          {/* No Results */}
-          {categories.filter(category =>
-            searchTerm === '' ||
-            category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            category.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            providers.some(provider =>
-              category.providers.includes(provider.name) &&
-              (provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                provider.courses.some(course =>
-                  course.toLowerCase().includes(searchTerm.toLowerCase())
-                ))
-            )
-          ).length === 0 && (
-            <div className="text-center py-12">
-              <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 text-lg">
-                No matches found for your search
-              </p>
-            </div>
-          )}
+            {/* No Results */}
+            {filteredProviders.length === 0 && (
+              <div className="col-span-full text-center py-12">
+                <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600 text-lg">
+                  No matches found for your search
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
