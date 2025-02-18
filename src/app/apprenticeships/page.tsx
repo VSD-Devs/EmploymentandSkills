@@ -214,6 +214,7 @@ const ApprenticeshipPage = () => {
       {/* Breadcrumbs Component */}
       <Breadcrumbs items={[
         { label: 'Home', href: '/' },
+        { label: 'Young People', href: '/young-people' },
         { label: 'Apprenticeships', href: '/apprenticeships' },
       ]} />
 

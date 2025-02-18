@@ -234,7 +234,7 @@ const BusinessPage = () => {
       {/* Breadcrumbs Component */}
       <Breadcrumbs items={[
         { label: 'Home', href: '/' },
-        { label: 'Business Support', href: '/business-support' },
+        { label: 'Business Support', href: '/business' },
       ]} />
 
       {/* Hero Section */}

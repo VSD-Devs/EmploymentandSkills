@@ -341,7 +341,7 @@ const FundedTrainingPage: React.FC = () => {
                   href="/business" 
                   className="text-gray-800 hover:text-gray-900 flex items-center text-sm transition-colors"
                 >
-                  Businesses
+                  Business Support
                 </Link>
               </li>
               <li>
@@ -416,7 +416,7 @@ const FundedTrainingPage: React.FC = () => {
 
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-slate-900 mb-2">
-                Funded Solution Assessment
+                Skills Assessment
               </h2>
               <p className="text-slate-600">
                 Answer a few quick questions to help us recommend the best option for your business.
@@ -547,7 +547,7 @@ const FundedTrainingPage: React.FC = () => {
           <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-lg transition-all">
             <div className="relative h-48">
               <Image
-                src={IMAGES.skillsBank}
+                src="/images/skills-bank3.jpg"
                 alt="Skills Bank"
                 fill
                 className="object-cover"
@@ -594,13 +594,11 @@ const FundedTrainingPage: React.FC = () => {
           <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-lg transition-all">
             <div className="relative h-48">
               <Image
-                src={IMAGES.pattern}
+                src="/images/skills-consultant.jpg"
                 alt="Skills assessment"
                 fill
                 className="object-cover"
-                style={{ objectPosition: 'top left' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
             </div>
             <div className="p-8">
               <div className="h-[4.5rem] mb-4">
@@ -646,7 +644,7 @@ const FundedTrainingPage: React.FC = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] lg:h-[600px] rounded-2xl overflow-hidden">
               <Image
-                src="/images/skills-bank-learning.jpg"
+                src="/images/skills-bank3.jpg"
                 alt="Skills Bank training session in progress"
                 fill
                 className="object-cover"
@@ -736,7 +734,7 @@ const FundedTrainingPage: React.FC = () => {
             </div>
             <div className="relative h-[400px] lg:h-[600px] rounded-2xl overflow-hidden order-1 lg:order-2">
               <Image
-                src={IMAGES.bootcamps}
+                src={"/images/skills-hub.jpg"}
                 alt="Skills Bootcamp training session"
                 fill
                 className="object-cover"
@@ -747,50 +745,109 @@ const FundedTrainingPage: React.FC = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="relative bg-slate-900 py-20">
-        <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
+      <section id="contact" className="relative bg-slate-50 py-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-slate-50/80" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Ready to Transform Your Workforce?
+          <div className="max-w-4xl mx-auto text-center mb-20">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-emerald-100/80 backdrop-blur-sm mb-8 border border-emerald-200/50">
+              <Mail className="h-6 w-6 text-emerald-700" />
+              <span className="text-lg font-medium text-emerald-900">Training Enquiries</span>
+            </div>
+            <h2 className="text-4xl font-bold text-slate-900 mb-8">
+              Need Help Finding the Right Support?
             </h2>
-            <p className="text-lg text-slate-300">
-              Our team is here to help you understand and access the right training opportunities for your business. Get in touch to discuss your needs and start your journey.
+            <p className="text-xl text-slate-600 leading-relaxed">
+              Our specialists will guide you through the options and help maximise your funding opportunities.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                icon: Phone,
-                title: "Call our team",
-                content: "0808 178 3061",
-                subtext: "Monday to Friday, 9am - 5pm"
-              },
-              {
-                icon: Mail,
-                title: "Email us",
-                content: "training@southyorkshire-ca.gov.uk",
-                subtext: "We aim to respond within 24 hours"
-              }
-            ].map((contact, index) => (
-              <div key={index} className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/20 to-emerald-800/20 rounded-xl transform group-hover:scale-[1.02] transition-transform duration-300" />
-                <div className="relative bg-white/5 backdrop-blur rounded-xl p-8 border border-white/10">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100/10 flex items-center justify-center">
-                      <contact.icon className="h-6 w-6 text-emerald-300" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-slate-200 text-lg mb-2">{contact.title}</h3>
-                      <p className="text-2xl font-bold mb-2 text-white">{contact.content}</p>
-                      <p className="text-slate-400">{contact.subtext}</p>
-                    </div>
-                  </div>
+          <form className="max-w-4xl mx-auto bg-white rounded-2xl p-8 sm:p-12 shadow-sm border border-slate-200/80 hover:border-emerald-200/60 transition-colors">
+            <div className="space-y-8">
+              <div className="grid sm:grid-cols-2 gap-8">
+                <div>
+                  <label htmlFor="name" className="block text-base font-medium text-slate-700 mb-3">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="w-full px-5 py-4 rounded-xl border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-lg"
+                    placeholder="Your full name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="company" className="block text-base font-medium text-slate-700 mb-3">
+                    Company Name
+                  </label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    required
+                    className="w-full px-5 py-4 rounded-xl border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-lg"
+                    placeholder="Your company name"
+                  />
                 </div>
               </div>
-            ))}
-          </div>
+
+              <div className="grid sm:grid-cols-2 gap-8">
+                <div>
+                  <label htmlFor="email" className="block text-base font-medium text-slate-700 mb-3">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full px-5 py-4 rounded-xl border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-lg"
+                    placeholder="your.email@company.com"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-base font-medium text-slate-700 mb-3">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    className="w-full px-5 py-4 rounded-xl border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-lg"
+                    placeholder="Your phone number"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-base font-medium text-slate-700 mb-3">
+                  How Can We Help?
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  required
+                  className="w-full px-5 py-4 rounded-xl border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-lg"
+                  placeholder="Describe your training needs and goals..."
+                ></textarea>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="text-base text-slate-500">
+                  We aim to respond within two working days
+                </div>
+                <button
+                  type="submit"
+                  className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-all shadow-sm hover:shadow-emerald-200 text-lg hover:scale-105"
+                >
+                  Send Message
+                  <ArrowRight className="ml-3 h-6 w-6" />
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </section>
     </main>

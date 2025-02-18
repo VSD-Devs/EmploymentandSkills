@@ -195,25 +195,16 @@ export default function PathwaysPage() {
                   <Link
                     key={slug}
                     href={`/pathways/${slug}`}
-                    className="group relative bg-white rounded-3xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-zinc-200/50 h-[280px] flex flex-col"
+                    className="group relative bg-white rounded-3xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-zinc-200/50 h-[200px] flex items-center justify-center"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/80 to-emerald-800/80 opacity-0 group-hover:opacity-100 transition-all duration-300" />
-                    <div className="relative z-10 h-full p-6 flex flex-col">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center transition-colors group-hover:bg-white/20">
-                          <IconComponent className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors" />
-                        </div>
-                        <h3 className="text-xl font-bold text-zinc-900 group-hover:text-white transition-colors">
-                          {sector.title}
-                        </h3>
+                    <div className="relative z-10 text-center p-6">
+                      <div className="w-16 h-16 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-4 transition-colors group-hover:bg-white/20">
+                        <IconComponent className="w-8 h-8 text-emerald-600 group-hover:text-white transition-colors" />
                       </div>
-                      <p className="text-zinc-600 group-hover:text-white/90 transition-colors line-clamp-3 text-sm leading-relaxed">
-                        {sector.description}
-                      </p>
-                      <div className="mt-auto flex items-center text-emerald-600 group-hover:text-white transition-colors font-medium text-sm">
-                        Explore careers
-                        <ArrowRight className="ml-2 w-4 h-4" />
-                      </div>
+                      <h3 className="text-3xl font-bold text-zinc-900 group-hover:text-white transition-colors">
+                        {sector.title}
+                      </h3>
                     </div>
                   </Link>
                 );

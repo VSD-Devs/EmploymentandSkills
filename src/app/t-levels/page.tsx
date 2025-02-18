@@ -207,6 +207,17 @@ const TLevelsPage = () => {
             </li>
             <li>
               <Link 
+                href="/young-people"
+                className="text-gray-800 hover:text-gray-900 flex items-center text-sm transition-colors"
+              >
+                Young People
+              </Link>
+            </li>
+            <li>
+              <ChevronRight className="h-4 w-4 text-gray-600" />
+            </li>
+            <li>
+              <Link 
                 href="/t-levels" 
                 className="text-gray-800 hover:text-gray-900 flex items-center text-sm transition-colors"
               >

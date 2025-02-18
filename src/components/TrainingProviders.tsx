@@ -115,134 +115,93 @@ const TrainingProviders = () => {
             {frameworks.map((framework) => (
               <div
                 key={framework.title}
-                className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-shadow"
+                className={`bg-${framework.color}-50 rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-between`}
               >
-                <div className={`w-12 h-12 rounded-xl bg-${framework.color}-100 flex items-center justify-center mb-6`}>
-                  <framework.icon className={`h-6 w-6 text-${framework.color}-600`} />
+                <div className="relative h-56 flex items-center justify-center">
+                  <div className={`w-full h-full bg-${framework.color}-600 flex items-center justify-center`}>
+                    <h3 className="text-2xl font-bold text-white">{framework.title}</h3>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{framework.title}</h3>
-                <p className="text-gray-600 mb-6">{framework.description}</p>
-                <ul className="space-y-3 mb-8">
-                  {framework.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-gray-600">
-                      <ChevronRight className={`h-5 w-5 text-${framework.color}-600 flex-shrink-0`} />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href={framework.href}
-                  className={`inline-flex items-center text-${framework.color}-600 font-medium hover:text-${framework.color}-500`}
-                >
-                  Learn more
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
+
+                <div className="p-8 flex flex-col flex-grow">
+                  <div className="flex-grow">
+                    <p className="text-lg text-gray-600 mb-8 leading-relaxed">{framework.description}</p>
+                    <ul className="space-y-3 mb-8">
+                      {framework.features.map((feature, i) => (
+                        <li key={i} className="flex items-start gap-3 text-base text-gray-600">
+                          <ChevronRight className={`h-5 w-5 text-${framework.color}-600 flex-shrink-0`} />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <Link
+                    href={framework.href}
+                    className={`w-full inline-flex justify-center items-center px-8 py-4 rounded-xl text-lg font-medium text-white bg-${framework.color}-600 hover:bg-${framework.color}-700 transition-colors mt-6`}
+                  >
+                    Learn more
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Programme Details Section */}
-      <div className="bg-gray-50 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">About Our Programmes</h2>
-              <p className="text-gray-600 text-lg mb-8">
-                Our training programmes are designed to meet the specific needs of South Yorkshire's workforce and employers. We focus on:
-              </p>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <Users className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Skills Development</h3>
-                    <p className="text-gray-600">Equipping individuals with in-demand skills for today's job market</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                    <Building2 className="h-5 w-5 text-emerald-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Partnerships</h3>
-                    <p className="text-gray-600">Working closely with businesses to design relevant training</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
-                    <Rocket className="h-5 w-5 text-purple-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Economic Growth</h3>
-                    <p className="text-gray-600">Supporting the region's economic development through skills training</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative h-[400px] rounded-2xl overflow-hidden">
-              <Image
-                src="/images/training-programmes.jpg"
-                alt="Training session in progress"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* ProContract Section */}
-      <div className="bg-emerald-50 border-y border-emerald-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Access Opportunities via ProContract</h2>
-              <p className="text-gray-600 mb-6">
-                All procurement opportunities are advertised through ProContract. Register to receive notifications about:
-              </p>
-              <ul className="space-y-3">
+      <div className="bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <h2 className="text-4xl font-bold text-gray-900">
+                  Access Opportunities via ProContract
+                </h2>
+                <p className="text-lg sm:text-xl text-gray-600">
+                  All procurement opportunities are advertised through ProContract. Register to receive notifications about:
+                </p>
+              </div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[
                   'New funding opportunities',
                   'Framework updates',
                   'Tender submissions',
                   'Contract awards'
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3 text-gray-600">
-                    <Bell className="h-5 w-5 text-emerald-600" />
-                    <span>{item}</span>
+                  <li key={index} className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
+                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                      <Bell className="h-4 w-4 text-emerald-600" />
+                    </div>
+                    <span className="text-lg text-gray-700">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">How to Register</h3>
-              <ol className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-sm font-medium text-emerald-600">1</span>
-                  <span className="text-gray-600">Visit ProContract portal</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-sm font-medium text-emerald-600">2</span>
-                  <span className="text-gray-600">Create an account as a supplier</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-sm font-medium text-emerald-600">3</span>
-                  <span className="text-gray-600">Set up your areas of interest</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center text-sm font-medium text-emerald-600">4</span>
-                  <span className="text-gray-600">Enable notification preferences</span>
-                </li>
+            <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
+              <h3 className="text-3xl font-bold text-gray-900 mb-6">How to Register</h3>
+              <ol className="space-y-6">
+                {[
+                  'Visit ProContract portal',
+                  'Create an account as a supplier',
+                  'Set up your areas of interest',
+                  'Enable notification preferences'
+                ].map((step, index) => (
+                  <li key={index} className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                      <span className="text-emerald-600 font-medium">{index + 1}</span>
+                    </div>
+                    <div>
+                      <p className="text-lg text-gray-700">{step}</p>
+                    </div>
+                  </li>
+                ))}
               </ol>
-              <div className="mt-6">
+              <div className="mt-8">
                 <a 
                   href="https://procontract.due-north.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-emerald-600 font-medium hover:text-emerald-500"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-500 transition-colors"
                 >
                   Register on ProContract
                   <ArrowUpRight className="ml-2 h-5 w-5" />

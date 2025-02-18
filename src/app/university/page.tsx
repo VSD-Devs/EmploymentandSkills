@@ -84,6 +84,7 @@ const UniversityPage = () => {
       {/* Breadcrumbs Component */}
       <Breadcrumbs items={[
         { label: 'Home', href: '/' },
+        { label: 'Young People', href: '/young-people' },
         { label: 'University', href: '/university' },
       ]} />
 
