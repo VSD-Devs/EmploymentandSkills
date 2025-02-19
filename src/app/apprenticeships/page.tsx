@@ -545,11 +545,11 @@ const ApprenticeshipPage = () => {
       </div>
 
       {/* Current Vacancies Section */}
-      <div id="current-vacancies" className="bg-gray-50 py-16 sm:py-24">
+      <div id="current-vacancies" className="bg-gradient-to-b from-white to-gray-50 py-16 sm:py-24 border-y border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="relative text-3xl font-bold text-gray-900 mb-6">
-              <span className="relative z-10 leading-tight px-2">Current Vacancies</span>
+            <h2 className="relative text-3xl font-bold text-gray-900 mb-6 inline-block">
+              <span className="relative z-10 leading-tight px-2">Featured Vacancies</span>
               <span 
                 className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
                 aria-hidden="true"
@@ -567,75 +567,19 @@ const ApprenticeshipPage = () => {
             </p>
           </div>
 
-          {/* Search and Filters */}
+          {/* Quick Search */}
           <div className="mb-8">
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <div className="grid md:grid-cols-2 gap-4 mb-6">
-                {/* Search Input */}
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                  <input
-                    type="text"
-                    placeholder="Search by title, company, or location..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                    aria-label="Search apprenticeships"
-                  />
-                </div>
-
-                {/* Postcode Input */}
-                <div className="relative">
-                  <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                  <input
-                    type="text"
-                    placeholder="Enter your postcode..."
-                    value={postcode}
-                    onChange={(e) => setPostcode(e.target.value.toUpperCase())}
-                    className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                    aria-label="Enter postcode"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex-1">
-                  <label htmlFor="category-select" className="block text-sm font-medium text-gray-600 mb-2">
-                    Apprenticeship Category
-                  </label>
-                  <select
-                    id="category-select"
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                    aria-label="Select apprenticeship category"
-                  >
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex-1">
-                  <label htmlFor="sort-select" className="block text-sm font-medium text-gray-600 mb-2">
-                    Sort by
-                  </label>
-                  <select
-                    id="sort-select"
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as SortOption)}
-                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                    aria-label="Sort apprenticeships"
-                  >
-                    {sortOptions.map(option => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>              
-                </div>
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <input
+                  type="text"
+                  placeholder="Search by title, company, or location..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  aria-label="Search apprenticeships"
+                />
               </div>
             </div>
           </div>
@@ -655,13 +599,13 @@ const ApprenticeshipPage = () => {
             </div>
           )}
 
-          {/* Vacancies Grid */}
+          {/* Vacancies Grid - Limited to 6 items */}
           {!isLoading && !error && (
             <div className="space-y-6">
               <div className="overflow-x-auto pb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-w-full">
                   {filteredVacancies
-                    .slice(currentChunk * CHUNK_SIZE, (currentChunk + 1) * CHUNK_SIZE)
+                    .slice(0, 6)
                     .map((vacancy) => (
                     <div
                       key={vacancy.vacancyReference}
@@ -673,8 +617,12 @@ const ApprenticeshipPage = () => {
                             <GraduationCap className="h-5 w-5" />
                             <span className="text-sm font-medium">{vacancy.apprenticeshipLevel}</span>
                           </div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-2">
-                            {vacancy.title}
+                          <h3 className="text-xl font-bold text-gray-900 mb-2 relative group-hover:text-emerald-700 transition-colors">
+                            <span className="relative z-10">{vacancy.title}</span>
+                            <span 
+                              className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-lg -rotate-[0.5deg] transform-gpu z-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                              aria-hidden="true"
+                            ></span>
                           </h3>
                           <p className="text-gray-600 line-clamp-2 mb-4">
                             {vacancy.description}
@@ -749,30 +697,19 @@ const ApprenticeshipPage = () => {
                 </div>
               </div>
               
-              {/* Pagination Controls */}
-              {filteredVacancies.length > CHUNK_SIZE && (
-                <div className="flex justify-center gap-4 mt-8">
-                  <button
-                    onClick={() => setCurrentChunk(prev => Math.max(0, prev - 1))}
-                    disabled={currentChunk === 0}
-                    className="px-4 py-2 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    aria-label="View previous vacancies"
-                  >
-                    Previous
-                  </button>
-                  <span className="flex items-center text-gray-600">
-                    Page {currentChunk + 1} of {Math.ceil(filteredVacancies.length / CHUNK_SIZE)}
-                  </span>
-                  <button
-                    onClick={() => setCurrentChunk(prev => Math.min(Math.ceil(filteredVacancies.length / CHUNK_SIZE) - 1, prev + 1))}
-                    disabled={currentChunk >= Math.ceil(filteredVacancies.length / CHUNK_SIZE) - 1}
-                    className="px-4 py-2 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    aria-label="View next vacancies"
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
+              {/* View More Button */}
+              <div className="text-center mt-12">
+                <Link
+                  href="/apprenticeships/vacancies"
+                  className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 transition-colors"
+                >
+                  View All Vacancies
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+                <p className="mt-4 text-gray-600">
+                  {filteredVacancies.length} apprenticeship opportunities available
+                </p>
+              </div>
             </div>
           )}
 

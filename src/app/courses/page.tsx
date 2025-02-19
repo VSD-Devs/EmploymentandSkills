@@ -1,180 +1,50 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Search, MapPin, Building2, GraduationCap, ChevronRight, Filter, BookOpen, Calculator, Briefcase, Clock } from 'lucide-react'
+import { Search, MapPin, Building2, GraduationCap, ChevronRight, ChevronLeft, Filter, BookOpen, Calculator, Briefcase, Clock, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Breadcrumbs from '@/components/Breadcrumbs'
-
-interface Course {
-  id: number;
-  title: string;
-  provider: string;
-  location: string;
-  type: string;
-  duration: string;
-  startDate: string;
-  description: string;
-  fundingInfo: string;
-  category: string;
-}
-
-// Placeholder course data - to be replaced with real data later
-const COURSES: Course[] = [
-  {
-    id: 1,
-    title: 'Level 3 Diploma in IT & Telecoms',
-    provider: 'Aim2Learn',
-    location: 'Sheffield',
-    type: 'Professional',
-    duration: '12 months',
-    startDate: 'Flexible start dates',
-    description: 'Comprehensive diploma covering IT and telecommunications, delivered face-to-face in Sheffield.',
-    fundingInfo: 'Fully funded for eligible participants',
-    category: 'Digital & IT'
-  },
-  {
-    id: 2,
-    title: 'Bootcamp in Telecoms',
-    provider: 'Aim2Learn',
-    location: 'Sheffield',
-    type: 'Bootcamp',
-    duration: '16 weeks',
-    startDate: 'Rolling admissions',
-    description: 'Intensive telecommunications training bootcamp with hands-on practical experience.',
-    fundingInfo: 'Fully funded for eligible participants',
-    category: 'Digital & IT'
-  },
-  {
-    id: 3,
-    title: 'Level 1 Award in Cyber Security',
-    provider: 'B2W Group',
-    location: 'Online - South Yorkshire',
-    type: 'Professional',
-    duration: 'Flexible',
-    startDate: 'Start anytime',
-    description: 'Introduction to cyber security fundamentals, delivered through online learning.',
-    fundingInfo: 'Fully funded for eligible participants',
-    category: 'Digital & IT'
-  },
-  {
-    id: 4,
-    title: 'Level 1 Award in Website Design',
-    provider: 'B2W Group',
-    location: 'Online - South Yorkshire',
-    type: 'Professional',
-    duration: 'Flexible',
-    startDate: 'Start anytime',
-    description: 'Learn the basics of website design and development through online learning.',
-    fundingInfo: 'Fully funded for eligible participants',
-    category: 'Digital & IT'
-  },
-  {
-    id: 5,
-    title: 'Level 1 Award Introduction to Programming',
-    provider: 'B2W Group',
-    location: 'Online - South Yorkshire',
-    type: 'Professional',
-    duration: 'Flexible',
-    startDate: 'Start anytime',
-    description: 'Begin your programming journey with this introductory course covering basic coding concepts.',
-    fundingInfo: 'Fully funded for eligible participants',
-    category: 'Digital & IT'
-  },
-  {
-    id: 6,
-    title: 'Level 1 Extended Certificate in Employability',
-    provider: 'B2W Group',
-    location: 'Online - South Yorkshire',
-    type: 'Professional',
-    duration: 'Flexible',
-    startDate: 'Start anytime',
-    description: 'Develop essential employability skills and prepare for the workplace.',
-    fundingInfo: 'Fully funded for eligible participants',
-    category: 'Employability'
-  },
-  {
-    id: 7,
-    title: 'My Ambition Programme',
-    provider: 'Big Ambitions CIC',
-    location: 'South Yorkshire',
-    type: 'Professional',
-    duration: 'Flexible',
-    startDate: 'Rolling admissions',
-    description: 'Specialised support and training programme focusing on mental health and employment skills.',
-    fundingInfo: 'Fully funded for eligible participants',
-    category: 'Health & Wellbeing'
-  },
-  {
-    id: 8,
-    title: 'Adult Skills and Community Learning',
-    provider: 'Barnsley Council',
-    location: 'Barnsley',
-    type: 'Vocational',
-    duration: 'Various',
-    startDate: 'Multiple start dates',
-    description: 'Community-based learning programmes including Multiply numeracy courses.',
-    fundingInfo: 'Fully funded for eligible participants',
-    category: 'Essential Skills'
-  }
-]
+import { Course, getPaginatedCourses, getProviderInfo, getCategories, getLevels, CourseFilters } from '@/lib/utils'
 
 interface CourseCardProps {
   course: Course;
-  onViewMore: (course: Course) => void;
 }
 
-const CourseCard = ({ course, onViewMore }: CourseCardProps) => {
-  const router = useRouter()
-
-  const handleViewMore = () => {
-    router.push(`/courses/${course.id}`)
-  }
+const CourseCard = ({ course }: CourseCardProps) => {
+  const provider = getProviderInfo(course.provider)
 
   return (
     <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all">
       <div className="p-6 space-y-4">
         <div className="flex flex-wrap gap-2">
-          {course.type === 'Bootcamp' && (
-            <span className="px-3 py-1 rounded-full text-sm font-medium bg-emerald-600 text-white">
-              Bootcamp
-            </span>
-          )}
           <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-600 text-white">
-            {course.duration}
-          </span>
-          <span className="px-3 py-1 rounded-full text-sm font-medium bg-purple-600 text-white">
-            {course.category}
+            {course.fundingModel}
           </span>
         </div>
         <div className="bg-gradient-to-r from-blue-50 to-emerald-50 p-4 rounded-lg border border-blue-100/50">
-          <h3 className="text-xl font-bold text-gray-900">
+          <h3 className="text-xl font-bold text-gray-900 line-clamp-2">
             {course.title}
           </h3>
         </div>
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-gray-600">
             <Building2 className="h-4 w-4" />
-            <span className="text-sm">{course.provider}</span>
+            <span className="text-sm">{provider.name}</span>
           </div>
           <div className="flex items-center gap-2 text-gray-600">
             <MapPin className="h-4 w-4" />
-            <span className="text-sm">{course.location}</span>
-          </div>
-          <div className="flex items-center gap-2 text-gray-600">
-            <Clock className="h-4 w-4" />
-            <span className="text-sm">{course.startDate}</span>
+            <span className="text-sm">{provider.address}</span>
           </div>
         </div>
-        <p className="text-gray-600 line-clamp-2">{course.description}</p>
-        <button
-          onClick={handleViewMore}
+        <Link
+          href={`/courses/${course.slug}`}
           className="w-full inline-flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
         >
           View Details
           <ChevronRight className="ml-2 h-4 w-4" />
-        </button>
+        </Link>
       </div>
     </div>
   )
@@ -231,38 +101,165 @@ const FundingOption = ({ title, description, image, features }: FundingOptionPro
   </div>
 )
 
+const Pagination = ({ currentPage, totalPages, onPageChange }: { 
+  currentPage: number; 
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}) => {
+  // Show max 5 pages with ellipsis
+  const getPageNumbers = () => {
+    const delta = 2; // Pages to show on each side of current page
+    const range = [];
+    const rangeWithDots = [];
+
+    // Always show first page
+    range.push(1);
+
+    for (let i = currentPage - delta; i <= currentPage + delta; i++) {
+      if (i > 1 && i < totalPages) {
+        range.push(i);
+      }
+    }
+
+    // Always show last page
+    if (totalPages > 1) {
+      range.push(totalPages);
+    }
+
+    // Add dots where needed
+    let l;
+    for (let i of range) {
+      if (l) {
+        if (i - l === 2) {
+          rangeWithDots.push(l + 1);
+        } else if (i - l !== 1) {
+          rangeWithDots.push('...');
+        }
+      }
+      rangeWithDots.push(i);
+      l = i;
+    }
+
+    return rangeWithDots;
+  };
+
+  return (
+    <div className="flex justify-center items-center gap-2 mt-8">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className="p-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        aria-label="Previous page"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      
+      <div className="flex items-center gap-2">
+        {getPageNumbers().map((page, index) => (
+          page === '...' ? (
+            <span key={`dots-${index}`} className="px-4 py-2">
+              {page}
+            </span>
+          ) : (
+            <button
+              key={page}
+              onClick={() => onPageChange(Number(page))}
+              className={`px-4 py-2 rounded-lg min-w-[40px] ${
+                currentPage === page
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white border border-gray-200 hover:bg-gray-50'
+              }`}
+              aria-label={`Page ${page}`}
+              aria-current={currentPage === page ? 'page' : undefined}
+            >
+              {page}
+            </button>
+          )
+        ))}
+      </div>
+      
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className="p-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        aria-label="Next page"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+    </div>
+  );
+};
+
 const CoursesPage = () => {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  
+  // State for filters and pagination
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedLocation, setSelectedLocation] = useState('All')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
+  const [selectedProvider, setSelectedProvider] = useState('All')
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const [selectedType, setSelectedType] = useState('All')
+  const [selectedLevel, setSelectedLevel] = useState('All')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [courses, setCourses] = useState<Course[]>([])
+  const [totalPages, setTotalPages] = useState(1)
+  const [totalCourses, setTotalCourses] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [isSearching, setIsSearching] = useState(false)
 
-  // Define categories
-  const categories = ['All', 'Digital & IT', 'Employability', 'Health & Wellbeing', 'Essential Skills']
+  // Get categories and levels
+  const categories = getCategories()
+  const levels = getLevels()
 
-  const handleViewMore = (course: Course) => {
-    // To be implemented - could open a modal or navigate to a detailed view
-    console.log('View more:', course)
-  }
+  // Debounce search input
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+      setIsSearching(false);
+    }, 300);
 
-  // Filter courses based on criteria
-  const filteredCourses = COURSES.filter(course => {
-    const searchTerms = searchQuery.toLowerCase().split(' ').filter(term => term.length > 0)
-    
-    const matchesSearch = searchTerms.length === 0 || searchTerms.every(term =>
-      course.title.toLowerCase().includes(term) ||
-      course.description.toLowerCase().includes(term) ||
-      course.category.toLowerCase().includes(term) ||
-      course.provider.toLowerCase().includes(term)
-    )
-    
-    const matchesLocation = selectedLocation === 'All' || course.location.includes(selectedLocation)
-    const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory
-    const matchesType = selectedType === 'All' || 
-      (selectedType === 'Bootcamp' ? course.type === 'Bootcamp' : true)
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
-    return matchesSearch && matchesLocation && matchesCategory && matchesType
-  })
+  // Load courses with filters
+  React.useEffect(() => {
+    const loadCourses = async () => {
+      try {
+        setLoading(true)
+        const filters: CourseFilters = {
+          provider: selectedProvider,
+          category: selectedCategory,
+          level: selectedLevel,
+          search: debouncedSearch
+        }
+        
+        // Only load 6 courses for the preview
+        const result = await getPaginatedCourses(1, 6, filters)
+        setCourses(result.courses)
+        setTotalPages(result.totalPages)
+        setCurrentPage(result.currentPage)
+        setTotalCourses(result.totalCourses)
+      } catch (error) {
+        console.error('Error loading courses:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadCourses()
+  }, [selectedProvider, selectedCategory, selectedLevel, debouncedSearch])
+
+  // Handle search input
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setIsSearching(true);
+    setCurrentPage(1);
+  };
+
+  // Get unique providers
+  const providers = React.useMemo(() => {
+    const uniqueProviders = new Set(courses.map(course => course.provider))
+    return ['All', ...Array.from(uniqueProviders)]
+  }, [courses])
 
   return (
     <main className="min-h-screen bg-white">
@@ -291,7 +288,7 @@ const CoursesPage = () => {
           <div className="text-center">
             <div className="inline-flex items-center gap-2 text-blue-300 mb-4">
               <div className="p-1.5 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-400/20">
-                <BookOpen className="h-4 w-4" />
+                <Building2 className="h-4 w-4" />
               </div>
               <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
             </div>
@@ -364,7 +361,7 @@ const CoursesPage = () => {
             <div>
               <div className="inline-flex items-center gap-3 text-blue-600 mb-6">
                 <div className="p-2 rounded-xl bg-blue-50">
-                  <GraduationCap className="h-6 w-6" aria-hidden="true" />
+                  <Building2 className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <span className="text-base font-semibold tracking-wide uppercase">Check Your Eligibility</span>
               </div>
@@ -438,108 +435,62 @@ const CoursesPage = () => {
       <div id="courses" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
           <h2 className="relative text-3xl font-bold text-gray-900 mb-4 max-w-md mx-auto">
-            <span className="relative z-10 line-clamp-2 leading-tight block">Available Courses</span>
+            <span className="relative z-10 line-clamp-2 leading-tight block">Course Directory</span>
             <span 
               className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
               aria-hidden="true"
             ></span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Browse our range of fully funded courses and find the perfect opportunity to develop your skills.
+            Browse a selection of our most popular fully funded courses.
+            {totalCourses > 0 && (
+              <span className="block mt-2 text-blue-600">
+                Showing {courses.length} of {totalCourses} courses
+              </span>
+            )}
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="flex flex-col gap-6">
-            {/* Search Bar */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search by course name, description, or category..."
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-6">
-              {/* Category Buttons */}
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-500 mb-3">Filter by Category:</p>
-                <div className="flex flex-wrap gap-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => setSelectedCategory(category)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        selectedCategory === category
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Type Filter */}
-              <div className="sm:w-48">
-                <p className="text-sm font-medium text-gray-500 mb-3">Course Type:</p>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setSelectedType('All')}
-                    className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      selectedType === 'All'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    All
-                  </button>
-                  <button
-                    onClick={() => setSelectedType('Bootcamp')}
-                    className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      selectedType === 'Bootcamp'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}
-                  >
-                    Bootcamps
-                  </button>
-                </div>
-              </div>
-
-              {/* Location Dropdown */}
-              <div className="sm:w-48">
-                <p className="text-sm font-medium text-gray-500 mb-3">Location:</p>
-                <select
-                  value={selectedLocation}
-                  onChange={(e) => setSelectedLocation(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-                >
-                  <option value="All">All Locations</option>
-                  <option value="Sheffield">Sheffield</option>
-                  <option value="Rotherham">Rotherham</option>
-                  <option value="Doncaster">Doncaster</option>
-                  <option value="Barnsley">Barnsley</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Course Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCourses.map((course) => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              onViewMore={handleViewMore}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center py-12">
+            <p className="text-lg text-gray-600">Loading courses...</p>
+          </div>
+        ) : courses.length > 0 ? (
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {courses.map((course) => (
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                />
+              ))}
+            </div>
+            <div className="text-center mt-12">
+              <Link
+                href="/course-directory"
+                className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-500 transition-colors"
+              >
+                View All Courses
+                <ChevronRight className="ml-2 h-6 w-6" />
+              </Link>
+              <p className="mt-4 text-gray-600">
+                Browse our complete directory of {totalCourses} courses
+              </p>
+            </div>
+          </>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-lg text-gray-600">No courses found matching your criteria.</p>
+            <Link
+              href="/course-directory"
+              className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors mt-4"
+            >
+              Browse All Courses
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </Link>
+          </div>
+        )}
       </div>
     </main>
   )

@@ -359,7 +359,7 @@ const AdultSkills = () => {
                 href="/courses"
                 className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-base sm:text-lg shadow-sm"
               >
-                Browse Courses
+                Learn more
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Link>
             </div>
