@@ -1,8 +1,7 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
-import { Building2, MapPin, Phone, Globe, ChevronRight, Clock, Calendar, GraduationCap, ExternalLink, HelpCircle, X, Briefcase } from 'lucide-react'
+import { Building2, MapPin, Phone, Globe, Clock, Calendar, GraduationCap, ExternalLink, HelpCircle, X, Briefcase } from 'lucide-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { useState } from 'react'
 

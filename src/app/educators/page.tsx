@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { 
@@ -53,7 +53,7 @@ const EducatorsPage = () => {
   const [touchEnd, setTouchEnd] = useState(0)
 
   // Define tabs configuration
-  const tabs = {
+  const tabs = useMemo(() => ({
     collegesAndProviders: {
       id: 'collegesAndProviders',
       title: 'Colleges & Training Providers',
@@ -68,7 +68,7 @@ const EducatorsPage = () => {
       icon: <GraduationCap className="w-6 h-6" />,
       color: 'emerald' as const
     }
-  }
+  }), [])
 
   // Add touch handlers
   const handleTouchStart = (e: React.TouchEvent) => {
