@@ -667,7 +667,7 @@ export async function getPaginatedCourses(
   const allCourses = await getCourses();
   
   // Apply filters
-  let filteredCourses = allCourses.filter(course => {
+  const filteredCourses = allCourses.filter(course => {
     const matchesProvider = !filters.provider || filters.provider === 'All' || 
       course.provider === filters.provider;
     const matchesCategory = !filters.category || filters.category === 'All' || 
