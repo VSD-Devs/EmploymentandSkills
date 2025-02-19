@@ -35,7 +35,7 @@ const sortOptions = [
 
 type SortOption = typeof sortOptions[number]['value'];
 
-const salaryRanges = [
+const _salaryRanges = [
   { min: 0, max: 10000, label: 'Up to £10,000' },
   { min: 10000, max: 15000, label: '£10,000 - £15,000' },
   { min: 15000, max: 20000, label: '£15,000 - £20,000' },
@@ -43,7 +43,7 @@ const salaryRanges = [
   { min: 25000, max: Infinity, label: '£25,000+' },
 ];
 
-const southYorkshirePostcodes = [
+const _southYorkshirePostcodes = [
   { area: 'Sheffield', prefix: 'S' },
   { area: 'Rotherham', prefix: 'S60-S66' },
   { area: 'Barnsley', prefix: 'S70-S75' },
@@ -72,7 +72,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
     }
 
     let l;
-    for (let i of range) {
+    for (const i of range) {
       if (l) {
         if (i - l === 2) {
           rangeWithDots.push(l + 1);

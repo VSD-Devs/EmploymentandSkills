@@ -1,3 +1,5 @@
+import { courses as coursesData } from '@/data/courses'
+
 export function cn(...classes: (string | undefined | boolean)[]) {
   return classes.filter(Boolean).join(' ');
 }
@@ -10,7 +12,19 @@ export interface Course {
   slug: string;
   category: string;
   level: string;
-  pathways?: string[]; // Array of pathway slugs this course is relevant for
+  type: string;
+  description: string;
+  location: string;
+  duration: string;
+  startDate: string;
+  deliveryMethod: string;
+  fundingInfo: string;
+  whatYoullLearn: string[];
+  careerOpportunities: string[];
+  qualifications?: string[];
+  sectors?: string[];
+  pathways?: string[];
+  fundingType?: string;
 }
 
 // Helper function to determine course category based on title
@@ -625,38 +639,51 @@ export function matchCourseToPathways(course: Course): string[] {
 
 // Update the getCourses function to include pathway matching
 export async function getCourses(): Promise<Course[]> {
-  const response = await fetch('/images/ASF provision.csv');
-  const csvText = await response.text();
-  
-  // Skip header row and parse CSV
-  const rows = csvText.split('\n').slice(1);
-  
-  const courses = rows.map((row, index) => {
-    const [provider, _, title, fundingModel] = row.split(',');
-    const slug = title
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-');
+  try {
+    const response = await fetch('/images/ASF provision.csv');
+    const csvText = await response.text();
     
-    const course = {
-      id: `course-${index + 1}`,
-      title: title.trim(),
-      provider: provider.trim(),
-      fundingModel: fundingModel.trim(),
-      slug,
-      category: getCourseCategory(title),
-      level: getCourseLevel(title)
-    };
+    // Skip header row and parse CSV
+    const rows = csvText.split('\n').slice(1);
+    
+    const courses = rows.map((row, index) => {
+      const [provider, _, title, fundingModel] = row.split(',');
+      const slug = title
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-');
+      
+      // Map CSV data to Course interface
+      const course: Course = {
+        id: `course-${index + 1}`,
+        title: title.trim(),
+        provider: provider.trim(),
+        fundingModel: fundingModel.trim(),
+        type: getCourseCategory(title),
+        category: getCourseCategory(title),
+        level: getCourseLevel(title),
+        description: `${title.trim()} offered by ${provider.trim()}`,
+        location: 'South Yorkshire',
+        duration: '12 weeks',
+        startDate: 'Flexible start dates',
+        deliveryMethod: 'Flexible',
+        fundingInfo: 'Fully funded for eligible learners',
+        whatYoullLearn: ['Course specific skills and knowledge'],
+        careerOpportunities: ['Various opportunities in ' + getCourseCategory(title)],
+        qualifications: [title.trim()],
+        sectors: [getCourseCategory(title)],
+        slug: slug,
+        fundingType: 'Fully Funded'
+      };
+      
+      return course;
+    });
 
-    // Match course to pathways
-    const pathways = matchCourseToPathways(course);
-    return {
-      ...course,
-      pathways
-    };
-  }).filter(course => course.title && course.provider);
-
-  return courses;
+    return courses.filter(course => course.title && course.provider);
+  } catch (error) {
+    console.error('Error loading courses:', error);
+    return [];
+  }
 }
 
 export async function getPaginatedCourses(
@@ -728,7 +755,21 @@ export function getLevels(): string[] {
 
 export async function getCourseBySlug(slug: string): Promise<Course | null> {
   const courses = await getCourses();
-  return courses.find(course => course.slug === slug) || null;
+  const course = courses.find(course => course.slug === slug);
+  
+  if (!course) return null;
+  
+  // Add missing properties required by CoursePageClient
+  return {
+    ...course,
+    type: course.fundingModel,
+    deliveryMethod: 'Face to Face',
+    fundingInfo: 'This course is fully funded',
+    whatYoullLearn: ['Course content to be announced'],
+    careerOpportunities: ['Career opportunities to be announced'],
+    startDate: 'Starting soon',
+    duration: '12 weeks',
+  };
 }
 
 export function getProviderInfo(providerName: string) {

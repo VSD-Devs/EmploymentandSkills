@@ -7,7 +7,7 @@
       "caughtErrorsIgnorePattern": "^_"
     }],
     "no-console": ["warn", {
-      "allow": ["warn", "error"]
+      "allow": ["warn", "error", "info"]
     }],
     "@typescript-eslint/no-explicit-any": "warn",
     "prefer-const": "error",
@@ -15,7 +15,13 @@
   },
   "overrides": [
     {
-      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "files": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/scripts/**",
+        "**/services/**",
+        "**/utils/**"
+      ],
       "rules": {
         "no-console": "off"
       }

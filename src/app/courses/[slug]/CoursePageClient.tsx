@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Building2, MapPin, Phone, Globe, Clock, Calendar, GraduationCap, ExternalLink, HelpCircle, X, Briefcase } from 'lucide-react'
+import { Building2, MapPin, Globe, Clock, Calendar, GraduationCap, ExternalLink, HelpCircle, X, Briefcase } from 'lucide-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { useState } from 'react'
 
@@ -250,7 +250,7 @@ export default function CoursePageClient({ course, provider }: CoursePageClientP
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Phone className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                  <MapPin className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-medium text-gray-900">Contact</h3>
                     <p className="text-gray-600 mt-1">{provider.phone}</p>

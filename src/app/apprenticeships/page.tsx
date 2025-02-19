@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Briefcase, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, Quote, ExternalLink, BookOpen, Users, SlidersHorizontal, ChevronRight } from 'lucide-react'
+import { Briefcase, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, Quote, ExternalLink, BookOpen, Users } from 'lucide-react'
 import { DfeVacancy } from '@/services/dfeApi'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
@@ -76,7 +76,7 @@ const successStories: SuccessStory[] = [
   }
 ]
 
-const categories = [
+const _categories = [
   'All',
   'Agriculture, environmental and animal care',
   'Business and administration',
@@ -95,14 +95,14 @@ const categories = [
   'Transport and logistics'
 ]
 
-const sortOptions = [
+const _sortOptions = [
   { value: 'AgeDesc', label: 'Newest first' },
   { value: 'AgeAsc', label: 'Oldest first' },
   { value: 'DistanceAsc', label: 'Nearest first' },
   { value: 'DistanceDesc', label: 'Furthest first' }
 ] as const;
 
-type SortOption = typeof sortOptions[number]['value'];
+type SortOption = typeof _sortOptions[number]['value'];
 
 const salaryRanges = [
   { min: 0, max: 10000, label: 'Up to £10,000' },
@@ -123,15 +123,15 @@ export const dynamic = 'force-dynamic'
 
 const ApprenticeshipPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [postcode, setPostcode] = useState('')
-  const [sortBy, setSortBy] = useState<SortOption>('AgeDesc')
-  const [selectedSalaryRange, setSelectedSalaryRange] = useState('')
+  const [selectedCategory, _setSelectedCategory] = useState('All')
+  const [postcode, _setPostcode] = useState('')
+  const [sortBy, _setSortBy] = useState<SortOption>('AgeDesc')
+  const [selectedSalaryRange, _setSelectedSalaryRange] = useState('')
   const [vacancies, setVacancies] = useState<DfeVacancy[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [currentChunk, setCurrentChunk] = useState(0)
-  const CHUNK_SIZE = 6
+  const [_currentChunk, setCurrentChunk] = useState(0)
+  const _CHUNK_SIZE = 6
 
   useEffect(() => {
     const fetchVacancies = async () => {
@@ -156,12 +156,6 @@ const ApprenticeshipPage = () => {
         }
         
         const data = await response.json();
-        
-        // Log debug information
-        if (data._debug) {
-          // Handle debug info silently
-          const debugInfo = data._debug;
-        }
         
         setVacancies(data.vacancies || []);
       } catch (err) {

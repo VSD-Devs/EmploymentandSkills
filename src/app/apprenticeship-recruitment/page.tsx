@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { GraduationCap, Briefcase, PoundSterling, Users, ArrowRight, CheckCircle2, Building2 } from 'lucide-react'
+import { GraduationCap, Briefcase, PoundSterling, Users, ArrowRight, CheckCircle2 } from 'lucide-react'
 
 export default function ApprenticeshipRecruitmentPage() {
   return (

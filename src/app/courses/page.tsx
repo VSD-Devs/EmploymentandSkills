@@ -101,91 +101,42 @@ const FundingOption = ({ title, description, image, features }: FundingOptionPro
   </div>
 )
 
-const Pagination = ({ currentPage, totalPages, onPageChange }: { 
-  currentPage: number; 
+const Pagination = ({ currentPage, totalPages, onPageChange }: {
+  currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
 }) => {
-  // Show max 5 pages with ellipsis
-  const getPageNumbers = () => {
-    const delta = 2; // Pages to show on each side of current page
-    const range = [];
-    const rangeWithDots = [];
-
-    // Always show first page
+  const getPageNumbers = (current: number, total: number) => {
+    const range: number[] = [];
+    const delta = 2;
+    
     range.push(1);
-
-    for (let i = currentPage - delta; i <= currentPage + delta; i++) {
-      if (i > 1 && i < totalPages) {
+    for (let i = current - delta; i <= current + delta; i++) {
+      if (i > 1 && i < total) {
         range.push(i);
       }
     }
-
-    // Always show last page
-    if (totalPages > 1) {
-      range.push(totalPages);
-    }
-
-    // Add dots where needed
-    let l;
-    for (let i of range) {
-      if (l) {
-        if (i - l === 2) {
-          rangeWithDots.push(l + 1);
-        } else if (i - l !== 1) {
-          rangeWithDots.push('...');
-        }
-      }
-      rangeWithDots.push(i);
-      l = i;
-    }
-
-    return rangeWithDots;
+    if (total > 1) range.push(total);
+    
+    return range;
   };
 
   return (
-    <div className="flex justify-center items-center gap-2 mt-8">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="p-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-        aria-label="Previous page"
-      >
-        <ChevronLeft className="h-5 w-5" />
-      </button>
-      
-      <div className="flex items-center gap-2">
-        {getPageNumbers().map((page, index) => (
-          page === '...' ? (
-            <span key={`dots-${index}`} className="px-4 py-2">
-              {page}
-            </span>
-          ) : (
-            <button
-              key={page}
-              onClick={() => onPageChange(Number(page))}
-              className={`px-4 py-2 rounded-lg min-w-[40px] ${
-                currentPage === page
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white border border-gray-200 hover:bg-gray-50'
-              }`}
-              aria-label={`Page ${page}`}
-              aria-current={currentPage === page ? 'page' : undefined}
-            >
-              {page}
-            </button>
-          )
-        ))}
-      </div>
-      
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="p-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-        aria-label="Next page"
-      >
-        <ChevronRight className="h-5 w-5" />
-      </button>
+    <div className="flex items-center gap-2">
+      {getPageNumbers(currentPage, totalPages).map((page) => (
+        <button
+          key={page}
+          onClick={() => onPageChange(page)}
+          className={`px-4 py-2 rounded-lg ${
+            currentPage === page
+              ? 'bg-blue-600 text-white'
+              : 'bg-white text-gray-600 hover:bg-gray-50'
+          }`}
+          aria-label={`Go to page ${page}`}
+        >
+          {page}
+        </button>
+      ))}
     </div>
   );
 };

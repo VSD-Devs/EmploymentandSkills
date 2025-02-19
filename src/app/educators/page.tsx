@@ -6,15 +6,11 @@ import Link from 'next/link'
 import { 
   ChevronRight, 
   GraduationCap,
-  Building2,
   Users,
-  BookOpen,
-  ArrowRight,
+  FileText,
   Target,
   Briefcase,
-  FileText,
   Lightbulb,
-  CheckCircle2,
   Calendar,
   Network
 } from 'lucide-react'
