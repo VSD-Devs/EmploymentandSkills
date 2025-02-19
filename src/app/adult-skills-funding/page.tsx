@@ -3,8 +3,26 @@ import { GraduationCap, BookOpen, MapPin, Clock, CheckCircle2 } from 'lucide-rea
 import Image from 'next/image'
 import Container from '@/components/Container'
 import PageHeader from '@/components/PageHeader'
-import { courses } from '@/data/courses'
 import type { FundingType } from '@/types/funding'
+import fs from 'fs'
+import path from 'path'
+import { parse } from 'csv-parse/sync'
+
+// Define the type for our CSV course data
+interface ASFCourse {
+  'Provider name': string
+  'Learning aim reference': string
+  'Learning aim title': string
+  'Funding model': string
+}
+
+// Read and parse the CSV file
+const csvFilePath = path.join(process.cwd(), 'public/images/ASF provision.csv')
+const csvData = fs.readFileSync(csvFilePath, 'utf-8')
+const courses: ASFCourse[] = parse(csvData, {
+  columns: true,
+  skip_empty_lines: true
+})
 
 export const metadata: Metadata = {
   title: 'Adult Skills Funding | South Yorkshire',
@@ -173,56 +191,32 @@ export default function AdultSkillsFunding() {
 
         {/* Available Courses Section */}
         <section className="mb-16">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-            Available Courses
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            Featured Courses
           </h2>
           <div className="grid gap-6 md:grid-cols-2">
             {courses.map((course) => (
               <div
-                key={course.id}
-                className="bg-white/80 backdrop-blur-sm border border-emerald-100 rounded-xl p-6 hover:shadow-lg transition-shadow"
+                key={course['Learning aim reference']}
+                className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                      {course.title}
+                      {course['Learning aim title']}
                     </h3>
-                    <p className="text-gray-700 text-sm mb-4">{course.description}</p>
                   </div>
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${fundingTypeColors[course.fundingType].bg} ${fundingTypeColors[course.fundingType].text}`}>
-                    {course.fundingType}
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                    {course['Funding model']}
                   </span>
                 </div>
                 <dl className="grid grid-cols-2 gap-4 text-sm">
                   <div className="flex items-center gap-2">
-                    <GraduationCap className="h-4 w-4 text-emerald-600" />
+                    <GraduationCap className="h-4 w-4 text-blue-600" />
                     <dt className="sr-only">Provider</dt>
-                    <dd className="text-gray-700">{course.provider}</dd>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-emerald-600" />
-                    <dt className="sr-only">Level</dt>
-                    <dd className="text-gray-700">{course.level}</dd>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-emerald-600" />
-                    <dt className="sr-only">Location</dt>
-                    <dd className="text-gray-700">{course.location}</dd>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-emerald-600" />
-                    <dt className="sr-only">Duration</dt>
-                    <dd className="text-gray-700">{course.duration}</dd>
+                    <dd className="text-gray-700">{course['Provider name']}</dd>
                   </div>
                 </dl>
-                <div className="mt-6">
-                  <button
-                    type="button"
-                    className="text-emerald-700 font-medium hover:text-emerald-800 transition-colors"
-                  >
-                    View Course Details →
-                  </button>
-                </div>
               </div>
             ))}
           </div>

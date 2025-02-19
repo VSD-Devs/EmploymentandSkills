@@ -1,4 +1,4 @@
-import { courses as coursesData } from '@/data/courses'
+// import { courses as coursesData } from '@/data/courses'
 
 export function cn(...classes: (string | undefined | boolean)[]) {
   return classes.filter(Boolean).join(' ');
