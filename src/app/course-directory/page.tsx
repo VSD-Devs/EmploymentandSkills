@@ -5,7 +5,17 @@ import { Search, MapPin, Building2, ChevronRight, ChevronLeft, X, Download, Brie
 import Image from 'next/image'
 import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import { Course, getPaginatedCourses, getProviderInfo, getCategories, getLevels, CourseFilters } from '@/lib/utils'
+import { 
+  Course, 
+  getPaginatedCourses, 
+  getProviderInfo, 
+  getCategories, 
+  getLevels, 
+  CourseFilters,
+  getPathways,
+  Pathway,
+  Role 
+} from '@/lib/utils'
 
 // Re-use the CourseCard and Pagination components from the courses page
 const CourseCard = ({ course }: { course: Course }) => {
@@ -37,18 +47,58 @@ const CourseCard = ({ course }: { course: Course }) => {
             <span className="text-base">{provider.address}</span>
           </div>
           {course.pathways && course.pathways.length > 0 && (
-            <div className="flex items-start gap-2 text-gray-600">
-              <Briefcase className="h-5 w-5 mt-1 flex-shrink-0" />
-              <div className="flex flex-wrap gap-2">
-                {course.pathways.map(pathway => (
-                  <Link
-                    key={pathway}
-                    href={`/pathways/${pathway}`}
-                    className="text-base px-3 py-1.5 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors"
-                  >
-                    {pathway.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                  </Link>
-                ))}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-start gap-2 text-gray-600">
+                <Briefcase className="h-5 w-5 mt-1 flex-shrink-0" />
+                <div className="flex flex-wrap gap-2">
+                  {course.pathways.map(pathway => {
+                    const pathwayData: Pathway | undefined = getPathways().find((p: Pathway) => p.slug === pathway);
+                    return (
+                      <Link
+                        key={pathway}
+                        href={`/pathways/${pathway}`}
+                        className="text-base px-3 py-1.5 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors"
+                      >
+                        {pathwayData ? pathwayData.title : pathway.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="mt-2 p-3 bg-gray-50 rounded-lg">
+                <p className="text-sm font-medium text-gray-700 mb-2">Related Roles:</p>
+                <div className="flex flex-wrap gap-2">
+                  {(() => {
+                    // Get all unique roles from all pathways
+                    const allRoles = new Set<string>();
+                    course.pathways.forEach(pathway => {
+                      const pathwayData = getPathways().find((p: Pathway) => p.slug === pathway);
+                      if (pathwayData) {
+                        pathwayData.roles.forEach(role => allRoles.add(role.title));
+                      }
+                    });
+                    
+                    // Convert to array and get first 2 roles
+                    const roleArray = Array.from(allRoles);
+                    return (
+                      <>
+                        {roleArray.slice(0, 2).map((roleTitle) => (
+                          <span
+                            key={roleTitle}
+                            className="text-sm px-2 py-1 bg-white rounded border border-gray-200 text-gray-600"
+                          >
+                            {roleTitle}
+                          </span>
+                        ))}
+                        {roleArray.length > 2 && (
+                          <span className="text-sm px-2 py-1 bg-white rounded border border-gray-200 text-gray-600">
+                            +{roleArray.length - 2} more
+                          </span>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
               </div>
             </div>
           )}

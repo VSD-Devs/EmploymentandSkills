@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { parse } from 'csv-parse/sync';
 import { promises as fs } from 'fs';
 import path from 'path';
-import type { Course } from '@/lib/utils';
+import { Course, matchCourseToPathways } from '@/lib/utils';
 
 function getCourseCategory(title: string): string {
   const titleLower = title.toLowerCase();
@@ -68,14 +68,17 @@ export async function GET() {
         .replace(/[^\w\s-]/g, '')
         .replace(/\s+/g, '-');
 
-      return {
+      const category = getCourseCategory(title);
+      
+      // Create the base course object
+      const course: Course = {
         id: reference || `course-${Math.random().toString(36).substr(2, 9)}`,
         title,
         provider,
         fundingModel,
         slug,
-        type: getCourseCategory(title),
-        category: getCourseCategory(title),
+        type: category,
+        category,
         level: getCourseLevel(title),
         description: `${title} offered by ${provider}`,
         location: 'South Yorkshire',
@@ -84,11 +87,16 @@ export async function GET() {
         deliveryMethod: 'Flexible',
         fundingInfo: `This course is ${fundingModel}`,
         whatYoullLearn: ['Course specific skills and knowledge'],
-        careerOpportunities: ['Various opportunities in ' + getCourseCategory(title)],
+        careerOpportunities: ['Various opportunities in ' + category],
         qualifications: [title],
-        sectors: [getCourseCategory(title)],
+        sectors: [category],
         fundingType: 'Fully Funded'
       };
+
+      // Match course to pathways
+      course.pathways = matchCourseToPathways(course);
+
+      return course;
     });
 
     return NextResponse.json(courses.filter(course => course.title && course.provider));
