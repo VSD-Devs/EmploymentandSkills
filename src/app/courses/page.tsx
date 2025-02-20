@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Building2, ChevronRight, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -141,7 +141,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
   );
 };
 
-export default function CoursesPage() {
+const CoursesPage = () => {
   const [courses, setCourses] = useState<Course[]>([])
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([])
   
@@ -165,12 +165,13 @@ export default function CoursesPage() {
   const levels = getLevels()
 
   // Fetch courses on mount
-  useEffect(() => {
-    const fetchCourses = async () => {
+  React.useEffect(() => {
+    const fetchData = async () => {
       try {
         const response = await fetch('/api/courses')
         const data = await response.json()
-        setCourses(data.slice(0, 6)) // Only show first 6 courses
+        setCourses(data)
+        setFilteredCourses(data.slice(0, 6))
         setTotalCourses(data.length)
         setTotalPages(Math.ceil(data.length / 6))
       } catch (error) {
@@ -179,11 +180,11 @@ export default function CoursesPage() {
         setLoading(false)
       }
     }
-    fetchCourses()
+    fetchData()
   }, [])
 
   // Debounce search input
-  useEffect(() => {
+  React.useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchQuery);
       setIsSearching(false);
@@ -193,7 +194,7 @@ export default function CoursesPage() {
   }, [searchQuery]);
 
   // Load courses with filters
-  useEffect(() => {
+  React.useEffect(() => {
     const loadCourses = async () => {
       try {
         setLoading(true)
@@ -486,4 +487,6 @@ export default function CoursesPage() {
       </div>
     </main>
   )
-} 
+}
+
+export default CoursesPage 

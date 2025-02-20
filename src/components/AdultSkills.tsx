@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { CheckCircle2, Users, ChevronRight, GraduationCap, BookOpen, Briefcase } from 'lucide-react'
+import { CheckCircle2, Users, ChevronRight, GraduationCap, BookOpen, Briefcase, Building2, MapPin, Globe, Clock, Calendar, X, HelpCircle } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Newsletter from './Newsletter'
 import CareerQuiz from './CareerQuiz'
-import Breadcrumbs from '@/components/Breadcrumbs'
+import Breadcrumbs from './Breadcrumbs'
 
 // Image constants to ensure consistent loading and prevent typos
 const IMAGES = {
