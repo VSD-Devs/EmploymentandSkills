@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Search, MapPin, Building2, GraduationCap, ChevronRight, ChevronLeft, Filter, BookOpen, Calculator, Briefcase, Clock, X } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { Building2, ChevronRight, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import { Course, getPaginatedCourses, getProviderInfo, getCategories, getLevels, CourseFilters } from '@/lib/utils'
+import { Course, getProviderInfo, getCategories, getLevels, CourseFilters } from '@/lib/utils'
 
 interface CourseCardProps {
   course: Course;
@@ -141,7 +141,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
   );
 };
 
-const CoursesPage = () => {
+export default function CoursesPage() {
+  const [courses, setCourses] = useState<Course[]>([])
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([])
+  
   const router = useRouter()
   const searchParams = useSearchParams()
   
@@ -152,7 +155,6 @@ const CoursesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedLevel, setSelectedLevel] = useState('All')
   const [currentPage, setCurrentPage] = useState(1)
-  const [courses, setCourses] = useState<Course[]>([])
   const [totalPages, setTotalPages] = useState(1)
   const [totalCourses, setTotalCourses] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -162,8 +164,26 @@ const CoursesPage = () => {
   const categories = getCategories()
   const levels = getLevels()
 
+  // Fetch courses on mount
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('/api/courses')
+        const data = await response.json()
+        setCourses(data.slice(0, 6)) // Only show first 6 courses
+        setTotalCourses(data.length)
+        setTotalPages(Math.ceil(data.length / 6))
+      } catch (error) {
+        console.error('Error fetching courses:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchCourses()
+  }, [])
+
   // Debounce search input
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchQuery);
       setIsSearching(false);
@@ -173,7 +193,7 @@ const CoursesPage = () => {
   }, [searchQuery]);
 
   // Load courses with filters
-  React.useEffect(() => {
+  useEffect(() => {
     const loadCourses = async () => {
       try {
         setLoading(true)
@@ -184,12 +204,11 @@ const CoursesPage = () => {
           search: debouncedSearch
         }
         
-        // Only load 6 courses for the preview
-        const result = await getPaginatedCourses(1, 6, filters)
-        setCourses(result.courses)
-        setTotalPages(result.totalPages)
-        setCurrentPage(result.currentPage)
-        setTotalCourses(result.totalCourses)
+        const filtered = filterCourses(courses, filters);
+        setFilteredCourses(filtered.slice(0, 6)); // Only show first 6 courses
+        setTotalCourses(filtered.length);
+        setTotalPages(Math.ceil(filtered.length / 6));
+        setCurrentPage(1);
       } catch (error) {
         console.error('Error loading courses:', error)
       } finally {
@@ -197,20 +216,42 @@ const CoursesPage = () => {
       }
     }
     loadCourses()
-  }, [selectedProvider, selectedCategory, selectedLevel, debouncedSearch])
-
-  // Handle search input
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    setIsSearching(true);
-    setCurrentPage(1);
-  };
+  }, [selectedProvider, selectedCategory, selectedLevel, debouncedSearch, courses])
 
   // Get unique providers
   const providers = React.useMemo(() => {
-    const uniqueProviders = new Set(courses.map(course => course.provider))
+    const uniqueProviders = new Set(courses.map((course: Course) => course.provider))
     return ['All', ...Array.from(uniqueProviders)]
   }, [courses])
+
+  // Update the filtering logic
+  const filterCourses = (courses: Course[], filters: CourseFilters) => {
+    return courses.filter(course => {
+      const matchesProvider = !filters.provider || filters.provider === 'All' || 
+        course.provider === filters.provider;
+      const matchesCategory = !filters.category || filters.category === 'All' || 
+        course.category === filters.category;
+      const matchesLevel = !filters.level || filters.level === 'All' || 
+        course.level === filters.level;
+      const matchesSearch = !filters.search || 
+        course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+        course.provider.toLowerCase().includes(filters.search.toLowerCase());
+      
+      return matchesProvider && matchesCategory && matchesLevel && matchesSearch;
+    });
+  }
+
+  // Update the handleSearch function
+  const handleSearch = (query: string) => {
+    const filtered = filterCourses(courses, {
+      provider: selectedProvider,
+      category: selectedCategory,
+      level: selectedLevel,
+      search: query
+    });
+    setFilteredCourses(filtered);
+    setSearchQuery(query);
+  }
 
   return (
     <main className="min-h-screen bg-white">
@@ -396,7 +437,7 @@ const CoursesPage = () => {
             Browse a selection of our most popular fully funded courses.
             {totalCourses > 0 && (
               <span className="block mt-2 text-blue-600">
-                Showing {courses.length} of {totalCourses} courses
+                Showing {filteredCourses.length} of {totalCourses} courses
               </span>
             )}
           </p>
@@ -407,10 +448,10 @@ const CoursesPage = () => {
           <div className="text-center py-12">
             <p className="text-lg text-gray-600">Loading courses...</p>
           </div>
-        ) : courses.length > 0 ? (
+        ) : filteredCourses.length > 0 ? (
           <>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((course) => (
+              {filteredCourses.map((course) => (
                 <CourseCard
                   key={course.id}
                   course={course}
@@ -445,6 +486,4 @@ const CoursesPage = () => {
       </div>
     </main>
   )
-}
-
-export default CoursesPage 
+} 

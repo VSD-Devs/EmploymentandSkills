@@ -1,5 +1,9 @@
 // import { courses as coursesData } from '@/data/courses'
 
+// import { parse } from 'csv-parse/sync';
+// import path from 'path';
+// import { promises as fs } from 'fs';
+
 export function cn(...classes: (string | undefined | boolean)[]) {
   return classes.filter(Boolean).join(' ');
 }
@@ -28,7 +32,7 @@ export interface Course {
 }
 
 // Helper function to determine course category based on title
-function getCourseCategory(title: string): string {
+export function getCourseCategory(title: string): string {
   const titleLower = title.toLowerCase();
   
   if (titleLower.includes('digital') || titleLower.includes('it') || titleLower.includes('cyber') || titleLower.includes('programming') || titleLower.includes('software') || titleLower.includes('website')) {
@@ -54,7 +58,7 @@ function getCourseCategory(title: string): string {
 }
 
 // Helper function to determine course level based on title
-function getCourseLevel(title: string): string {
+export function getCourseLevel(title: string): string {
   const titleLower = title.toLowerCase();
   
   if (titleLower.includes('level 1')) return 'Level 1';
@@ -637,95 +641,6 @@ export function matchCourseToPathways(course: Course): string[] {
   return matchedPathways;
 }
 
-// Update the getCourses function to include pathway matching
-export async function getCourses(): Promise<Course[]> {
-  try {
-    const response = await fetch('/images/ASF provision.csv');
-    const csvText = await response.text();
-    
-    // Skip header row and parse CSV
-    const rows = csvText.split('\n').slice(1);
-    
-    const courses = rows.map((row, index) => {
-      const [provider, _, title, fundingModel] = row.split(',');
-      const slug = title
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/\s+/g, '-');
-      
-      // Map CSV data to Course interface
-      const course: Course = {
-        id: `course-${index + 1}`,
-        title: title.trim(),
-        provider: provider.trim(),
-        fundingModel: fundingModel.trim(),
-        type: getCourseCategory(title),
-        category: getCourseCategory(title),
-        level: getCourseLevel(title),
-        description: `${title.trim()} offered by ${provider.trim()}`,
-        location: 'South Yorkshire',
-        duration: '12 weeks',
-        startDate: 'Flexible start dates',
-        deliveryMethod: 'Flexible',
-        fundingInfo: 'Fully funded for eligible learners',
-        whatYoullLearn: ['Course specific skills and knowledge'],
-        careerOpportunities: ['Various opportunities in ' + getCourseCategory(title)],
-        qualifications: [title.trim()],
-        sectors: [getCourseCategory(title)],
-        slug: slug,
-        fundingType: 'Fully Funded'
-      };
-      
-      return course;
-    });
-
-    return courses.filter(course => course.title && course.provider);
-  } catch (error) {
-    console.error('Error loading courses:', error);
-    return [];
-  }
-}
-
-export async function getPaginatedCourses(
-  page: number = 1,
-  pageSize: number = 9,
-  filters: CourseFilters = {}
-): Promise<PaginatedCourses> {
-  const allCourses = await getCourses();
-  
-  // Apply filters
-  const filteredCourses = allCourses.filter(course => {
-    const matchesProvider = !filters.provider || filters.provider === 'All' || 
-      course.provider === filters.provider;
-    const matchesCategory = !filters.category || filters.category === 'All' || 
-      course.category === filters.category;
-    const matchesLevel = !filters.level || filters.level === 'All' || 
-      course.level === filters.level;
-    const matchesSearch = !filters.search || 
-      course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
-      course.provider.toLowerCase().includes(filters.search.toLowerCase());
-    
-    return matchesProvider && matchesCategory && matchesLevel && matchesSearch;
-  });
-
-  // Calculate pagination
-  const totalCourses = filteredCourses.length;
-  const totalPages = Math.ceil(totalCourses / pageSize);
-  const currentPage = Math.min(Math.max(1, page), totalPages);
-  const start = (currentPage - 1) * pageSize;
-  const end = start + pageSize;
-
-  // Get courses for current page
-  const paginatedCourses = filteredCourses.slice(start, end);
-
-  return {
-    courses: paginatedCourses,
-    totalPages,
-    currentPage,
-    totalCourses
-  };
-}
-
 export function getCategories(): string[] {
   return [
     'All',
@@ -753,31 +668,12 @@ export function getLevels(): string[] {
   ];
 }
 
-export async function getCourseBySlug(slug: string): Promise<Course | null> {
-  const courses = await getCourses();
-  const course = courses.find(course => course.slug === slug);
-  
-  if (!course) return null;
-  
-  // Add missing properties required by CoursePageClient
-  return {
-    ...course,
-    type: course.fundingModel,
-    deliveryMethod: 'Face to Face',
-    fundingInfo: 'This course is fully funded',
-    whatYoullLearn: ['Course content to be announced'],
-    careerOpportunities: ['Career opportunities to be announced'],
-    startDate: 'Starting soon',
-    duration: '12 weeks',
-  };
-}
-
 export function getProviderInfo(providerName: string) {
   const providers = {
     'BARNSLEY COLLEGE': {
       name: 'Barnsley College',
       website: 'https://www.barnsley.ac.uk',
-      description: 'A leading further education college in South Yorkshire, offering a wide range of courses and qualifications.',
+      description: 'A leading further education college in South Yorkshire.',
       address: 'Church Street, Barnsley, South Yorkshire, S70 2YW',
       phone: '01226 216 123'
     },
@@ -818,4 +714,47 @@ export function getProviderInfo(providerName: string) {
     address: 'South Yorkshire',
     phone: 'Contact for details'
   };
+}
+
+export function getPaginatedCourses(
+  courses: Course[],
+  page: number = 1,
+  pageSize: number = 6,
+  filters?: CourseFilters
+): PaginatedCourses {
+  let filteredCourses = courses;
+
+  // Apply filters if provided
+  if (filters) {
+    filteredCourses = filteredCourses.filter(course => {
+      const matchesProvider = !filters.provider || filters.provider === 'All' || 
+        course.provider === filters.provider;
+      const matchesCategory = !filters.category || filters.category === 'All' || 
+        course.category === filters.category;
+      const matchesLevel = !filters.level || filters.level === 'All' || 
+        course.level === filters.level;
+      const matchesSearch = !filters.search || 
+        course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+        course.provider.toLowerCase().includes(filters.search.toLowerCase());
+      
+      return matchesProvider && matchesCategory && matchesLevel && matchesSearch;
+    });
+  }
+
+  const totalCourses = filteredCourses.length;
+  const totalPages = Math.ceil(totalCourses / pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedCourses = filteredCourses.slice(startIndex, endIndex);
+
+  return {
+    courses: paginatedCourses,
+    totalPages,
+    currentPage: page,
+    totalCourses
+  };
+}
+
+export function getCourseBySlug(courses: Course[], slug: string): Course | undefined {
+  return courses.find(course => course.slug === slug);
 } 

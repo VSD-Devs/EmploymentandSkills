@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Search, MapPin, Building2, ChevronRight, ChevronLeft, X, Download, Briefcase } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
-import { Course, getPaginatedCourses, getProviderInfo, getCategories, getLevels, CourseFilters, getCourses } from '@/lib/utils'
+import { Course, getPaginatedCourses, getProviderInfo, getCategories, getLevels, CourseFilters } from '@/lib/utils'
 
 // Re-use the CourseCard and Pagination components from the courses page
 const CourseCard = ({ course }: { course: Course }) => {
@@ -193,113 +193,34 @@ const exportToCSV = (courses: Course[]) => {
 }
 
 export default function CourseDirectoryPage() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [debouncedSearch, setDebouncedSearch] = useState('')
-  const [selectedProvider, setSelectedProvider] = useState('All')
-  const [selectedCategory, setSelectedCategory] = useState('All')
-  const [selectedLevel, setSelectedLevel] = useState('All')
-  const [currentPage, setCurrentPage] = useState(1)
   const [courses, setCourses] = useState<Course[]>([])
-  const [totalPages, setTotalPages] = useState(1)
-  const [totalCourses, setTotalCourses] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [isSearching, setIsSearching] = useState(false)
-  const [providers, setProviders] = useState<string[]>(['All'])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [filters, setFilters] = useState<CourseFilters>({
+    provider: 'All',
+    category: 'All',
+    level: 'All',
+    search: ''
+  })
 
-  const categories = getCategories()
-  const levels = getLevels()
-
-  // Get all providers on initial load
-  React.useEffect(() => {
-    const loadProviders = async () => {
+  // Fetch courses on mount
+  useEffect(() => {
+    const fetchCourses = async () => {
       try {
-        const allCourses = await getCourses()
-        const uniqueProviders = new Set(allCourses.map(course => course.provider))
-        const sortedProviders = Array.from(uniqueProviders).sort()
-        setProviders(['All', ...sortedProviders])
+        const response = await fetch('/api/courses')
+        const data = await response.json()
+        setCourses(data)
       } catch (error) {
-        console.error('Error loading providers:', error)
-      }
-    }
-    loadProviders()
-  }, [])
-
-  // Debounce search input
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(searchQuery);
-      setIsSearching(false);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-
-  // Load courses with filters
-  React.useEffect(() => {
-    const loadCourses = async () => {
-      try {
-        setLoading(true)
-        const filters: CourseFilters = {
-          provider: selectedProvider,
-          category: selectedCategory,
-          level: selectedLevel,
-          search: debouncedSearch
-        }
-        
-        const result = await getPaginatedCourses(currentPage, 12, filters)
-        setCourses(result.courses)
-        setTotalPages(result.totalPages)
-        setCurrentPage(result.currentPage)
-        setTotalCourses(result.totalCourses)
-      } catch (error) {
-        console.error('Error loading courses:', error)
+        console.error('Error fetching courses:', error)
       } finally {
         setLoading(false)
       }
     }
-    loadCourses()
-  }, [currentPage, selectedProvider, selectedCategory, selectedLevel, debouncedSearch])
+    fetchCourses()
+  }, [])
 
-  // Handle search input
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    setIsSearching(true);
-    setCurrentPage(1);
-  };
-
-  // Add function to handle export
-  const handleExport = async () => {
-    try {
-      setLoading(true)
-      // Get all courses with current filters
-      const allCourses = await getCourses()
-      let filteredCourses = allCourses
-      
-      // Apply current filters
-      if (selectedProvider !== 'All') {
-        filteredCourses = filteredCourses.filter(course => course.provider === selectedProvider)
-      }
-      if (selectedCategory !== 'All') {
-        filteredCourses = filteredCourses.filter(course => course.category === selectedCategory)
-      }
-      if (selectedLevel !== 'All') {
-        filteredCourses = filteredCourses.filter(course => course.level === selectedLevel)
-      }
-      if (debouncedSearch) {
-        const searchLower = debouncedSearch.toLowerCase()
-        filteredCourses = filteredCourses.filter(course => 
-          course.title.toLowerCase().includes(searchLower) ||
-          course.provider.toLowerCase().includes(searchLower)
-        )
-      }
-      
-      exportToCSV(filteredCourses)
-    } catch (error) {
-      console.error('Error exporting courses:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  // Get paginated and filtered courses
+  const paginatedData = getPaginatedCourses(courses, currentPage, 6, filters)
 
   return (
     <main className="min-h-screen bg-white">
@@ -342,22 +263,17 @@ export default function CourseDirectoryPage() {
                   type="text"
                   placeholder="Search by course name or provider..."
                   className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  value={searchQuery}
-                  onChange={handleSearch}
+                  value={filters.search}
+                  onChange={(e) => setFilters({ ...filters, search: e.target.value })}
                   aria-label="Search courses"
                 />
                 <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                  {isSearching ? (
-                    <div className="h-5 w-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <Search className="h-5 w-5 text-gray-400" />
-                  )}
+                  <Search className="h-5 w-5 text-gray-400" />
                 </div>
               </div>
               <div className="flex flex-col items-end gap-2">
                 <button
-                  onClick={handleExport}
-                  disabled={loading || courses.length === 0}
+                  onClick={() => exportToCSV(courses)}
                   className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px] justify-center"
                 >
                   <Download className="h-4 w-4" />
@@ -367,50 +283,52 @@ export default function CourseDirectoryPage() {
             </div>
 
             {/* Active Filters */}
-            {(selectedProvider !== 'All' || selectedCategory !== 'All' || selectedLevel !== 'All' || debouncedSearch) && (
+            {(filters.provider !== 'All' || filters.category !== 'All' || filters.level !== 'All' || filters.search) && (
               <div className="flex flex-wrap gap-2">
-                {selectedProvider !== 'All' && (
+                {filters.provider !== 'All' && (
                   <button
-                    onClick={() => setSelectedProvider('All')}
+                    onClick={() => setFilters({ ...filters, provider: 'All' })}
                     className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700 hover:bg-blue-100"
                   >
-                    Provider: {getProviderInfo(selectedProvider).name}
+                    Provider: {filters.provider ? getProviderInfo(filters.provider).name : 'All'}
                     <X className="h-4 w-4" />
                   </button>
                 )}
-                {selectedCategory !== 'All' && (
+                {filters.category !== 'All' && (
                   <button
-                    onClick={() => setSelectedCategory('All')}
+                    onClick={() => setFilters({ ...filters, category: 'All' })}
                     className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700 hover:bg-blue-100"
                   >
-                    Category: {selectedCategory}
+                    Category: {filters.category}
                     <X className="h-4 w-4" />
                   </button>
                 )}
-                {selectedLevel !== 'All' && (
+                {filters.level !== 'All' && (
                   <button
-                    onClick={() => setSelectedLevel('All')}
+                    onClick={() => setFilters({ ...filters, level: 'All' })}
                     className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700 hover:bg-blue-100"
                   >
-                    Level: {selectedLevel}
+                    Level: {filters.level}
                     <X className="h-4 w-4" />
                   </button>
                 )}
-                {debouncedSearch && (
+                {filters.search && (
                   <button
-                    onClick={() => setSearchQuery('')}
+                    onClick={() => setFilters({ ...filters, search: '' })}
                     className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700 hover:bg-blue-100"
                   >
-                    Search: {debouncedSearch}
+                    Search: {filters.search}
                     <X className="h-4 w-4" />
                   </button>
                 )}
                 <button
                   onClick={() => {
-                    setSelectedProvider('All');
-                    setSelectedCategory('All');
-                    setSelectedLevel('All');
-                    setSearchQuery('');
+                    setFilters({
+                      provider: 'All',
+                      category: 'All',
+                      level: 'All',
+                      search: ''
+                    })
                   }}
                   className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200"
                 >
@@ -426,16 +344,14 @@ export default function CourseDirectoryPage() {
               <div>
                 <p className="text-sm font-medium text-gray-500 mb-3">Provider:</p>
                 <select
-                  value={selectedProvider}
-                  onChange={(e) => {
-                    setSelectedProvider(e.target.value)
-                    setCurrentPage(1)
-                  }}
+                  value={filters.provider}
+                  onChange={(e) => setFilters({ ...filters, provider: e.target.value })}
                   className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                 >
-                  {providers.map((provider) => (
+                  <option value="All">All Providers</option>
+                  {Object.keys(getProviderInfo).map((provider) => (
                     <option key={provider} value={provider}>
-                      {provider === 'All' ? 'All Providers' : getProviderInfo(provider).name}
+                      {getProviderInfo(provider).name}
                     </option>
                   ))}
                 </select>
@@ -445,14 +361,12 @@ export default function CourseDirectoryPage() {
               <div>
                 <p className="text-sm font-medium text-gray-500 mb-3">Category:</p>
                 <select
-                  value={selectedCategory}
-                  onChange={(e) => {
-                    setSelectedCategory(e.target.value)
-                    setCurrentPage(1)
-                  }}
+                  value={filters.category}
+                  onChange={(e) => setFilters({ ...filters, category: e.target.value })}
                   className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                 >
-                  {categories.map((category) => (
+                  <option value="All">All Categories</option>
+                  {getCategories().map((category) => (
                     <option key={category} value={category}>
                       {category}
                     </option>
@@ -464,14 +378,12 @@ export default function CourseDirectoryPage() {
               <div>
                 <p className="text-sm font-medium text-gray-500 mb-3">Level:</p>
                 <select
-                  value={selectedLevel}
-                  onChange={(e) => {
-                    setSelectedLevel(e.target.value)
-                    setCurrentPage(1)
-                  }}
+                  value={filters.level}
+                  onChange={(e) => setFilters({ ...filters, level: e.target.value })}
                   className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                 >
-                  {levels.map((level) => (
+                  <option value="All">All Levels</option>
+                  {getLevels().map((level) => (
                     <option key={level} value={level}>
                       {level}
                     </option>
@@ -491,11 +403,11 @@ export default function CourseDirectoryPage() {
           <>
             <div className="mb-6 text-center">
               <p className="text-blue-600 font-medium">
-                {totalCourses > 0 ? `Showing ${courses.length} of ${totalCourses} courses` : 'No courses found'}
+                {paginatedData.totalCourses > 0 ? `Showing ${paginatedData.courses.length} of ${paginatedData.totalCourses} courses` : 'No courses found'}
               </p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((course) => (
+              {paginatedData.courses.map((course) => (
                 <CourseCard
                   key={course.id}
                   course={course}
@@ -504,7 +416,7 @@ export default function CourseDirectoryPage() {
             </div>
             <Pagination
               currentPage={currentPage}
-              totalPages={totalPages}
+              totalPages={paginatedData.totalPages}
               onPageChange={setCurrentPage}
             />
           </>
