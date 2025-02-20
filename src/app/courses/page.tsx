@@ -16,19 +16,19 @@ const CourseCard = ({ course }: CourseCardProps) => {
   const provider = getProviderInfo(course.provider)
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all">
-      <div className="p-6 space-y-4">
+    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all flex flex-col">
+      <div className="p-6 flex flex-col flex-grow">
         <div className="flex flex-wrap gap-2">
           <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-600 text-white">
             {course.fundingModel}
           </span>
         </div>
-        <div className="bg-gradient-to-r from-blue-50 to-emerald-50 p-4 rounded-lg border border-blue-100/50">
-          <h3 className="text-xl font-bold text-gray-900 line-clamp-2">
+        <div className="bg-gradient-to-r from-blue-50 to-emerald-50 p-4 rounded-lg border border-blue-100/50 mt-4">
+          <h3 className="text-xl font-bold text-gray-900">
             {course.title}
           </h3>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-3 mt-4 flex-grow">
           <div className="flex items-center gap-2 text-gray-600">
             <Building2 className="h-4 w-4" />
             <span className="text-sm">{provider.name}</span>
@@ -38,13 +38,15 @@ const CourseCard = ({ course }: CourseCardProps) => {
             <span className="text-sm">{provider.address}</span>
           </div>
         </div>
-        <Link
-          href={`/courses/${course.slug}`}
-          className="w-full inline-flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
-        >
-          View Details
-          <ChevronRight className="ml-2 h-4 w-4" />
-        </Link>
+        <div className="mt-6">
+          <Link
+            href={`/courses/${course.slug}`}
+            className="w-full inline-flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
+          >
+            View Details
+            <ChevronRight className="ml-2 h-4 w-4" />
+          </Link>
+        </div>
       </div>
     </div>
   )
@@ -171,9 +173,9 @@ const CoursesPage = () => {
         const response = await fetch('/api/courses')
         const data = await response.json()
         setCourses(data)
-        setFilteredCourses(data.slice(0, 6))
+        setFilteredCourses(data.slice(0, 3))
         setTotalCourses(data.length)
-        setTotalPages(Math.ceil(data.length / 6))
+        setTotalPages(Math.ceil(data.length / 3))
       } catch (error) {
         console.error('Error fetching courses:', error)
       } finally {
@@ -206,9 +208,9 @@ const CoursesPage = () => {
         }
         
         const filtered = filterCourses(courses, filters);
-        setFilteredCourses(filtered.slice(0, 6)); // Only show first 6 courses
+        setFilteredCourses(filtered.slice(0, 3)); // Only show first 3 courses
         setTotalCourses(filtered.length);
-        setTotalPages(Math.ceil(filtered.length / 6));
+        setTotalPages(Math.ceil(filtered.length / 3)); // Update pagination
         setCurrentPage(1);
       } catch (error) {
         console.error('Error loading courses:', error)
@@ -260,7 +262,6 @@ const CoursesPage = () => {
       <Breadcrumbs items={[
         { label: 'Business Support', href: '/business-support' },
         { label: 'Funded Training', href: '/funded-training' },
-        { label: 'Skills Bank', href: '/courses' },
       ]} />
 
       {/* Hero Section */}
@@ -325,8 +326,8 @@ const CoursesPage = () => {
             ]}
           />
           <FundingOption
-            title="Free Courses for Jobs and Career Development"
-            description="Level 3 qualifications (A-level equivalent) fully funded through the National Skills Fund."
+            title="Adult Skills Funding"
+            description="Government Funded training for adults aged 19+ to gain essential skills for work and life."
             image="/images/FCFJ-1.jpg"
             features={[
               "Wide range of sectors",
@@ -427,12 +428,8 @@ const CoursesPage = () => {
       {/* Search and Filters */}
       <div id="courses" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12">
-          <h2 className="relative text-3xl font-bold text-gray-900 mb-4 max-w-md mx-auto">
-            <span className="relative z-10 line-clamp-2 leading-tight block">Course Directory</span>
-            <span 
-              className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
-              aria-hidden="true"
-            ></span>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 max-w-md mx-auto">
+            Course Directory
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Browse a selection of our most popular fully funded courses.

@@ -12,8 +12,8 @@ const CourseCard = ({ course }: { course: Course }) => {
   const provider = getProviderInfo(course.provider)
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all">
-      <div className="p-6 space-y-4">
+    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all flex flex-col">
+      <div className="p-6 flex flex-col flex-grow">
         <div className="flex flex-wrap gap-2">
           <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-600 text-white">
             {course.fundingModel}
@@ -22,29 +22,29 @@ const CourseCard = ({ course }: { course: Course }) => {
             {course.level}
           </span>
         </div>
-        <div className="bg-gradient-to-r from-blue-50 to-emerald-50 p-4 rounded-lg border border-blue-100/50">
-          <h3 className="text-xl font-bold text-gray-900 line-clamp-2">
+        <div className="bg-gradient-to-r from-blue-50 to-emerald-50 p-4 rounded-lg border border-blue-100/50 mt-4">
+          <h3 className="text-xl font-bold text-gray-900">
             {course.title}
           </h3>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-3 mt-4 flex-grow">
           <div className="flex items-center gap-2 text-gray-600">
-            <Building2 className="h-4 w-4" />
-            <span className="text-sm">{provider.name}</span>
+            <Building2 className="h-5 w-5" />
+            <span className="text-base">{provider.name}</span>
           </div>
           <div className="flex items-center gap-2 text-gray-600">
-            <MapPin className="h-4 w-4" />
-            <span className="text-sm">{provider.address}</span>
+            <MapPin className="h-5 w-5" />
+            <span className="text-base">{provider.address}</span>
           </div>
           {course.pathways && course.pathways.length > 0 && (
             <div className="flex items-start gap-2 text-gray-600">
-              <Briefcase className="h-4 w-4 mt-1 flex-shrink-0" />
+              <Briefcase className="h-5 w-5 mt-1 flex-shrink-0" />
               <div className="flex flex-wrap gap-2">
                 {course.pathways.map(pathway => (
                   <Link
                     key={pathway}
                     href={`/pathways/${pathway}`}
-                    className="text-sm px-2 py-1 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors"
+                    className="text-base px-3 py-1.5 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors"
                   >
                     {pathway.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                   </Link>
@@ -53,13 +53,15 @@ const CourseCard = ({ course }: { course: Course }) => {
             </div>
           )}
         </div>
-        <Link
-          href={`/courses/${course.slug}`}
-          className="w-full inline-flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
-        >
-          View Details
-          <ChevronRight className="ml-2 h-4 w-4" />
-        </Link>
+        <div className="mt-6">
+          <Link
+            href={`/courses/${course.slug}`}
+            className="w-full inline-flex items-center justify-center px-6 py-3.5 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors text-base font-medium"
+          >
+            View Details
+            <ChevronRight className="ml-2 h-5 w-5" />
+          </Link>
+        </div>
       </div>
     </div>
   )
@@ -262,21 +264,21 @@ export default function CourseDirectoryPage() {
                 <input
                   type="text"
                   placeholder="Search by course name or provider..."
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
                   value={filters.search}
                   onChange={(e) => setFilters({ ...filters, search: e.target.value })}
                   aria-label="Search courses"
                 />
-                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
                   <Search className="h-5 w-5 text-gray-400" />
                 </div>
               </div>
               <div className="flex flex-col items-end gap-2">
                 <button
                   onClick={() => exportToCSV(courses)}
-                  className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px] justify-center"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px] justify-center text-base"
                 >
-                  <Download className="h-4 w-4" />
+                  <Download className="h-5 w-5" />
                   <span className="font-medium">Export to CSV</span>
                 </button>
               </div>
@@ -342,11 +344,11 @@ export default function CourseDirectoryPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Provider Filter */}
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-3">Provider:</p>
+                <p className="text-base font-medium text-gray-500 mb-3">Provider:</p>
                 <select
                   value={filters.provider}
                   onChange={(e) => setFilters({ ...filters, provider: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-base"
                 >
                   <option value="All">All Providers</option>
                   {Object.keys(getProviderInfo).map((provider) => (
@@ -359,11 +361,11 @@ export default function CourseDirectoryPage() {
 
               {/* Category Filter */}
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-3">Category:</p>
+                <p className="text-base font-medium text-gray-500 mb-3">Category:</p>
                 <select
                   value={filters.category}
                   onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-base"
                 >
                   <option value="All">All Categories</option>
                   {getCategories().map((category) => (
@@ -376,11 +378,11 @@ export default function CourseDirectoryPage() {
 
               {/* Level Filter */}
               <div>
-                <p className="text-sm font-medium text-gray-500 mb-3">Level:</p>
+                <p className="text-base font-medium text-gray-500 mb-3">Level:</p>
                 <select
                   value={filters.level}
                   onChange={(e) => setFilters({ ...filters, level: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-base"
                 >
                   <option value="All">All Levels</option>
                   {getLevels().map((level) => (
