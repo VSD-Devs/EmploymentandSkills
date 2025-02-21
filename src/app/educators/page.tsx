@@ -176,8 +176,8 @@ const EducatorsPage = () => {
         </div>
       </div>
 
-      {/* Sticky Navigation */}
-      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
+      {/* Enhanced Navigation - Bottom on Mobile, Top on Desktop */}
+      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-200 shadow-lg md:shadow-sm overflow-x-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-start sm:justify-center min-w-max">
             <div className="flex space-x-1 py-1">
@@ -185,7 +185,7 @@ const EducatorsPage = () => {
                 <a 
                   key={tab.id}
                   href={`#${tab.id}`} 
-                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl transition-colors ${
+                  className={`group relative px-2 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-xl transition-colors ${
                     activeTab === tab.id 
                       ? `${colorClasses[tab.color].button} text-${tab.color}-600 shadow-md` 
                       : `${colorClasses[tab.color].nav} text-gray-600`
@@ -200,14 +200,14 @@ const EducatorsPage = () => {
                     } transition-colors`}>
                       {tab.icon}
                     </div>
-                    <span className={`text-sm sm:text-base font-medium ${
+                    <span className={`text-xs md:text-sm font-medium ${
                       activeTab === tab.id 
                         ? `text-${tab.color}-600` 
                         : 'text-gray-900 group-hover:text-${tab.color}-600'
                     } whitespace-nowrap transition-colors`}>
                       {tab.title}
                     </span>
-                    <div className={`h-0.5 ${
+                    <div className={`h-0.5 hidden md:block ${
                       activeTab === tab.id 
                         ? `w-full bg-${tab.color}-600` 
                         : `w-0 bg-${tab.color}-600 group-hover:w-full`
@@ -220,177 +220,180 @@ const EducatorsPage = () => {
         </div>
       </div>
 
-      {/* Colleges & Training Providers Section */}
-      <div id="collegesAndProviders" className="relative bg-gray-50">
-        {/* Top wave divider */}
-        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-          <svg
-            viewBox="0 0 1440 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute bottom-0 w-full h-full text-gray-50"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
-              <Image
-                src={IMAGES.trainingProviders}
-                alt="Colleges and training providers delivering quality education"
-                fill
-                className="object-cover"
+      {/* Main Content Sections with bottom padding for mobile */}
+      <div className="pb-20 md:pb-0">
+        {/* Colleges & Training Providers Section */}
+        <div id="collegesAndProviders" className="relative bg-gray-50">
+          {/* Top wave divider */}
+          <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
+            <svg
+              viewBox="0 0 1440 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute bottom-0 w-full h-full text-gray-50"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
+                fill="currentColor"
               />
-              <div className="absolute bottom-4 sm:bottom-8 -right-12 bg-white rounded-xl p-4 sm:p-6 shadow-xl max-w-[280px] sm:max-w-sm transform -translate-x-8 sm:-translate-x-20 backdrop-blur-sm border border-gray-100">
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Target className="h-6 w-6 sm:h-7 sm:w-7 text-blue-600" />
+            </svg>
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+            <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+              <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
+                <Image
+                  src={IMAGES.trainingProviders}
+                  alt="Colleges and training providers delivering quality education"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute bottom-4 sm:bottom-8 -right-12 bg-white rounded-xl p-4 sm:p-6 shadow-xl max-w-[280px] sm:max-w-sm transform -translate-x-8 sm:-translate-x-20 backdrop-blur-sm border border-gray-100">
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Target className="h-6 w-6 sm:h-7 sm:w-7 text-blue-600" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">£1.7bn Investment</div>
+                      <div className="text-sm sm:text-base text-gray-600">In skills development by 2030</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">£1.7bn Investment</div>
-                    <div className="text-sm sm:text-base text-gray-600">In skills development by 2030</div>
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 text-blue-600 mb-3 sm:mb-4">
+                  <span className="text-sm font-medium tracking-wide uppercase">For Colleges & Training Providers</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Deliver Quality Training</h2>
+                <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+                  Partner with us to deliver high-quality training programmes that meet employer needs and support economic growth in South Yorkshire.
+                </p>
+                <div className="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
+                  <div className="grid gap-4">
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                        <ChevronRight className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 text-lg mb-1">Access Funding</h3>
+                        <p className="text-gray-600">Deliver funded training programmes through Skills Bank and Skills Bootcamps</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                        <ChevronRight className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 text-lg mb-1">Quality Framework</h3>
+                        <p className="text-gray-600">Access support to meet our quality standards and enhance your provision</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                        <ChevronRight className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Networks</h3>
+                        <p className="text-gray-600">Connect with employers and understand their training needs</p>
+                      </div>
+                    </div>
                   </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
+                  <Link
+                    href="/educators/training-providers"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors text-base sm:text-lg shadow-sm"
+                  >
+                    Learn More
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </div>
               </div>
             </div>
-            <div>
-              <div className="flex items-center gap-2 text-blue-600 mb-3 sm:mb-4">
-                <span className="text-sm font-medium tracking-wide uppercase">For Colleges & Training Providers</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Deliver Quality Training</h2>
-              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                Partner with us to deliver high-quality training programmes that meet employer needs and support economic growth in South Yorkshire.
-              </p>
-              <div className="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
-                <div className="grid gap-4">
+          </div>
+        </div>
+
+        {/* Schools Section */}
+        <div id="schools" className="relative bg-white">
+          {/* Top wave divider */}
+          <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
+            <svg
+              viewBox="0 0 1440 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="absolute bottom-0 w-full h-full text-white"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+            <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+              <div>
+                <div className="flex items-center gap-2 text-emerald-600 mb-3 sm:mb-4">
+                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
+                  <span className="text-sm font-medium tracking-wide uppercase">For Schools</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Career Education Support</h2>
+                <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+                  Access resources and support to deliver outstanding careers guidance and work-related learning opportunities for your students.
+                </p>
+                <div className="space-y-6 mb-8">
                   <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-blue-600" />
+                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                      <Calendar className="h-5 w-5 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Access Funding</h3>
-                      <p className="text-gray-600">Deliver funded training programmes through Skills Bank and Skills Bootcamps</p>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Provider Access</h3>
+                      <p className="text-gray-600">Support to meet Provider Access Legislation requirements</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-blue-600" />
+                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                      <Network className="h-5 w-5 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Quality Framework</h3>
-                      <p className="text-gray-600">Access support to meet our quality standards and enhance your provision</p>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Engagement</h3>
+                      <p className="text-gray-600">Connect with local employers for work experience and insights</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-blue-600" />
+                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                      <Lightbulb className="h-5 w-5 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Networks</h3>
-                      <p className="text-gray-600">Connect with employers and understand their training needs</p>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Career Resources</h3>
+                      <p className="text-gray-600">Teaching materials and labour market information</p>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
                 <Link
-                  href="/educators/training-providers"
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors text-base sm:text-lg shadow-sm"
+                  href="/educators/schools"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-base sm:text-lg shadow-sm"
                 >
                   Learn More
                   <ChevronRight className="ml-2 h-5 w-5" />
                 </Link>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Schools Section */}
-      <div id="schools" className="relative bg-white">
-        {/* Top wave divider */}
-        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-          <svg
-            viewBox="0 0 1440 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute bottom-0 w-full h-full text-white"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-            <div>
-              <div className="flex items-center gap-2 text-emerald-600 mb-3 sm:mb-4">
-                <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-                <span className="text-sm font-medium tracking-wide uppercase">For Schools</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Career Education Support</h2>
-              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                Access resources and support to deliver outstanding careers guidance and work-related learning opportunities for your students.
-              </p>
-              <div className="space-y-6 mb-8">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
-                    <Calendar className="h-5 w-5 text-emerald-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Provider Access</h3>
-                    <p className="text-gray-600">Support to meet Provider Access Legislation requirements</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
-                    <Network className="h-5 w-5 text-emerald-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Engagement</h3>
-                    <p className="text-gray-600">Connect with local employers for work experience and insights</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
-                    <Lightbulb className="h-5 w-5 text-emerald-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-lg mb-1">Career Resources</h3>
-                    <p className="text-gray-600">Teaching materials and labour market information</p>
-                  </div>
-                </div>
-              </div>
-              <Link
-                href="/educators/schools"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-base sm:text-lg shadow-sm"
-              >
-                Learn More
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
-            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden">
-              <Image
-                src={IMAGES.schools}
-                alt="School career guidance session"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Users className="h-7 w-7 text-emerald-600" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-xl mb-1">100+ Schools</div>
-                    <div className="text-gray-600">Supported across South Yorkshire</div>
+              <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden">
+                <Image
+                  src={IMAGES.schools}
+                  alt="School career guidance session"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Users className="h-7 w-7 text-emerald-600" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-gray-900 text-xl mb-1">100+ Schools</div>
+                      <div className="text-gray-600">Supported across South Yorkshire</div>
+                    </div>
                   </div>
                 </div>
               </div>
