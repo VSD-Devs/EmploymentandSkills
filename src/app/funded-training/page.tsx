@@ -381,7 +381,7 @@ const FundedTrainingPage: React.FC = () => {
               Funded Training for Businesses
             </h1>
             <p className="text-sm text-slate-200 mb-8 leading-relaxed">
-              Skills Bank provides funding for businesses that can demonstrate how training will support their growth plans and build resilience.
+              Funded training opportunities are available for businesses that can demonstrate how training initiatives will support their growth objectives and enhance resilience.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button

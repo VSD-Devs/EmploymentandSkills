@@ -61,6 +61,12 @@ export default function PlanYourCareer() {
       description: "Get real workplace experience locally",
       icon: <Users className="h-6 w-6" />,
       link: '/work-experience'
+    },
+    {
+      title: "Funded Training",
+      description: "Find training opportunities to develop your skills",
+      icon: <Briefcase className="h-6 w-6" />,
+      link: '/funded-training-for-adults'
     }
   ]
 

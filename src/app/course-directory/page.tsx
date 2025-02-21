@@ -105,7 +105,7 @@ const CourseCard = ({ course }: { course: Course }) => {
         </div>
         <div className="mt-6">
           <Link
-            href={`/courses/${course.slug}`}
+            href={`/funded-training-for-adults/${course.slug}`}
             className="w-full inline-flex items-center justify-center px-6 py-3.5 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors text-base font-medium"
           >
             View Details
@@ -279,6 +279,7 @@ export default function CourseDirectoryPage() {
       <Breadcrumbs items={[
         { label: 'Courses', href: '/courses' },
         { label: 'Course Directory', href: '/course-directory' },
+        { label: 'Funded Training for Adults', href: '/funded-training-for-adults' },
       ]} />
 
       <div className="relative bg-[#111827] py-16">

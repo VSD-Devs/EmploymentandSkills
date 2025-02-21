@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Young People | South Yorkshire Careers',
-  description: 'Explore career opportunities, apprenticeships, and educational pathways for young people in South Yorkshire.',
+  title: 'Young People | Yorkshire Pathways',
+  description: 'Explore opportunities in education, training, and careers for young people in South Yorkshire. From T-Levels to apprenticeships, find your path to success.',
 }
 
 export default function YoungPeoplePage() {

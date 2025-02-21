@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { ChevronRight, GraduationCap, BookOpen, Briefcase, Users, ArrowRight, Rocket } from 'lucide-react'
 import Newsletter from './Newsletter'
 import CareerQuiz from './CareerQuiz'
+import Breadcrumbs from './Breadcrumbs'
 
 const colorClasses = {
   indigo: {
@@ -259,6 +260,12 @@ const YoungPeople = () => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Young People', href: '/young-people' },
+      ]} />
+
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">
@@ -309,63 +316,65 @@ const YoungPeople = () => {
         </div>
       </div>
 
-      {/* Enhanced Mobile Navigation */}
-      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg">
+      {/* Remove the old navigation */}
+      {/* Enhanced Navigation - Bottom on Mobile, Top on Desktop */}
+      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-200 shadow-lg md:shadow-sm overflow-x-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start sm:justify-center">
-            <div className="flex space-x-1 py-1 overflow-x-auto scrollbar-hide snap-x snap-mandatory touch-pan-x">
-              {Object.entries(tabs).map(([key, tab]) => (
-                <button
-                  key={key}
-                  onClick={() => {
-                    setActiveTab(key)
-                    document.getElementById(key)?.scrollIntoView({ behavior: 'smooth' })
-                  }}
-                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl snap-start ${
-                    activeTab === key 
-                      ? `${colorClasses[tab.color].button} shadow-md` 
-                      : colorClasses[tab.color].nav
-                  }`}
-                >
-                  <div className="relative z-10 flex flex-col items-center gap-1">
-                    <div className={`h-6 w-6 ${
+          <div className="flex justify-start sm:justify-center min-w-max">
+            <div className="flex space-x-1 py-1">
+              {Object.entries(tabs).map(([key, tab]) => {
+                const color = tab.color as keyof typeof colorClasses;
+                return (
+                  <a 
+                    key={key}
+                    href={`#${key}`} 
+                    className={`group relative px-2 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-xl transition-colors ${
                       activeTab === key 
-                        ? `text-${tab.color}-600` 
-                        : 'text-gray-600 group-hover:text-${tab.color}-600'
-                    }`}>
-                      {tab.icon}
+                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
+                        : `${colorClasses[color].nav} text-gray-600`
+                    }`}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    <div className="relative z-10 flex flex-col items-center gap-1">
+                      <div className={`h-6 w-6 ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-600 group-hover:text-${color}-600'
+                      } transition-colors`}>
+                        {tab.icon}
+                      </div>
+                      <span className={`text-xs md:text-sm font-medium ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-900 group-hover:text-${color}-600'
+                      } whitespace-nowrap transition-colors`}>
+                        {tab.title}
+                      </span>
+                      <div className={`h-0.5 hidden md:block ${
+                        activeTab === key 
+                          ? `w-full bg-${color}-600` 
+                          : `w-0 bg-${color}-600 group-hover:w-full`
+                      } transition-all duration-200`} />
                     </div>
-                    <span className={`text-sm sm:text-base font-medium whitespace-nowrap ${
-                      activeTab === key 
-                        ? `text-${tab.color}-600` 
-                        : 'text-gray-900 group-hover:text-${tab.color}-600'
-                    }`}>
-                      {tab.title}
-                    </span>
-                    <div className={`h-0.5 ${
-                      activeTab === key 
-                        ? `w-full bg-${tab.color}-600` 
-                        : `w-0 bg-${tab.color}-600 group-hover:w-full`
-                    } transition-all duration-200`} />
-                  </div>
-                </button>
-              ))}
+                  </a>
+                )
+              })}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content Sections with Enhanced Mobile Scroll Snap */}
-      <div className="md:block">
+      {/* Main Content Sections */}
+      <div className="md:block pb-20 md:pb-0"> {/* Add padding bottom for mobile nav */}
         {Object.entries(tabs).map(([key, tab], index) => (
           <div 
             key={key} 
             id={key} 
-            className={`relative scroll-mt-20 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} snap-start`}
+            className={`relative scroll-mt-20 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
           >
             {/* Top wave divider for even sections */}
             {index % 2 === 0 && (
-              <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
+              <div className="absolute top-0 left-0 right-0 h-16 overflow-hidden -translate-y-[99%]">
                 <svg
                   viewBox="0 0 1440 48"
                   fill="none"
@@ -382,7 +391,7 @@ const YoungPeople = () => {
             )}
             
             {/* Section Content */}
-            <div className="relative py-8 sm:py-24">
+            <div className="relative py-24">
               {/* Decorative elements */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
@@ -390,28 +399,50 @@ const YoungPeople = () => {
               </div>
 
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid md:grid-cols-2 gap-6 sm:gap-12 items-center">
-                  {/* Alternate layout based on index */}
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                  {/* Mobile: Stack content on top of image */}
+                  <div className="md:hidden">
+                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                      {tab.icon}
+                      <span className="text-sm font-medium">{tab.title}</span>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                    <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg mb-6">
+                      <Image
+                        src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
+                        alt={tab.content.alt}
+                        fill
+                        className="object-cover"
+                        onError={() => handleImageError(key)}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                    </div>
+                    <div className="prose prose-lg max-w-none mb-8">
+                      {tab.content.text.map((paragraph, index) => (
+                        <p key={index} className="text-gray-600 leading-relaxed">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                    <Link
+                      href={tab.content.link}
+                      className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                    >
+                      {tab.content.cta}
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  </div>
+
+                  {/* Desktop: Alternating layout */}
                   {index % 2 === 0 ? (
                     <>
-                      {/* Mobile: Stack content on top of smaller image */}
-                      <div className="md:hidden">
-                        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${colorClasses[tab.color].button} mb-4`}>
+                      <div className="hidden md:block">
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
                           {tab.icon}
-                          <span className="text-xs font-medium">{tab.title}</span>
+                          <span className="text-sm font-medium">{tab.title}</span>
                         </div>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">{tab.description}</h2>
-                        <div className="relative h-[200px] rounded-xl overflow-hidden shadow-lg mb-4">
-                          <Image
-                            src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
-                            alt={tab.content.alt}
-                            fill
-                            className="object-cover"
-                            onError={() => handleImageError(key)}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                        </div>
-                        <div className="prose prose-sm max-w-none mb-6">
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                        <div className="prose prose-lg max-w-none mb-8">
                           {tab.content.text.map((paragraph, index) => (
                             <p key={index} className="text-gray-600 leading-relaxed">
                               {paragraph}
@@ -420,14 +451,12 @@ const YoungPeople = () => {
                         </div>
                         <Link
                           href={tab.content.link}
-                          className={`inline-flex items-center px-4 py-2.5 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-sm`}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
                         >
                           {tab.content.cta}
-                          <ChevronRight className="ml-2 h-4 w-4" />
+                          <ChevronRight className="ml-2 h-5 w-5" />
                         </Link>
                       </div>
-
-                      {/* Desktop: Original layout */}
                       <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
                         <Image
                           src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
@@ -437,14 +466,38 @@ const YoungPeople = () => {
                           onError={() => handleImageError(key)}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                        <div className="absolute bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
                           <div className="flex items-center gap-4">
                             <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
                               {tab.icon}
                             </div>
                             <div>
                               <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
-                              <div className="text-base text-gray-600">{tab.description}</div>
+                              <div className="text-gray-600">{tab.description}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                        <Image
+                          src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
+                          alt={tab.content.alt}
+                          fill
+                          className="object-cover"
+                          onError={() => handleImageError(key)}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                          <div className="flex items-center gap-4">
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                              {tab.icon}
+                            </div>
+                            <div>
+                              <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
+                              <div className="text-gray-600">{tab.description}</div>
                             </div>
                           </div>
                         </div>
@@ -464,96 +517,35 @@ const YoungPeople = () => {
                         </div>
                         <Link
                           href={tab.content.link}
-                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-base`}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
                         >
                           {tab.content.cta}
                           <ChevronRight className="ml-2 h-5 w-5" />
                         </Link>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      {/* Mobile: Stack content on top of smaller image */}
-                      <div className="md:hidden">
-                        <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${colorClasses[tab.color].button} mb-4`}>
-                          {tab.icon}
-                          <span className="text-xs font-medium">{tab.title}</span>
-                        </div>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">{tab.description}</h2>
-                        <div className="relative h-[200px] rounded-xl overflow-hidden shadow-lg mb-4">
-                          <Image
-                            src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
-                            alt={tab.content.alt}
-                            fill
-                            className="object-cover"
-                            onError={() => handleImageError(key)}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                        </div>
-                        <div className="prose prose-sm max-w-none mb-6">
-                          {tab.content.text.map((paragraph, index) => (
-                            <p key={index} className="text-gray-600 leading-relaxed">
-                              {paragraph}
-                            </p>
-                          ))}
-                        </div>
-                        <Link
-                          href={tab.content.link}
-                          className={`inline-flex items-center px-4 py-2.5 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-sm`}
-                        >
-                          {tab.content.cta}
-                          <ChevronRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </div>
-
-                      {/* Desktop: Original layout */}
-                      <div className="hidden md:block md:order-1">
-                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
-                          {tab.icon}
-                          <span className="text-sm font-medium">{tab.title}</span>
-                        </div>
-                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
-                        <div className="prose prose-lg max-w-none mb-8">
-                          {tab.content.text.map((paragraph, index) => (
-                            <p key={index} className="text-gray-600 leading-relaxed">
-                              {paragraph}
-                            </p>
-                          ))}
-                        </div>
-                        <Link
-                          href={tab.content.link}
-                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl text-base`}
-                        >
-                          {tab.content.cta}
-                          <ChevronRight className="ml-2 h-5 w-5" />
-                        </Link>
-                      </div>
-                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl md:order-2">
-                        <Image
-                          src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
-                          alt={tab.content.alt}
-                          fill
-                          className="object-cover"
-                          onError={() => handleImageError(key)}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                        <div className="absolute bottom-8 right-4 sm:-right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
-                          <div className="flex items-center gap-4">
-                            <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
-                              {tab.icon}
-                            </div>
-                            <div>
-                              <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
-                              <div className="text-base text-gray-600">{tab.description}</div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </>
                   )}
                 </div>
               </div>
             </div>
+
+            {/* Bottom wave divider for odd sections */}
+            {index % 2 === 1 && (
+              <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden translate-y-[99%]">
+                <svg
+                  viewBox="0 0 1440 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute top-0 w-full h-full text-white transform rotate-180"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
         ))}
       </div>

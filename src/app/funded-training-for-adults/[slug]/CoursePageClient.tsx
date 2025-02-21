@@ -116,8 +116,8 @@ export default function CoursePageClient({ course, provider }: CoursePageClientP
   return (
     <main className="min-h-screen bg-white">
       <Breadcrumbs items={[
-        { label: 'Courses', href: '/courses' },
-        { label: course.title, href: `/courses/${course.slug}` },
+        { label: 'Funded Training for Adults', href: '/funded-training-for-adults' },
+        { label: course.title, href: `/funded-training-for-adults/${course.slug}` },
       ]} />
 
       {/* Hero Section */}

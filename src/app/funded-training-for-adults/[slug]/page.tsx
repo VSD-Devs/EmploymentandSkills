@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!course) return { title: 'Course Not Found' }
   
   return {
-    title: `${course.title} | South Yorkshire Courses`,
+    title: `${course.title} | South Yorkshire Business Training`,
     description: course.description,
   }
 }

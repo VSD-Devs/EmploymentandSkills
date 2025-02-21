@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { CheckCircle2, Users, ChevronRight, GraduationCap, BookOpen, Briefcase, Building2, MapPin, Globe, Clock, Calendar, X, HelpCircle } from 'lucide-react'
+import { CheckCircle2, Users, ChevronRight, GraduationCap, BookOpen, Briefcase, Building2, MapPin, Globe, Clock, Calendar, X, HelpCircle, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Newsletter from './Newsletter'
@@ -16,7 +16,16 @@ const IMAGES = {
   apprenticeship: "/images/apprenticeship-hub.jpg"
 }
 
-const colorClasses = {
+interface ColorClasses {
+  button: string;
+  icon: string;
+  link: string;
+  badge: string;
+  gradient: string;
+  nav: string;
+}
+
+const colorClasses: Record<string, ColorClasses> = {
   blue: {
     button: 'border-blue-500 bg-blue-50',
     icon: 'bg-blue-100 text-blue-600',
@@ -49,7 +58,29 @@ const colorClasses = {
     gradient: 'from-violet-50 to-white',
     nav: 'hover:bg-violet-50/80'
   }
-} as const
+}
+
+type ColorType = keyof typeof colorClasses
+
+interface TabContent {
+  text: string[]
+  image: string
+  alt: string
+  link: string
+  cta: string
+}
+
+interface Tab {
+  icon: React.ReactNode
+  color: ColorType
+  title: string
+  description: string
+  content: TabContent
+}
+
+type TabsType = {
+  [key: string]: Tab
+}
 
 const AdultSkills = () => {
   const [isQuizOpen, setIsQuizOpen] = useState(false)
@@ -57,32 +88,58 @@ const AdultSkills = () => {
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
 
-  // Define tabs configuration
   const tabs = useMemo(() => ({
     employment: {
-      id: 'employment',
+      icon: <CheckCircle2 className="w-6 h-6" />,
+      color: 'blue',
       title: 'Employment Support',
       description: 'Career Development',
-      icon: <CheckCircle2 className="w-6 h-6" />,
-      color: 'blue' as const
+      content: {
+        text: [
+          'Get personalised career guidance, CV writing support, and interview preparation from our expert advisors.',
+          'Our career guidance leads to successful job placements with a 94% success rate.'
+        ],
+        image: IMAGES.employmentSupport,
+        alt: 'Employment support session',
+        link: '/employment-support',
+        cta: 'Explore Employment Support'
+      }
     },
     training: {
-      id: 'training',
+      icon: <Users className="w-6 h-6" />,
+      color: 'emerald',
       title: 'Funded Training',
       description: 'Professional Development',
-      icon: <Users className="w-6 h-6" />,
-      color: 'emerald' as const
+      content: {
+        text: [
+          'Access fully funded courses and qualifications in Yorkshire\'s high-growth sectors.',
+          'Over 2,500 graduates have successfully completed our training programmes, gaining valuable skills and qualifications.'
+        ],
+        image: IMAGES.fundedTraining,
+        alt: 'Training session in progress',
+        link: '/funded-training-for-adults',
+        cta: 'Browse Courses'
+      }
     },
     apprenticeship: {
-      id: 'apprenticeship',
+      icon: <Briefcase className="w-6 h-6" />,
+      color: 'purple',
       title: 'Apprenticeships',
       description: 'Career Change & Progression',
-      icon: <Briefcase className="w-6 h-6" />,
-      color: 'violet' as const
+      content: {
+        text: [
+          'It\'s never too late to start an apprenticeship. Gain recognised qualifications whilst earning a salary in your chosen industry.',
+          'Our apprenticeship programmes are available at all levels, with no age limit and full support throughout your journey.'
+        ],
+        image: IMAGES.apprenticeship,
+        alt: 'Adult apprenticeship opportunities',
+        link: '/apprenticeships',
+        cta: 'Find Apprenticeships'
+      }
     }
   }), [])
 
-  // Add touch handlers
+  // Handle touch swipe for mobile navigation
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX)
   }
@@ -109,7 +166,7 @@ const AdultSkills = () => {
     }
   }
 
-  // Add scroll handler
+  // Handle scroll to update active tab
   const handleScroll = useCallback(() => {
     const sections = Object.keys(tabs).map(key => document.getElementById(key))
     const scrollPosition = window.scrollY + window.innerHeight / 2
@@ -132,7 +189,8 @@ const AdultSkills = () => {
   }, [handleScroll])
 
   return (
-    <div className="bg-white"
+    <div 
+      className="bg-white"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -178,271 +236,244 @@ const AdultSkills = () => {
                 className="inline-flex items-center px-5 py-2.5 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-500 transition-colors"
               >
                 Take Career Quiz
-                <ChevronRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4" />
               </button>
               <Link
                 href="/plan-your-career"
                 className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
               >
                 Start Planning
-                <ChevronRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Updated Sticky Navigation */}
-      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
+      {/* Enhanced Navigation - Bottom on Mobile, Top on Desktop */}
+      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-200 shadow-lg md:shadow-sm overflow-x-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-start sm:justify-center min-w-max">
             <div className="flex space-x-1 py-1">
-              {Object.values(tabs).map((tab) => (
-                <a 
-                  key={tab.id}
-                  href={`#${tab.id}`} 
-                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl transition-colors ${
-                    activeTab === tab.id 
-                      ? `${colorClasses[tab.color].button} text-${tab.color}-600 shadow-md` 
-                      : `${colorClasses[tab.color].nav} text-gray-600`
-                  }`}
-                  onClick={() => setActiveTab(tab.id)}
+              {Object.entries(tabs).map(([key, tab]) => {
+                const color = tab.color as keyof typeof colorClasses;
+                return (
+                  <a 
+                    key={key}
+                    href={`#${key}`} 
+                    className={`group relative px-2 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-xl transition-colors ${
+                      activeTab === key 
+                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
+                        : `${colorClasses[color].nav} text-gray-600`
+                    }`}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    <div className="relative z-10 flex flex-col items-center gap-1">
+                      <div className={`h-6 w-6 ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-600 group-hover:text-${color}-600'
+                      } transition-colors`}>
+                        {tab.icon}
+                      </div>
+                      <span className={`text-xs md:text-sm font-medium ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-900 group-hover:text-${color}-600'
+                      } whitespace-nowrap transition-colors`}>
+                        {tab.title}
+                      </span>
+                      <div className={`h-0.5 hidden md:block ${
+                        activeTab === key 
+                          ? `w-full bg-${color}-600` 
+                          : `w-0 bg-${color}-600 group-hover:w-full`
+                      } transition-all duration-200`} />
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content Sections */}
+      <div className="md:block pb-20 md:pb-0"> {/* Add padding bottom for mobile nav */}
+        {Object.entries(tabs).map(([key, tab], index) => (
+          <div key={key} id={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+            {/* Top wave divider for even sections */}
+            {index % 2 === 0 && (
+              <div className="absolute top-0 left-0 right-0 h-16 overflow-hidden -translate-y-[99%]">
+                <svg
+                  viewBox="0 0 1440 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute bottom-0 w-full h-full text-gray-50"
+                  preserveAspectRatio="none"
                 >
-                  <div className="relative z-10 flex flex-col items-center gap-1">
-                    <div className={`h-6 w-6 ${
-                      activeTab === tab.id 
-                        ? `text-${tab.color}-600` 
-                        : 'text-gray-600 group-hover:text-${tab.color}-600'
-                    } transition-colors`}>
+                  <path
+                    d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+            )}
+            
+            {/* Section Content */}
+            <div className="relative py-24">
+              {/* Decorative elements */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
+                <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
+              </div>
+
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                  {/* Mobile: Stack content on top of image */}
+                  <div className="md:hidden">
+                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
                       {tab.icon}
+                      <span className="text-sm font-medium">{tab.title}</span>
                     </div>
-                    <span className={`text-sm sm:text-base font-medium ${
-                      activeTab === tab.id 
-                        ? `text-${tab.color}-600` 
-                        : 'text-gray-900 group-hover:text-${tab.color}-600'
-                    } whitespace-nowrap transition-colors`}>
-                      {tab.title}
-                    </span>
-                    <div className={`h-0.5 ${
-                      activeTab === tab.id 
-                        ? `w-full bg-${tab.color}-600` 
-                        : `w-0 bg-${tab.color}-600 group-hover:w-full`
-                    } transition-all duration-200`} />
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                    <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg mb-6">
+                      <Image
+                        src={tab.content.image}
+                        alt={tab.content.alt}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                    </div>
+                    <div className="prose prose-lg max-w-none mb-8">
+                      {tab.content.text.map((paragraph, index) => (
+                        <p key={index} className="text-gray-600 leading-relaxed">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                    <Link
+                      href={tab.content.link}
+                      className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                    >
+                      {tab.content.cta}
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Link>
                   </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Employment Support Section */}
-      <div id="employment" className="relative bg-gray-50">
-        {/* Top wave divider */}
-        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-          <svg
-            viewBox="0 0 1440 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute bottom-0 w-full h-full text-gray-50"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
-              <Image
-                src={IMAGES.employmentSupport}
-                alt="Employment support session"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute bottom-4 sm:bottom-8 -right-12 bg-white rounded-xl p-4 sm:p-6 shadow-xl max-w-[280px] sm:max-w-sm transform -translate-x-8 sm:-translate-x-20 backdrop-blur-sm border border-gray-100">
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle2 className="h-6 w-6 sm:h-7 sm:w-7 text-blue-600" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">94% Success Rate</div>
-                    <div className="text-sm sm:text-base text-gray-600">Our career guidance leads to successful job placements</div>
-                  </div>
+                  {/* Desktop: Alternating layout */}
+                  {index % 2 === 0 ? (
+                    <>
+                      <div className="hidden md:block">
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                          {tab.icon}
+                          <span className="text-sm font-medium">{tab.title}</span>
+                        </div>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                        <div className="prose prose-lg max-w-none mb-8">
+                          {tab.content.text.map((paragraph, index) => (
+                            <p key={index} className="text-gray-600 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                        <Link
+                          href={tab.content.link}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                        >
+                          {tab.content.cta}
+                          <ChevronRight className="ml-2 h-5 w-5" />
+                        </Link>
+                      </div>
+                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                        <Image
+                          src={tab.content.image}
+                          alt={tab.content.alt}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                          <div className="flex items-center gap-4">
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                              {tab.icon}
+                            </div>
+                            <div>
+                              <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
+                              <div className="text-gray-600">{tab.description}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                        <Image
+                          src={tab.content.image}
+                          alt={tab.content.alt}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                          <div className="flex items-center gap-4">
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                              {tab.icon}
+                            </div>
+                            <div>
+                              <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
+                              <div className="text-gray-600">{tab.description}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="hidden md:block">
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                          {tab.icon}
+                          <span className="text-sm font-medium">{tab.title}</span>
+                        </div>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                        <div className="prose prose-lg max-w-none mb-8">
+                          {tab.content.text.map((paragraph, index) => (
+                            <p key={index} className="text-gray-600 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                        <Link
+                          href={tab.content.link}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                        >
+                          {tab.content.cta}
+                          <ChevronRight className="ml-2 h-5 w-5" />
+                        </Link>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
-            <div>
-              <div className="flex items-center gap-2 text-blue-600 mb-3 sm:mb-4">
-                <span className="text-sm font-medium tracking-wide uppercase">Career Development</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Employment Support</h2>
-              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                Get personalised career guidance, CV writing support, and interview preparation from our expert advisors.
-              </p>
-              <div className="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
-                <div className="grid gap-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">One-to-one Career Coaching</h3>
-                      <p className="text-gray-600">Personalised guidance sessions with experienced career advisors</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Job Search Strategy</h3>
-                      <p className="text-gray-600">Learn effective techniques to find and secure your ideal role</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Interview Skills Workshop</h3>
-                      <p className="text-gray-600">Practice sessions to boost your confidence and performance</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
-                <Link
-                  href="/employment-support"
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors text-base sm:text-lg shadow-sm"
+
+            {/* Bottom wave divider for odd sections */}
+            {index % 2 === 1 && (
+              <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden translate-y-[99%]">
+                <svg
+                  viewBox="0 0 1440 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute top-0 w-full h-full text-white transform rotate-180"
+                  preserveAspectRatio="none"
                 >
-                  Explore Employment Support
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
+                  <path
+                    d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
+                    fill="currentColor"
+                  />
+                </svg>
               </div>
-            </div>
+            )}
           </div>
-        </div>
-      </div>
-
-      {/* Funded Training Section */}
-      <div id="training" className="relative bg-white">
-        {/* Top wave divider */}
-        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-          <svg
-            viewBox="0 0 1440 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute bottom-0 w-full h-full text-white"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-            <div>
-              <div className="flex items-center gap-2 text-emerald-600 mb-3 sm:mb-4">
-                <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-                <span className="text-sm font-medium tracking-wide uppercase">Professional Development</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Funded Training</h2>
-              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                Access fully funded courses and qualifications in Yorkshire's high-growth sectors.
-              </p>
-              <Link
-                href="/courses"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-base sm:text-lg shadow-sm"
-              >
-                Learn more
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
-            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden">
-              <Image
-                src={IMAGES.fundedTraining}
-                alt="Training session"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Users className="h-7 w-7 text-emerald-600" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-xl mb-1">2,500+ Graduates</div>
-                    <div className="text-gray-600">Successfully completed our training programmes</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Apprenticeships Section */}
-      <div id="apprenticeship" className="relative bg-gray-50">
-        {/* Top wave divider */}
-        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-          <svg
-            viewBox="0 0 1440 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute bottom-0 w-full h-full text-gray-50"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-            <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
-              <Image
-                src={IMAGES.apprenticeship}
-                alt="Adult apprenticeship opportunities"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-violet-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="h-7 w-7 text-violet-600" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-xl mb-1">No Age Limit</div>
-                    <div className="text-gray-600">Apprenticeships available at all levels</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2 text-violet-600 mb-3 sm:mb-4">
-                <span className="inline-block w-2 h-2 rounded-full bg-violet-600" />
-                <span className="text-sm font-medium tracking-wide uppercase">Career Change & Progression</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Apprenticeships</h2>
-              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                It's never too late to start an apprenticeship. Gain recognised qualifications whilst earning a salary in your chosen industry.
-              </p>
-              <Link
-                href="/apprenticeships"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-violet-600 text-white rounded-xl hover:bg-violet-500 transition-colors text-base sm:text-lg shadow-sm"
-              >
-                Find Apprenticeships
-                <ChevronRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Newsletter Section */}

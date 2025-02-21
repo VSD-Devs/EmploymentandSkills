@@ -16,15 +16,15 @@ const CourseCard = ({ course }: CourseCardProps) => {
   const provider = getProviderInfo(course.provider)
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all flex flex-col">
-      <div className="p-6 flex flex-col flex-grow">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all flex flex-col">
+      <div className="p-4 md:p-6 flex flex-col flex-grow">
         <div className="flex flex-wrap gap-2">
-          <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-600 text-white">
+          <span className="px-2 py-1 rounded-full text-xs md:text-sm font-medium bg-blue-600 text-white">
             {course.fundingModel}
           </span>
         </div>
-        <div className="bg-gradient-to-r from-blue-50 to-emerald-50 p-4 rounded-lg border border-blue-100/50 mt-4">
-          <h3 className="text-xl font-bold text-gray-900">
+        <div className="bg-gradient-to-r from-blue-50 to-emerald-50 p-3 md:p-4 rounded-md border border-blue-100/50 mt-3">
+          <h3 className="text-lg md:text-xl font-bold text-gray-900">
             {course.title}
           </h3>
         </div>
@@ -40,7 +40,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
         </div>
         <div className="mt-6">
           <Link
-            href={`/courses/${course.slug}`}
+            href={`/funded-training-for-businesses/${course.slug}`}
             className="w-full inline-flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors"
           >
             View Details
@@ -60,28 +60,29 @@ interface FundingOptionProps {
 }
 
 const FundingOption = ({ title, description, image, features }: FundingOptionProps) => (
-  <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-lg transition-all">
-    <div className="relative h-48">
+  <div className="relative bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition-all">
+    <div className="relative h-40 md:h-48">
       <Image
         src={image}
         alt={title}
         fill
         className="object-cover"
         style={{ objectPosition: 'top left' }}
+        sizes="(max-width: 768px) 100vw, 33vw"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
     </div>
-    <div className="p-8">
-      <div className="h-[4.5rem] mb-4">
-        <h2 className="relative text-2xl font-bold text-gray-900">
+    <div className="p-4 md:p-6">
+      <div className="h-[3.5rem] md:h-[4.5rem] mb-3">
+        <h2 className="relative text-xl md:text-2xl font-bold text-gray-900">
           <span className="relative z-10 line-clamp-2 leading-tight block">{title}</span>
           <span 
-            className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+            className="absolute inset-0 -mx-1 -my-0.5 md:-mx-2 md:-my-1 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
             aria-hidden="true"
           ></span>
         </h2>
       </div>
-      <p className="text-lg text-gray-700 mb-6 leading-relaxed min-h-[4rem]">{description}</p>
+      <p className="text-base md:text-lg text-gray-700 mb-4 leading-relaxed min-h-[3rem] md:min-h-[4rem]">{description}</p>
       <ul className="space-y-4 mb-8">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start gap-3 text-gray-700">
@@ -143,7 +144,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
   );
 };
 
-const CoursesPage = () => {
+const FundedTrainingForAdultsPage = () => {
   const [courses, setCourses] = useState<Course[]>([])
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([])
   
@@ -265,106 +266,117 @@ const CoursesPage = () => {
       ]} />
 
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+      <div className="relative bg-[#111827] py-16 min-h-[400px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/training-provider.jpg"
-            alt="Courses available in South Yorkshire"
+            src="/images/hero-training.jpg"
+            alt="Adult education and training opportunities in South Yorkshire"
             fill
             className="object-cover object-center brightness-75"
             priority
             quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
         </div>
-
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-blue-300 mb-4">
-              <div className="p-1.5 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-400/20">
-                <Building2 className="h-4 w-4" />
+            <div className="inline-flex items-center gap-2 text-blue-300 mb-3">
+              <div className="p-1 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-400/20">
+                <Building2 className="h-3 w-3" />
               </div>
-              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
+              <span className="text-xs font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
             </div>
-            <h1 className="relative text-3xl font-bold text-white mb-6">
+            <h1 className="relative text-2xl font-bold text-white mb-4">
               <span className="relative z-10 line-clamp-2 leading-tight block">Funded Training</span>
             </h1>
-            <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+            <p className="text-base text-gray-200 max-w-3xl mx-auto mb-6">
               Access free courses, bootcamps, and qualifications to advance your career in South Yorkshire's growing industries.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-3">
               <Link
                 href="#courses"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-500 transition-colors"
+                className="inline-flex items-center px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-medium hover:bg-green-500 transition-colors"
               >
                 Browse Courses
-                <ChevronRight className="ml-2 h-5 w-5" />
+                <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
               <Link
                 href="#eligibility"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+                className="inline-flex items-center px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm text-white text-sm font-medium hover:bg-white/20 transition-colors border border-white/20"
               >
                 Check Eligibility
-                <ChevronRight className="ml-2 h-5 w-5" />
+                <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Funding Options */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 mb-12 relative z-10">
-        <div className="grid md:grid-cols-3 gap-6">
-          <FundingOption
-            title="Skills Bootcamps"
-            description="Intensive, flexible courses of up to 16 weeks, designed to give you job-ready skills."
-            image="/images/bootcamps-image2.png"
-            features={[
-              "Industry-recognised qualifications",
-              "Guaranteed job interview",
-              "16-week intensive training"
-            ]}
-          />
-          <FundingOption
-            title="Adult Skills Funding"
-            description="Government Funded training for adults aged 19+ to gain essential skills for work and life."
-            image="/images/FCFJ-1.jpg"
-            features={[
-              "Wide range of sectors",
-              "Valuable qualifications",
-              "Flexible learning options"
-            ]}
-          />
-          <FundingOption
-            title="Multiply: Boost Your Number Skills"
-            description="Free numeracy courses to help you build confidence with numbers for work and daily life."
-            image="/images/multiply.png"
-            features={[
-              "Flexible learning options",
-              "Practical skills focus",
-              "One-to-one support"
-            ]}
-          />
+      {/* Funding Options - Now in a scrollable container on mobile */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 mb-8 relative z-10">
+        <div className="flex overflow-x-auto pb-4 gap-4 snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-3 hide-scrollbar">
+          <div className="w-[85vw] flex-shrink-0 snap-center sm:w-auto">
+            <FundingOption
+              title="Skills Bootcamps"
+              description="Intensive, flexible courses of up to 16 weeks, designed to give you job-ready skills."
+              image="/images/bootcamps-image2.png"
+              features={[
+                "Industry-recognised qualifications",
+                "Guaranteed job interview",
+                "16-week intensive training"
+              ]}
+            />
+          </div>
+          <div className="w-[85vw] flex-shrink-0 snap-center sm:w-auto">
+            <FundingOption
+              title="Adult Skills Funding"
+              description="Government Funded training for adults aged 19+ to gain essential skills for work and life."
+              image="/images/FCFJ-1.jpg"
+              features={[
+                "Wide range of sectors",
+                "Valuable qualifications",
+                "Flexible learning options"
+              ]}
+            />
+          </div>
+          <div className="w-[85vw] flex-shrink-0 snap-center sm:w-auto">
+            <FundingOption
+              title="Multiply: Boost Your Number Skills"
+              description="Free numeracy courses to help you build confidence with numbers for work and daily life."
+              image="/images/multiply.png"
+              features={[
+                "Flexible learning options",
+                "Practical skills focus",
+                "One-to-one support"
+              ]}
+            />
+          </div>
         </div>
       </div>
 
+      {/* Add custom styles for hiding scrollbar */}
+      <style jsx global>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+
       {/* Eligibility Section */}
-      <div id="eligibility" className="bg-gradient-to-b from-white to-gray-50 py-24">
+      <div id="eligibility" className="bg-gradient-to-b from-white to-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 gap-6 items-center">
             <div>
-              <div className="inline-flex items-center gap-3 text-blue-600 mb-6">
-                <div className="p-2 rounded-xl bg-blue-50">
-                  <Building2 className="h-6 w-6" aria-hidden="true" />
+              <div className="inline-flex items-center gap-2 text-blue-600 mb-4">
+                <div className="p-1.5 rounded-lg bg-blue-50">
+                  <Building2 className="h-4 w-4" />
                 </div>
-                <span className="text-base font-semibold tracking-wide uppercase">Check Your Eligibility</span>
+                <span className="text-sm font-semibold tracking-wide uppercase">Check Your Eligibility</span>
               </div>
-              <h2 className="relative text-4xl font-bold text-gray-900 mb-8 leading-tight">
-                <span className="relative z-10 line-clamp-2 leading-tight block">See if You Qualify for<br />Funded Training</span>
-                <span 
-                  className="absolute inset-0 -mx-2 -my-1 bg-gradient-to-r from-blue-100 via-blue-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
-                  aria-hidden="true"
-                ></span>
+              <h2 className="relative text-2xl font-bold text-gray-900 mb-6 leading-tight">
+                See if You Qualify for Funded Training
               </h2>
               <div className="bg-white rounded-2xl p-8 mb-8 shadow-sm border border-gray-100">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-6">Basic Requirements:</h3>
@@ -411,13 +423,14 @@ const CoursesPage = () => {
                 <ChevronRight className="ml-2 h-6 w-6" aria-hidden="true" />
               </Link>
             </div>
-            <div className="relative h-[600px] rounded-2xl overflow-hidden shadow-xl">
+            <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg">
               <Image
                 src="/images/educator-hero.webp"
                 alt="A diverse group of students collaborating in a modern learning environment"
                 fill
                 className="object-cover"
                 priority
+                sizes="100vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
@@ -426,16 +439,16 @@ const CoursesPage = () => {
       </div>
 
       {/* Search and Filters */}
-      <div id="courses" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 max-w-md mx-auto">
-            Course Directory
+      <div id="courses" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-6">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">
+            Funded Courses
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Browse a selection of our most popular fully funded courses.
+          <p className="text-sm text-gray-600">
+            Browse our selection of fully funded courses designed to help you develop new skills and advance your career.
             {totalCourses > 0 && (
-              <span className="block mt-2 text-blue-600">
-                Showing {filteredCourses.length} of {totalCourses} courses
+              <span className="block mt-1 text-blue-600 text-xs">
+                Showing {filteredCourses.length} of {totalCourses} available courses
               </span>
             )}
           </p>
@@ -443,12 +456,12 @@ const CoursesPage = () => {
 
         {/* Course Grid */}
         {loading ? (
-          <div className="text-center py-12">
-            <p className="text-lg text-gray-600">Loading courses...</p>
+          <div className="text-center py-8 md:py-12">
+            <p className="text-base md:text-lg text-gray-600">Loading courses...</p>
           </div>
         ) : filteredCourses.length > 0 ? (
           <>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {filteredCourses.map((course) => (
                 <CourseCard
                   key={course.id}
@@ -470,8 +483,8 @@ const CoursesPage = () => {
             </div>
           </>
         ) : (
-          <div className="text-center py-12">
-            <p className="text-lg text-gray-600">No courses found matching your criteria.</p>
+          <div className="text-center py-8 md:py-12">
+            <p className="text-base md:text-lg text-gray-600">No courses found matching your criteria.</p>
             <Link
               href="/course-directory"
               className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-colors mt-4"
@@ -486,4 +499,4 @@ const CoursesPage = () => {
   )
 }
 
-export default CoursesPage 
+export default FundedTrainingForAdultsPage 

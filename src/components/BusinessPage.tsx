@@ -286,53 +286,6 @@ const BusinessPage = () => {
         </div>
       </div>
 
-      {/* Enhanced Sticky Navigation Banner */}
-      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start sm:justify-center min-w-max">
-            <div className="flex space-x-1 py-1">
-              {Object.entries(tabs).map(([key, tab]) => {
-                const color = tab.color as keyof typeof colorClasses;
-                return (
-                  <a 
-                    key={key}
-                    href={`#${key}`} 
-                    className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl transition-colors ${
-                      activeTab === key 
-                        ? `${colorClasses[color as keyof typeof colorClasses].button} text-${color}-600 shadow-md` 
-                        : `${colorClasses[color as keyof typeof colorClasses].nav} text-gray-600`
-                    }`}
-                    onClick={() => setActiveTab(key)}
-                  >
-                    <div className="relative z-10 flex flex-col items-center gap-1">
-                      <div className={`h-6 w-6 ${
-                        activeTab === key 
-                          ? `text-${color}-600` 
-                          : 'text-gray-600 group-hover:text-${color}-600'
-                      } transition-colors`}>
-                        {tab.icon}
-                      </div>
-                      <span className={`text-sm sm:text-base font-medium ${
-                        activeTab === key 
-                          ? `text-${color}-600` 
-                          : 'text-gray-900 group-hover:text-${color}-600'
-                      } whitespace-nowrap transition-colors`}>
-                        {tab.title}
-                      </span>
-                      <div className={`h-0.5 ${
-                        activeTab === key 
-                          ? `w-full bg-${color}-600` 
-                          : `w-0 bg-${color}-600 group-hover:w-full`
-                      } transition-all duration-200`} />
-                    </div>
-                  </a>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Content Sections */}
       {Object.entries(tabs).map(([key, tab], index) => (
         <div key={key} id={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
@@ -509,6 +462,53 @@ const BusinessPage = () => {
           )}
         </div>
       ))}
+
+      {/* Enhanced Navigation - Bottom on Mobile, Top on Desktop */}
+      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-200 shadow-lg md:shadow-sm overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-start sm:justify-center min-w-max">
+            <div className="flex space-x-1 py-1">
+              {Object.entries(tabs).map(([key, tab]) => {
+                const color = tab.color as keyof typeof colorClasses;
+                return (
+                  <a 
+                    key={key}
+                    href={`#${key}`} 
+                    className={`group relative px-2 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-xl transition-colors ${
+                      activeTab === key 
+                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
+                        : `${colorClasses[color].nav} text-gray-600`
+                    }`}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    <div className="relative z-10 flex flex-col items-center gap-1">
+                      <div className={`h-6 w-6 ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-600 group-hover:text-${color}-600'
+                      } transition-colors`}>
+                        {tab.icon}
+                      </div>
+                      <span className={`text-xs md:text-sm font-medium ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-900 group-hover:text-${color}-600'
+                      } whitespace-nowrap transition-colors`}>
+                        {tab.title}
+                      </span>
+                      <div className={`h-0.5 hidden md:block ${
+                        activeTab === key 
+                          ? `w-full bg-${color}-600` 
+                          : `w-0 bg-${color}-600 group-hover:w-full`
+                      } transition-all duration-200`} />
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Newsletter Section */}
       <Newsletter />

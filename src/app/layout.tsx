@@ -48,30 +48,6 @@ export default function RootLayout({
           <SpeedInsights />
           <Analytics />
         </ThemeProvider>
-        <script 
-          src="https://website-widgets.pages.dev/dist/sienna.min.js" 
-          defer
-          async
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.addEventListener('load', function() {
-                if (window.Sienna) {
-                  window.Sienna.init({
-                    position: 'bottom-right',
-                    contrast: true,
-                    fontSize: true,
-                    textSpacing: true,
-                    dyslexic: true,
-                    saturation: true,
-                    linkHighlight: true
-                  });
-                }
-              });
-            `
-          }}
-        />
       </body>
     </html>
   )

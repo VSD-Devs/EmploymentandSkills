@@ -73,7 +73,7 @@ export default function AdultSkillsFunding() {
               <span className="text-sm font-medium tracking-wide uppercase">Adult Skills Funding</span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-              Fully Funded Training for Adults
+              Funded Training
             </h1>
             <p className="text-lg text-gray-200 max-w-2xl mx-auto leading-relaxed">
               Access fully funded training opportunities to enhance your skills and advance your career in South Yorkshire.
