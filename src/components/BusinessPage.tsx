@@ -238,7 +238,7 @@ const BusinessPage = () => {
       ]} />
 
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+      <div className="relative bg-[#111827] py-20 flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-business.jpg"
@@ -260,10 +260,10 @@ const BusinessPage = () => {
               </div>
               <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Business Hub</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
               Business Support<br className="hidden sm:block" /> in South Yorkshire
             </h1>
-            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-200 max-w-2xl mx-auto">
               Access funding, expert support, and resources to help your business thrive. Connect with Yorkshire's future workforce and shape the skills of tomorrow.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-4">
@@ -286,27 +286,56 @@ const BusinessPage = () => {
         </div>
       </div>
 
+      {/* Enhanced Navigation - Desktop Only */}
+      <div className="hidden md:block sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <div className="flex space-x-1 py-3">
+              {Object.entries(tabs).map(([key, tab]) => {
+                const color = tab.color as keyof typeof colorClasses;
+                return (
+                  <a 
+                    key={key}
+                    href={`#${key}`} 
+                    className={`group relative px-4 py-3 flex-shrink-0 rounded-xl transition-colors ${
+                      activeTab === key 
+                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
+                        : `${colorClasses[color].nav} text-gray-600`
+                    }`}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    <div className="relative z-10 flex flex-col items-center gap-1">
+                      <div className={`h-6 w-6 ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-600 group-hover:text-${color}-600'
+                      } transition-colors`}>
+                        {tab.icon}
+                      </div>
+                      <span className={`text-sm md:text-base font-medium ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-900 group-hover:text-${color}-600'
+                      } whitespace-nowrap transition-colors`}>
+                        {tab.title}
+                      </span>
+                      <div className={`h-0.5 hidden md:block ${
+                        activeTab === key 
+                          ? `w-full bg-${color}-600` 
+                          : `w-0 bg-${color}-600 group-hover:w-full`
+                      } transition-all duration-200`} />
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Content Sections */}
       {Object.entries(tabs).map(([key, tab], index) => (
         <div key={key} id={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
-          {/* Top wave divider for even sections */}
-          {index % 2 === 0 && (
-            <div className="absolute top-0 left-0 right-0 h-16 overflow-hidden -translate-y-[99%]">
-              <svg
-                viewBox="0 0 1440 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="absolute bottom-0 w-full h-full text-gray-50"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-          )}
-          
           {/* Section Content */}
           <div className="relative py-24">
             {/* Decorative elements */}
@@ -321,9 +350,9 @@ const BusinessPage = () => {
                 <div className="md:hidden">
                   <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as keyof typeof colorClasses].button} mb-6`}>
                     {tab.icon}
-                    <span className="text-sm font-medium">{tab.title}</span>
+                    <span className="text-base font-medium">{tab.title}</span>
                   </div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                  <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
                   <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg mb-6">
                     <Image
                       src={tab.content.image}
@@ -355,10 +384,10 @@ const BusinessPage = () => {
                     <div className="hidden md:block">
                       <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as keyof typeof colorClasses].button} mb-6`}>
                         {tab.icon}
-                        <span className="text-sm font-medium">{tab.title}</span>
+                        <span className="text-base font-medium">{tab.title}</span>
                       </div>
-                      <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
-                      <div className="prose prose-lg max-w-none mb-8">
+                      <h2 className="text-5xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                      <div className="prose prose-xl max-w-none mb-8">
                         {tab.content.text.map((paragraph, index) => (
                           <p key={index} className="text-gray-600 leading-relaxed">
                             {paragraph}
@@ -419,10 +448,10 @@ const BusinessPage = () => {
                     <div className="hidden md:block">
                       <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as keyof typeof colorClasses].button} mb-6`}>
                         {tab.icon}
-                        <span className="text-sm font-medium">{tab.title}</span>
+                        <span className="text-base font-medium">{tab.title}</span>
                       </div>
-                      <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
-                      <div className="prose prose-lg max-w-none mb-8">
+                      <h2 className="text-5xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                      <div className="prose prose-xl max-w-none mb-8">
                         {tab.content.text.map((paragraph, index) => (
                           <p key={index} className="text-gray-600 leading-relaxed">
                             {paragraph}
@@ -442,39 +471,24 @@ const BusinessPage = () => {
               </div>
             </div>
           </div>
-
-          {/* Bottom wave divider for odd sections */}
-          {index % 2 === 1 && (
-            <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden translate-y-[99%]">
-              <svg
-                viewBox="0 0 1440 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="absolute top-0 w-full h-full text-white transform rotate-180"
-                preserveAspectRatio="none"
-              >
-                <path
-                  d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-          )}
         </div>
       ))}
 
-      {/* Enhanced Navigation - Bottom on Mobile, Top on Desktop */}
-      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-200 shadow-lg md:shadow-sm overflow-x-auto">
+      {/* Newsletter Section */}
+      <Newsletter />
+
+      {/* Mobile Navigation - Fixed at Bottom */}
+      <div className="fixed md:hidden bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t border-gray-200 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start sm:justify-center min-w-max">
-            <div className="flex space-x-1 py-1">
+          <div className="flex justify-center">
+            <div className="flex space-x-1 py-2">
               {Object.entries(tabs).map(([key, tab]) => {
                 const color = tab.color as keyof typeof colorClasses;
                 return (
                   <a 
                     key={key}
                     href={`#${key}`} 
-                    className={`group relative px-2 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-xl transition-colors ${
+                    className={`group relative px-3 py-2 flex-shrink-0 rounded-xl transition-colors ${
                       activeTab === key 
                         ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
                         : `${colorClasses[color].nav} text-gray-600`
@@ -482,25 +496,20 @@ const BusinessPage = () => {
                     onClick={() => setActiveTab(key)}
                   >
                     <div className="relative z-10 flex flex-col items-center gap-1">
-                      <div className={`h-6 w-6 ${
+                      <div className={`h-5 w-5 ${
                         activeTab === key 
                           ? `text-${color}-600` 
                           : 'text-gray-600 group-hover:text-${color}-600'
                       } transition-colors`}>
                         {tab.icon}
                       </div>
-                      <span className={`text-xs md:text-sm font-medium ${
+                      <span className={`text-xs font-medium ${
                         activeTab === key 
                           ? `text-${color}-600` 
                           : 'text-gray-900 group-hover:text-${color}-600'
                       } whitespace-nowrap transition-colors`}>
                         {tab.title}
                       </span>
-                      <div className={`h-0.5 hidden md:block ${
-                        activeTab === key 
-                          ? `w-full bg-${color}-600` 
-                          : `w-0 bg-${color}-600 group-hover:w-full`
-                      } transition-all duration-200`} />
                     </div>
                   </a>
                 )
@@ -509,9 +518,6 @@ const BusinessPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Newsletter Section */}
-      <Newsletter />
     </div>
   )
 }

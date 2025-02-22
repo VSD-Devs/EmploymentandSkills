@@ -202,7 +202,7 @@ const AdultSkills = () => {
       ]} />
 
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+      <div className="relative bg-[#111827] py-20 flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/adult-skills-hero.jpg"
@@ -250,8 +250,8 @@ const AdultSkills = () => {
         </div>
       </div>
 
-      {/* Enhanced Navigation - Bottom on Mobile, Top on Desktop */}
-      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-200 shadow-lg md:shadow-sm overflow-x-auto">
+      {/* Enhanced Navigation - Desktop Only */}
+      <div className="hidden md:block sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-start sm:justify-center min-w-max">
             <div className="flex space-x-1 py-1">
@@ -301,24 +301,6 @@ const AdultSkills = () => {
       <div className="md:block pb-20 md:pb-0"> {/* Add padding bottom for mobile nav */}
         {Object.entries(tabs).map(([key, tab], index) => (
           <div key={key} id={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
-            {/* Top wave divider for even sections */}
-            {index % 2 === 0 && (
-              <div className="absolute top-0 left-0 right-0 h-16 overflow-hidden -translate-y-[99%]">
-                <svg
-                  viewBox="0 0 1440 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="absolute bottom-0 w-full h-full text-gray-50"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
-            )}
-            
             {/* Section Content */}
             <div className="relative py-24">
               {/* Decorative elements */}
@@ -454,24 +436,6 @@ const AdultSkills = () => {
                 </div>
               </div>
             </div>
-
-            {/* Bottom wave divider for odd sections */}
-            {index % 2 === 1 && (
-              <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden translate-y-[99%]">
-                <svg
-                  viewBox="0 0 1440 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="absolute top-0 w-full h-full text-white transform rotate-180"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
-            )}
           </div>
         ))}
       </div>
@@ -481,6 +445,48 @@ const AdultSkills = () => {
 
       {/* Career Quiz Modal */}
       <CareerQuiz isOpen={isQuizOpen} onClose={() => setIsQuizOpen(false)} />
+
+      {/* Mobile Navigation - Fixed at Bottom */}
+      <div className="fixed md:hidden bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t border-gray-200 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <div className="flex space-x-1 py-2">
+              {Object.entries(tabs).map(([key, tab]) => {
+                const color = tab.color as keyof typeof colorClasses;
+                return (
+                  <a 
+                    key={key}
+                    href={`#${key}`} 
+                    className={`group relative px-3 py-2 flex-shrink-0 rounded-xl transition-colors ${
+                      activeTab === key 
+                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
+                        : `${colorClasses[color].nav} text-gray-600`
+                    }`}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    <div className="relative z-10 flex flex-col items-center gap-1">
+                      <div className={`h-5 w-5 ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-600 group-hover:text-${color}-600'
+                      } transition-colors`}>
+                        {tab.icon}
+                      </div>
+                      <span className={`text-xs font-medium ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-900 group-hover:text-${color}-600'
+                      } whitespace-nowrap transition-colors`}>
+                        {tab.title}
+                      </span>
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

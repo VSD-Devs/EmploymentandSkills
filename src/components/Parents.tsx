@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, Users, BookOpen, GraduationCap, Lightbulb } from 'lucide-react'
@@ -12,30 +12,6 @@ const IMAGES = {
   careerGuidance: "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80",
   skillsSupport: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80",
   financialHelp: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80"
-}
-
-const sections = {
-  guidance: {
-    id: 'guidance',
-    title: 'Career Guidance',
-    description: 'Supporting Your Child',
-    icon: <GraduationCap className="w-6 h-6" />,
-    color: 'teal' as const
-  },
-  skills: {
-    id: 'skills',
-    title: 'Skills Support',
-    description: 'Learning & Development',
-    icon: <BookOpen className="w-6 h-6" />,
-    color: 'emerald' as const
-  },
-  funding: {
-    id: 'funding',
-    title: 'Financial Support',
-    description: 'Available Funding',
-    icon: <Lightbulb className="w-6 h-6" />,
-    color: 'purple' as const
-  }
 }
 
 const colorClasses = {
@@ -65,9 +41,140 @@ const colorClasses = {
   }
 } as const
 
+type ColorType = keyof typeof colorClasses
+
+interface TabContent {
+  text: string[]
+  image: string
+  alt: string
+  link: string
+  cta: string
+}
+
+interface Tab {
+  icon: React.ReactNode
+  color: ColorType
+  title: string
+  description: string
+  content: TabContent
+}
+
+type TabsType = {
+  [key: string]: Tab
+}
+
 const Parents = () => {
+  const [activeTab, setActiveTab] = useState<string>('')
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+
+  const tabs = useMemo(() => ({
+    guidance: {
+      icon: <GraduationCap className="w-6 h-6" />,
+      color: 'teal',
+      title: 'Career Guidance',
+      description: 'Supporting Your Child',
+      content: {
+        text: [
+          'Help your child explore career options and make informed decisions about their future.',
+          'Get expert guidance on supporting your child through their career journey, from choosing subjects to understanding different career paths.'
+        ],
+        image: IMAGES.careerGuidance,
+        alt: 'Career guidance session',
+        link: '/career-guidance',
+        cta: 'Get Started'
+      }
+    },
+    skills: {
+      icon: <BookOpen className="w-6 h-6" />,
+      color: 'emerald',
+      title: 'Skills Support',
+      description: 'Learning & Development',
+      content: {
+        text: [
+          'Access resources and support to help your child develop essential skills for their future career.',
+          'Discover tools and resources to support your child\'s learning and development journey.'
+        ],
+        image: IMAGES.skillsSupport,
+        alt: 'Skills development',
+        link: '/skills-support',
+        cta: 'Explore Resources'
+      }
+    },
+    funding: {
+      icon: <Lightbulb className="w-6 h-6" />,
+      color: 'purple',
+      title: 'Financial Support',
+      description: 'Available Funding',
+      content: {
+        text: [
+          'Learn about available financial support and funding options for your child\'s education and training.',
+          'Understand the various funding options available to support your child\'s educational journey.'
+        ],
+        image: IMAGES.financialHelp,
+        alt: 'Financial support',
+        link: '/financial-support',
+        cta: 'Explore Funding'
+      }
+    }
+  }), [])
+
+  // Handle touch swipe for mobile navigation
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    const SWIPE_THRESHOLD = 50
+    const touchDiff = touchStart - touchEnd
+
+    if (Math.abs(touchDiff) > SWIPE_THRESHOLD) {
+      const tabKeys = Object.keys(tabs)
+      const currentIndex = tabKeys.indexOf(activeTab)
+      
+      if (touchDiff > 0 && currentIndex < tabKeys.length - 1) {
+        setActiveTab(tabKeys[currentIndex + 1])
+        document.getElementById(tabKeys[currentIndex + 1])?.scrollIntoView({ behavior: 'smooth' })
+      } else if (touchDiff < 0 && currentIndex > 0) {
+        setActiveTab(tabKeys[currentIndex - 1])
+        document.getElementById(tabKeys[currentIndex - 1])?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+
+  // Handle scroll to update active tab
+  const handleScroll = useCallback(() => {
+    const sections = Object.keys(tabs).map(key => document.getElementById(key))
+    const scrollPosition = window.scrollY + window.innerHeight / 2
+
+    sections.forEach((section) => {
+      if (section) {
+        const sectionTop = section.offsetTop
+        const sectionBottom = sectionTop + section.offsetHeight
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          setActiveTab(section.id)
+        }
+      }
+    })
+  }, [tabs])
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [handleScroll])
+
   return (
-    <div className="bg-white">
+    <div 
+      className="bg-white"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Breadcrumbs Component */}
       <Breadcrumbs items={[
         { label: 'Home', href: '/' },
@@ -123,332 +230,240 @@ const Parents = () => {
         </div>
       </div>
 
-      {/* Enhanced Sticky Navigation Banner */}
-      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-lg overflow-x-auto">
+      {/* Enhanced Navigation - Desktop Only */}
+      <div className="hidden md:block sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start sm:justify-center min-w-max">
-            <div className="flex space-x-1 py-1">
-              {Object.values(sections).map((section) => (
-                <a 
-                  key={section.id}
-                  href={`#${section.id}`} 
-                  className={`group relative px-4 sm:px-6 py-3 sm:py-4 flex-shrink-0 rounded-xl ${colorClasses[section.color].nav}`}
-                >
-                  <div className="relative z-10 flex flex-col items-center gap-1">
-                    <div className={`h-6 w-6 text-gray-600 group-hover:text-${section.color}-600 group-hover:scale-105`}>
-                      {section.icon}
+          <div className="flex justify-center">
+            <div className="flex space-x-1 py-3">
+              {Object.entries(tabs).map(([key, tab]) => {
+                const color = tab.color as keyof typeof colorClasses;
+                return (
+                  <a 
+                    key={key}
+                    href={`#${key}`} 
+                    className={`group relative px-4 py-3 flex-shrink-0 rounded-xl transition-colors ${
+                      activeTab === key 
+                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
+                        : `${colorClasses[color].nav} text-gray-600`
+                    }`}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    <div className="relative z-10 flex flex-col items-center gap-1">
+                      <div className={`h-6 w-6 ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-600 group-hover:text-${color}-600'
+                      } transition-colors`}>
+                        {tab.icon}
+                      </div>
+                      <span className={`text-sm md:text-base font-medium ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-900 group-hover:text-${color}-600'
+                      } whitespace-nowrap transition-colors`}>
+                        {tab.title}
+                      </span>
+                      <div className={`h-0.5 hidden md:block ${
+                        activeTab === key 
+                          ? `w-full bg-${color}-600` 
+                          : `w-0 bg-${color}-600 group-hover:w-full`
+                      } transition-all duration-200`} />
                     </div>
-                    <span className={`text-sm sm:text-base font-medium text-gray-900 group-hover:text-${section.color}-600 whitespace-nowrap`}>
-                      {section.title}
-                    </span>
-                    <div className={`h-0.5 w-0 bg-${section.color}-600 group-hover:w-full transition-all duration-50`} />
-                  </div>
-                </a>
-              ))}
+                  </a>
+                )
+              })}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Career Guidance Section */}
-      <div id="guidance" className="relative bg-gray-50">
-        {/* Top wave divider */}
-        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-          <svg
-            viewBox="0 0 1440 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute bottom-0 w-full h-full text-gray-50"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[460px] rounded-2xl overflow-hidden">
-              <Image
-                src={IMAGES.careerGuidance}
-                alt="Career guidance session"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-teal-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <GraduationCap className="h-7 w-7 text-teal-600" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-xl mb-1">Guidance</div>
-                    <div className="text-gray-600">Knowledgeable career advisors for your child</div>
-                  </div>
-                </div>
+      {/* Main Content Sections */}
+      <div className="md:block pb-20 md:pb-0"> {/* Add padding bottom for mobile nav */}
+        {Object.entries(tabs).map(([key, tab], index) => (
+          <div key={key} id={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+            {/* Section Content */}
+            <div className="relative py-24">
+              {/* Decorative elements */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
+                <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
               </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2 text-teal-600 mb-4">
-                <span className="inline-block w-2 h-2 rounded-full bg-teal-600" />
-                <span className="text-sm font-medium tracking-wide uppercase">Supporting Your Child</span>
-              </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Career Guidance</h2>
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Help your child explore career options and make informed decisions about their future.
-              </p>
-              <div className="bg-gray-50 rounded-xl p-6 mb-8">
-                <div className="grid gap-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-teal-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Career Exploration</h3>
-                      <p className="text-gray-600"> Diverse career paths and opportunities</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-teal-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Industry Insights</h3>
-                      <p className="text-gray-600">Learn about Yorkshire's growing sectors</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-teal-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Decision Support</h3>
-                      <p className="text-gray-600">Tools to help make informed career choices</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-6">
-                <Link
-                  href="/career-guidance"
-                  className="inline-flex items-center px-6 py-3 bg-teal-600 text-white rounded-xl hover:bg-teal-500 transition-colors text-lg shadow-sm"
-                >
-                  Get Started
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
-                <Link
-                  href="/success-stories"
-                  className="inline-flex items-center text-teal-600 font-medium hover:text-teal-500 group text-lg"
-                >
-                  View Success Stories
-                  <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Skills Support Section */}
-      <div id="skills" className="relative bg-white">
-        {/* Top wave divider */}
-        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-          <svg
-            viewBox="0 0 1440 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute bottom-0 w-full h-full text-white"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="flex items-center gap-2 text-emerald-600 mb-4">
-                <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-                <span className="text-sm font-medium tracking-wide uppercase">Learning & Development</span>
-              </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Skills Support</h2>
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Access resources and support to help your child develop essential skills for their future career.
-              </p>
-              <div className="bg-gray-50 rounded-xl p-6 mb-8">
-                <div className="grid gap-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-emerald-600" />
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                  {/* Mobile: Stack content on top of image */}
+                  <div className="md:hidden">
+                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                      {tab.icon}
+                      <span className="text-sm font-medium">{tab.title}</span>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Study Support</h3>
-                      <p className="text-gray-600">Resources to help with academic development</p>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                    <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg mb-6">
+                      <Image
+                        src={tab.content.image}
+                        alt={tab.content.alt}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                     </div>
+                    <div className="prose prose-lg max-w-none mb-8">
+                      {tab.content.text.map((paragraph, index) => (
+                        <p key={index} className="text-gray-600 leading-relaxed">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                    <Link
+                      href={tab.content.link}
+                      className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                    >
+                      {tab.content.cta}
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Link>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Life Skills</h3>
-                      <p className="text-gray-600">Building essential skills for work and life</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Digital Skills</h3>
-                      <p className="text-gray-600">Technology skills for the modern workplace</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-6">
-                <Link
-                  href="/skills-support"
-                  className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-lg shadow-sm"
-                >
-                  Explore Resources
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
-                <Link
-                  href="/learning-resources"
-                  className="inline-flex items-center text-emerald-600 font-medium hover:text-emerald-500 group text-lg"
-                >
-                  View Learning Materials
-                  <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </div>
-            </div>
-            <div className="relative h-[460px] rounded-2xl overflow-hidden">
-              <Image
-                src={IMAGES.skillsSupport}
-                alt="Skills development"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <BookOpen className="h-7 w-7 text-emerald-600" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-xl mb-1">Learning Resources</div>
-                    <div className="text-gray-600">Comprehensive support materials</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Financial Support Section */}
-      <div id="funding" className="relative bg-gray-50">
-        {/* Top wave divider */}
-        <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-          <svg
-            viewBox="0 0 1440 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="absolute bottom-0 w-full h-full text-gray-50"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[460px] rounded-2xl overflow-hidden">
-              <Image
-                src={IMAGES.financialHelp}
-                alt="Financial support"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-purple-50 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Lightbulb className="h-7 w-7 text-purple-600" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900 text-xl mb-1">Available Support</div>
-                    <div className="text-gray-600">Financial aid and funding options</div>
-                  </div>
+                  {/* Desktop: Alternating layout */}
+                  {index % 2 === 0 ? (
+                    <>
+                      <div className="hidden md:block">
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                          {tab.icon}
+                          <span className="text-sm font-medium">{tab.title}</span>
+                        </div>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                        <div className="prose prose-lg max-w-none mb-8">
+                          {tab.content.text.map((paragraph, index) => (
+                            <p key={index} className="text-gray-600 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                        <Link
+                          href={tab.content.link}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                        >
+                          {tab.content.cta}
+                          <ChevronRight className="ml-2 h-5 w-5" />
+                        </Link>
+                      </div>
+                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                        <Image
+                          src={tab.content.image}
+                          alt={tab.content.alt}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                          <div className="flex items-center gap-4">
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                              {tab.icon}
+                            </div>
+                            <div>
+                              <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
+                              <div className="text-gray-600">{tab.description}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                        <Image
+                          src={tab.content.image}
+                          alt={tab.content.alt}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                          <div className="flex items-center gap-4">
+                            <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
+                              {tab.icon}
+                            </div>
+                            <div>
+                              <div className="font-bold text-gray-900 text-xl mb-1">{tab.title}</div>
+                              <div className="text-gray-600">{tab.description}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="hidden md:block">
+                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                          {tab.icon}
+                          <span className="text-sm font-medium">{tab.title}</span>
+                        </div>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                        <div className="prose prose-lg max-w-none mb-8">
+                          {tab.content.text.map((paragraph, index) => (
+                            <p key={index} className="text-gray-600 leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                        <Link
+                          href={tab.content.link}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                        >
+                          {tab.content.cta}
+                          <ChevronRight className="ml-2 h-5 w-5" />
+                        </Link>
+                      </div>
+                    </>
+                  )}
                 </div>
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center gap-2 text-purple-600 mb-4">
-                <span className="inline-block w-2 h-2 rounded-full bg-purple-600" />
-                <span className="text-sm font-medium tracking-wide uppercase">Available Funding</span>
-              </div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Financial Support</h2>
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                Learn about available financial support and funding options for your child's education and training.
-              </p>
-              <div className="bg-gray-50 rounded-xl p-6 mb-8">
-                <div className="grid gap-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-purple-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Education Grants</h3>
-                      <p className="text-gray-600">Available grants and bursaries for study</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-purple-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Training Support</h3>
-                      <p className="text-gray-600">Funding for vocational training and courses</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <ChevronRight className="h-5 w-5 text-purple-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Additional Help</h3>
-                      <p className="text-gray-600">Extra support for specific circumstances</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-6">
-                <Link
-                  href="/financial-support"
-                  className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-500 transition-colors text-lg shadow-sm"
-                >
-                  Explore Funding
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
-                <Link
-                  href="/funding-guide"
-                  className="inline-flex items-center text-purple-600 font-medium hover:text-purple-500 group text-lg"
-                >
-                  View Funding Guide
-                  <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Link>
               </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
 
       {/* Newsletter Section */}
       <Newsletter />
+
+      {/* Mobile Navigation - Fixed at Bottom */}
+      <div className="fixed md:hidden bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t border-gray-200 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <div className="flex space-x-1 py-2">
+              {Object.entries(tabs).map(([key, tab]) => {
+                const color = tab.color as keyof typeof colorClasses;
+                return (
+                  <a 
+                    key={key}
+                    href={`#${key}`} 
+                    className={`group relative px-3 py-2 flex-shrink-0 rounded-xl transition-colors ${
+                      activeTab === key 
+                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
+                        : `${colorClasses[color].nav} text-gray-600`
+                    }`}
+                    onClick={() => setActiveTab(key)}
+                  >
+                    <div className="relative z-10 flex flex-col items-center gap-1">
+                      <div className={`h-5 w-5 ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-600 group-hover:text-${color}-600'
+                      } transition-colors`}>
+                        {tab.icon}
+                      </div>
+                      <span className={`text-xs font-medium ${
+                        activeTab === key 
+                          ? `text-${color}-600` 
+                          : 'text-gray-900 group-hover:text-${color}-600'
+                      } whitespace-nowrap transition-colors`}>
+                        {tab.title}
+                      </span>
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

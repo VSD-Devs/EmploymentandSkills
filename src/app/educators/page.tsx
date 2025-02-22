@@ -224,21 +224,6 @@ const EducatorsPage = () => {
       <div className="pb-20 md:pb-0">
         {/* Colleges & Training Providers Section */}
         <div id="collegesAndProviders" className="relative bg-gray-50">
-          {/* Top wave divider */}
-          <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-            <svg
-              viewBox="0 0 1440 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute bottom-0 w-full h-full text-gray-50"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                fill="currentColor"
-              />
-            </svg>
-          </div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
             <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
               <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
@@ -315,21 +300,6 @@ const EducatorsPage = () => {
 
         {/* Schools Section */}
         <div id="schools" className="relative bg-white">
-          {/* Top wave divider */}
-          <div className="absolute top-0 left-0 right-0 h-8 sm:h-16 overflow-hidden -translate-y-[99%]">
-            <svg
-              viewBox="0 0 1440 48"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute bottom-0 w-full h-full text-white"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                fill="currentColor"
-              />
-            </svg>
-          </div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
             <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
               <div>

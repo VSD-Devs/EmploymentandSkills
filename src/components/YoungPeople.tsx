@@ -372,24 +372,6 @@ const YoungPeople = () => {
             id={key} 
             className={`relative scroll-mt-20 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
           >
-            {/* Top wave divider for even sections */}
-            {index % 2 === 0 && (
-              <div className="absolute top-0 left-0 right-0 h-16 overflow-hidden -translate-y-[99%]">
-                <svg
-                  viewBox="0 0 1440 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="absolute bottom-0 w-full h-full text-gray-50"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
-            )}
-            
             {/* Section Content */}
             <div className="relative py-24">
               {/* Decorative elements */}
@@ -528,24 +510,6 @@ const YoungPeople = () => {
                 </div>
               </div>
             </div>
-
-            {/* Bottom wave divider for odd sections */}
-            {index % 2 === 1 && (
-              <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden translate-y-[99%]">
-                <svg
-                  viewBox="0 0 1440 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="absolute top-0 w-full h-full text-white transform rotate-180"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0 48h1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0v48z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
-            )}
           </div>
         ))}
       </div>
