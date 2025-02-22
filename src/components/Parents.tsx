@@ -43,6 +43,15 @@ const colorClasses = {
 
 type ColorType = keyof typeof colorClasses
 
+interface ColorClasses {
+  button: string
+  icon: string
+  link: string
+  badge: string
+  gradient: string
+  nav: string
+}
+
 interface TabContent {
   text: string[]
   image: string
