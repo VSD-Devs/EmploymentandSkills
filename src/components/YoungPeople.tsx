@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { ChevronRight, GraduationCap, BookOpen, Briefcase, Users, ArrowRight, Rocket } from 'lucide-react'
 import Newsletter from './Newsletter'
 import CareerQuiz from './CareerQuiz'
-import Breadcrumbs from './Breadcrumbs'
 
 const colorClasses = {
   indigo: {
@@ -260,12 +259,6 @@ const YoungPeople = () => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Breadcrumbs Component */}
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Young People', href: '/young-people' },
-      ]} />
-
       {/* Hero Section */}
       <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
         <div className="absolute inset-0">

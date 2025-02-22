@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronRight, Building2, GraduationCap, BookOpen, LineChart, Globe2, ArrowRight } from 'lucide-react'
@@ -76,6 +76,7 @@ const BusinessPage = () => {
   const [activeTab, setActiveTab] = useState<string>('')
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
+  const navRef = useRef<HTMLDivElement>(null)
 
   const tabs = useMemo(() => ({
     skills: {
@@ -224,6 +225,19 @@ const BusinessPage = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
+  useEffect(() => {
+    if (navRef.current && activeTab) {
+      const activeLink = navRef.current.querySelector(`a[href="#${activeTab}"]`)
+      if (activeLink) {
+        activeLink.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        })
+      }
+    }
+  }, [activeTab])
+
   return (
     <div 
       className="bg-white"
@@ -289,15 +303,15 @@ const BusinessPage = () => {
       {/* Enhanced Navigation - Desktop Only */}
       <div className="hidden md:block sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center">
-            <div className="flex space-x-1 py-3">
+          <div className="flex justify-start sm:justify-center min-w-max">
+            <div className="flex space-x-1 py-1">
               {Object.entries(tabs).map(([key, tab]) => {
                 const color = tab.color as keyof typeof colorClasses;
                 return (
                   <a 
                     key={key}
                     href={`#${key}`} 
-                    className={`group relative px-4 py-3 flex-shrink-0 rounded-xl transition-colors ${
+                    className={`group relative px-2 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-xl transition-colors ${
                       activeTab === key 
                         ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
                         : `${colorClasses[color].nav} text-gray-600`
@@ -312,7 +326,7 @@ const BusinessPage = () => {
                       } transition-colors`}>
                         {tab.icon}
                       </div>
-                      <span className={`text-sm md:text-base font-medium ${
+                      <span className={`text-xs md:text-sm font-medium ${
                         activeTab === key 
                           ? `text-${color}-600` 
                           : 'text-gray-900 group-hover:text-${color}-600'
@@ -477,10 +491,13 @@ const BusinessPage = () => {
       {/* Newsletter Section */}
       <Newsletter />
 
-      {/* Mobile Navigation - Fixed at Bottom */}
-      <div className="fixed md:hidden bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t border-gray-200 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center">
+      {/* Updated Mobile Navigation with ref */}
+      <div 
+        ref={navRef}
+        className="fixed md:hidden bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t border-gray-200 shadow-lg overflow-x-auto scrollbar-hide"
+      >
+        <div className="w-max min-w-full px-2 sm:px-4">
+          <div className="flex justify-start">
             <div className="flex space-x-1 py-2">
               {Object.entries(tabs).map(([key, tab]) => {
                 const color = tab.color as keyof typeof colorClasses;
@@ -506,7 +523,7 @@ const BusinessPage = () => {
                       <span className={`text-xs font-medium ${
                         activeTab === key 
                           ? `text-${color}-600` 
-                          : 'text-gray-900 group-hover:text-${color}-600'
+                          : 'text-gray-900 group-hover:text-${color}-600`
                       } whitespace-nowrap transition-colors`}>
                         {tab.title}
                       </span>
