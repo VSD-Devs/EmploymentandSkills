@@ -43,7 +43,7 @@ const colorClasses = {
 
 type ColorType = keyof typeof colorClasses
 
-interface ColorClasses {
+interface _ColorClasses {
   button: string
   icon: string
   link: string
@@ -68,7 +68,7 @@ interface Tab {
   content: TabContent
 }
 
-type TabsType = {
+type _TabsType = {
   [key: string]: Tab
 }
 

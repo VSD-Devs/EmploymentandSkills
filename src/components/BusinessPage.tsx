@@ -306,7 +306,7 @@ const BusinessPage = () => {
           <div className="flex justify-start sm:justify-center min-w-max">
             <div className="flex space-x-1 py-1">
               {Object.entries(tabs).map(([key, tab]) => {
-                const color = tab.color as keyof typeof colorClasses;
+                const color = tab.color as ColorType;
                 return (
                   <a 
                     key={key}
@@ -354,15 +354,15 @@ const BusinessPage = () => {
           <div className="relative py-24">
             {/* Decorative elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color as keyof typeof colorClasses].gradient} opacity-20 blur-3xl`} />
-              <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color as keyof typeof colorClasses].gradient} opacity-20 blur-3xl`} />
+              <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color as ColorType].gradient} opacity-20 blur-3xl`} />
+              <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color as ColorType].gradient} opacity-20 blur-3xl`} />
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 {/* Mobile: Stack content on top of image */}
                 <div className="md:hidden">
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as keyof typeof colorClasses].button} mb-6`}>
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as ColorType].button} mb-6`}>
                     {tab.icon}
                     <span className="text-base font-medium">{tab.title}</span>
                   </div>
@@ -385,7 +385,7 @@ const BusinessPage = () => {
                   </div>
                   <Link
                     href={tab.content.link}
-                    className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as keyof typeof colorClasses].link} shadow-lg hover:shadow-xl`}
+                    className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as ColorType].link} shadow-lg hover:shadow-xl`}
                   >
                     {tab.content.cta}
                     <ChevronRight className="ml-2 h-5 w-5" />
@@ -396,9 +396,15 @@ const BusinessPage = () => {
                 {index % 2 === 0 ? (
                   <>
                     <div className="hidden md:block">
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as keyof typeof colorClasses].button} mb-6`}>
+                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as ColorType].button} mb-6`}>
                         {tab.icon}
-                        <span className="text-base font-medium">{tab.title}</span>
+                        <span className={`text-xs font-medium ${
+                          activeTab === key 
+                            ? `text-${tab.color}-600` 
+                            : `text-gray-900 group-hover:text-${tab.color}-600`
+                        } whitespace-nowrap transition-colors`}>
+                          {tab.title}
+                        </span>
                       </div>
                       <h2 className="text-5xl font-bold text-gray-900 mb-6">{tab.description}</h2>
                       <div className="prose prose-xl max-w-none mb-8">
@@ -410,7 +416,7 @@ const BusinessPage = () => {
                       </div>
                       <Link
                         href={tab.content.link}
-                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as keyof typeof colorClasses].link} shadow-lg hover:shadow-xl`}
+                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as ColorType].link} shadow-lg hover:shadow-xl`}
                       >
                         {tab.content.cta}
                         <ChevronRight className="ml-2 h-5 w-5" />
@@ -426,7 +432,7 @@ const BusinessPage = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                       <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
                         <div className="flex items-center gap-4">
-                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color as keyof typeof colorClasses].icon}`}>
+                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color as ColorType].icon}`}>
                             {tab.icon}
                           </div>
                           <div>
@@ -449,7 +455,7 @@ const BusinessPage = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                       <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
                         <div className="flex items-center gap-4">
-                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color as keyof typeof colorClasses].icon}`}>
+                          <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color as ColorType].icon}`}>
                             {tab.icon}
                           </div>
                           <div>
@@ -460,9 +466,15 @@ const BusinessPage = () => {
                       </div>
                     </div>
                     <div className="hidden md:block">
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as keyof typeof colorClasses].button} mb-6`}>
+                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as ColorType].button} mb-6`}>
                         {tab.icon}
-                        <span className="text-base font-medium">{tab.title}</span>
+                        <span className={`text-xs font-medium ${
+                          activeTab === key 
+                            ? `text-${tab.color}-600` 
+                            : `text-gray-900 group-hover:text-${tab.color}-600`
+                        } whitespace-nowrap transition-colors`}>
+                          {tab.title}
+                        </span>
                       </div>
                       <h2 className="text-5xl font-bold text-gray-900 mb-6">{tab.description}</h2>
                       <div className="prose prose-xl max-w-none mb-8">
@@ -474,7 +486,7 @@ const BusinessPage = () => {
                       </div>
                       <Link
                         href={tab.content.link}
-                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as keyof typeof colorClasses].link} shadow-lg hover:shadow-xl`}
+                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as ColorType].link} shadow-lg hover:shadow-xl`}
                       >
                         {tab.content.cta}
                         <ChevronRight className="ml-2 h-5 w-5" />
@@ -500,7 +512,7 @@ const BusinessPage = () => {
           <div className="flex justify-start">
             <div className="flex space-x-1 py-2">
               {Object.entries(tabs).map(([key, tab]) => {
-                const color = tab.color as keyof typeof colorClasses;
+                const color = tab.color as ColorType;
                 return (
                   <a 
                     key={key}
@@ -523,7 +535,7 @@ const BusinessPage = () => {
                       <span className={`text-xs font-medium ${
                         activeTab === key 
                           ? `text-${color}-600` 
-                          : 'text-gray-900 group-hover:text-${color}-600`
+                          : `text-gray-900 group-hover:text-${color}-600`
                       } whitespace-nowrap transition-colors`}>
                         {tab.title}
                       </span>
