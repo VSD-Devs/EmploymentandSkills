@@ -83,7 +83,7 @@ export default function Page() {
       ]} />
 
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+      <div className="relative bg-[#111827] py-16 flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/skills-bank-hero.jpg"
@@ -96,30 +96,30 @@ export default function Page() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 text-emerald-400 mb-4">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 text-emerald-400 mb-3 justify-center">
               <div className="p-2 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-500/20">
                 <Building2 className="h-5 w-5" />
               </div>
               <span className="text-sm font-medium tracking-wide uppercase">Skills Bank</span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Receive up to 60% Funding towards training costs for your business
             </h1>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-lg text-gray-300 mb-6 max-w-2xl mx-auto">
               Skills Bank provides funding for businesses that can demonstrate how training will support their growth plans and build resilience.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 justify-center">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center px-6 py-3 rounded-xl bg-emerald-600 text-white hover:bg-emerald-500 transition-colors"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500 transition-colors"
               >
                 Check Your Eligibility
                 <ArrowRight className="ml-2 w-4 h-4" />
               </button>
               <Link
                 href="#benefits"
-                className="inline-flex items-center px-6 py-3 rounded-xl bg-white/10 text-white hover:bg-white/20 transition-colors"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
               >
                 View Benefits
               </Link>
@@ -137,9 +137,9 @@ export default function Page() {
                 <div className="p-2 rounded-lg bg-emerald-100">
                   <Building2 className="h-5 w-5" />
                 </div>
-                <span className="text-sm font-medium tracking-wide uppercase">About Skills Bank</span>
+                <span className="text-sm font-medium tracking-wide uppercase">Funded by the South Yorkshire Mayoral Combined Authority</span>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Transform Your Business with Skills Bank</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">Skills Bank</h2>
               <div className="space-y-6">
                 <p className="text-lg text-gray-600">
                   Skills Bank is a unique initiative designed to boost South Yorkshire's economy by investing in its workforce. We provide up to 60% funding for business training, helping organisations like yours develop the skills needed for sustainable growth.
@@ -304,13 +304,39 @@ export default function Page() {
         </div>
       </section>
 
-      {/* How to Apply */}
-      <section id="apply" className="py-20 bg-gray-50">
+      {/* Skills Advisors */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Skills Advisors</h2>
+              <p className="text-lg text-gray-600 mb-8">
+                Our dedicated Skills Advisors are here to guide you through the application process, helping you to identify your challenges and opportunities, and ensure you receive the benefits you're eligible for. Our Skills Advisors work closely with businesses to prioritise the completion of successful applications.
+              </p>
+              <p className="text-gray-600">
+                Unsuccessful applicants will receive immediate feedback and the option to be referred to a Skills Advisor.
+              </p>
+            </div>
+            <div>
+              <Image
+                src="/images/hero-business.jpg"
+                alt="Skills advisor helping a business"
+                width={600}
+                height={400}
+                className="rounded-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Application Process */}
+      <section id="apply" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Application Process</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-What's the process?
+              What's the process?
             </p>
           </div>
           <div className="space-y-8">
@@ -357,15 +383,41 @@ What's the process?
               },
               {
                 question: 'Can Skills Bank support a charity or third sector organisation?',
-                answer: 'Skills Bank funding is set aside for businesses that can provide a business case to show growth.'
+                answer: (
+                  <div className="space-y-3">
+                    <p>Yes, Skills Bank can support charities and third sector organisations when:</p>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li>The training is for Employees</li>
+                      <li>Are able to provide a clear business case for growth or improved resilience</li>
+                      <li>Can demonstrate how the training will support their objectives</li>
+                    </ul>
+                    <p>We encourage charities and third sector organisations to speak with our Skills Advisors to discuss their specific needs.</p>
+                  </div>
+                )
               },
               {
-                question: 'Can national employers be approached?',
-                answer: 'The expectation is that the employer has a permanent base within South Yorkshire.'
+                question: 'Can national businesses apply?',
+                answer: 'The expectation is that the business has a site within South Yorkshire and the training is for employees based at this site.'
               },
               {
                 question: 'Is there any training that cannot be supported?',
-                answer: 'Skills Bank will not usually support certain types of training.'
+                answer: (
+                  <div className="space-y-3">
+                    <p>Skills Bank will not usually support the following training:</p>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li>Low level learning, unless part of a bespoke package demonstrating overall objectives and strong growth case</li>
+                      <li>Mandatory, legally required or duty of care training (e.g., health and safety, first aid, food hygiene, manual handling)</li>
+                      <li>Licence to Practice</li>
+                      <li>Training demonstrating existing competency</li>
+                      <li>Worldhost</li>
+                      <li>CSCS cards</li>
+                      <li>Customer services for taxi drivers</li>
+                      <li>DBS</li>
+                      <li>Delivery to own staff</li>
+                    </ul>
+                    <p>However, there may be exceptions where it forms an integral element of a package that supports growth.</p>
+                  </div>
+                )
               },
               {
                 question: 'Is there a restriction on the value of financial support?',
@@ -389,9 +441,16 @@ What's the process?
                   <span className="text-lg">{faq.question}</span>
                   <HelpCircle className="h-5 w-5 text-emerald-600" />
                 </button>
-                <p id={`faq-answer-${index}`} className="hidden p-4 text-gray-600 text-base">
-                  {faq.answer}
-                </p>
+                <div 
+                  id={`faq-answer-${index}`} 
+                  className="hidden p-4 text-gray-600 text-base space-y-3"
+                >
+                  {typeof faq.answer === 'string' ? (
+                    <p>{faq.answer}</p>
+                  ) : (
+                    faq.answer
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -409,32 +468,6 @@ What's the process?
                 Contact Our Advisors
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Advisors */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Skills Advisors</h2>
-              <p className="text-lg text-gray-600 mb-8">
-                Our dedicated Skills Advisors are here to guide you through the application process, helping you to identify your challenges and opportunities, and ensure you receive the benefits you're eligible for. Our Skills Advisors work closely with businesses to prioritise the completion of successful applications.
-              </p>
-              <p className="text-gray-600">
-                Unsuccessful applicants will receive immediate feedback and the option to be referred to a Skills Advisor.
-              </p>
-            </div>
-            <div>
-              <Image
-                src="/images/hero-business.jpg"
-                alt="Skills advisor helping a business"
-                width={600}
-                height={400}
-                className="rounded-xl"
-              />
             </div>
           </div>
         </div>

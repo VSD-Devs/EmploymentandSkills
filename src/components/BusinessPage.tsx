@@ -274,7 +274,7 @@ const BusinessPage = () => {
               </div>
               <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Business Hub</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               Business Support<br className="hidden sm:block" /> in South Yorkshire
             </h1>
             <p className="text-lg sm:text-xl text-gray-200 max-w-2xl mx-auto">
@@ -366,7 +366,7 @@ const BusinessPage = () => {
                     {tab.icon}
                     <span className="text-base font-medium">{tab.title}</span>
                   </div>
-                  <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6">{tab.description}</h2>
                   <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg mb-6">
                     <Image
                       src={tab.content.image}
@@ -406,7 +406,7 @@ const BusinessPage = () => {
                           {tab.title}
                         </span>
                       </div>
-                      <h2 className="text-5xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                      <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
                       <div className="prose prose-xl max-w-none mb-8">
                         {tab.content.text.map((paragraph, index) => (
                           <p key={index} className="text-gray-600 leading-relaxed">
@@ -476,7 +476,7 @@ const BusinessPage = () => {
                           {tab.title}
                         </span>
                       </div>
-                      <h2 className="text-5xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                      <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
                       <div className="prose prose-xl max-w-none mb-8">
                         {tab.content.text.map((paragraph, index) => (
                           <p key={index} className="text-gray-600 leading-relaxed">

@@ -266,42 +266,43 @@ const FundedTrainingForAdultsPage = () => {
       ]} />
 
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-16 min-h-[400px] flex items-center">
+      <div className="relative bg-[#111827] py-12 min-h-[380px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="/images/hero-training.jpg"
+            src="/images/adult-skills-hero.jpg"
             alt="Adult education and training opportunities in South Yorkshire"
             fill
-            className="object-cover object-center brightness-75"
+            className="object-cover object-center brightness-50 contrast-125"
             priority
             quality={90}
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-blue-300 mb-3">
-              <div className="p-1 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-400/20">
-                <Building2 className="h-3 w-3" />
+            <div className="inline-flex items-center gap-2 text-blue-200 mb-3">
+              <div className="p-1 rounded-lg bg-blue-500/20 backdrop-blur-sm border border-blue-400/30">
+                <Building2 className="h-4 w-4" />
               </div>
-              <span className="text-xs font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
+              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
             </div>
-            <h1 className="relative text-2xl font-bold text-white mb-4">
-              <span className="relative z-10 line-clamp-2 leading-tight block">Funded Training</span>
+            <h1 className="relative text-3xl md:text-4xl font-bold text-white mb-4">
+              <span className="relative z-10 line-clamp-2 leading-tight block">Funded Training for Adults</span>
             </h1>
-            <p className="text-base text-gray-200 max-w-3xl mx-auto mb-6">
+            <p className="text-base text-gray-300 max-w-3xl mx-auto mb-6 leading-relaxed">
               Access free courses, bootcamps, and qualifications to advance your career in South Yorkshire's growing industries.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Link
                 href="#courses"
-                className="inline-flex items-center px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-medium hover:bg-green-500 transition-colors"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-500 transition-colors backdrop-blur-sm"
               >
                 Browse Courses
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
               <Link
                 href="#eligibility"
-                className="inline-flex items-center px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm text-white text-sm font-medium hover:bg-white/20 transition-colors border border-white/20"
+                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/20 backdrop-blur-sm text-white text-sm font-medium hover:bg-white/30 transition-colors border border-white/30"
               >
                 Check Eligibility
                 <ChevronRight className="ml-2 h-4 w-4" />
@@ -367,7 +368,7 @@ const FundedTrainingForAdultsPage = () => {
       {/* Eligibility Section */}
       <div id="eligibility" className="bg-gradient-to-b from-white to-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-6 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
               <div className="inline-flex items-center gap-2 text-blue-600 mb-4">
                 <div className="p-1.5 rounded-lg bg-blue-50">
@@ -415,22 +416,24 @@ const FundedTrainingForAdultsPage = () => {
                   </p>
                 </div>
               </div>
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-8 py-4 rounded-xl bg-blue-600 text-white text-lg font-medium hover:bg-blue-500 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-500/20"
-              >
-                Contact Our Team
-                <ChevronRight className="ml-2 h-6 w-6" aria-hidden="true" />
-              </Link>
+              <div className="mt-8">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center px-8 py-4 rounded-xl bg-blue-600 text-white text-lg font-medium hover:bg-blue-500 transition-colors focus:outline-none focus:ring-4 focus:ring-blue-500/20"
+                >
+                  Contact Our Team
+                  <ChevronRight className="ml-2 h-6 w-6" aria-hidden="true" />
+                </Link>
+              </div>
             </div>
-            <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg">
+            <div className="relative h-[400px] rounded-xl overflow-hidden shadow-lg">
               <Image
                 src="/images/educator-hero.webp"
                 alt="A diverse group of students collaborating in a modern learning environment"
                 fill
                 className="object-cover"
                 priority
-                sizes="100vw"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
@@ -440,14 +443,14 @@ const FundedTrainingForAdultsPage = () => {
 
       {/* Search and Filters */}
       <div id="courses" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-3">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
             Funded Courses
           </h2>
-          <p className="text-sm text-gray-600">
+          <p className="text-base text-gray-600">
             Browse our selection of fully funded courses designed to help you develop new skills and advance your career.
             {totalCourses > 0 && (
-              <span className="block mt-1 text-blue-600 text-xs">
+              <span className="block mt-1 text-blue-600 text-sm">
                 Showing {filteredCourses.length} of {totalCourses} available courses
               </span>
             )}

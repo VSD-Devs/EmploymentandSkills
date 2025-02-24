@@ -22,7 +22,7 @@ const CourseCard = ({ course }: { course: Course }) => {
   const provider = getProviderInfo(course.provider)
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all flex flex-col">
+    <div className="bg-white rounded-xl shadow-md border border-gray-300 overflow-hidden hover:shadow-lg transition-all flex flex-col">
       <div className="p-6 flex flex-col flex-grow">
         <div className="flex flex-wrap gap-2">
           <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-600 text-white">
@@ -85,13 +85,13 @@ const CourseCard = ({ course }: { course: Course }) => {
                         {roleArray.slice(0, 2).map((roleTitle) => (
                           <span
                             key={roleTitle}
-                            className="text-sm px-2 py-1 bg-white rounded border border-gray-200 text-gray-600"
+                            className="text-sm px-2 py-1 bg-white rounded border border-gray-300 text-gray-600"
                           >
                             {roleTitle}
                           </span>
                         ))}
                         {roleArray.length > 2 && (
-                          <span className="text-sm px-2 py-1 bg-white rounded border border-gray-200 text-gray-600">
+                          <span className="text-sm px-2 py-1 bg-white rounded border border-gray-300 text-gray-600">
                             +{roleArray.length - 2} more
                           </span>
                         )}
@@ -159,7 +159,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="p-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        className="p-2 rounded-lg bg-white border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
         aria-label="Previous page"
       >
         <ChevronLeft className="h-5 w-5" />
@@ -178,7 +178,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
               className={`px-4 py-2 rounded-lg min-w-[40px] ${
                 currentPage === page
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white border border-gray-200 hover:bg-gray-50'
+                  : 'bg-white border border-gray-300 hover:bg-gray-100'
               }`}
               aria-label={`Page ${page}`}
               aria-current={currentPage === page ? 'page' : undefined}
@@ -192,7 +192,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="p-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        className="p-2 rounded-lg bg-white border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
         aria-label="Next page"
       >
         <ChevronRight className="h-5 w-5" />
@@ -255,6 +255,11 @@ export default function CourseDirectoryPage() {
     search: ''
   })
 
+  const providers = React.useMemo(() => {
+    const uniqueProviders = new Set(courses.map((course: Course) => course.provider))
+    return ['All', ...Array.from(uniqueProviders)]
+  }, [courses])
+
   // Fetch courses on mount
   useEffect(() => {
     const fetchCourses = async () => {
@@ -302,12 +307,22 @@ export default function CourseDirectoryPage() {
             <p className="text-lg text-blue-100 max-w-2xl mx-auto">
               Browse our complete range of fully funded courses and find the best opportunity to develop your skills.
             </p>
+            
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={() => exportToCSV(courses)}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-gray-900 hover:bg-gray-100 transition-colors border border-gray-300 shadow-sm"
+              >
+                <Download className="h-5 w-5" />
+                <span className="font-medium">Export All Courses (CSV)</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-300 p-6 mb-8">
           <div className="flex flex-col gap-6">
             {/* Search and Export Row */}
             <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
@@ -315,7 +330,7 @@ export default function CourseDirectoryPage() {
                 <input
                   type="text"
                   placeholder="Search by course name or provider..."
-                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+                  className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
                   value={filters.search}
                   onChange={(e) => setFilters({ ...filters, search: e.target.value })}
                   aria-label="Search courses"
@@ -323,15 +338,6 @@ export default function CourseDirectoryPage() {
                 <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
                   <Search className="h-5 w-5 text-gray-400" />
                 </div>
-              </div>
-              <div className="flex flex-col items-end gap-2">
-                <button
-                  onClick={() => exportToCSV(courses)}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-w-[160px] justify-center text-base"
-                >
-                  <Download className="h-5 w-5" />
-                  <span className="font-medium">Export to CSV</span>
-                </button>
               </div>
             </div>
 
@@ -399,14 +405,17 @@ export default function CourseDirectoryPage() {
                 <select
                   value={filters.provider}
                   onChange={(e) => setFilters({ ...filters, provider: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-base"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-base"
                 >
                   <option value="All">All Providers</option>
-                  {Object.keys(getProviderInfo).map((provider) => (
-                    <option key={provider} value={provider}>
-                      {getProviderInfo(provider).name}
-                    </option>
-                  ))}
+                  {providers.filter(p => p !== 'All').map((provider) => {
+                    const providerInfo = getProviderInfo(provider)
+                    return (
+                      <option key={provider} value={provider}>
+                        {providerInfo?.name || provider}
+                      </option>
+                    )
+                  })}
                 </select>
               </div>
 
@@ -416,7 +425,7 @@ export default function CourseDirectoryPage() {
                 <select
                   value={filters.category}
                   onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-base"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-base"
                 >
                   <option value="All">All Categories</option>
                   {getCategories().map((category) => (
@@ -433,7 +442,7 @@ export default function CourseDirectoryPage() {
                 <select
                   value={filters.level}
                   onChange={(e) => setFilters({ ...filters, level: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-base"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-base"
                 >
                   <option value="All">All Levels</option>
                   {getLevels().map((level) => (

@@ -15,6 +15,8 @@ import {
   GraduationCap,
   Search
 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import BootcampRecruitment from "@/components/BootcampRecruitment"
 
 const IMAGES = {
   hero: "/images/bootcamps-hero.jpg",
@@ -113,90 +115,50 @@ export default function SkillsBootcampsPage() {
 
       {/* Recruitment Section */}
       <section className="py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-1">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-100 mb-6">
-                <Search className="h-5 w-5 text-emerald-600" />
-                <span className="text-base font-medium text-emerald-900">Recruit Talent</span>
-              </div>
-              
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">
-                Hire Job-Ready Candidates
-              </h2>
-              
-              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                Connect with motivated, trained individuals who have completed intensive training in your sector's key skills areas.
-              </p>
-
-              <div className="space-y-4 mb-8">
-                {[
-                  "Interview participants during training",
-                  "Access pre-screened candidates",
-                  "Offer guaranteed interviews",
-                  "Provide work trial opportunities",
-                  "Recruit directly from talent pools"
-                ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-6 w-6 text-emerald-600 flex-shrink-0" />
-                    <span className="text-slate-700">{feature}</span>
-                  </div>
-                ))}
-              </div>
-
-              <Link
-                href="#contact"
-                className="inline-flex items-center text-emerald-600 font-medium hover:text-emerald-500 group"
-              >
-                Access Talent Pools
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-            <div className="relative h-[400px] lg:h-[600px] rounded-2xl overflow-hidden order-2">
-              <Image
-                src={IMAGES.hiring}
-                alt="Employer interviewing Skills Bootcamp graduate"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
+        <BootcampRecruitment />
       </section>
 
       {/* Get Involved CTA */}
-      <section id="get-involved" className="relative bg-slate-900 py-20">
-        <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
+      <section id="get-involved" className="bg-primary py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
               Partner With Our Bootcamps
             </h2>
-            <p className="text-lg text-slate-300">
+            <p className="text-lg text-white/90">
               Whether you want to shape training content or recruit top talent, we'll help you connect with the right Bootcamp.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white/5 backdrop-blur rounded-xl p-8 border border-white/10">
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Employer Partnerships Card */}
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-blue-100/10 flex items-center justify-center">
-                  <Handshake className="h-6 w-6 text-blue-300" />
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Handshake className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-white text-lg mb-2">Employer Partnerships</h3>
-                  <p className="text-slate-300">Collaborate on curriculum design and delivery</p>
+                  <h3 className="font-semibold text-lg mb-2">Employer Partnerships</h3>
+                  <p className="text-gray-600">Collaborate on curriculum design and delivery</p>
+                  <Button className="mt-4">
+                    Learn More
+                  </Button>
                 </div>
               </div>
             </div>
-            <div className="bg-white/5 backdrop-blur rounded-xl p-8 border border-white/10">
+
+            {/* Recruitment Services Card */}
+            <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-emerald-100/10 flex items-center justify-center">
-                  <GraduationCap className="h-6 w-6 text-emerald-300" />
+                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                  <GraduationCap className="h-5 w-5 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-white text-lg mb-2">Recruitment Services</h3>
-                  <p className="text-slate-300">Access our pool of trained candidates</p>
+                  <h3 className="font-semibold text-lg mb-2">Recruitment Services</h3>
+                  <p className="text-gray-600">Access our pool of trained candidates</p>
+                  <Button className="mt-4">
+                    View Talent Pool
+                  </Button>
                 </div>
               </div>
             </div>
