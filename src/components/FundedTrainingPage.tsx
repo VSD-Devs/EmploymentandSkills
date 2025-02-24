@@ -20,7 +20,8 @@ import {
   Building2,
   Calculator,
   Percent,
-  BookOpen
+  BookOpen,
+  ArrowRight
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -97,69 +98,86 @@ const FundedTrainingPage = () => {
         { label: 'Funded Training', href: '/funded-training' },
       ]} />
 
-      {/* Hero Section */}
-      <div className="relative bg-[#111827] py-12 md:py-20 min-h-[320px] md:min-h-[480px] flex items-center">
+      {/* Hero Section - Enhanced with modern design elements */}
+      <div className="relative bg-[#0e1b3d] py-32 flex items-center min-h-[600px]">
         <div className="absolute inset-0">
           <Image
             src="/images/funded-training-hero.jpg"
             alt="Funded training opportunities in South Yorkshire"
             fill
-            className="object-cover object-center brightness-75"
+            className="object-cover object-center object-[center_25%] brightness-75"
             priority
             quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0e1b3d]/90 via-[#0e1b3d]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0e1b3d]/70 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:20px_20px] opacity-30" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,#ffffff05_50%,transparent_100%)] opacity-70" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="text-center">
-            <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-4">
-              Funded Training Opportunities
+            <div className="inline-flex items-center gap-3 text-blue-300 mb-6">
+              <div className="p-2 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-400/20">
+                <GraduationCap className="h-5 w-5" />
+              </div>
+              <span className="text-base font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
+              Funded Training<br className="hidden sm:block" /> Opportunities
             </h1>
-            <p className="text-sm md:text-lg text-gray-200 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-10">
               Access fully funded training programs to enhance your skills and advance your career in South Yorkshire.
             </p>
-            <div className="mt-4 md:mt-6 flex flex-wrap justify-center gap-3 md:gap-4">
-              <Link
-                href="/funded-training#apply"
-                className="inline-flex items-center px-4 md:px-5 py-2 md:py-2.5 rounded-lg bg-blue-600 text-white text-sm md:text-base font-medium hover:bg-blue-500 transition-colors"
+            <div className="flex flex-wrap justify-center gap-5">
+              <button
+                onClick={() => setShowEligibilityChecker(true)}
+                aria-label="Check your eligibility for funded training"
+                className="inline-flex items-center px-8 py-4 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-500 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900"
               >
-                Apply Now
-                <ChevronRight className="ml-2 h-4 w-4" />
+                Check Eligibility
+                <ArrowRight className="ml-3 h-5 w-5" />
+              </button>
+              <Link
+                href="#fully-funded"
+                aria-label="View fully funded training options"
+                className="inline-flex items-center px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-all duration-300 border border-white/20 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-gray-900"
+              >
+                Explore Options
+                <ChevronRight className="ml-3 h-5 w-5" />
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Navigation - Bottom on Mobile, Top on Desktop */}
-      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-200 shadow-lg md:shadow-sm overflow-x-auto">
-        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-          <div className="flex justify-start sm:justify-center min-w-max">
-            <div className="flex space-x-1 py-1">
+      {/* Enhanced Navigation - Sticky on Desktop, Fixed on Mobile */}
+      <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <div className="flex space-x-4 md:space-x-8 py-4">
               <a 
                 href="#fully-funded" 
-                className="group relative px-3 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-lg md:rounded-xl transition-colors hover:bg-emerald-50"
+                className="group relative px-4 py-3 flex-shrink-0 rounded-xl transition-all duration-300 hover:bg-emerald-50/80 hover:transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-emerald-400"
               >
-                <div className="relative z-10 flex flex-col items-center gap-0.5 md:gap-1">
-                  <div className="h-5 w-5 md:h-6 md:w-6 text-emerald-600">
-                    <CheckCircle2 className="h-5 w-5 md:h-6 md:w-6" />
+                <div className="flex items-center gap-3">
+                  <div className="h-6 w-6 text-emerald-600">
+                    <CheckCircle2 className="h-6 w-6" />
                   </div>
-                  <span className="text-[11px] md:text-sm font-medium text-gray-900 whitespace-nowrap">
+                  <span className="text-sm md:text-base font-medium text-gray-900 whitespace-nowrap">
                     Fully Funded
                   </span>
                 </div>
               </a>
               <a 
                 href="#partially-funded" 
-                className="group relative px-3 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-lg md:rounded-xl transition-colors hover:bg-purple-50"
+                className="group relative px-4 py-3 flex-shrink-0 rounded-xl transition-all duration-300 hover:bg-purple-50/80 hover:transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-purple-400"
               >
-                <div className="relative z-10 flex flex-col items-center gap-0.5 md:gap-1">
-                  <div className="h-5 w-5 md:h-6 md:w-6 text-purple-600">
-                    <Percent className="h-5 w-5 md:h-6 md:w-6" />
+                <div className="flex items-center gap-3">
+                  <div className="h-6 w-6 text-purple-600">
+                    <Percent className="h-6 w-6" />
                   </div>
-                  <span className="text-[11px] md:text-sm font-medium text-gray-900 whitespace-nowrap">
+                  <span className="text-sm md:text-base font-medium text-gray-900 whitespace-nowrap">
                     Partially Funded
                   </span>
                 </div>
@@ -169,22 +187,30 @@ const FundedTrainingPage = () => {
         </div>
       </div>
 
-      {/* Main Content Sections with bottom padding for mobile */}
-      <div className="pb-16 md:pb-0">
-        {/* Fully Funded Section */}
-        <section id="fully-funded" className="py-8 md:py-24 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-6 md:mb-16">
-              <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs md:text-sm font-medium mb-3 md:mb-4">
-                No Cost to Your Business
-              </span>
-              <h2 className="text-xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">Fully Funded Training Programmes</h2>
-              <p className="text-sm md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+      {/* Main Content Sections */}
+      <div>
+        {/* Fully Funded Section - Enhanced with decorative elements */}
+        <section id="fully-funded" className="relative py-24 bg-gray-50">
+          {/* Decorative elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -right-1/4 -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br from-emerald-50 to-white opacity-30 blur-3xl" />
+            <div className="absolute -left-1/4 -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr from-emerald-50 to-white opacity-30 blur-3xl" />
+            <div className="absolute inset-0 bg-[radial-gradient(#00000008_1px,transparent_1px)] [background-size:16px_16px]" />
+          </div>
+          
+          <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-emerald-50/90 border-emerald-600 mb-6">
+                <CheckCircle2 className="w-8 h-8 text-emerald-700" />
+                <span className="text-base font-medium text-emerald-700">No Cost to Your Business</span>
+              </div>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6 tracking-tight">Fully Funded Training Programmes</h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 These programmes are completely free for eligible businesses and employees
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4 md:gap-12">
+            <div className="grid md:grid-cols-2 gap-12">
               {[
                 {
                   title: 'Adult Skills Funding',
@@ -226,35 +252,35 @@ const FundedTrainingPage = () => {
                   link: '/multiply-programme'
                 }
               ].map((option, index) => (
-                <div key={index} className="bg-white rounded-xl md:rounded-2xl shadow-md md:shadow-xl overflow-hidden border border-gray-100 hover:shadow-xl md:hover:shadow-2xl transition-shadow duration-300">
-                  <div className="relative h-40 md:h-56">
+                <div key={index} className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] group">
+                  <div className="relative h-56">
                     <Image
                       src={option.image}
                       alt={option.title}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                    <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 right-4 md:right-6">
-                      <div className="flex items-center gap-3 md:gap-4">
-                        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full bg-${option.color}-100 flex items-center justify-center`}>
-                          <option.icon className="h-5 w-5 md:h-6 md:w-6" />
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <div className="flex items-center gap-4">
+                        <div className={`w-12 h-12 rounded-full bg-${option.color}-100 flex items-center justify-center`}>
+                          <option.icon className="h-6 w-6 text-${option.color}-700" />
                         </div>
-                        <h3 className="text-xl md:text-2xl font-bold text-white">{option.title}</h3>
+                        <h3 className="text-2xl font-bold text-white">{option.title}</h3>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 md:p-8">
-                    <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-8 leading-relaxed">{option.description}</p>
+                  <div className="p-8">
+                    <p className="text-lg text-gray-600 mb-8 leading-relaxed">{option.description}</p>
                     
-                    <div className="space-y-4 md:space-y-8">
+                    <div className="space-y-8">
                       <div>
-                        <h4 className="text-base md:text-lg font-semibold text-gray-900 mb-2 md:mb-4">Requirements</h4>
-                        <ul className="space-y-2 md:space-y-3">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-4">Requirements</h4>
+                        <ul className="space-y-3">
                           {option.requirements.map((req, i) => (
-                            <li key={i} className="flex items-start gap-2 md:gap-3 text-sm md:text-base text-gray-600">
-                              <span className="text-emerald-600 font-bold">•</span>
+                            <li key={i} className="flex items-start gap-3 text-base text-gray-600">
+                              <span className={`text-${option.color}-600 font-bold`}>•</span>
                               <span>{req}</span>
                             </li>
                           ))}
@@ -262,11 +288,11 @@ const FundedTrainingPage = () => {
                       </div>
 
                       <div>
-                        <h4 className="text-base md:text-lg font-semibold text-gray-900 mb-2 md:mb-4">Benefits</h4>
-                        <ul className="space-y-2 md:space-y-3">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-4">Benefits</h4>
+                        <ul className="space-y-3">
                           {option.benefits.map((benefit, i) => (
-                            <li key={i} className="flex items-start gap-2 md:gap-3 text-sm md:text-base text-gray-600">
-                              <span className="text-emerald-600 font-bold">•</span>
+                            <li key={i} className="flex items-start gap-3 text-base text-gray-600">
+                              <span className={`text-${option.color}-600 font-bold`}>•</span>
                               <span>{benefit}</span>
                             </li>
                           ))}
@@ -274,12 +300,13 @@ const FundedTrainingPage = () => {
                       </div>
                     </div>
 
-                    <div className="mt-6 md:mt-10">
+                    <div className="mt-10">
                       <Link
                         href={option.link}
-                        className={`w-full inline-flex justify-center items-center px-4 md:px-8 py-3 md:py-4 rounded-lg md:rounded-xl text-sm md:text-lg font-medium text-white bg-${option.color}-600 hover:bg-${option.color}-500 transition-colors`}
+                        className={`w-full inline-flex justify-center items-center px-8 py-4 rounded-xl text-lg font-medium text-white bg-${option.color}-600 hover:bg-${option.color}-500 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-${option.color}-400 focus:ring-offset-2`}
                       >
                         Learn More About {option.title}
+                        <ChevronRight className="ml-3 h-5 w-5" />
                       </Link>
                     </div>
                   </div>
@@ -289,20 +316,27 @@ const FundedTrainingPage = () => {
           </div>
         </section>
 
-        {/* Partially Funded Section */}
-        <section id="partially-funded" className="py-8 md:py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8 md:mb-16">
-              <span className="inline-block px-4 py-1.5 rounded-full bg-purple-100 text-purple-700 text-sm font-medium mb-4">
-                Subsidised Training
-              </span>
-              <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">Partially Funded Programmes</h2>
-              <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        {/* Partially Funded Section - Enhanced with decorative elements */}
+        <section id="partially-funded" className="relative py-24 bg-white">
+          {/* Decorative elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute -left-1/4 -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br from-purple-50 to-white opacity-30 blur-3xl" />
+            <div className="absolute -right-1/4 -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr from-purple-50 to-white opacity-30 blur-3xl" />
+          </div>
+          
+          <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-purple-50/90 border-purple-600 mb-6">
+                <Percent className="w-8 h-8 text-purple-700" />
+                <span className="text-base font-medium text-purple-700">Subsidised Training</span>
+              </div>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6 tracking-tight">Partially Funded Programmes</h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 Cost-effective training solutions with significant funding support
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 md:gap-12">
+            <div className="grid md:grid-cols-2 gap-12">
               {[
                 {
                   title: 'Skills Bank',
@@ -344,19 +378,19 @@ const FundedTrainingPage = () => {
                   link: '/skills-bootcamps'
                 }
               ].map((option, index) => (
-                <div key={index} className="bg-gray-50 rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+                <div key={index} className="bg-gray-50 rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] group">
                   <div className="relative h-56">
                     <Image
                       src={option.image}
                       alt={option.title}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                     <div className="absolute bottom-6 left-6 right-6">
                       <div className="flex items-center gap-4">
                         <div className={`w-12 h-12 rounded-full bg-${option.color}-100 flex items-center justify-center`}>
-                          <option.icon className="h-6 w-6" />
+                          <option.icon className="h-6 w-6 text-${option.color}-700" />
                         </div>
                         <h3 className="text-2xl font-bold text-white">{option.title}</h3>
                       </div>
@@ -372,7 +406,7 @@ const FundedTrainingPage = () => {
                         <ul className="space-y-3">
                           {option.requirements.map((req, i) => (
                             <li key={i} className="flex items-start gap-3 text-base text-gray-600">
-                              <span className="text-purple-600 font-bold">•</span>
+                              <span className={`text-${option.color}-600 font-bold`}>•</span>
                               <span>{req}</span>
                             </li>
                           ))}
@@ -384,7 +418,7 @@ const FundedTrainingPage = () => {
                         <ul className="space-y-3">
                           {option.benefits.map((benefit, i) => (
                             <li key={i} className="flex items-start gap-3 text-base text-gray-600">
-                              <span className="text-purple-600 font-bold">•</span>
+                              <span className={`text-${option.color}-600 font-bold`}>•</span>
                               <span>{benefit}</span>
                             </li>
                           ))}
@@ -395,9 +429,10 @@ const FundedTrainingPage = () => {
                     <div className="mt-10">
                       <Link
                         href={option.link}
-                        className={`w-full inline-flex justify-center items-center px-8 py-4 rounded-xl text-lg font-medium text-white bg-${option.color}-600 hover:bg-${option.color}-500 transition-colors`}
+                        className={`w-full inline-flex justify-center items-center px-8 py-4 rounded-xl text-lg font-medium text-white bg-${option.color}-600 hover:bg-${option.color}-500 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-${option.color}-400 focus:ring-offset-2`}
                       >
                         Learn More About {option.title}
+                        <ChevronRight className="ml-3 h-5 w-5" />
                       </Link>
                     </div>
                   </div>
@@ -407,17 +442,26 @@ const FundedTrainingPage = () => {
           </div>
         </section>
 
-        {/* Contact Section */}
-        <div id="contact" className="relative bg-[#111827] text-white py-8 md:py-24 overflow-hidden">
+        {/* Contact Section - Enhanced with modern design */}
+        <div id="contact" className="relative bg-[#0e1b3d] text-white py-24 overflow-hidden">
           <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8 md:mb-16">
-              <h2 className="text-xl md:text-4xl font-bold mb-2 md:mb-4">Need More Information?</h2>
-              <p className="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto">
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] [background-size:20px_20px] opacity-20" />
+          
+          <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-3 text-emerald-300 mb-6">
+                <div className="p-2 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
+                  <MessageSquare className="h-5 w-5" />
+                </div>
+                <span className="text-base font-medium tracking-wide uppercase">Get in Touch</span>
+              </div>
+              <h2 className="text-4xl font-bold mb-6 tracking-tight">Need More Information?</h2>
+              <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
                 Our team is here to help you understand and access the right funding options for your business.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-4 md:gap-8">
+            
+            <div className="grid md:grid-cols-2 gap-8">
               {[
                 {
                   icon: Phone,
@@ -433,16 +477,16 @@ const FundedTrainingPage = () => {
                 }
               ].map((contact, index) => (
                 <div key={index} className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/20 to-emerald-800/20 rounded-lg md:rounded-xl transform group-hover:scale-[1.02] transition-transform duration-300" />
-                  <div className="relative bg-gray-800/50 backdrop-blur rounded-lg md:rounded-xl p-4 md:p-8 border border-gray-700">
-                    <div className="flex items-start gap-3 md:gap-4">
-                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-700 flex items-center justify-center">
-                        <contact.icon className="h-5 w-5 md:h-6 md:w-6 text-emerald-400" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/20 to-emerald-800/20 rounded-xl transform group-hover:scale-[1.02] transition-transform duration-300" />
+                  <div className="relative bg-gray-800/50 backdrop-blur rounded-xl p-8 border border-gray-700 h-full">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center">
+                        <contact.icon className="h-6 w-6 text-emerald-400" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-300 text-base md:text-lg mb-1 md:mb-2">{contact.title}</h3>
-                        <p className="text-lg md:text-2xl font-bold mb-1 md:mb-2 text-white">{contact.content}</p>
-                        <p className="text-sm md:text-base text-gray-400">{contact.subtext}</p>
+                        <h3 className="font-semibold text-gray-300 text-lg mb-2">{contact.title}</h3>
+                        <p className="text-2xl font-bold mb-2 text-white">{contact.content}</p>
+                        <p className="text-base text-gray-400">{contact.subtext}</p>
                       </div>
                     </div>
                   </div>
@@ -453,13 +497,13 @@ const FundedTrainingPage = () => {
         </div>
       </div>
 
-      {/* Eligibility Checker Modal */}
+      {/* Eligibility Checker Modal - Enhanced with modern design */}
       {showEligibilityChecker && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl md:rounded-2xl w-full max-w-2xl p-4 md:p-8 relative">
+          <div className="bg-white rounded-2xl w-full max-w-2xl p-8 relative">
             <button
               onClick={resetChecker}
-              className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+              className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded-full p-1"
             >
               <X className="h-6 w-6" />
             </button>
@@ -492,7 +536,7 @@ const FundedTrainingPage = () => {
                     <button
                       key={option}
                       onClick={() => handleAnswer(option)}
-                      className="w-full px-6 py-4 text-left text-lg font-medium rounded-xl border-2 border-emerald-100 hover:border-emerald-500 hover:bg-emerald-50 transition-colors"
+                      className="w-full px-6 py-4 text-left text-lg font-medium rounded-xl border-2 border-emerald-100 hover:border-emerald-500 hover:bg-emerald-50 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2"
                     >
                       {option}
                     </button>
@@ -516,14 +560,14 @@ const FundedTrainingPage = () => {
                       <Link
                         href="#contact"
                         onClick={resetChecker}
-                        className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors"
+                        className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2"
                       >
                         Contact Us
                         <ChevronRight className="ml-2 h-5 w-5" />
                       </Link>
                       <button
                         onClick={resetChecker}
-                        className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
+                        className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                       >
                         Close
                       </button>
@@ -544,14 +588,14 @@ const FundedTrainingPage = () => {
                       <Link
                         href="#contact"
                         onClick={resetChecker}
-                        className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors"
+                        className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2"
                       >
                         Contact Us
                         <ChevronRight className="ml-2 h-5 w-5" />
                       </Link>
                       <button
                         onClick={resetChecker}
-                        className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors"
+                        className="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
                       >
                         Close
                       </button>

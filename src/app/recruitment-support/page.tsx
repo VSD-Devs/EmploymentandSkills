@@ -52,6 +52,19 @@ const recruitmentOptions: RecruitmentOption[] = [
     ],
     color: 'purple',
     link: '/graduates'
+  },
+  {
+    title: 'T Levels',
+    description: 'Host industry placements for learners aged 16-19, combining classroom learning with practical workplace experience.',
+    icon: <Clock className="w-6 h-6" />,
+    benefits: [
+      'Build a talent pipeline for junior roles',
+      'Develop staff mentoring skills',
+      'Train young people with needed skills',
+      'Free government scheme with flexible hosting'
+    ],
+    color: 'blue',
+    link: '/t-levels'
   }
 ]
 

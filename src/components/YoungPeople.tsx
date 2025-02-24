@@ -3,55 +3,56 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronRight, GraduationCap, BookOpen, Briefcase, Users, ArrowRight, Rocket } from 'lucide-react'
+import { ChevronRight, GraduationCap, BookOpen, Briefcase, Users, ArrowRight, Rocket, Building2, MapPin } from 'lucide-react'
 import Newsletter from './Newsletter'
 import CareerQuiz from './CareerQuiz'
+import Breadcrumbs from './Breadcrumbs'
 
 const colorClasses = {
   indigo: {
-    button: 'border-indigo-500 bg-indigo-50',
-    icon: 'bg-indigo-100 text-indigo-600',
-    link: 'bg-indigo-600 hover:bg-indigo-500',
+    button: 'border-indigo-600 bg-indigo-50/90',
+    icon: 'bg-indigo-100 text-indigo-700',
+    link: 'bg-indigo-700 hover:bg-indigo-600',
     badge: 'bg-indigo-50 text-indigo-700',
     gradient: 'from-indigo-50 to-white',
     nav: 'hover:bg-indigo-50/80'
   },
   emerald: {
-    button: 'border-emerald-500 bg-emerald-50',
-    icon: 'bg-emerald-100 text-emerald-600',
-    link: 'bg-emerald-600 hover:bg-emerald-500',
+    button: 'border-emerald-600 bg-emerald-50/90',
+    icon: 'bg-emerald-100 text-emerald-700',
+    link: 'bg-emerald-700 hover:bg-emerald-600',
     badge: 'bg-emerald-50 text-emerald-700',
     gradient: 'from-emerald-50 to-white',
     nav: 'hover:bg-emerald-50/80'
   },
   violet: {
-    button: 'border-violet-500 bg-violet-50',
-    icon: 'bg-violet-100 text-violet-600',
-    link: 'bg-violet-600 hover:bg-violet-500',
+    button: 'border-violet-600 bg-violet-50/90',
+    icon: 'bg-violet-100 text-violet-700',
+    link: 'bg-violet-700 hover:bg-violet-600',
     badge: 'bg-violet-50 text-violet-700',
     gradient: 'from-violet-50 to-white',
     nav: 'hover:bg-violet-50/80'
   },
   fuchsia: {
-    button: 'border-fuchsia-500 bg-fuchsia-50',
-    icon: 'bg-fuchsia-100 text-fuchsia-600',
-    link: 'bg-fuchsia-600 hover:bg-fuchsia-500',
+    button: 'border-fuchsia-600 bg-fuchsia-50/90',
+    icon: 'bg-fuchsia-100 text-fuchsia-700',
+    link: 'bg-fuchsia-700 hover:bg-fuchsia-600',
     badge: 'bg-fuchsia-50 text-fuchsia-700',
     gradient: 'from-fuchsia-50 to-white',
     nav: 'hover:bg-fuchsia-50/80'
   },
   sky: {
-    button: 'border-sky-500 bg-sky-50',
-    icon: 'bg-sky-100 text-sky-600',
-    link: 'bg-sky-600 hover:bg-sky-500',
+    button: 'border-sky-600 bg-sky-50/90',
+    icon: 'bg-sky-100 text-sky-700',
+    link: 'bg-sky-700 hover:bg-sky-600',
     badge: 'bg-sky-50 text-sky-700',
     gradient: 'from-sky-50 to-white',
     nav: 'hover:bg-sky-50/80'
   },
   rose: {
-    button: 'border-rose-500 bg-rose-50',
-    icon: 'bg-rose-100 text-rose-600',
-    link: 'bg-rose-600 hover:bg-rose-500',
+    button: 'border-rose-600 bg-rose-50/90',
+    icon: 'bg-rose-100 text-rose-700',
+    link: 'bg-rose-700 hover:bg-rose-600',
     badge: 'bg-rose-50 text-rose-700',
     gradient: 'from-rose-50 to-white',
     nav: 'hover:bg-rose-50/80'
@@ -259,8 +260,14 @@ const YoungPeople = () => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      {/* Breadcrumbs Component */}
+      <Breadcrumbs items={[
+        { label: 'Home', href: '/' },
+        { label: 'Young People', href: '/young-people' },
+      ]} />
+
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+      <div className="relative bg-[#0e1b3d] py-24 flex items-center min-h-[580px]">
         <div className="absolute inset-0">
           <Image
             src="/images/young-people.jpg"
@@ -271,84 +278,74 @@ const YoungPeople = () => {
             quality={90}
             onError={() => handleImageError('hero')}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0e1b3d]/95 via-[#0e1b3d]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0e1b3d]/70 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:20px_20px] opacity-30" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,#ffffff05_50%,transparent_100%)] opacity-70" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-indigo-300 mb-4">
-              <div className="p-1.5 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-400/20">
-                <Rocket className="h-4 w-4" />
+            <div className="inline-flex items-center gap-3 text-indigo-300 mb-6">
+              <div className="p-2 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-400/20">
+                <Rocket className="h-5 w-5" />
               </div>
-              <span className="text-sm font-medium tracking-wide uppercase">Your Future Starts Here</span>
+              <span className="text-base font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
               Career Support<br className="hidden sm:block" /> in South Yorkshire
             </h1>
-            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-10">
               Explore exciting opportunities for your future. Whether it's university, apprenticeships, or starting your career, we're here to help you make informed choices.
             </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-5">
               <button
                 onClick={() => setIsQuizOpen(true)}
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition-colors"
+                aria-label="Take our career quiz to find your ideal path"
+                className="inline-flex items-center px-8 py-4 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900"
               >
                 Take Career Quiz
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-3 h-5 w-5" />
               </button>
               <Link
                 href="/plan-your-career"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+                aria-label="Start planning your career with our resources and tools"
+                className="inline-flex items-center px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-all duration-300 border border-white/20 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-gray-900"
               >
                 Start Planning
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-3 h-5 w-5" />
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Remove the old navigation */}
       {/* Enhanced Navigation - Bottom on Mobile, Top on Desktop */}
-      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-200 shadow-lg md:shadow-sm overflow-x-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start sm:justify-center min-w-max">
-            <div className="flex space-x-1 py-1">
+      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-50 bg-white shadow-md md:shadow-md border-t md:border-t-0 md:border-b border-gray-200 overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+          <div className="flex justify-center">
+            <div className="flex space-x-4 md:space-x-6 py-2 md:py-4">
               {Object.entries(tabs).map(([key, tab]) => {
                 const color = tab.color as keyof typeof colorClasses;
                 return (
                   <a 
                     key={key}
                     href={`#${key}`} 
-                    className={`group relative px-2 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-xl transition-colors ${
+                    aria-label={`View ${tab.title} information`}
+                    className={`group relative px-3 md:px-5 py-3 md:py-4 flex-shrink-0 rounded-xl transition-all duration-300 ${
                       activeTab === key 
-                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
-                        : `${colorClasses[color].nav} text-gray-600`
-                    }`}
+                        ? `${colorClasses[color].button} text-${color}-700 shadow-md transform -translate-y-1` 
+                        : `${colorClasses[color].nav} text-gray-700 hover:transform hover:-translate-y-1`
+                    } focus:outline-none focus:ring-2 focus:ring-${color}-400`}
                     onClick={() => setActiveTab(key)}
                   >
-                    <div className="relative z-10 flex flex-col items-center gap-1">
-                      <div className={`h-6 w-6 ${
-                        activeTab === key 
-                          ? `text-${color}-600` 
-                          : 'text-gray-600 group-hover:text-${color}-600'
-                      } transition-colors`}>
-                        {tab.icon}
-                      </div>
-                      <span className={`text-xs md:text-sm font-medium ${
-                        activeTab === key 
-                          ? `text-${color}-600` 
-                          : 'text-gray-900 group-hover:text-${color}-600'
-                      } whitespace-nowrap transition-colors`}>
-                        {tab.title}
-                      </span>
-                      <div className={`h-0.5 hidden md:block ${
-                        activeTab === key 
-                          ? `w-full bg-${color}-600` 
-                          : `w-0 bg-${color}-600 group-hover:w-full`
-                      } transition-all duration-200`} />
-                    </div>
+                    <span className={`text-sm md:text-base font-medium ${
+                      activeTab === key 
+                        ? `text-${color}-700` 
+                      : 'text-gray-900 group-hover:text-${color}-700'
+                    } whitespace-nowrap transition-colors`}>
+                      {tab.title}
+                    </span>
                   </a>
                 )
               })}
@@ -366,42 +363,54 @@ const YoungPeople = () => {
             className={`relative scroll-mt-20 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
           >
             {/* Section Content */}
-            <div className="relative py-24">
+            <div className="relative py-24 md:py-32">
               {/* Decorative elements */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
-                <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color].gradient} opacity-20 blur-3xl`} />
+                <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color].gradient} opacity-30 blur-3xl`} />
+                <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color].gradient} opacity-30 blur-3xl`} />
+                {index % 2 === 0 && (
+                  <div className="absolute inset-0 bg-[radial-gradient(#00000008_1px,transparent_1px)] [background-size:16px_16px]" />
+                )}
               </div>
 
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+                <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
                   {/* Mobile: Stack content on top of image */}
                   <div className="md:hidden">
-                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                    <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-full ${colorClasses[tab.color].button} mb-6`}>
                       {tab.icon}
-                      <span className="text-sm font-medium">{tab.title}</span>
+                      <span className="text-base font-medium">{tab.title}</span>
                     </div>
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">{tab.description}</h2>
-                    <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg mb-6">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">{tab.description}</h2>
+                    <div className="relative h-[350px] rounded-2xl overflow-hidden shadow-xl mb-8 group">
                       <Image
                         src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
                         alt={tab.content.alt}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
                         onError={() => handleImageError(key)}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                      
+                      {/* Regional Badge */}
+                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-md">
+                        <div className="flex items-center gap-1.5">
+                          <MapPin className="h-3.5 w-3.5 text-indigo-700" />
+                          <span className="text-xs font-medium text-gray-800">South Yorkshire</span>
+                        </div>
+                      </div>
                     </div>
                     <div className="prose prose-lg max-w-none mb-8">
                       {tab.content.text.map((paragraph, index) => (
-                        <p key={index} className="text-gray-600 leading-relaxed">
+                        <p key={index} className="text-lg text-gray-600 leading-relaxed mb-4">
                           {paragraph}
                         </p>
                       ))}
                     </div>
                     <Link
                       href={tab.content.link}
-                      className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                      aria-label={`${tab.content.cta} for ${tab.title}`}
+                      className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-all duration-300 ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-base focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${tab.color}-400`}
                     >
                       {tab.content.cta}
                       <ChevronRight className="ml-2 h-5 w-5" />
@@ -412,36 +421,46 @@ const YoungPeople = () => {
                   {index % 2 === 0 ? (
                     <>
                       <div className="hidden md:block">
-                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                        <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-full ${colorClasses[tab.color].button} mb-6`}>
                           {tab.icon}
-                          <span className="text-sm font-medium">{tab.title}</span>
+                          <span className="text-base font-medium">{tab.title}</span>
                         </div>
-                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6 tracking-tight">{tab.description}</h2>
                         <div className="prose prose-lg max-w-none mb-8">
                           {tab.content.text.map((paragraph, index) => (
-                            <p key={index} className="text-gray-600 leading-relaxed">
+                            <p key={index} className="text-xl text-gray-600 leading-relaxed mb-6">
                               {paragraph}
                             </p>
                           ))}
                         </div>
                         <Link
                           href={tab.content.link}
-                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                          aria-label={`${tab.content.cta} for ${tab.title}`}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-all duration-300 ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${tab.color}-400`}
                         >
                           {tab.content.cta}
                           <ChevronRight className="ml-2 h-5 w-5" />
                         </Link>
                       </div>
-                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                      <div className="hidden md:block relative h-[480px] rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-[1.02] group">
                         <Image
                           src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
                           alt={tab.content.alt}
                           fill
-                          className="object-cover"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
                           onError={() => handleImageError(key)}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                        
+                        {/* Regional Badge */}
+                        <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-md">
+                          <div className="flex items-center gap-1.5">
+                            <MapPin className="h-3.5 w-3.5 text-indigo-700" />
+                            <span className="text-xs font-medium text-gray-800">South Yorkshire</span>
+                          </div>
+                        </div>
+                        
+                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100 transition-all duration-500 group-hover:-translate-y-2">
                           <div className="flex items-center gap-4">
                             <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
                               {tab.icon}
@@ -456,16 +475,25 @@ const YoungPeople = () => {
                     </>
                   ) : (
                     <>
-                      <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                      <div className="hidden md:block relative h-[480px] rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-[1.02] group">
                         <Image
                           src={imageLoadError[key] ? '/images/fallback.jpg' : tab.content.image}
                           alt={tab.content.alt}
                           fill
-                          className="object-cover"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
                           onError={() => handleImageError(key)}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                        
+                        {/* Regional Badge */}
+                        <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-md">
+                          <div className="flex items-center gap-1.5">
+                            <MapPin className="h-3.5 w-3.5 text-indigo-700" />
+                            <span className="text-xs font-medium text-gray-800">South Yorkshire</span>
+                          </div>
+                        </div>
+                        
+                        <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100 transition-all duration-500 group-hover:-translate-y-2">
                           <div className="flex items-center gap-4">
                             <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color].icon}`}>
                               {tab.icon}
@@ -478,21 +506,22 @@ const YoungPeople = () => {
                         </div>
                       </div>
                       <div className="hidden md:block">
-                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color].button} mb-6`}>
+                        <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-full ${colorClasses[tab.color].button} mb-6`}>
                           {tab.icon}
-                          <span className="text-sm font-medium">{tab.title}</span>
+                          <span className="text-base font-medium">{tab.title}</span>
                         </div>
-                        <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-6 tracking-tight">{tab.description}</h2>
                         <div className="prose prose-lg max-w-none mb-8">
                           {tab.content.text.map((paragraph, index) => (
-                            <p key={index} className="text-gray-600 leading-relaxed">
+                            <p key={index} className="text-xl text-gray-600 leading-relaxed mb-6">
                               {paragraph}
                             </p>
                           ))}
                         </div>
                         <Link
                           href={tab.content.link}
-                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl`}
+                          aria-label={`${tab.content.cta} for ${tab.title}`}
+                          className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-all duration-300 ${colorClasses[tab.color].link} shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${tab.color}-400`}
                         >
                           {tab.content.cta}
                           <ChevronRight className="ml-2 h-5 w-5" />

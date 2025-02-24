@@ -12,7 +12,9 @@ import {
   Briefcase,
   Lightbulb,
   Calendar,
-  Network
+  Network,
+  ArrowRight,
+  Building2
 } from 'lucide-react'
 import Newsletter from '@/components/Newsletter'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -26,17 +28,17 @@ const IMAGES = {
 
 const colorClasses = {
   blue: {
-    button: 'border-blue-500 bg-blue-50',
-    icon: 'bg-blue-100 text-blue-600',
-    link: 'bg-blue-600 hover:bg-blue-500',
+    button: 'border-blue-600 bg-blue-50/90',
+    icon: 'bg-blue-100 text-blue-700',
+    link: 'bg-blue-700 hover:bg-blue-600',
     badge: 'bg-blue-50 text-blue-700',
     gradient: 'from-blue-50 to-white',
     nav: 'hover:bg-blue-50/80'
   },
   emerald: {
-    button: 'border-emerald-500 bg-emerald-50',
-    icon: 'bg-emerald-100 text-emerald-600',
-    link: 'bg-emerald-600 hover:bg-emerald-500',
+    button: 'border-emerald-600 bg-emerald-50/90',
+    icon: 'bg-emerald-100 text-emerald-700',
+    link: 'bg-emerald-700 hover:bg-emerald-600',
     badge: 'bg-emerald-50 text-emerald-700',
     gradient: 'from-emerald-50 to-white',
     nav: 'hover:bg-emerald-50/80'
@@ -54,14 +56,14 @@ const EducatorsPage = () => {
       id: 'collegesAndProviders',
       title: 'Colleges & Training Providers',
       description: 'Deliver Skills Training and Career Education',
-      icon: <Briefcase className="w-6 h-6" />,
+      icon: <Briefcase className="w-8 h-8" />,
       color: 'blue' as const
     },
     schools: {
       id: 'schools',
       title: 'Schools',
       description: 'Career Education',
-      icon: <GraduationCap className="w-6 h-6" />,
+      icon: <GraduationCap className="w-8 h-8" />,
       color: 'emerald' as const
     }
   }), [])
@@ -128,91 +130,80 @@ const EducatorsPage = () => {
       ]} />
 
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+      <div className="relative bg-[#0e1b3d] py-32 flex items-center min-h-[600px]">
         <div className="absolute inset-0">
           <Image
             src={IMAGES.hero}
             alt="Education and training facilities in South Yorkshire"
             fill
-            className="object-cover object-center brightness-[0.7] saturate-[0.85]"
+            className="object-cover object-center brightness-75"
             priority
             quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0e1b3d]/90 via-[#0e1b3d]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0e1b3d]/70 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:20px_20px] opacity-30" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,#ffffff05_50%,transparent_100%)] opacity-70" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-blue-300 mb-4">
-              <div className="p-1.5 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-400/20">
-                <FileText className="h-4 w-4" />
+            <div className="inline-flex items-center gap-3 text-blue-300 mb-6">
+              <div className="p-2 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-400/20">
+                <FileText className="h-5 w-5" />
               </div>
-              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Education Hub</span>
+              <span className="text-base font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
               Shaping South Yorkshire's<br className="hidden sm:block" /> Future Workforce
             </h1>
-            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-10">
               Join us in building a skilled workforce for tomorrow. Access resources, funding, and support tailored to your role in education.
             </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-5">
               <Link
                 href="#collegesAndProviders"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors"
+                className="inline-flex items-center px-8 py-4 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-500 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900"
               >
                 Colleges & Training Providers
-                <ChevronRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-3 h-5 w-5" />
               </Link>
               <Link
                 href="#schools"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+                className="inline-flex items-center px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-all duration-300 border border-white/20 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-gray-900"
               >
                 Schools
-                <ChevronRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-3 h-5 w-5" />
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Navigation - Bottom on Mobile, Top on Desktop */}
-      <div className="md:sticky md:top-0 fixed bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t md:border-t-0 md:border-b border-gray-200 shadow-lg md:shadow-sm overflow-x-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start sm:justify-center min-w-max">
-            <div className="flex space-x-1 py-1">
+      {/* Enhanced Navigation - Desktop Only */}
+      <div className="hidden md:block sticky top-0 z-50 bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+          <div className="flex justify-center">
+            <div className="flex space-x-6 py-4">
               {Object.values(tabs).map((tab) => (
                 <a 
                   key={tab.id}
                   href={`#${tab.id}`} 
-                  className={`group relative px-2 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-xl transition-colors ${
+                  aria-label={`View ${tab.title} information`}
+                  className={`group relative px-6 py-3 flex-shrink-0 rounded-xl transition-all duration-300 ${
                     activeTab === tab.id 
-                      ? `${colorClasses[tab.color].button} text-${tab.color}-600 shadow-md` 
-                      : `${colorClasses[tab.color].nav} text-gray-600`
-                  }`}
+                      ? `${colorClasses[tab.color].button} text-${tab.color}-700 shadow-md transform -translate-y-1` 
+                      : `${colorClasses[tab.color].nav} text-gray-700 hover:transform hover:-translate-y-1`
+                  } focus:outline-none focus:ring-2 focus:ring-${tab.color}-400`}
                   onClick={() => setActiveTab(tab.id)}
                 >
-                  <div className="relative z-10 flex flex-col items-center gap-1">
-                    <div className={`h-6 w-6 ${
-                      activeTab === tab.id 
-                        ? `text-${tab.color}-600` 
-                        : 'text-gray-600 group-hover:text-${tab.color}-600'
-                    } transition-colors`}>
-                      {tab.icon}
-                    </div>
-                    <span className={`text-xs md:text-sm font-medium ${
-                      activeTab === tab.id 
-                        ? `text-${tab.color}-600` 
-                        : 'text-gray-900 group-hover:text-${tab.color}-600'
-                    } whitespace-nowrap transition-colors`}>
-                      {tab.title}
-                    </span>
-                    <div className={`h-0.5 hidden md:block ${
-                      activeTab === tab.id 
-                        ? `w-full bg-${tab.color}-600` 
-                        : `w-0 bg-${tab.color}-600 group-hover:w-full`
-                    } transition-all duration-200`} />
-                  </div>
+                  <span className={`text-base font-medium ${
+                    activeTab === tab.id 
+                      ? `text-${tab.color}-700` 
+                      : 'text-gray-900 group-hover:text-${tab.color}-700'
+                  } whitespace-nowrap transition-colors`}>
+                    {tab.title}
+                  </span>
                 </a>
               ))}
             </div>
@@ -221,76 +212,85 @@ const EducatorsPage = () => {
       </div>
 
       {/* Main Content Sections with bottom padding for mobile */}
-      <div className="pb-20 md:pb-0">
+      <div className="md:block pb-20 md:pb-0"> {/* Add padding bottom for mobile nav */}
         {/* Colleges & Training Providers Section */}
-        <div id="collegesAndProviders" className="relative bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-            <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-              <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden order-1 md:order-none">
-                <Image
-                  src={IMAGES.trainingProviders}
-                  alt="Colleges and training providers delivering quality education"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute bottom-4 sm:bottom-8 -right-12 bg-white rounded-xl p-4 sm:p-6 shadow-xl max-w-[280px] sm:max-w-sm transform -translate-x-8 sm:-translate-x-20 backdrop-blur-sm border border-gray-100">
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Target className="h-6 w-6 sm:h-7 sm:w-7 text-blue-600" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-gray-900 text-lg sm:text-xl mb-0.5 sm:mb-1">£1.7bn Investment</div>
-                      <div className="text-sm sm:text-base text-gray-600">In skills development by 2030</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div className="flex items-center gap-2 text-blue-600 mb-3 sm:mb-4">
-                  <span className="text-sm font-medium tracking-wide uppercase">For Colleges & Training Providers</span>
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Deliver Quality Training</h2>
-                <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                  Partner with us to deliver high-quality training programmes that meet employer needs and support economic growth in South Yorkshire.
-                </p>
-                <div className="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
-                  <div className="grid gap-4">
-                    <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                        <ChevronRight className="h-5 w-5 text-blue-600" />
+        <div id="collegesAndProviders" className="relative bg-gray-50 scroll-mt-20">
+          <div className="relative py-32">
+            {/* Decorative elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute -right-1/4 -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br from-blue-50 to-white opacity-30 blur-3xl" />
+              <div className="absolute -left-1/4 -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr from-blue-50 to-white opacity-30 blur-3xl" />
+              <div className="absolute inset-0 bg-[radial-gradient(#00000008_1px,transparent_1px)] [background-size:16px_16px]" />
+            </div>
+
+            <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+              <div className="grid md:grid-cols-2 gap-16 lg:gap-20 items-center">
+                <div className="relative h-[350px] sm:h-[520px] rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-[1.02] group">
+                  <Image
+                    src={IMAGES.trainingProviders}
+                    alt="Colleges and training providers delivering quality education"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                  <div className="absolute bottom-10 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-8 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100 transition-all duration-500 group-hover:-translate-y-2">
+                    <div className="flex items-center gap-5">
+                      <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Target className="h-8 w-8 text-blue-700" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 text-lg mb-1">Access Funding</h3>
-                        <p className="text-gray-600">Deliver funded training programmes through Skills Bank and Skills Bootcamps</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                        <ChevronRight className="h-5 w-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 text-lg mb-1">Quality Framework</h3>
-                        <p className="text-gray-600">Access support to meet our quality standards and enhance your provision</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
-                        <ChevronRight className="h-5 w-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Networks</h3>
-                        <p className="text-gray-600">Connect with employers and understand their training needs</p>
+                        <div className="font-bold text-gray-900 text-2xl mb-2">£1.7bn Investment</div>
+                        <div className="text-lg text-gray-600">In skills development by 2030</div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
+                <div>
+                  <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full border-blue-600 bg-blue-50/90 mb-8">
+                    <Briefcase className="w-8 h-8 text-blue-700" />
+                    <span className="text-base font-medium">For Colleges & Training Providers</span>
+                  </div>
+                  <h2 className="text-5xl font-bold text-gray-900 mb-8 tracking-tight leading-tight">Deliver Quality Training</h2>
+                  <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+                    Partner with us to deliver high-quality training programmes that meet employer needs and support economic growth in South Yorkshire.
+                  </p>
+                  <div className="bg-white rounded-2xl p-8 mb-10 shadow-md">
+                    <div className="grid gap-6">
+                      <div className="flex items-start gap-5">
+                        <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                          <ChevronRight className="h-6 w-6 text-blue-700" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 text-xl mb-2">Access Funding</h3>
+                          <p className="text-lg text-gray-600">Deliver funded training programmes through Skills Bank and Skills Bootcamps</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-5">
+                        <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                          <ChevronRight className="h-6 w-6 text-blue-700" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 text-xl mb-2">Quality Framework</h3>
+                          <p className="text-lg text-gray-600">Access support to meet our quality standards and enhance your provision</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-5">
+                        <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-1">
+                          <ChevronRight className="h-6 w-6 text-blue-700" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 text-xl mb-2">Employer Networks</h3>
+                          <p className="text-lg text-gray-600">Connect with employers and understand their training needs</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <Link
                     href="/educators/training-providers"
-                    className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors text-base sm:text-lg shadow-sm"
+                    className="inline-flex items-center px-8 py-4 rounded-xl bg-blue-700 text-white font-medium hover:bg-blue-600 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                   >
                     Learn More
-                    <ChevronRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-3 h-5 w-5" />
                   </Link>
                 </div>
               </div>
@@ -299,74 +299,116 @@ const EducatorsPage = () => {
         </div>
 
         {/* Schools Section */}
-        <div id="schools" className="relative bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-            <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-              <div>
-                <div className="flex items-center gap-2 text-emerald-600 mb-3 sm:mb-4">
-                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-                  <span className="text-sm font-medium tracking-wide uppercase">For Schools</span>
+        <div id="schools" className="relative bg-white scroll-mt-20">
+          <div className="relative py-32">
+            {/* Decorative elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute -left-1/4 -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br from-emerald-50 to-white opacity-30 blur-3xl" />
+              <div className="absolute -right-1/4 -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr from-emerald-50 to-white opacity-30 blur-3xl" />
+            </div>
+
+            <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+              <div className="grid md:grid-cols-2 gap-16 lg:gap-20 items-center">
+                <div>
+                  <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full border-emerald-600 bg-emerald-50/90 mb-8">
+                    <GraduationCap className="w-8 h-8 text-emerald-700" />
+                    <span className="text-base font-medium">For Schools</span>
+                  </div>
+                  <h2 className="text-5xl font-bold text-gray-900 mb-8 tracking-tight leading-tight">Career Education Support</h2>
+                  <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+                    Access resources and support to deliver outstanding careers guidance and work-related learning opportunities for your students.
+                  </p>
+                  <div className="space-y-8 mb-10">
+                    <div className="flex items-start gap-5">
+                      <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                        <Calendar className="h-6 w-6 text-emerald-700" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 text-xl mb-2">Provider Access</h3>
+                        <p className="text-lg text-gray-600">Support to meet Provider Access Legislation requirements</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-5">
+                      <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                        <Network className="h-6 w-6 text-emerald-700" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 text-xl mb-2">Employer Engagement</h3>
+                        <p className="text-lg text-gray-600">Connect with local employers for work experience and insights</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-5">
+                      <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
+                        <Lightbulb className="h-6 w-6 text-emerald-700" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 text-xl mb-2">Career Resources</h3>
+                        <p className="text-lg text-gray-600">Teaching materials and labour market information</p>
+                      </div>
+                    </div>
+                  </div>
+                  <Link
+                    href="/educators/schools"
+                    className="inline-flex items-center px-8 py-4 rounded-xl bg-emerald-700 text-white font-medium hover:bg-emerald-600 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2"
+                  >
+                    Learn More
+                    <ArrowRight className="ml-3 h-5 w-5" />
+                  </Link>
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Career Education Support</h2>
-                <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
-                  Access resources and support to deliver outstanding careers guidance and work-related learning opportunities for your students.
-                </p>
-                <div className="space-y-6 mb-8">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <Calendar className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Provider Access</h3>
-                      <p className="text-gray-600">Support to meet Provider Access Legislation requirements</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <Network className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Employer Engagement</h3>
-                      <p className="text-gray-600">Connect with local employers for work experience and insights</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-1">
-                      <Lightbulb className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 text-lg mb-1">Career Resources</h3>
-                      <p className="text-gray-600">Teaching materials and labour market information</p>
+                <div className="relative h-[350px] sm:h-[520px] rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-[1.02] group">
+                  <Image
+                    src={IMAGES.schools}
+                    alt="School career guidance session"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                  <div className="absolute bottom-10 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-8 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100 transition-all duration-500 group-hover:-translate-y-2">
+                    <div className="flex items-center gap-5">
+                      <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Users className="h-8 w-8 text-emerald-700" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-gray-900 text-2xl mb-2">100+ Schools</div>
+                        <div className="text-lg text-gray-600">Supported across South Yorkshire</div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <Link
-                  href="/educators/schools"
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors text-base sm:text-lg shadow-sm"
-                >
-                  Learn More
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
               </div>
-              <div className="relative h-[300px] sm:h-[460px] rounded-2xl overflow-hidden">
-                <Image
-                  src={IMAGES.schools}
-                  alt="School career guidance session"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute bottom-8 -right-12 bg-white rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 backdrop-blur-sm border border-gray-100">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Users className="h-7 w-7 text-emerald-600" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-gray-900 text-xl mb-1">100+ Schools</div>
-                      <div className="text-gray-600">Supported across South Yorkshire</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation - Fixed at Bottom */}
+      <div className="fixed md:hidden bottom-0 left-0 right-0 z-50 bg-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center">
+            <div className="flex space-x-4 py-4">
+              {Object.values(tabs).map((tab) => {
+                return (
+                  <a 
+                    key={tab.id}
+                    href={`#${tab.id}`} 
+                    aria-label={`View ${tab.title} information`}
+                    className={`group relative px-5 py-3 flex-shrink-0 rounded-xl transition-all duration-300 ${
+                      activeTab === tab.id 
+                        ? `${colorClasses[tab.color].button} text-${tab.color}-700 shadow-md transform -translate-y-1` 
+                        : `${colorClasses[tab.color].nav} text-gray-700`
+                    } focus:outline-none focus:ring-2 focus:ring-${tab.color}-400`}
+                    onClick={() => setActiveTab(tab.id)}
+                  >
+                    <span className={`text-sm font-medium ${
+                      activeTab === tab.id 
+                        ? `text-${tab.color}-700` 
+                        : 'text-gray-900 group-hover:text-${tab.color}-700'
+                    } whitespace-nowrap transition-colors`}>
+                      {tab.title}
+                    </span>
+                  </a>
+                )
+              })}
             </div>
           </div>
         </div>

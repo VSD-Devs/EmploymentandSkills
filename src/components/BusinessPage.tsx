@@ -3,47 +3,47 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ChevronRight, Building2, GraduationCap, BookOpen, LineChart, Globe2, ArrowRight } from 'lucide-react'
+import { ChevronRight, Building2, GraduationCap, BookOpen, LineChart, Globe2, ArrowRight, MapPin } from 'lucide-react'
 import Newsletter from './Newsletter'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 const colorClasses = {
   emerald: {
-    button: 'border-emerald-500 bg-emerald-50',
-    icon: 'bg-emerald-100 text-emerald-600',
-    link: 'bg-emerald-600 hover:bg-emerald-500',
+    button: 'border-emerald-600 bg-emerald-50/90',
+    icon: 'bg-emerald-100 text-emerald-700',
+    link: 'bg-emerald-700 hover:bg-emerald-600',
     badge: 'bg-emerald-50 text-emerald-700',
     gradient: 'from-emerald-50 to-white',
     nav: 'hover:bg-emerald-50/80'
   },
   blue: {
-    button: 'border-blue-500 bg-blue-50',
-    icon: 'bg-blue-100 text-blue-600',
-    link: 'bg-blue-600 hover:bg-blue-500',
+    button: 'border-blue-600 bg-blue-50/90',
+    icon: 'bg-blue-100 text-blue-700',
+    link: 'bg-blue-700 hover:bg-blue-600',
     badge: 'bg-blue-50 text-blue-700',
     gradient: 'from-blue-50 to-white',
     nav: 'hover:bg-blue-50/80'
   },
   indigo: {
-    button: 'border-indigo-500 bg-indigo-50',
-    icon: 'bg-indigo-100 text-indigo-600',
-    link: 'bg-indigo-600 hover:bg-indigo-700',
+    button: 'border-indigo-600 bg-indigo-50/90',
+    icon: 'bg-indigo-100 text-indigo-700',
+    link: 'bg-indigo-700 hover:bg-indigo-600',
     badge: 'bg-indigo-50 text-indigo-700',
     gradient: 'from-indigo-50 to-white',
     nav: 'hover:bg-indigo-50/80'
   },
   purple: {
-    button: 'border-purple-500 bg-purple-50',
-    icon: 'bg-purple-100 text-purple-600',
-    link: 'bg-purple-600 hover:bg-purple-500',
+    button: 'border-purple-600 bg-purple-50/90',
+    icon: 'bg-purple-100 text-purple-700',
+    link: 'bg-purple-700 hover:bg-purple-600',
     badge: 'bg-purple-50 text-purple-700',
     gradient: 'from-purple-50 to-white',
     nav: 'hover:bg-purple-50/80'
   },
   teal: {
-    button: 'border-teal-500 bg-teal-50',
-    icon: 'bg-teal-100 text-teal-600',
-    link: 'bg-teal-600 hover:bg-teal-500',
+    button: 'border-teal-600 bg-teal-50/90',
+    icon: 'bg-teal-100 text-teal-700',
+    link: 'bg-teal-700 hover:bg-teal-600',
     badge: 'bg-teal-50 text-teal-700',
     gradient: 'from-teal-50 to-white',
     nav: 'hover:bg-teal-50/80'
@@ -154,7 +154,7 @@ const BusinessPage = () => {
         image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80',
         alt: 'Business consulting session with professionals',
         link: '/business-support',
-        cta: 'Book Consultation'
+        cta: 'Learn More'
       }
     },
     trade: {
@@ -252,7 +252,7 @@ const BusinessPage = () => {
       ]} />
 
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 flex items-center">
+      <div className="relative bg-[#0e1b3d] py-24 flex items-center min-h-[580px]">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-business.jpg"
@@ -262,38 +262,36 @@ const BusinessPage = () => {
             priority
             quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0e1b3d]/95 via-[#0e1b3d]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0e1b3d]/70 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:20px_20px] opacity-30" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,#ffffff05_50%,transparent_100%)] opacity-70" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
-              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
-                <Building2 className="h-4 w-4" />
-              </div>
-              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Business Hub</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
               Business Support<br className="hidden sm:block" /> in South Yorkshire
             </h1>
-            <p className="text-lg sm:text-xl text-gray-200 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-10">
               Access funding, expert support, and resources to help your business thrive. Connect with Yorkshire's future workforce and shape the skills of tomorrow.
             </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-5">
               <Link
                 href="/funded-training"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
+                aria-label="Learn about funded training opportunities for businesses"
+                className="inline-flex items-center px-8 py-4 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-gray-900"
               >
                 Funded Training
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-3 h-5 w-5" />
               </Link>
               <Link
                 href="/business-support"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+                aria-label="Get comprehensive business support services"
+                className="inline-flex items-center px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-all duration-300 border border-white/20 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-gray-900"
               >
                 Get Support
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-3 h-5 w-5" />
               </Link>
             </div>
           </div>
@@ -301,44 +299,31 @@ const BusinessPage = () => {
       </div>
 
       {/* Enhanced Navigation - Desktop Only */}
-      <div className="hidden md:block sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-start sm:justify-center min-w-max">
-            <div className="flex space-x-1 py-1">
+      <div className="hidden md:block sticky top-0 z-50 bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+          <div className="flex justify-center">
+            <div className="flex space-x-6 py-4">
               {Object.entries(tabs).map(([key, tab]) => {
                 const color = tab.color as ColorType;
                 return (
                   <a 
                     key={key}
                     href={`#${key}`} 
-                    className={`group relative px-2 md:px-4 py-2 md:py-3 flex-shrink-0 rounded-xl transition-colors ${
+                    aria-label={`View ${tab.title} information`}
+                    className={`group relative px-5 py-3 flex-shrink-0 rounded-xl transition-all duration-300 ${
                       activeTab === key 
-                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
-                        : `${colorClasses[color].nav} text-gray-600`
-                    }`}
+                        ? `${colorClasses[color].button} text-${color}-700 shadow-md transform -translate-y-1` 
+                        : `${colorClasses[color].nav} text-gray-700 hover:transform hover:-translate-y-1`
+                    } focus:outline-none focus:ring-2 focus:ring-${color}-400`}
                     onClick={() => setActiveTab(key)}
                   >
-                    <div className="relative z-10 flex flex-col items-center gap-1">
-                      <div className={`h-6 w-6 ${
-                        activeTab === key 
-                          ? `text-${color}-600` 
-                          : 'text-gray-600 group-hover:text-${color}-600'
-                      } transition-colors`}>
-                        {tab.icon}
-                      </div>
-                      <span className={`text-xs md:text-sm font-medium ${
-                        activeTab === key 
-                          ? `text-${color}-600` 
-                          : 'text-gray-900 group-hover:text-${color}-600'
-                      } whitespace-nowrap transition-colors`}>
-                        {tab.title}
-                      </span>
-                      <div className={`h-0.5 hidden md:block ${
-                        activeTab === key 
-                          ? `w-full bg-${color}-600` 
-                          : `w-0 bg-${color}-600 group-hover:w-full`
-                      } transition-all duration-200`} />
-                    </div>
+                    <span className={`text-base font-medium ${
+                      activeTab === key 
+                        ? `text-${color}-700` 
+                        : 'text-gray-900 group-hover:text-${color}-700'
+                    } whitespace-nowrap transition-colors`}>
+                      {tab.title}
+                    </span>
                   </a>
                 )
               })}
@@ -349,43 +334,55 @@ const BusinessPage = () => {
 
       {/* Main Content Sections */}
       {Object.entries(tabs).map(([key, tab], index) => (
-        <div key={key} id={key} className={`relative ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+        <div key={key} id={key} className={`relative scroll-mt-20 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
           {/* Section Content */}
-          <div className="relative py-24">
+          <div className="relative py-24 md:py-32">
             {/* Decorative elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color as ColorType].gradient} opacity-20 blur-3xl`} />
-              <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color as ColorType].gradient} opacity-20 blur-3xl`} />
+              <div className={`absolute ${index % 2 === 0 ? '-right-1/4' : '-left-1/4'} -top-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-br ${colorClasses[tab.color as ColorType].gradient} opacity-30 blur-3xl`} />
+              <div className={`absolute ${index % 2 === 0 ? '-left-1/4' : '-right-1/4'} -bottom-1/4 w-1/2 h-1/2 rounded-full bg-gradient-to-tr ${colorClasses[tab.color as ColorType].gradient} opacity-30 blur-3xl`} />
+              {index % 2 === 0 && (
+                <div className="absolute inset-0 bg-[radial-gradient(#00000008_1px,transparent_1px)] [background-size:16px_16px]" />
+              )}
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+              <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
                 {/* Mobile: Stack content on top of image */}
                 <div className="md:hidden">
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as ColorType].button} mb-6`}>
+                  <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-full ${colorClasses[tab.color as ColorType].button} mb-6`}>
                     {tab.icon}
                     <span className="text-base font-medium">{tab.title}</span>
                   </div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-6">{tab.description}</h2>
-                  <div className="relative h-[300px] rounded-xl overflow-hidden shadow-lg mb-6">
+                  <h2 className="text-3xl font-bold text-gray-900 mb-6 tracking-tight">{tab.description}</h2>
+                  <div className="relative h-[350px] rounded-2xl overflow-hidden shadow-xl mb-8 group">
                     <Image
                       src={tab.content.image}
                       alt={tab.content.alt}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+                    
+                    {/* Regional Badge */}
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-md">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="h-3.5 w-3.5 text-blue-700" />
+                        <span className="text-xs font-medium text-gray-800">South Yorkshire</span>
+                      </div>
+                    </div>
                   </div>
                   <div className="prose prose-lg max-w-none mb-8">
                     {tab.content.text.map((paragraph, index) => (
-                      <p key={index} className="text-gray-600 leading-relaxed">
+                      <p key={index} className="text-lg text-gray-600 leading-relaxed mb-4">
                         {paragraph}
                       </p>
                     ))}
                   </div>
                   <Link
                     href={tab.content.link}
-                    className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as ColorType].link} shadow-lg hover:shadow-xl`}
+                    aria-label={`${tab.content.cta} for ${tab.title}`}
+                    className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-all duration-300 ${colorClasses[tab.color as ColorType].link} shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-base focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${tab.color}-400`}
                   >
                     {tab.content.cta}
                     <ChevronRight className="ml-2 h-5 w-5" />
@@ -396,41 +393,45 @@ const BusinessPage = () => {
                 {index % 2 === 0 ? (
                   <>
                     <div className="hidden md:block">
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as ColorType].button} mb-6`}>
+                      <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-full ${colorClasses[tab.color as ColorType].button} mb-6`}>
                         {tab.icon}
-                        <span className={`text-xs font-medium ${
-                          activeTab === key 
-                            ? `text-${tab.color}-600` 
-                            : `text-gray-900 group-hover:text-${tab.color}-600`
-                        } whitespace-nowrap transition-colors`}>
-                          {tab.title}
-                        </span>
+                        <span className="text-base font-medium">{tab.title}</span>
                       </div>
-                      <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
-                      <div className="prose prose-xl max-w-none mb-8">
+                      <h2 className="text-4xl font-bold text-gray-900 mb-6 tracking-tight">{tab.description}</h2>
+                      <div className="prose prose-lg max-w-none mb-8">
                         {tab.content.text.map((paragraph, index) => (
-                          <p key={index} className="text-gray-600 leading-relaxed">
+                          <p key={index} className="text-xl text-gray-600 leading-relaxed mb-6">
                             {paragraph}
                           </p>
                         ))}
                       </div>
                       <Link
                         href={tab.content.link}
-                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as ColorType].link} shadow-lg hover:shadow-xl`}
+                        aria-label={`${tab.content.cta} for ${tab.title}`}
+                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-all duration-300 ${colorClasses[tab.color as ColorType].link} shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${tab.color}-400`}
                       >
                         {tab.content.cta}
                         <ChevronRight className="ml-2 h-5 w-5" />
                       </Link>
                     </div>
-                    <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="hidden md:block relative h-[480px] rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-[1.02] group">
                       <Image
                         src={tab.content.image}
                         alt={tab.content.alt}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                      
+                      {/* Regional Badge */}
+                      <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-md">
+                        <div className="flex items-center gap-1.5">
+                          <MapPin className="h-3.5 w-3.5 text-blue-700" />
+                          <span className="text-xs font-medium text-gray-800">South Yorkshire</span>
+                        </div>
+                      </div>
+                      
+                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100 transition-all duration-500 group-hover:-translate-y-2">
                         <div className="flex items-center gap-4">
                           <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color as ColorType].icon}`}>
                             {tab.icon}
@@ -445,15 +446,24 @@ const BusinessPage = () => {
                   </>
                 ) : (
                   <>
-                    <div className="hidden md:block relative h-[460px] rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="hidden md:block relative h-[480px] rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 hover:scale-[1.02] group">
                       <Image
                         src={tab.content.image}
                         alt={tab.content.alt}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
-                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100">
+                      
+                      {/* Regional Badge */}
+                      <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-md">
+                        <div className="flex items-center gap-1.5">
+                          <MapPin className="h-3.5 w-3.5 text-blue-700" />
+                          <span className="text-xs font-medium text-gray-800">South Yorkshire</span>
+                        </div>
+                      </div>
+                      
+                      <div className="absolute bottom-8 -right-12 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl max-w-sm transform -translate-x-20 border border-gray-100 transition-all duration-500 group-hover:-translate-y-2">
                         <div className="flex items-center gap-4">
                           <div className={`w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 ${colorClasses[tab.color as ColorType].icon}`}>
                             {tab.icon}
@@ -466,27 +476,22 @@ const BusinessPage = () => {
                       </div>
                     </div>
                     <div className="hidden md:block">
-                      <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${colorClasses[tab.color as ColorType].button} mb-6`}>
+                      <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-full ${colorClasses[tab.color as ColorType].button} mb-6`}>
                         {tab.icon}
-                        <span className={`text-xs font-medium ${
-                          activeTab === key 
-                            ? `text-${tab.color}-600` 
-                            : `text-gray-900 group-hover:text-${tab.color}-600`
-                        } whitespace-nowrap transition-colors`}>
-                          {tab.title}
-                        </span>
+                        <span className="text-base font-medium">{tab.title}</span>
                       </div>
-                      <h2 className="text-4xl font-bold text-gray-900 mb-6">{tab.description}</h2>
-                      <div className="prose prose-xl max-w-none mb-8">
+                      <h2 className="text-4xl font-bold text-gray-900 mb-6 tracking-tight">{tab.description}</h2>
+                      <div className="prose prose-lg max-w-none mb-8">
                         {tab.content.text.map((paragraph, index) => (
-                          <p key={index} className="text-gray-600 leading-relaxed">
+                          <p key={index} className="text-xl text-gray-600 leading-relaxed mb-6">
                             {paragraph}
                           </p>
                         ))}
                       </div>
                       <Link
                         href={tab.content.link}
-                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-colors ${colorClasses[tab.color as ColorType].link} shadow-lg hover:shadow-xl`}
+                        aria-label={`${tab.content.cta} for ${tab.title}`}
+                        className={`inline-flex items-center px-6 py-3 rounded-xl text-white transition-all duration-300 ${colorClasses[tab.color as ColorType].link} shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${tab.color}-400`}
                       >
                         {tab.content.cta}
                         <ChevronRight className="ml-2 h-5 w-5" />
@@ -503,43 +508,34 @@ const BusinessPage = () => {
       {/* Newsletter Section */}
       <Newsletter />
 
-      {/* Updated Mobile Navigation with ref */}
+      {/* Mobile Navigation - Fixed at Bottom */}
       <div 
-        ref={navRef}
-        className="fixed md:hidden bottom-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md border-t border-gray-200 shadow-lg overflow-x-auto scrollbar-hide"
+        className="fixed md:hidden bottom-0 left-0 right-0 z-50 bg-white shadow-lg overflow-x-auto scrollbar-hide"
       >
         <div className="w-max min-w-full px-2 sm:px-4">
           <div className="flex justify-start">
-            <div className="flex space-x-1 py-2">
+            <div className="flex space-x-2 py-2">
               {Object.entries(tabs).map(([key, tab]) => {
                 const color = tab.color as ColorType;
                 return (
                   <a 
                     key={key}
                     href={`#${key}`} 
-                    className={`group relative px-3 py-2 flex-shrink-0 rounded-xl transition-colors ${
+                    aria-label={`View ${tab.title} information`}
+                    className={`group relative px-4 py-3 flex-shrink-0 rounded-xl transition-all duration-300 ${
                       activeTab === key 
-                        ? `${colorClasses[color].button} text-${color}-600 shadow-md` 
-                        : `${colorClasses[color].nav} text-gray-600`
-                    }`}
+                        ? `${colorClasses[color].button} text-${color}-700 shadow-md transform -translate-y-1` 
+                        : `${colorClasses[color].nav} text-gray-700`
+                    } focus:outline-none focus:ring-2 focus:ring-${color}-400`}
                     onClick={() => setActiveTab(key)}
                   >
-                    <div className="relative z-10 flex flex-col items-center gap-1">
-                      <div className={`h-5 w-5 ${
-                        activeTab === key 
-                          ? `text-${color}-600` 
-                          : 'text-gray-600 group-hover:text-${color}-600'
-                      } transition-colors`}>
-                        {tab.icon}
-                      </div>
-                      <span className={`text-xs font-medium ${
-                        activeTab === key 
-                          ? `text-${color}-600` 
-                          : `text-gray-900 group-hover:text-${color}-600`
-                      } whitespace-nowrap transition-colors`}>
-                        {tab.title}
-                      </span>
-                    </div>
+                    <span className={`text-sm font-medium ${
+                      activeTab === key 
+                        ? `text-${color}-700` 
+                        : 'text-gray-900 group-hover:text-${color}-700'
+                    } whitespace-nowrap transition-colors`}>
+                      {tab.title}
+                    </span>
                   </a>
                 )
               })}

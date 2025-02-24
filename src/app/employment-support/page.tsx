@@ -275,7 +275,6 @@ const EmploymentSupportPage = () => {
             quality={90}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/80 to-transparent" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -296,38 +295,21 @@ const EmploymentSupportPage = () => {
               </p>
 
               {/* CTA Buttons - Mobile Optimized */}
-              <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-3 md:gap-4">
-                <button
-                  onClick={() => setShowEligibilityChecker(true)}
-                  className="w-full md:w-auto inline-flex items-center justify-center px-4 md:px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors text-sm md:text-base"
-                >
-                  Check Your Eligibility
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                </button>
+              <div className="flex flex-wrap justify-center gap-3">
                 <Link
-                  href="#contact"
-                  className="w-full md:w-auto inline-flex items-center justify-center px-4 md:px-6 py-3 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20 text-sm md:text-base"
+                  href="#programmes"
+                  className="inline-flex items-center px-5 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-500 transition-colors"
                 >
-                  Contact Support Team
+                  View Programmes
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Link>
-              </div>
-
-              {/* Quick Stats - Mobile Optimized */}
-              <div className="mt-8 md:mt-12 grid grid-cols-3 gap-2 md:gap-4 max-w-2xl mx-auto">
-                {[
-                  { number: "7,500+", label: "People Supported", icon: Users },
-                  { number: "89%", label: "Success Rate", icon: Sparkles },
-                  { number: "6m", label: "Duration", icon: Clock }
-                ].map((stat, index) => (
-                  <div key={index} className="text-center px-2 md:px-4 py-2 md:py-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10">
-                    <div className="flex items-center justify-center mb-1 md:mb-2">
-                      <stat.icon className="h-4 md:h-5 w-4 md:w-5 text-blue-300" />
-                    </div>
-                    <div className="text-base md:text-2xl font-bold text-white mb-0.5 md:mb-1">{stat.number}</div>
-                    <div className="text-[10px] md:text-sm text-gray-400">{stat.label}</div>
-                  </div>
-                ))}
+                <Link
+                  href="#eligibility"
+                  className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/20 backdrop-blur-sm text-white text-sm font-medium hover:bg-white/30 transition-colors border border-white/30"
+                >
+                  Check Eligibility
+                  <ChevronRight className="ml-2 h-4 w-4" />
+                </Link>
               </div>
             </div>
           </div>
