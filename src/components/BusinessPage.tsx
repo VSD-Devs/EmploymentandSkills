@@ -359,7 +359,7 @@ const BusinessPage = () => {
         {/* Main Content Sections */}
         <div className="md:block pb-24 md:pb-0"> {/* Add padding bottom for mobile nav */}
           {Object.entries(tabs).map(([key, tab], index) => {
-            const color = tab.color;
+            const color = tab.color as ColorType;
             const colorClass = colorClasses[color];
             const isEvenSection = index % 2 === 0;
             
