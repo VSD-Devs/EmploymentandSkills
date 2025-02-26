@@ -57,34 +57,20 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
   onPageChange: (page: number) => void;
 }) => {
   const getPageNumbers = () => {
+    const pages = [];
     const delta = 2;
-    const range = [];
-    const rangeWithDots = [];
-
-    range.push(1);
-    for (let i = currentPage - delta; i <= currentPage + delta; i++) {
-      if (i > 1 && i < totalPages) {
-        range.push(i);
+    const left = currentPage - delta;
+    const right = currentPage + delta;
+    
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || (i >= left && i <= right)) {
+        pages.push(i);
+      } else if (i === left - 1 || i === right + 1) {
+        pages.push('...');
       }
     }
-    if (totalPages > 1) {
-      range.push(totalPages);
-    }
-
-    let l;
-    for (const i of range) {
-      if (l) {
-        if (i - l === 2) {
-          rangeWithDots.push(l + 1);
-        } else if (i - l !== 1) {
-          rangeWithDots.push('...');
-        }
-      }
-      rangeWithDots.push(i);
-      l = i;
-    }
-
-    return rangeWithDots;
+    
+    return pages.filter((page, index, array) => page !== array[index - 1]);
   };
 
   return (
@@ -92,29 +78,26 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="p-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-        aria-label="Previous page"
+        className="p-2 rounded-lg bg-white border border-emerald-200 text-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-50"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
       
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         {getPageNumbers().map((page, index) => (
-          page === '...' ? (
-            <span key={`dots-${index}`} className="px-4 py-2">
+          typeof page === 'string' ? (
+            <span key={`dots-${index}`} className="px-3 py-2 text-gray-500">
               {page}
             </span>
           ) : (
             <button
               key={page}
-              onClick={() => onPageChange(Number(page))}
-              className={`px-4 py-2 rounded-lg min-w-[40px] ${
+              onClick={() => onPageChange(page)}
+              className={`px-4 py-2 rounded-lg min-w-[40px] text-base ${
                 currentPage === page
                   ? 'bg-emerald-600 text-white'
-                  : 'bg-white border border-gray-200 hover:bg-gray-50'
+                  : 'bg-white border border-emerald-200 text-emerald-600 hover:bg-emerald-50'
               }`}
-              aria-label={`Page ${page}`}
-              aria-current={currentPage === page ? 'page' : undefined}
             >
               {page}
             </button>
@@ -125,8 +108,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: {
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="p-2 rounded-lg bg-white border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-        aria-label="Next page"
+        className="p-2 rounded-lg bg-white border border-emerald-200 text-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-emerald-50"
       >
         <ChevronRight className="h-5 w-5" />
       </button>
@@ -211,13 +193,14 @@ export default function VacanciesPage() {
         if (selectedLevel !== 'All') params.append('level', selectedLevel)
         if (debouncedSearch) params.append('search', debouncedSearch)
         params.append('page', currentPage.toString())
+        params.append('limit', '9')
         
         const response = await fetch(`/api/vacancies?${params.toString()}`)
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
         
         const data = await response.json()
         setVacancies(data.vacancies || [])
-        setTotalPages(Math.ceil((data.total || 0) / 12))
+        setTotalPages(Math.ceil((data.total || 0) / 9))
         setTotalVacancies(data.total || 0)
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred'
@@ -255,280 +238,276 @@ export default function VacanciesPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Breadcrumbs */}
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Apprenticeships', href: '/apprenticeships' },
-        { label: 'Vacancies', href: '/apprenticeships/vacancies' },
-      ]} />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="relative text-3xl font-bold text-gray-900 mb-4 inline-block">
-            <span className="relative z-10 leading-tight px-2">Apprenticeship Vacancies</span>
-            <span 
-              className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
-              aria-hidden="true"
-            ></span>
-          </h1>
-          <p className="text-lg text-gray-600">
-            Browse through {totalVacancies} apprenticeship opportunities in South Yorkshire
-          </p>
+      {/* Breadcrumbs at the very top of the page */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Breadcrumbs items={[
+            { label: 'Home', href: '/' },
+            { label: 'Apprenticeships', href: '/apprenticeships' },
+            { label: 'Vacancies', href: '/apprenticeships/vacancies' },
+          ]} />
         </div>
+      </div>
 
-        {/* Search and Filters */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-12">
-          <div className="flex flex-wrap gap-4 items-start">
-            {/* Search Bar */}
-            <div className="flex-1 min-w-[300px]">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <input
-                  type="text"
-                  placeholder="Search by title, company, or location..."
-                  value={searchTerm}
-                  onChange={handleSearch}
-                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                />
-              </div>
-            </div>
-
-            {/* Filter Toggle */}
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className="inline-flex items-center px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100"
-            >
-              <SlidersHorizontal className="h-5 w-5 mr-2" />
-              Filters
-              {showFilters ? (
-                <X className="h-5 w-5 ml-2" />
-              ) : (
-                <ChevronRight className="h-5 w-5 ml-2" />
-              )}
-            </button>
-
-            {/* Export Button */}
-            <button
-              onClick={handleExport}
-              className="inline-flex items-center px-4 py-3 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500"
-            >
-              <Download className="h-5 w-5 mr-2" />
-              Export
-            </button>
+      {/* Updated Header Section */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-emerald-900 to-emerald-700 shadow-xl">
+        <div className="absolute inset-0 bg-pattern opacity-10"></div>
+        <div className="absolute bottom-0 right-0 w-60 h-60 rounded-full bg-emerald-500 opacity-20 -mr-20 -mb-20"></div>
+        <div className="absolute top-0 left-0 w-40 h-40 rounded-full bg-emerald-400 opacity-20 -ml-10 -mt-10"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+          {/* Header Content */}
+          <div className="text-center mt-8 mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Apprenticeship Vacancies
+            </h1>
+            <p className="text-lg text-emerald-100">
+              Browse through {totalVacancies} opportunities in South Yorkshire
+            </p>
           </div>
 
-          {/* Expanded Filters */}
-          {showFilters && (
-            <div className="grid md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-200">
-              {/* Location Filter */}
-              <div>
-                <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-2">
-                  Location
-                </label>
+          {/* Search and Filters - Updated styling */}
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8">
+            <div className="flex flex-wrap gap-4 items-start">
+              {/* Search Bar */}
+              <div className="flex-1 min-w-[300px]">
                 <div className="relative">
-                  <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-emerald-600 h-5 w-5" />
                   <input
-                    id="postcode"
                     type="text"
-                    placeholder="Enter postcode..."
-                    value={postcode}
-                    onChange={(e) => setPostcode(e.target.value.toUpperCase())}
-                    className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    placeholder="Search by title, company, or location..."
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    className="w-full pl-12 pr-4 py-3 rounded-lg bg-white border border-emerald-100 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                   />
                 </div>
               </div>
 
-              {/* Category Filter */}
-              <div>
-                <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
-                  Category
-                </label>
-                <select
-                  id="category"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                >
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              {/* Filter Toggle */}
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="inline-flex items-center px-4 py-3 rounded-lg bg-white text-emerald-700 border border-emerald-100 hover:bg-emerald-50 hover:text-emerald-800 transition-colors"
+              >
+                <SlidersHorizontal className="h-5 w-5 mr-2" />
+                Filters
+                {showFilters ? (
+                  <X className="h-5 w-5 ml-2" />
+                ) : (
+                  <ChevronRight className="h-5 w-5 ml-2" />
+                )}
+              </button>
 
-              {/* Sort Filter */}
-              <div>
-                <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-2">
-                  Sort by
-                </label>
-                <select
-                  id="sort"
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                >
-                  {sortOptions.map(option => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Main Content Area with Background */}
-        <div className="bg-gradient-to-b from-white to-gray-50 py-12 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 border-y border-gray-200">
-          <div className="max-w-7xl mx-auto">
-            {/* Results Count */}
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-gray-600">
-                Showing {vacancies.length} of {totalVacancies} vacancies
-              </p>
-              {isSearching && (
-                <p className="text-gray-600">
-                  Searching...
-                </p>
-              )}
+              {/* Export Button */}
+              <button
+                onClick={handleExport}
+                className="inline-flex items-center px-4 py-3 rounded-lg bg-white text-emerald-700 hover:bg-emerald-50 transition-colors"
+              >
+                <Download className="h-5 w-5 mr-2" />
+                Export
+              </button>
             </div>
 
-            {/* Loading State */}
-            {isLoading && (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-                <p className="text-gray-600">Loading apprenticeships...</p>
-              </div>
-            )}
-
-            {/* Error State */}
-            {error && (
-              <div className="text-center py-12 bg-red-50 rounded-xl border border-red-100">
-                <p className="text-red-600">{error}</p>
-              </div>
-            )}
-
-            {/* Vacancies Grid */}
-            {!isLoading && !error && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {vacancies.map((vacancy) => (
-                  <div
-                    key={vacancy.vacancyReference}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 group"
-                  >
-                    <div className="p-6">
-                      <div className="mb-4">
-                        <div className="flex items-center gap-2 text-emerald-600 mb-2">
-                          <GraduationCap className="h-5 w-5" />
-                          <span className="text-sm font-medium">{vacancy.apprenticeshipLevel}</span>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2 relative group-hover:text-emerald-700 transition-colors">
-                          <span className="relative z-10">{vacancy.title}</span>
-                          <span 
-                            className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-lg -rotate-[0.5deg] transform-gpu z-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                            aria-hidden="true"
-                          ></span>
-                        </h3>
-                        <p className="text-gray-600 line-clamp-2 mb-4">
-                          {vacancy.description}
-                        </p>
-                      </div>
-                      <div className="space-y-3 border-t border-gray-100 pt-4 mb-4">
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <Building2 className="h-4 w-4 flex-shrink-0" />
-                          <span className="line-clamp-1">{vacancy.employerName}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <MapPin className="h-4 w-4 flex-shrink-0" />
-                          <span>
-                            {vacancy.address.postcode}
-                            {vacancy.distance !== undefined && (
-                              <span className="text-gray-500 ml-1">
-                                ({Math.round(vacancy.distance * 10) / 10} miles)
-                              </span>
-                            )}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2 text-gray-600">
-                          <Clock className="h-4 w-4 flex-shrink-0" />
-                          <span>{vacancy.expectedDuration}</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <span className="text-emerald-600 font-medium">
-                          {(() => {
-                            const wage = vacancy.wage;
-                            if (!wage) return 'Salary details on application';
-
-                            const additionalInfo = wage.wageAdditionalInformation 
-                              ? ` (${wage.wageAdditionalInformation})`
-                              : '';
-
-                            switch (wage.wageType) {
-                              case 'Custom':
-                                if (wage.wageAmount) {
-                                  const amount = wage.wageAmount.toLocaleString('en-GB');
-                                  const unit = wage.wageUnit !== 'Unspecified' 
-                                    ? ` ${wage.wageUnit.toLowerCase()}`
-                                    : '';
-                                  return `£${amount}${unit}${additionalInfo}`;
-                                }
-                                return wage.wageAdditionalInformation || 'Salary details on application';
-                              case 'CompetitiveSalary':
-                                return `Competitive salary${additionalInfo}`;
-                              case 'ApprenticeshipMinimum':
-                                return `Apprenticeship minimum wage${additionalInfo}`;
-                              case 'NationalMinimum':
-                                return `National minimum wage${additionalInfo}`;
-                              default:
-                                return wage.wageAdditionalInformation || 'Salary details on application';
-                            }
-                          })()}
-                        </span>
-                        <a
-                          href={vacancy.vacancyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 transition-colors"
-                        >
-                          View Details
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </a>
-                      </div>
-                    </div>
+            {/* Expanded Filters */}
+            {showFilters && (
+              <div className="grid md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-white/20">
+                {/* Location Filter */}
+                <div>
+                  <label htmlFor="postcode" className="block text-base font-medium text-white mb-3">
+                    <MapPin className="inline-block h-5 w-5 text-white mr-1" />
+                    Location
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="postcode"
+                      type="text"
+                      placeholder="Enter postcode (e.g. S1 2BJ)..."
+                      className="w-full pl-4 pr-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:ring-2 focus:ring-white focus:border-transparent text-base backdrop-blur-sm"
+                      value={postcode}
+                      onChange={(e) => setPostcode(e.target.value.toUpperCase())}
+                    />
                   </div>
-                ))}
-              </div>
-            )}
-
-            {/* Empty State */}
-            {!isLoading && !error && vacancies.length === 0 && (
-              <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-200">
-                <div className="mb-4">
-                  <Search className="h-12 w-12 text-gray-400 mx-auto" />
                 </div>
-                <p className="text-gray-900 font-medium mb-2">
-                  No apprenticeships found
-                </p>
-                <p className="text-gray-600">
-                  Try adjusting your search criteria or browse all opportunities
-                </p>
-              </div>
-            )}
 
-            {/* Pagination */}
-            {!isLoading && !error && vacancies.length > 0 && (
-              <div className="mt-12">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                />
+                {/* Category Filter */}
+                <div>
+                  <label htmlFor="category" className="block text-base font-medium text-white mb-3">
+                    <Building2 className="inline-block h-5 w-5 text-white mr-1" />
+                    Category
+                  </label>
+                  <select
+                    id="category"
+                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white focus:ring-2 focus:ring-white focus:border-transparent text-base backdrop-blur-sm"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    {categories.map((category) => (
+                      <option key={category} value={category} className="text-base bg-emerald-900">
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Sort Filter */}
+                <div>
+                  <label htmlFor="sort" className="block text-base font-medium text-white mb-3">
+                    <SlidersHorizontal className="inline-block h-5 w-5 text-white mr-1" />
+                    Sort By
+                  </label>
+                  <select
+                    id="sort"
+                    className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white focus:ring-2 focus:ring-white focus:border-transparent text-base backdrop-blur-sm"
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as SortOption)}
+                  >
+                    {sortOptions.map(option => (
+                      <option key={option.value} value={option.value} className="text-base bg-emerald-900">
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* Main Content Area - Adjusted spacing */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-24">
+        <div className="bg-white rounded-2xl shadow-lg p-6">
+          {/* Results Count - Simplified */}
+          <div className="flex items-center justify-between mb-6">
+            <p className="text-gray-700 font-medium text-lg">
+              {totalVacancies} opportunities found
+            </p>
+          </div>
+
+          {/* Loading State */}
+          {isLoading && (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-700 mx-auto mb-4"></div>
+              <p className="text-gray-700 text-lg">Loading apprenticeships...</p>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <div className="text-center py-12 bg-red-50 rounded-xl border border-red-100">
+              <p className="text-red-700 text-lg">{error}</p>
+            </div>
+          )}
+
+          {/* Vacancies Grid - Improved accessibility */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {vacancies.map((vacancy) => (
+              <div
+                key={vacancy.vacancyReference}
+                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-200 border border-gray-200 group"
+              >
+                <div className="p-6">
+                  <div className="mb-4">
+                    <div className="flex items-center gap-2 text-emerald-700 mb-3">
+                      <GraduationCap className="h-5 w-5" />
+                      <span className="text-base font-medium">{vacancy.apprenticeshipLevel}</span>
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3 leading-tight">
+                      {vacancy.title}
+                    </h3>
+                    <p className="text-base text-gray-700 line-clamp-3 mb-4 leading-relaxed">
+                      {vacancy.description}
+                    </p>
+                  </div>
+                  
+                  {/* Info Section */}
+                  <div className="space-y-3 border-t border-gray-100 pt-4 mb-4">
+                    <div className="flex items-center gap-2 text-gray-700">
+                      <Building2 className="h-5 w-5 text-emerald-700 flex-shrink-0" />
+                      <span className="line-clamp-1 text-base">{vacancy.employerName}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-700">
+                      <MapPin className="h-5 w-5 text-emerald-700 flex-shrink-0" />
+                      <span className="text-base">
+                        {vacancy.address.postcode}
+                        {vacancy.distance && (
+                          <span className="text-gray-600 ml-1 text-sm">
+                            ({Math.round(vacancy.distance * 10) / 10}mi)
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="text-emerald-700 font-medium text-base">
+                      {(() => {
+                        const wage = vacancy.wage;
+                        if (!wage) return 'Salary details on application';
+
+                        const additionalInfo = wage.wageAdditionalInformation 
+                          ? ` (${wage.wageAdditionalInformation})`
+                          : '';
+
+                        switch (wage.wageType) {
+                          case 'Custom':
+                            if (wage.wageAmount) {
+                              const amount = wage.wageAmount.toLocaleString('en-GB');
+                              const unit = wage.wageUnit !== 'Unspecified' 
+                                ? ` ${wage.wageUnit.toLowerCase()}`
+                                : '';
+                              return `£${amount}${unit}${additionalInfo}`;
+                            }
+                            return wage.wageAdditionalInformation || 'Salary details on application';
+                          case 'CompetitiveSalary':
+                            return `Competitive salary${additionalInfo}`;
+                          case 'ApprenticeshipMinimum':
+                            return `Apprenticeship minimum wage${additionalInfo}`;
+                          case 'NationalMinimum':
+                            return `National minimum wage${additionalInfo}`;
+                          default:
+                            return wage.wageAdditionalInformation || 'Salary details on application';
+                        }
+                      })()}
+                    </span>
+                    <Link
+                      href={`/apprenticeships/vacancies/${vacancy.vacancyReference}`}
+                      className="inline-flex items-center px-4 py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-600 transition-colors text-base"
+                    >
+                      View Details
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Empty State */}
+          {!isLoading && !error && vacancies.length === 0 && (
+            <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-200">
+              <div className="mb-4">
+                <Search className="h-12 w-12 text-gray-400 mx-auto" />
+              </div>
+              <p className="text-gray-900 font-medium mb-2 text-xl">
+                No apprenticeships found
+              </p>
+              <p className="text-gray-700 text-lg">
+                Try adjusting your search criteria or browse all opportunities
+              </p>
+            </div>
+          )}
+
+          {/* Pagination - Styled to match design */}
+          {!isLoading && !error && vacancies.length > 0 && (
+            <div className="mt-12">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
         </div>
       </div>
     </main>

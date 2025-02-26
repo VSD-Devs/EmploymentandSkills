@@ -172,7 +172,7 @@ const ApprenticeshipPage = () => {
 
   useEffect(() => {
     setCurrentChunk(0);
-  }, [searchTerm, selectedCategory, postcode, sortBy]);
+  }, [selectedCategory, postcode, sortBy]);
 
   const filteredVacancies = vacancies.filter(vacancy => {
     const matchesSearch = 
@@ -205,148 +205,154 @@ const ApprenticeshipPage = () => {
 
   return (
     <main className="min-h-screen bg-white">
-      {/* Breadcrumbs Component */}
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Young People', href: '/young-people' },
-        { label: 'Apprenticeships', href: '/apprenticeships' },
-      ]} />
+      {/* Breadcrumbs at the very top of the page */}
+      <div className="bg-gray-50 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Breadcrumbs items={[
+            { label: 'Home', href: '/' },
+            { label: 'Young People', href: '/young-people' },
+            { label: 'Apprenticeships', href: '/apprenticeships' },
+          ]} />
+        </div>
+      </div>
 
-      {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
+      {/* Hero Section - REDESIGNED */}
+      <div className="relative bg-[#111827] py-32 min-h-[600px] flex items-center">
         <div className="absolute inset-0">
           <Image
             src="/images/apprenticeship-hero.jpg"
             alt="A skilled apprentice working with industrial brewing equipment, showcasing hands-on vocational training"
             fill
-            className="object-cover object-center object-[center_25%] brightness-75"
+            className="object-cover object-center object-[center_25%] brightness-50"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#111827]/80 via-transparent to-[#111827]/80" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
-              <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
-                <GraduationCap className="h-4 w-4" />
+          <div className="text-center md:text-left md:max-w-3xl">
+            <div className="inline-flex items-center gap-2 text-emerald-300 mb-6">
+              <div className="p-2 rounded-lg bg-emerald-500/20 backdrop-blur-sm border border-emerald-400/30">
+                <GraduationCap className="h-5 w-5" />
               </div>
-              <span className="text-sm font-medium tracking-wide uppercase">South Yorkshire Apprenticeships</span>
+              <span className="text-base font-medium tracking-wide uppercase">South Yorkshire Apprenticeships</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Apprenticeships in South Yorkshire
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+              Start Your Career <span className="text-emerald-300">Journey</span> in South Yorkshire
             </h1>
-            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
-              Discover apprenticeship opportunities across South Yorkshire and get the support you need to succeed
+            <p className="text-xl text-gray-200 max-w-2xl mb-8 leading-relaxed">
+              Discover apprenticeship opportunities across South Yorkshire and get the personalised support you need to succeed in your career
             </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap gap-5 mt-8">
               <a
                 href="https://www.instituteforapprenticeships.org/apprenticeship-standards/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
+                className="inline-flex items-center px-8 py-4 rounded-lg bg-emerald-600 text-white text-lg font-medium hover:bg-emerald-500 transition-colors shadow-lg hover:shadow-xl hover:shadow-emerald-500/20 transition-all"
               >
                 Browse Standards
-                <ExternalLink className="ml-2 h-4 w-4" />
+                <ExternalLink className="ml-2 h-5 w-5" />
               </a>
               <Link
                 href="#current-vacancies"
-                className="inline-flex items-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20"
+                className="inline-flex items-center px-8 py-4 rounded-lg bg-white/15 backdrop-blur-sm text-white text-lg font-medium hover:bg-white/25 transition-colors border border-white/20 shadow-lg"
               >
                 View Vacancies
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Quick Stats */}
-      <div className="relative -mt-8 mb-12">
+      {/* Quick Stats - REDESIGNED */}
+      <div className="relative -mt-16 mb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white rounded-lg p-4 shadow-md border border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-emerald-100">
-                  <GraduationCap className="h-5 w-5 text-emerald-600" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow">
+              <div className="flex items-center gap-5">
+                <div className="p-4 rounded-xl bg-emerald-100">
+                  <GraduationCap className="h-8 w-8 text-emerald-600" />
                 </div>
                 <div>
-                  <p className="text-xl font-bold text-gray-900">20%</p>
-                  <p className="text-base text-gray-600">Off-the-job Training</p>
+                  <p className="text-3xl font-bold text-gray-900">20%</p>
+                  <p className="text-xl text-gray-600">Off-the-job Training</p>
                 </div>
               </div>
-              <p className="mt-2 text-base text-gray-500">Dedicated time for learning and development during work hours</p>
+              <p className="mt-4 text-lg text-gray-500 leading-relaxed">Dedicated time for learning and development during work hours, ensuring you build valuable skills alongside practical experience</p>
             </div>
-            <div className="bg-white rounded-lg p-4 shadow-md border border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-emerald-100">
-                  <Clock className="h-5 w-5 text-emerald-600" />
+            <div className="bg-white rounded-xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow">
+              <div className="flex items-center gap-5">
+                <div className="p-4 rounded-xl bg-emerald-100">
+                  <Clock className="h-8 w-8 text-emerald-600" />
                 </div>
                 <div>
-                  <p className="text-xl font-bold text-gray-900">12-48</p>
-                  <p className="text-base text-gray-600">Months Duration</p>
+                  <p className="text-3xl font-bold text-gray-900">12-48</p>
+                  <p className="text-xl text-gray-600">Months Duration</p>
                 </div>
               </div>
-              <p className="mt-2 text-base text-gray-500">Depending on the level and sector of your apprenticeship</p>
+              <p className="mt-4 text-lg text-gray-500 leading-relaxed">Depending on the level and sector of your apprenticeship, with structured progression and clear career development paths</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* What is an Apprenticeship Section */}
-      <div className="bg-white py-16 sm:py-24">
+      {/* What is an Apprenticeship Section - REDESIGNED */}
+      <div className="bg-white py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-<h2 className="relative text-3xl font-bold text-gray-900 mb-6 text-left">
-  <span className="relative z-10 leading-tight px-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu">What is an Apprenticeship?</span>
-</h2>
+          <div className="text-center mb-16">
+            <h2 className="relative text-4xl font-bold text-gray-900 mb-6 inline-block">
+              <span className="relative z-10 leading-tight px-4 py-2">What is an Apprenticeship?</span>
+              <span 
+                className="absolute inset-0 -inset-x-4 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-xl -rotate-[0.5deg] transform-gpu" 
+                aria-hidden="true"
+              ></span>
+            </h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="flex items-center gap-2 text-emerald-600 mb-4">
-              </div>
-              <p className="text-xl leading-relaxed text-gray-600 mb-8">
+          <div className="grid md:grid-cols-2 gap-16 items-start">
+            <div className="space-y-10">
+              <p className="text-2xl leading-relaxed text-gray-600">
                 An apprenticeship is a genuine job with structured training, combining practical work experience with dedicated study time. You'll earn whilst you learn, gaining valuable qualifications and real-world skills.
               </p>
 
-              <div className="space-y-6 mb-8">
-                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Briefcase className="h-6 w-6 text-emerald-600" />
+              <div className="space-y-8">
+                <div className="bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow border border-gray-100">
+                  <div className="flex gap-6">
+                    <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Briefcase className="h-8 w-8 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Work Experience</h3>
-                      <p className="text-gray-600">
+                      <h3 className="text-2xl font-semibold text-gray-900 mb-3">Work Experience</h3>
+                      <p className="text-lg text-gray-600 leading-relaxed">
                         Gain hands-on experience working alongside industry professionals. You'll spend 80% of your time learning on the job.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <BookOpen className="h-6 w-6 text-emerald-600" />
+                <div className="bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow border border-gray-100">
+                  <div className="flex gap-6">
+                    <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <BookOpen className="h-8 w-8 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Study Programme</h3>
-                      <p className="text-gray-600">
+                      <h3 className="text-2xl font-semibold text-gray-900 mb-3">Study Programme</h3>
+                      <p className="text-lg text-gray-600 leading-relaxed">
                         Dedicate 20% of your time to learning through a structured training programme, either at college, university, or online.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                <div className="bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow border border-gray-100">
+                  <div className="flex gap-6">
+                    <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-8 w-8 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Recognised Qualification</h3>
-                      <p className="text-gray-600">
+                      <h3 className="text-2xl font-semibold text-gray-900 mb-3">Recognised Qualification</h3>
+                      <p className="text-lg text-gray-600 leading-relaxed">
                         Complete your apprenticeship with a nationally recognised qualification, from GCSE equivalent up to master's degree level.
                       </p>
                     </div>
@@ -354,33 +360,33 @@ const ApprenticeshipPage = () => {
                 </div>
               </div>
 
-              <div className="bg-emerald-50 rounded-xl p-6 border border-emerald-100">
-                <h4 className="font-semibold text-emerald-900 mb-4 flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5 text-emerald-600" />
+              <div className="bg-emerald-50 rounded-xl p-8 border border-emerald-100 shadow-lg">
+                <h4 className="font-semibold text-emerald-900 mb-6 flex items-center gap-3 text-xl">
+                  <GraduationCap className="h-6 w-6 text-emerald-600" />
                   Available Qualification Levels
                 </h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white rounded-lg p-4 border border-emerald-100">
-                    <span className="text-lg font-bold text-emerald-600">Level 2-3</span>
-                    <p className="text-sm text-emerald-700 mt-1">GCSE to A-level equivalent</p>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-white rounded-lg p-6 border border-emerald-100 hover:shadow-md transition-shadow">
+                    <span className="text-2xl font-bold text-emerald-600">Level 2-3</span>
+                    <p className="text-base text-emerald-700 mt-2">GCSE to A-level equivalent</p>
                   </div>
-                  <div className="bg-white rounded-lg p-4 border border-emerald-100">
-                    <span className="text-lg font-bold text-emerald-600">Level 4-5</span>
-                    <p className="text-sm text-emerald-700 mt-1">Foundation degree equivalent</p>
+                  <div className="bg-white rounded-lg p-6 border border-emerald-100 hover:shadow-md transition-shadow">
+                    <span className="text-2xl font-bold text-emerald-600">Level 4-5</span>
+                    <p className="text-base text-emerald-700 mt-2">Foundation degree equivalent</p>
                   </div>
-                  <div className="bg-white rounded-lg p-4 border border-emerald-100">
-                    <span className="text-lg font-bold text-emerald-600">Level 6</span>
-                    <p className="text-sm text-emerald-700 mt-1">Bachelor's degree equivalent</p>
+                  <div className="bg-white rounded-lg p-6 border border-emerald-100 hover:shadow-md transition-shadow">
+                    <span className="text-2xl font-bold text-emerald-600">Level 6</span>
+                    <p className="text-base text-emerald-700 mt-2">Bachelor's degree equivalent</p>
                   </div>
-                  <div className="bg-white rounded-lg p-4 border border-emerald-100">
-                    <span className="text-lg font-bold text-emerald-600">Level 7</span>
-                    <p className="text-sm text-emerald-700 mt-1">Master's degree equivalent</p>
+                  <div className="bg-white rounded-lg p-6 border border-emerald-100 hover:shadow-md transition-shadow">
+                    <span className="text-2xl font-bold text-emerald-600">Level 7</span>
+                    <p className="text-base text-emerald-700 mt-2">Master's degree equivalent</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="relative">
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden">
+            <div className="sticky top-24">
+              <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
                   src="/images/apprenticeship-learning.jpg"
                   alt="An apprentice receiving hands-on training whilst building their portfolio"
@@ -388,19 +394,19 @@ const ApprenticeshipPage = () => {
                   className="object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 right-6 bg-white rounded-xl shadow-xl p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <Users className="h-8 w-8 text-emerald-600" />
+              <div className="absolute -bottom-8 -left-8 right-8 bg-white rounded-xl shadow-xl p-8 border border-gray-100">
+                <div className="flex items-center gap-5 mb-6">
+                  <Users className="h-10 w-10 text-emerald-600" />
                   <div>
-                    <h4 className="font-semibold text-gray-900">Support Network</h4>
-                    <p className="text-sm text-gray-600">You'll have dedicated mentors throughout your journey</p>
+                    <h4 className="font-semibold text-gray-900 text-xl">Support Network</h4>
+                    <p className="text-base text-gray-600">You'll have dedicated mentors throughout your journey</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <Clock className="h-8 w-8 text-emerald-600" />
+                <div className="flex items-center gap-5">
+                  <Clock className="h-10 w-10 text-emerald-600" />
                   <div>
-                    <h4 className="font-semibold text-gray-900">Flexible Learning</h4>
-                    <p className="text-sm text-gray-600">Balance work and study with structured training</p>
+                    <h4 className="font-semibold text-gray-900 text-xl">Flexible Learning</h4>
+                    <p className="text-base text-gray-600">Balance work and study with structured training</p>
                   </div>
                 </div>
               </div>
@@ -409,127 +415,139 @@ const ApprenticeshipPage = () => {
         </div>
       </div>
 
-      {/* South Yorkshire Apprenticeship Hub Section */}
-      <div className="bg-white py-16 sm:py-24">
+      {/* South Yorkshire Apprenticeship Hub Section - REDESIGNED */}
+      <div className="bg-gray-50 py-20 sm:py-28 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 text-emerald-600 mb-4">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-            <span className="text-sm font-medium tracking-wide uppercase">Your Local Support</span>
+          <div className="flex items-center gap-3 text-emerald-600 mb-6">
+            <span className="inline-block w-3 h-3 rounded-full bg-emerald-600" />
+            <span className="text-lg font-medium tracking-wide uppercase">Your Local Support</span>
           </div>
           
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6 max-w-2xl">
             South Yorkshire Apprenticeship Hub
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="text-xl leading-relaxed text-gray-600 mb-6">
+              <p className="text-2xl leading-relaxed text-gray-600 mb-8">
                 We're here to help you navigate your apprenticeship journey. Our dedicated team provides:
               </p>
               <div className="space-y-6">
-                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                <div className="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow border border-gray-100">
+                  <div className="flex gap-5">
+                    <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-7 w-7 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">One-to-one support and guidance</h3>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">One-to-one support and guidance</h3>
+                      <p className="text-lg text-gray-600">Personalised advice to help you find and secure the right opportunity</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                <div className="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow border border-gray-100">
+                  <div className="flex gap-5">
+                    <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-7 w-7 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Help finding the right apprenticeship</h3>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">Help finding the right apprenticeship</h3>
+                      <p className="text-lg text-gray-600">Matching your skills and interests with the perfect opportunity</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                <div className="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow border border-gray-100">
+                  <div className="flex gap-5">
+                    <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-7 w-7 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Application and interview preparation</h3>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">Application and interview preparation</h3>
+                      <p className="text-lg text-gray-600">Expert coaching to help you stand out to potential employers</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-shadow">
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                <div className="bg-white rounded-xl p-6 hover:shadow-lg transition-shadow border border-gray-100">
+                  <div className="flex gap-5">
+                    <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="h-7 w-7 text-emerald-600" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Connections with local employers</h3>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">Connections with local employers</h3>
+                      <p className="text-lg text-gray-600">Direct links to businesses looking for apprentices like you</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="mt-8">
+              <div className="mt-10">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center px-6 py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors"
+                  className="inline-flex items-center px-8 py-4 rounded-lg bg-emerald-600 text-white text-lg font-medium hover:bg-emerald-500 transition-colors shadow-lg hover:shadow-xl hover:shadow-emerald-500/20 transition-all"
                 >
                   Get Support
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-6 w-6" />
                 </Link>
               </div>
             </div>
-            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl">
+            <div className="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="/images/apprenticeship-hub.png"
                 alt="An apprentice receiving support and guidance from a mentor"
                 fill
                 className="object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white text-xl font-medium">Our team is ready to support your apprenticeship journey</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* The Process Section */}
-      <div className="bg-gray-50 py-16 sm:py-24">
+      {/* The Process Section - REDESIGNED */}
+      <div className="bg-white py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="relative text-3xl font-bold text-gray-900 mb-12">
-              <span className="relative z-10 leading-tight px-2">The Process</span>
+          <div className="text-center mb-16">
+            <h2 className="relative text-4xl font-bold text-gray-900 mb-6 inline-block">
+              <span className="relative z-10 leading-tight px-4 py-2">The Apprenticeship Journey</span>
               <span 
-                className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+                className="absolute inset-0 -inset-x-4 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-xl -rotate-[0.5deg] transform-gpu" 
                 aria-hidden="true"
               ></span>
             </h2>
-            <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
-              <span className="text-sm font-medium tracking-wide uppercase">How It works</span>
+            <div className="flex items-center justify-center gap-2 text-emerald-600 mb-6">
+              <span className="text-lg font-medium tracking-wide uppercase">How It Works</span>
             </div>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               We're here to guide you through every stage of your apprenticeship journey in South Yorkshire. Our Advisors provide personalised support to help you succeed.
             </p>
           </div>
 
-          <div className="mt-12">
-            <div className="grid md:grid-cols-4 gap-8 items-stretch">
+          <div className="mt-16">
+            <div className="grid md:grid-cols-4 gap-10 items-stretch">
             {apprenticeshipProcess.map((step, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
-                <div className="relative h-48 w-full">
+              <div key={index} className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all group">
+                <div className="relative h-64 w-full">
                   <Image
                     src={step.image}
                     alt={step.imageAlt}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                </div>
-                <div className="p-6">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
-                    <step.icon className="h-6 w-6 text-emerald-600" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500 text-white font-bold text-lg">{index + 1}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-gray-600">{step.description}</p>
+                </div>
+                <div className="p-8">
+                  <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-200 transition-colors">
+                    <step.icon className="h-8 w-8 text-emerald-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{step.title}</h3>
+                  <p className="text-lg text-gray-600 leading-relaxed">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -538,118 +556,102 @@ const ApprenticeshipPage = () => {
         </div>
       </div>
 
-      {/* Current Vacancies Section */}
-      <div id="current-vacancies" className="bg-gradient-to-b from-white to-gray-50 py-16 sm:py-24 border-y border-gray-200">
+      {/* Current Vacancies Section - UPDATED FOR ACCESSIBILITY */}
+      <div id="current-vacancies" className="bg-gradient-to-b from-gray-50 to-white py-20 sm:py-28 border-y border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="relative text-3xl font-bold text-gray-900 mb-6 inline-block">
-              <span className="relative z-10 leading-tight px-2">Featured Vacancies</span>
+          <div className="text-center mb-16">
+            <h2 className="relative text-4xl font-bold text-gray-900 mb-6 inline-block">
+              <span className="relative z-10 leading-tight px-4 py-2">Featured Vacancies</span>
               <span 
-                className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
+                className="absolute inset-0 -inset-x-4 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-xl -rotate-[0.5deg] transform-gpu" 
                 aria-hidden="true"
               ></span>
             </h2>
           </div>
           {/* Section Header */}
           <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-              <span className="text-sm font-medium tracking-wide uppercase">Latest Opportunities</span>
+            <div className="flex items-center justify-center gap-3 text-emerald-600 mb-6">
+              <span className="inline-block w-3 h-3 rounded-full bg-emerald-600" />
+              <span className="text-lg font-medium tracking-wide uppercase">Latest Opportunities</span>
             </div>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Find your perfect apprenticeship opportunity in South Yorkshire
             </p>
           </div>
 
-          {/* Quick Search */}
-          <div className="mb-8">
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <input
-                  type="text"
-                  placeholder="Search by title, company, or location..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                  aria-label="Search apprenticeships"
-                />
-              </div>
-            </div>
-          </div>
-
           {/* Loading State */}
           {isLoading && (
-            <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading apprenticeships...</p>
+            <div className="text-center py-16">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-6"></div>
+              <p className="text-xl text-gray-600">Loading apprenticeships...</p>
             </div>
           )}
 
           {/* Error State */}
           {error && (
-            <div className="text-center py-12 bg-red-50 rounded-xl border border-red-100">
-              <p className="text-red-600">{error}</p>
+            <div className="text-center py-16 bg-red-50 rounded-xl border border-red-100 shadow-md">
+              <p className="text-xl text-red-600 font-medium">{error}</p>
+              <button 
+                onClick={() => window.location.reload()} 
+                className="mt-6 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-500 transition-colors"
+              >
+                Try Again
+              </button>
             </div>
           )}
 
-          {/* Vacancies Grid - Limited to 6 items */}
+          {/* Vacancies Grid - UPDATED FOR ACCESSIBILITY */}
           {!isLoading && !error && (
-            <div className="space-y-6">
-              <div className="overflow-x-auto pb-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-w-full">
+            <div className="space-y-8">
+              <div className="overflow-x-auto pb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-w-full">
                   {filteredVacancies
-                    .slice(0, 6)
+                    .slice(0, 3) // Show only the first 3 vacancies
                     .map((vacancy) => (
                     <div
                       key={vacancy.vacancyReference}
-                      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 group w-full"
+                      className="bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-200 group"
                     >
                       <div className="p-6">
                         <div className="mb-4">
-                          <div className="flex items-center gap-2 text-emerald-600 mb-2">
+                          <div className="flex items-center gap-2 text-emerald-700 mb-3">
                             <GraduationCap className="h-5 w-5" />
-                            <span className="text-sm font-medium">{vacancy.apprenticeshipLevel}</span>
+                            <span className="text-base font-medium">{vacancy.apprenticeshipLevel}</span>
                           </div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-2 relative group-hover:text-emerald-700 transition-colors">
-                            <span className="relative z-10">{vacancy.title}</span>
-                            <span 
-                              className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-lg -rotate-[0.5deg] transform-gpu z-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                              aria-hidden="true"
-                            ></span>
+                          <h3 className="text-xl font-semibold text-gray-900 mb-3 leading-tight">
+                            {vacancy.title}
                           </h3>
-                          <p className="text-gray-600 line-clamp-2 mb-4">
+                          <p className="text-base text-gray-700 line-clamp-3 mb-4 leading-relaxed">
                             {vacancy.description}
                           </p>
                         </div>
+                        
+                        {/* Info Section */}
                         <div className="space-y-3 border-t border-gray-100 pt-4 mb-4">
-                          <div className="flex items-center gap-2 text-gray-600">
-                            <Building2 className="h-4 w-4 flex-shrink-0" />
-                            <span className="line-clamp-1">{vacancy.employerName}</span>
+                          <div className="flex items-center gap-2 text-gray-700">
+                            <Building2 className="h-5 w-5 text-emerald-700 flex-shrink-0" />
+                            <span className="line-clamp-1 text-base">{vacancy.employerName}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-600">
-                            <MapPin className="h-4 w-4 flex-shrink-0" />
-                            <span>
+                          <div className="flex items-center gap-2 text-gray-700">
+                            <MapPin className="h-5 w-5 text-emerald-700 flex-shrink-0" />
+                            <span className="text-base">
                               {vacancy.address.postcode}
-                              {vacancy.distance !== undefined && (
-                                <span className="text-gray-500 ml-1">
-                                  ({Math.round(vacancy.distance * 10) / 10} miles)
+                              {vacancy.distance && (
+                                <span className="text-gray-600 ml-1 text-sm">
+                                  ({Math.round(vacancy.distance * 10) / 10}mi)
                                 </span>
                               )}
                             </span>
                           </div>
-                          <div className="flex items-center gap-2 text-gray-600">
-                            <Clock className="h-4 w-4 flex-shrink-0" />
-                            <span>{vacancy.expectedDuration}</span>
-                          </div>
                         </div>
+
+                        {/* Footer */}
                         <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                          <span className="text-emerald-600 font-medium">
+                          <span className="text-emerald-700 font-medium text-base">
                             {(() => {
                               const wage = vacancy.wage;
                               if (!wage) return 'Salary details on application';
 
-                              // Include additional wage information if available
                               const additionalInfo = wage.wageAdditionalInformation 
                                 ? ` (${wage.wageAdditionalInformation})`
                                 : '';
@@ -675,15 +677,13 @@ const ApprenticeshipPage = () => {
                               }
                             })()}
                           </span>
-                          <a
-                            href={vacancy.vacancyUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 transition-colors"
+                          <Link
+                            href={`/apprenticeships/vacancies/${vacancy.vacancyReference}`}
+                            className="inline-flex items-center px-4 py-2 bg-emerald-700 text-white rounded-lg hover:bg-emerald-600 transition-colors text-base"
                           >
                             View Details
                             <ArrowRight className="ml-2 h-4 w-4" />
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -692,77 +692,80 @@ const ApprenticeshipPage = () => {
               </div>
               
               {/* View More Button */}
-              <div className="text-center mt-12">
+              <div className="text-center mt-16">
                 <Link
                   href="/apprenticeships/vacancies"
-                  className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 transition-colors"
+                  className="inline-flex items-center px-8 py-4 bg-emerald-700 text-white rounded-xl hover:bg-emerald-600 transition-colors text-lg"
                 >
                   View All Vacancies
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
-                <p className="mt-4 text-gray-600">
-                  {filteredVacancies.length} apprenticeship opportunities available
-                </p>
               </div>
             </div>
           )}
 
           {/* Empty State */}
           {!isLoading && !error && filteredVacancies.length === 0 && (
-            <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-200">
-              <div className="mb-4">
-                <Search className="h-12 w-12 text-gray-400 mx-auto" />
+            <div className="text-center py-16 bg-white rounded-xl shadow-lg border border-gray-200">
+              <div className="mb-6">
+                <Search className="h-16 w-16 text-gray-400 mx-auto" />
               </div>
-              <p className="text-gray-900 font-medium mb-2">
+              <p className="text-2xl text-gray-900 font-medium mb-4">
                 No apprenticeships found
               </p>
-              <p className="text-gray-600">
+              <p className="text-xl text-gray-700 max-w-2xl mx-auto mb-8">
                 Try adjusting your search criteria or browse all opportunities
               </p>
+              <button
+                onClick={() => setSearchTerm('')}
+                className="px-6 py-3 bg-emerald-700 text-white rounded-lg hover:bg-emerald-600 transition-colors text-lg"
+              >
+                Clear Search
+              </button>
             </div>
           )}
         </div>
       </div>
 
-      {/* Success Stories Section */}
-      <div className="bg-white py-16 sm:py-24">
+      {/* Success Stories Section - REDESIGNED */}
+      <div className="bg-white py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="relative text-3xl font-bold text-gray-900 mb-6 inline-flex flex-col max-w-md mx-auto">
-            <span className="relative z-10 leading-tight px-2">Meet Our South Yorkshire Apprentices</span>
-            <span 
-              className="absolute inset-0 -inset-x-2 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-lg -rotate-[0.5deg] transform-gpu" 
-              aria-hidden="true"
-            ></span>
-          </h2>
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
-              <span className="text-sm font-medium tracking-wide uppercase">Local Success Stories</span>
+          <div className="text-center mb-16">
+            <h2 className="relative text-4xl font-bold text-gray-900 mb-6 inline-block">
+              <span className="relative z-10 leading-tight px-4 py-2">Meet Our South Yorkshire Apprentices</span>
+              <span 
+                className="absolute inset-0 -inset-x-4 bg-gradient-to-r from-emerald-100 via-emerald-50 to-white rounded-xl -rotate-[0.5deg] transform-gpu" 
+                aria-hidden="true"
+              ></span>
+            </h2>
+            <div className="flex items-center justify-center gap-3 text-emerald-600 mb-6">
+              <span className="text-lg font-medium tracking-wide uppercase">Local Success Stories</span>
             </div>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Discover how local people like you have transformed their careers through apprenticeships
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             {successStories.map((story) => (
-              <div key={story.id} className="bg-gray-50 rounded-xl overflow-hidden">
-                <div className="relative h-64">
+              <div key={story.id} className="bg-gray-50 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all group">
+                <div className="relative h-80">
                   <Image
                     src={story.imageUrl}
                     alt={story.name}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-xl font-bold text-white mb-1">{story.name}</h3>
-                    <p className="text-white/90 text-sm">{story.role}</p>
-                    <p className="text-white/80 text-sm">{story.company}</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <h3 className="text-2xl font-bold text-white mb-2">{story.name}</h3>
+                    <p className="text-white/90 text-lg">{story.role}</p>
+                    <p className="text-white/80 text-base">{story.company}</p>
                   </div>
                 </div>
-                <div className="p-6">
-                  <Quote className="h-8 w-8 text-emerald-600 mb-4 opacity-50" />
-                  <p className="text-gray-600 italic leading-relaxed">
+                <div className="p-8">
+                  <Quote className="h-10 w-10 text-emerald-600 mb-6 opacity-50" />
+                  <p className="text-xl text-gray-600 italic leading-relaxed">
                     {story.quote}
                   </p>
                 </div>
@@ -772,30 +775,30 @@ const ApprenticeshipPage = () => {
         </div>
       </div>
 
-      {/* Media Wall */}
-      <div className="bg-gray-50 py-16 sm:py-24">
+      {/* Media Wall - REDESIGNED */}
+      <div className="bg-gray-50 py-20 sm:py-28 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-2 text-emerald-600 mb-4">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-600" />
-              <span className="text-sm font-medium tracking-wide uppercase">Apprenticeship Life</span>
+          <div className="text-center mb-16">
+            <div className="flex items-center justify-center gap-3 text-emerald-600 mb-6">
+              <span className="inline-block w-3 h-3 rounded-full bg-emerald-600" />
+              <span className="text-lg font-medium tracking-wide uppercase">Apprenticeship Life</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Life as an Apprentice
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               See what it's like to be an apprentice in South Yorkshire
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
-              <div key={index} className="relative aspect-square rounded-xl overflow-hidden group">
+              <div key={index} className="relative aspect-square rounded-xl overflow-hidden group shadow-lg hover:shadow-xl transition-all">
                 <Image
                   src={`/images/apprentice-life-${index}.jpg`}
                   alt={`Apprenticeship life image ${index}`}
                   fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
               </div>

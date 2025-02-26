@@ -6,29 +6,42 @@ interface Breadcrumb {
   href: string;
 }
 
-interface BreadcrumbsProps {
+export interface BreadcrumbsProps {
   items: Breadcrumb[];
 }
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
   return (
-    <nav className="absolute top-20 left-0 z-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ol className="flex items-center space-x-2 bg-white/80 rounded-lg p-2 inline-block">
-          {items.map((item, index) => (
-            <li key={index} className="flex items-center">
-              <Link href={item.href} className="text-gray-800 hover:text-gray-900 flex items-center text-sm transition-colors">
+    <nav aria-label="Breadcrumb" className="w-full">
+      <ol className="flex items-center flex-wrap">
+        {items.map((item, index) => (
+          <li 
+            key={index} 
+            className={`flex items-center ${
+              index === items.length - 1 
+                ? 'text-gray-700 font-medium' 
+                : 'text-gray-500'
+            }`}
+          >
+            {index > 0 && (
+              <ChevronRight className="h-4 w-4 mx-2 flex-shrink-0 text-gray-400" />
+            )}
+            
+            {index === items.length - 1 ? (
+              <span className="text-sm sm:text-base" aria-current="page">
+                {item.label}
+              </span>
+            ) : (
+              <Link 
+                href={item.href} 
+                className="text-sm sm:text-base hover:text-blue-600 transition-colors"
+              >
                 {item.label}
               </Link>
-              {index < items.length - 1 && (
-                <>
-                  <ChevronRight className="h-4 w-4 text-gray-600" />
-                </>
-              )}
-            </li>
-          ))}
-        </ol>
-      </div>
+            )}
+          </li>
+        ))}
+      </ol>
     </nav>
   );
 };
