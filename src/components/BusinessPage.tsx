@@ -320,7 +320,7 @@ const BusinessPage = () => {
             <div className="flex justify-center">
               <div className="flex space-x-6 py-4">
                 {Object.entries(tabs).map(([key, tab]) => {
-                  const color = tab.color;
+                  const color = tab.color as ColorType;
                   const colorClass = colorClasses[color];
                   return (
                     <a 
@@ -567,7 +567,7 @@ const BusinessPage = () => {
             <div className="flex justify-start">
               <div className="flex space-x-2 py-2">
                 {Object.entries(tabs).map(([key, tab]) => {
-                  const color = tab.color;
+                  const color = tab.color as ColorType;
                   const colorClass = colorClasses[color];
                   return (
                     <a 
