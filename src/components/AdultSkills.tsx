@@ -279,7 +279,7 @@ const AdultSkills = () => {
             <div className="flex justify-center">
               <div className="flex space-x-6 py-4">
                 {Object.entries(tabs).map(([key, tab]) => {
-                  const color = tab.color;
+                  const color = tab.color as ColorType;
                   const colorClass = colorClasses[color];
                   return (
                     <a 
@@ -316,7 +316,7 @@ const AdultSkills = () => {
         {/* Main Content Sections */}
         <div className="md:block pb-24 md:pb-0"> {/* Add padding bottom for mobile nav */}
           {Object.entries(tabs).map(([key, tab], index) => {
-            const color = tab.color;
+            const color = tab.color as ColorType;
             const colorClass = colorClasses[color];
             const isEvenSection = index % 2 === 0;
             
@@ -530,7 +530,7 @@ const AdultSkills = () => {
             <div className="flex justify-center">
               <div className="flex space-x-4 py-2">
                 {Object.entries(tabs).map(([key, tab]) => {
-                  const color = tab.color;
+                  const color = tab.color as ColorType;
                   const colorClass = colorClasses[color];
                   return (
                     <a 

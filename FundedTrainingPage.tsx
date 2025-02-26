@@ -1,9 +1,12 @@
-import Breadcrumb from './Breadcrumb';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 const FundedTrainingPage = () => {
     return (
         <div>
-            <Breadcrumb />
+            <Breadcrumbs items={[
+                { label: 'Home', href: '/' },
+                { label: 'Funded Training', href: '/funded-training' },
+            ]} />
             <div className="hero">
                 {/* Hero content... */}
             </div>
