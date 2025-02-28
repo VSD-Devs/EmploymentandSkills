@@ -1,49 +1,42 @@
-import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
+import React from 'react'
+import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
 
-interface Breadcrumb {
-  label: string;
-  href: string;
+interface BreadcrumbItem {
+  label: string
+  href: string
 }
 
-export interface BreadcrumbsProps {
-  items: Breadcrumb[];
+interface BreadcrumbsProps {
+  items: BreadcrumbItem[]
+  className?: string
 }
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' }) => {
   return (
-    <nav aria-label="Breadcrumb" className="w-full">
-      <ol className="flex items-center flex-wrap">
+    <nav className={`flex py-3 ${className}`}>
+      <ol className="flex text-sm">
         {items.map((item, index) => (
-          <li 
-            key={index} 
-            className={`flex items-center ${
-              index === items.length - 1 
-                ? 'text-gray-700 font-medium' 
-                : 'text-gray-500'
-            }`}
-          >
+          <React.Fragment key={item.href}>
             {index > 0 && (
-              <ChevronRight className="h-4 w-4 mx-2 flex-shrink-0 text-gray-400" />
+              <li className="flex items-center">
+                <ChevronRight className="h-4 w-4 text-gray-400 mx-2" />
+              </li>
             )}
-            
-            {index === items.length - 1 ? (
-              <span className="text-sm sm:text-base" aria-current="page">
-                {item.label}
-              </span>
-            ) : (
-              <Link 
-                href={item.href} 
-                className="text-sm sm:text-base hover:text-blue-600 transition-colors"
-              >
-                {item.label}
-              </Link>
-            )}
-          </li>
+            <li className={index === items.length - 1 ? "text-blue-600 font-medium" : "text-gray-600"}>
+              {index === items.length - 1 ? (
+                <span>{item.label}</span>
+              ) : (
+                <Link href={item.href} className="hover:text-blue-600 hover:underline">
+                  {item.label}
+                </Link>
+              )}
+            </li>
+          </React.Fragment>
         ))}
       </ol>
     </nav>
-  );
-};
+  )
+}
 
-export default Breadcrumbs; 
+export default Breadcrumbs 

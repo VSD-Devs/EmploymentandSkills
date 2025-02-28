@@ -1,4 +1,6 @@
-import { useState } from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { Sparkles } from 'lucide-react'
 import CareerQuiz from './CareerQuiz'
 import { ReactNode } from 'react'
@@ -9,7 +11,7 @@ interface CareerQuizButtonProps {
   children?: ReactNode;
 }
 
-export default function CareerQuizButton({ className = '', variant = 'primary', children }: CareerQuizButtonProps) {
+const CareerQuizButton: React.FC<CareerQuizButtonProps> = ({ className = '', variant = 'primary', children }) => {
   const [isQuizOpen, setIsQuizOpen] = useState(false)
 
   const buttonStyles = {
@@ -38,4 +40,6 @@ export default function CareerQuizButton({ className = '', variant = 'primary', 
       />
     </>
   )
-} 
+}
+
+export default CareerQuizButton 

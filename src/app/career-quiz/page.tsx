@@ -6,6 +6,7 @@ import { quizQuestions, careerProfiles } from '@/data/careerQuizData';
 import type { CareerProfile } from '@/data/careerQuizData';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 interface QuizOption {
   id: string;
@@ -86,7 +87,16 @@ export default function CareerQuizPage() {
   const question = currentQuestions;
 
   return (
-    <main className="min-h-screen bg-zinc-50">
+    <main className="min-h-screen bg-white">
+      <div className="bg-gray-50 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+          <Breadcrumbs items={[
+            { label: 'Home', href: '/' },
+            { label: 'Career Quiz', href: '/career-quiz' },
+          ]} />
+        </div>
+      </div>
+      
       <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         {recommendations ? (
           <CareerQuizResults

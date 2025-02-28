@@ -104,7 +104,7 @@ export default function CareerQuizResults({
 
       {/* Recommended Roles */}
       <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-        <h3 className="text-2xl font-semibold text-zinc-900 mb-6">
+        <h3 className="text-2xl font-semibold text-zinc-900 mb-6 text-center">
           Recommended Roles
         </h3>
         <div className="grid gap-6">

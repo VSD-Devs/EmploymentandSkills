@@ -219,10 +219,10 @@ const AdultSkills = () => {
         onTouchEnd={handleTouchEnd}
       >
         {/* Hero Section */}
-        <div className="relative bg-[#0e1b3d] py-32 flex items-center min-h-[600px]">
+        <div className="relative bg-[#0e1b3d] py-12 md:py-24 flex items-center min-h-[300px] md:min-h-[600px]">
           <div className="absolute inset-0">
             <Image
-              src="/images/adult-skills-hero.jpg"
+              src="/images/adult-skills-hero.webp"
               alt="Professional development and training opportunities in South Yorkshire"
               fill
               className="object-cover object-center object-[center_25%] brightness-75"
@@ -239,34 +239,28 @@ const AdultSkills = () => {
 
           <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
             <div className="text-center">
-              <div className="inline-flex items-center gap-3 text-blue-300 mb-6">
-                <div className="p-2 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-400/20">
-                  <GraduationCap className="h-5 w-5" />
-                </div>
-                <span className="text-base font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
-              </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 md:mb-12 tracking-tight">
                 Build Your Career<br className="hidden sm:block" /> in South Yorkshire
               </h1>
-              <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-10">
-                Access funded support, training, and resources to help you thrive in Yorkshire's growing industries. Whether you are looking to upskill, change careers, or get back into work, we are here to help.
+              <p className="text-base md:text-lg text-gray-200 max-w-3xl mx-auto leading-relaxed mb-6 md:mb-10">
+                Access funded support, training, and resources to help you thrive in Yorkshire's growing industries.
               </p>
-              <div className="flex flex-wrap justify-center gap-5">
+              <div className="flex flex-wrap justify-center gap-3 md:gap-5">
                 <button
                   onClick={() => setIsQuizOpen(true)}
                   aria-label="Take our career quiz to find your ideal path"
-                  className="inline-flex items-center px-8 py-4 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-500 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+                  className="inline-flex items-center px-6 py-3 md:px-8 md:py-4 rounded-xl text-sm md:text-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-gray-900"
                 >
                   Take Career Quiz
-                  <ArrowRight className="ml-3 h-5 w-5" />
+                  <ArrowRight className="ml-2 md:ml-3 h-4 w-4 md:h-5 md:w-5" />
                 </button>
                 <Link
                   href="/plan-your-career"
                   aria-label="Start planning your career with our resources and tools"
-                  className="inline-flex items-center px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-all duration-300 border border-white/20 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-gray-900"
+                  className="inline-flex items-center px-6 py-3 md:px-8 md:py-4 rounded-xl text-sm md:text-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-all duration-300 border border-white/20 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-gray-900"
                 >
                   Start Planning
-                  <ArrowRight className="ml-3 h-5 w-5" />
+                  <ArrowRight className="ml-2 md:ml-3 h-4 w-4 md:h-5 md:w-5" />
                 </Link>
               </div>
             </div>
@@ -277,7 +271,7 @@ const AdultSkills = () => {
         <div className="hidden md:block sticky top-0 z-50 bg-white shadow-md">
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
             <div className="flex justify-center">
-              <div className="flex space-x-6 py-4">
+              <div className="flex space-x-6 py-3">
                 {Object.entries(tabs).map(([key, tab]) => {
                   const color = tab.color as ColorType;
                   const colorClass = colorClasses[color];
@@ -295,7 +289,8 @@ const AdultSkills = () => {
                     >
                       <div className="flex items-center gap-2">
                         <div className={`${activeTab === key ? colorClass.icon : 'text-gray-500'} p-1 rounded-lg`}>
-                          {tab.icon}
+                          {React.isValidElement(tab.icon) ? 
+                            <div className="w-6 h-6">{tab.icon}</div> : tab.icon}
                         </div>
                         <span className={`text-base font-medium ${
                           activeTab === key 
@@ -324,7 +319,7 @@ const AdultSkills = () => {
             <div 
               key={key} 
               id={key} 
-              className="relative scroll-mt-20 overflow-hidden"
+              className={`relative ${isEvenSection ? 'scroll-mt-12' : 'scroll-mt-16'} overflow-hidden`}
             >
               {/* Section Background - alternating white and very light colored */}
               <div className={`absolute inset-0 ${isEvenSection ? 'bg-white' : 'bg-gray-50'}`}></div>
@@ -339,7 +334,7 @@ const AdultSkills = () => {
               )}
               
               {/* Section Content */}
-              <div className="relative py-24 md:py-32">
+              <div className={`relative ${isEvenSection ? 'py-12' : 'py-16'} md:py-32`}>
                 <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
                   <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
                     {/* Mobile: Stack content on top of image */}
@@ -525,36 +520,29 @@ const AdultSkills = () => {
         )}
 
         {/* Mobile Navigation with Icons - Fixed at Bottom */}
-        <div className="fixed md:hidden bottom-0 left-0 right-0 z-50 bg-white shadow-lg border-t border-gray-200">
+        <div className="fixed md:hidden bottom-0 left-0 right-0 z-50 bg-white shadow-lg border-t border-gray-200 overflow-x-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="flex justify-center">
-              <div className="flex space-x-4 py-2">
+            <div className="flex justify-start">
+              <div className="inline-flex px-2 py-2 space-x-2">
                 {Object.entries(tabs).map(([key, tab]) => {
-                  const color = tab.color as ColorType;
-                  const colorClass = colorClasses[color];
+                  const colorClass = colorClasses[tab.color as ColorType];
                   return (
                     <a 
                       key={key}
-                      href={`#${key}`} 
-                      aria-label={`View ${tab.title} information`}
-                      className={`group relative px-3 py-2 flex-shrink-0 rounded-xl transition-all duration-300 ${
+                      href={`#${key}`}
+                      className={`flex-shrink-0 px-3 py-2 rounded-xl transition-all duration-300 ${
                         activeTab === key 
-                          ? `text-gray-800 ${colorClass.button} shadow-md transform -translate-y-1` 
+                          ? `text-gray-800 ${colorClass.button} shadow-md transform -translate-y-1`
                           : `hover:bg-gray-50 text-gray-700`
-                      } focus:outline-none focus:ring-2 focus:ring-gray-200`}
-                      onClick={() => setActiveTab(key)}
+                      }`}
+                      style={{ minWidth: '7rem' }}
                     >
                       <div className="flex flex-col items-center gap-1">
                         <div className={`${activeTab === key ? colorClass.icon : 'text-gray-500'} p-1 rounded-lg`}>
-                          {React.isValidElement(tab.icon) 
-                            ? React.cloneElement(tab.icon as React.ReactElement, { className: 'w-6 h-6' })
-                            : tab.icon}
+                          {React.isValidElement(tab.icon) ? 
+                            <div className="w-6 h-6">{tab.icon}</div> : tab.icon}
                         </div>
-                        <span className={`text-xs font-medium ${
-                          activeTab === key 
-                            ? 'text-gray-800'
-                            : 'text-gray-900 group-hover:text-gray-800'
-                        } whitespace-nowrap transition-colors`}>
+                        <span className={`text-xs font-medium ${activeTab === key ? 'text-gray-800' : 'text-gray-900'} whitespace-nowrap`}>
                           {tab.title}
                         </span>
                       </div>

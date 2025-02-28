@@ -72,11 +72,15 @@ export default function EventsPageContent() {
 
     return (
         <div className="bg-white">
-            {/* Breadcrumbs Component */}
-            <Breadcrumbs items={[
-                { label: 'Home', href: '/' },
-                { label: 'Events', href: '/events' },
-            ]} />
+            {/* Breadcrumbs at the very top of the page */}
+            <div className="bg-gray-50 border-b border-gray-200">
+                <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+                    <Breadcrumbs items={[
+                        { label: 'Home', href: '/' },
+                        { label: 'Events', href: '/events' },
+                    ]} />
+                </div>
+            </div>
 
             {/* Hero Section */}
             <div className="relative bg-[#0e1b3d] py-32 flex items-center min-h-[600px]">

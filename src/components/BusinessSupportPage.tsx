@@ -10,15 +10,19 @@ import Newsletter from '@/components/Newsletter'
 const BusinessSupportPage = () => {
   return (
     <div className="bg-white">
-      {/* Breadcrumbs Component */}
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Business Support', href: '/business' },
-        { label: 'Business Growth', href: '/business-support' },
-      ]} />
+      {/* Breadcrumbs at the very top of the page */}
+      <div className="bg-gray-50 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+          <Breadcrumbs items={[
+            { label: 'Home', href: '/' },
+            { label: 'Business Support', href: '/business' },
+            { label: 'Business Growth', href: '/business-support' },
+          ]} />
+        </div>
+      </div>
 
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 flex items-center">
+      <div className="relative bg-[#111827] py-32 flex items-center min-h-[600px]">
         <div className="absolute inset-0">
           <Image
             src="/images/hero-business.jpg"
@@ -28,17 +32,19 @@ const BusinessSupportPage = () => {
             priority
             quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:20px_20px] opacity-30" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,#ffffff05_50%,transparent_100%)] opacity-70" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-purple-300 mb-4">
-              <div className="p-1.5 rounded-lg bg-purple-500/10 backdrop-blur-sm border border-purple-400/20">
-                <LineChart className="h-4 w-4" />
+            <div className="inline-flex items-center gap-3 text-purple-300 mb-6">
+              <div className="p-2 rounded-lg bg-purple-500/10 backdrop-blur-sm border border-purple-400/20">
+                <LineChart className="h-5 w-5" />
               </div>
-              <span className="text-sm font-medium tracking-wide uppercase">Business Growth</span>
+              <span className="text-base font-medium tracking-wide uppercase">Business Growth</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               Business Support to<br className="hidden sm:block" /> Grow Your Business

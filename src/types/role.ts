@@ -7,10 +7,19 @@ export type CareerPath = {
   providers?: string[];
 };
 
+export interface Testimonial {
+  imageUrl?: string;
+  name: string;
+  role: string;
+  quote: string;
+}
+
 export type Role = {
   title: string;
   slug: string;
+  category?: string;
   description: string;
+  featured?: boolean;
   salary: {
     entry: string;
     experienced: string;
@@ -34,6 +43,9 @@ export type Role = {
     nextSteps: string[];
     potentialRoles: string[];
   };
+  testimonials?: Testimonial[];
+  localEmployers?: string[];
+  videoUrl?: string;
 };
 
 export type RoleData = Record<string, Role>; 

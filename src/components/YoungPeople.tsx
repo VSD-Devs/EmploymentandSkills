@@ -100,16 +100,16 @@ const TABS_CONFIG: TabsType = {
     icon: <BookOpen className="w-6 h-6" />,
     color: 'amber',
     title: 'T-Levels',
-    description: 'Technical Excellence',
+    description: 'Learn Through Experience',
     content: {
       text: [
-        "T-Levels are new qualifications that combine classroom learning with industry placements. Perfect for those who want a practical, hands-on approach to learning.",
-        "Discover how T-Levels can give you the skills and knowledge that employers are looking for, with real workplace experience built into your course."
+        "T-Levels are exciting new qualifications that combine classroom learning with real workplace experience. Perfect if you want hands-on, practical training alongside your studies.",
+        "T-Levels are equivalent to 3 A Levels and include a substantial industry placement of at least 315 hours (approximately 45 days) with an employer. You'll gain valuable work experience, develop industry-specific skills, and make connections with potential future employers."
       ],
       image: '/images/tlevels-hub.jpg',
-      alt: 'Students in technical training',
-      link: '/t-levels',
-      cta: 'Explore T-Levels'
+      alt: 'Students gaining practical experience through T-Level courses',
+      link: '/t-levels-for-students',
+      cta: 'Discover T-Levels'
     }
   },
   apprenticeships: {
@@ -274,13 +274,13 @@ const YoungPeople = () => {
         onTouchEnd={handleTouchEnd}
       >
         {/* Hero Section */}
-        <div className="relative bg-[#0e1b3d] py-32 flex items-center min-h-[600px]">
+        <div className="relative bg-[#0e1b3d] py-12 md:py-32 flex items-center min-h-[300px] md:min-h-[600px]">
           <div className="absolute inset-0">
             <Image
               src="/images/young-people.jpg"
               alt="Young people exploring career opportunities in South Yorkshire"
               fill
-              className="object-cover object-center object-[center_25%] brightness-75"
+              className="object-cover object-center md:object-[center_25%] brightness-75"
               priority
               quality={90}
               onError={() => handleImageError('hero')}
@@ -293,34 +293,28 @@ const YoungPeople = () => {
 
           <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
             <div className="text-center">
-              <div className="inline-flex items-center gap-3 text-indigo-300 mb-6">
-                <div className="p-2 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-400/20">
-                  <Rocket className="h-5 w-5" />
-                </div>
-                <span className="text-base font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
-              </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 md:mb-12 tracking-tight">
                 Career Support<br className="hidden sm:block" /> in South Yorkshire
               </h1>
-              <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-10">
+              <p className="text-base md:text-lg text-gray-200 max-w-3xl mx-auto leading-relaxed mb-6 md:mb-10">
                 Explore exciting opportunities for your future. Whether it's university, apprenticeships, or starting your career, we're here to help you make informed choices.
               </p>
-              <div className="flex flex-wrap justify-center gap-5">
+              <div className="flex flex-wrap justify-center gap-3 md:gap-5">
                 <button
                   onClick={() => setIsQuizOpen(true)}
                   aria-label="Take our career quiz to find your ideal path"
-                  className="inline-flex items-center px-8 py-4 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+                  className="inline-flex items-center px-6 py-3 md:px-8 md:py-4 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-500 transition-all duration-300 text-sm md:text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900"
                 >
                   Take Career Quiz
-                  <ArrowRight className="ml-3 h-5 w-5" />
+                  <ArrowRight className="ml-2 md:ml-3 h-4 w-4 md:h-5 md:w-5" />
                 </button>
                 <Link
                   href="/plan-your-career"
                   aria-label="Start planning your career with our resources and tools"
-                  className="inline-flex items-center px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-all duration-300 border border-white/20 text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-gray-900"
+                  className="inline-flex items-center px-6 py-3 md:px-8 md:py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-all duration-300 border border-white/20 text-sm md:text-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-gray-900"
                 >
                   Start Planning
-                  <ArrowRight className="ml-3 h-5 w-5" />
+                  <ArrowRight className="ml-2 md:ml-3 h-4 w-4 md:h-5 md:w-5" />
                 </Link>
               </div>
             </div>
@@ -354,7 +348,7 @@ const YoungPeople = () => {
                             ? colorClass.icon
                             : 'text-gray-500'
                           } p-1 rounded-lg`}>
-                          {tab.icon}
+                          {React.isValidElement(tab.icon) && React.cloneElement(tab.icon as React.ReactElement<{ className?: string }>, { className: 'w-6 h-6' })}
                         </div>
                         <span className={`text-base font-medium ${
                           activeTab === key 
@@ -378,12 +372,13 @@ const YoungPeople = () => {
             const color = tab.color;
             const colorClass = colorClasses[color];
             const isEvenSection = index % 2 === 0;
+            const isTLevels = key === 'tlevels';
             
             return (
               <div 
                 key={key} 
                 id={key} 
-                className="relative scroll-mt-20 overflow-hidden"
+                className={`relative ${isTLevels ? 'scroll-mt-12' : 'scroll-mt-16'} overflow-hidden`}
               >
                 {/* Section Background - alternating white and very light colored */}
                 <div className={`absolute inset-0 ${isEvenSection ? 'bg-white' : 'bg-gray-50'}`}></div>
@@ -398,7 +393,7 @@ const YoungPeople = () => {
                 )}
 
                 {/* Section Content */}
-                <div className="relative py-24 md:py-32">
+                <div className={`relative ${isTLevels ? 'py-12' : 'py-16'} md:py-32`}>
                   <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
                     <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
                       {/* Mobile: Stack content on top of image */}
@@ -554,41 +549,29 @@ const YoungPeople = () => {
         <CareerQuiz isOpen={isQuizOpen} onClose={() => setIsQuizOpen(false)} />
 
         {/* Mobile Navigation with Icons - Fixed at Bottom */}
-        <div className="fixed md:hidden bottom-0 left-0 right-0 z-50 bg-white shadow-lg border-t border-gray-200">
+        <div className="fixed md:hidden bottom-0 left-0 right-0 z-50 bg-white shadow-lg border-t border-gray-200 overflow-x-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="flex justify-center">
-              <div className="flex space-x-4 py-2">
+            <div className="flex justify-start">
+              <div className="inline-flex px-2 py-2 space-x-2">
                 {Object.entries(tabs).map(([key, tab]) => {
-                  const color = tab.color;
-                  const colorClass = colorClasses[color];
+                  const colorClass = colorClasses[tab.color];
                   
                   return (
                     <a 
                       key={key}
-                      href={`#${key}`} 
-                      aria-label={`View ${tab.title} information`}
-                      className={`group relative px-3 py-2 flex-shrink-0 rounded-xl transition-all duration-300 ${
+                      href={`#${key}`}
+                      className={`flex-shrink-0 px-3 py-2 rounded-xl transition-all duration-300 ${
                         activeTab === key 
                           ? `text-gray-800 ${colorClass.button} shadow-md transform -translate-y-1`
                           : `hover:bg-gray-50 text-gray-700`
-                      } focus:outline-none focus:ring-2 focus:ring-gray-200`}
-                      onClick={() => setActiveTab(key)}
+                      }`}
+                      style={{ minWidth: '7rem' }}
                     >
                       <div className="flex flex-col items-center gap-1">
-                        <div className={`${
-                          activeTab === key 
-                            ? colorClass.icon
-                            : 'text-gray-500'
-                          } p-1 rounded-lg`}>
-                          {React.isValidElement(tab.icon) 
-                            ? React.cloneElement(tab.icon as React.ReactElement, { className: 'w-6 h-6' })
-                            : tab.icon}
+                        <div className={`${activeTab === key ? colorClass.icon : 'text-gray-500'} p-1 rounded-lg`}>
+                          {React.isValidElement(tab.icon) && React.cloneElement(tab.icon as React.ReactElement<{ className?: string }>, { className: 'w-6 h-6' })}
                         </div>
-                        <span className={`text-xs font-medium ${
-                          activeTab === key 
-                            ? 'text-gray-800'
-                            : 'text-gray-900 group-hover:text-gray-800'
-                        } whitespace-nowrap transition-colors`}>
+                        <span className={`text-xs font-medium ${activeTab === key ? 'text-gray-800' : 'text-gray-900'} whitespace-nowrap`}>
                           {tab.title}
                         </span>
                       </div>

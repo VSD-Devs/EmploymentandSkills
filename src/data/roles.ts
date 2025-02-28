@@ -6,6 +6,38 @@ import { creativeRoles } from './creativeRoles';
 import { engineeringRoles } from './engineeringRoles';
 import { hospitalityRoles } from './hospitalityRoles';
 
+// Common category themes for UI consistency
+export const categoryThemes = {
+  digital: {
+    color: 'blue',
+    gradient: 'from-blue-600 to-indigo-700'
+  },
+  business: {
+    color: 'emerald',
+    gradient: 'from-emerald-600 to-teal-700'
+  },
+  healthcare: {
+    color: 'rose',
+    gradient: 'from-rose-600 to-pink-700'
+  },
+  creative: {
+    color: 'purple',
+    gradient: 'from-purple-600 to-violet-700'
+  },
+  engineering: {
+    color: 'amber',
+    gradient: 'from-amber-500 to-orange-600'
+  },
+  hospitality: {
+    color: 'cyan',
+    gradient: 'from-cyan-600 to-sky-700'
+  },
+  construction: {
+    color: 'yellow',
+    gradient: 'from-yellow-500 to-amber-600'
+  }
+};
+
 export const roleData: RoleData = {
   ...digitalRoles,
   ...businessRoles,
@@ -18,6 +50,8 @@ export const roleData: RoleData = {
     title: 'Qualified Plumber',
     slug: 'qualified-plumber',
     description: 'A skilled professional who installs, maintains and repairs water, heating and drainage systems in homes and commercial buildings.',
+    category: 'construction',
+    featured: true,
     salary: {
       entry: '£25,000',
       experienced: '£35,000',
@@ -118,13 +152,30 @@ export const roleData: RoleData = {
         'Renewable Energy Specialist',
         'Plumbing Business Owner'
       ]
-    }
+    },
+    testimonials: [
+      {
+        name: "James Wilson",
+        role: "Plumbing Business Owner",
+        quote: "I started as an apprentice plumber and now run my own successful business with five employees. The skills I learned have been invaluable, and there's always work available in this trade.",
+        imageUrl: "/images/testimonials/plumber-1.jpg"
+      }
+    ],
+    localEmployers: [
+      "Sheffield Heating Solutions",
+      "Yorkshire Water Services",
+      "Barnsley Building Services",
+      "Rotherham Council Maintenance"
+    ],
+    videoUrl: "https://www.youtube.com/watch?v=example-plumber"
   },
   
   'qualified-electrician': {
     title: 'Qualified Electrician',
     slug: 'qualified-electrician',
     description: 'A certified professional who installs, maintains and repairs electrical systems in domestic, commercial and industrial settings.',
+    category: 'construction',
+    featured: true,
     salary: {
       entry: '£25,000',
       experienced: '£38,000',
@@ -225,13 +276,30 @@ export const roleData: RoleData = {
         'Electrical Designer',
         'Business Owner'
       ]
-    }
+    },
+    testimonials: [
+      {
+        name: "Sarah Thompson",
+        role: "Commercial Electrician",
+        quote: "The electrical industry is constantly evolving with new technologies. I love that every day brings new challenges and learning opportunities, especially in renewable energy systems.",
+        imageUrl: "/images/testimonials/electrician-1.jpg"
+      }
+    ],
+    localEmployers: [
+      "Yorkshire Electrical Contractors",
+      "Sheffield City Council",
+      "South Yorkshire Renewables",
+      "Doncaster Building Services"
+    ],
+    videoUrl: "https://www.youtube.com/watch?v=example-electrician"
   },
   
   'qualified-mechanic': {
     title: 'Qualified Mechanic',
     slug: 'qualified-mechanic',
     description: 'A skilled automotive professional who diagnoses, repairs and maintains vehicles, including modern hybrid and electric vehicles.',
+    category: 'engineering',
+    featured: true,
     salary: {
       entry: '£22,000',
       experienced: '£32,000',
@@ -332,6 +400,21 @@ export const roleData: RoleData = {
         'Garage Owner',
         'Technical Trainer'
       ]
-    }
+    },
+    testimonials: [
+      {
+        name: "Michael Roberts",
+        role: "Master Technician",
+        quote: "The transition to electric vehicles has completely transformed our industry. Getting qualified in EV maintenance early on has given me a competitive edge in the job market.",
+        imageUrl: "/images/testimonials/mechanic-1.jpg"
+      }
+    ],
+    localEmployers: [
+      "South Yorkshire Motors",
+      "Sheffield Autos",
+      "Rotherham Vehicle Services",
+      "Barnsley Automotive Ltd"
+    ],
+    videoUrl: "https://www.youtube.com/watch?v=example-mechanic"
   }
 }; 

@@ -93,60 +93,63 @@ export default function PlanYourCareer() {
 
   return (
     <main className="min-h-screen bg-white">
-      {/* Breadcrumbs Component */}
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Plan Your Career', href: '/plan-your-career' },
-      ]} />
+      {/* Breadcrumbs at the very top of the page */}
+      <div className="bg-gray-50 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+          <Breadcrumbs items={[
+            { label: 'Home', href: '/' },
+            { label: 'Plan Your Career', href: '/plan-your-career' },
+          ]} />
+        </div>
+      </div>
 
       {/* Hero Section */}
-      <div className="relative bg-[#111827] py-20 min-h-[480px] flex items-center">
-        <div className="absolute inset-0">
-          <Image
-            src="/images/planning.jpg"
-            alt="Young people exploring career opportunities in South Yorkshire"
+      <section className="relative bg-[#0e1b3d] py-32 flex items-center min-h-[600px]">
+        <div className="absolute inset-0 overflow-hidden">
+          <Image 
+            src="/images/careers-hero.jpg" 
+            alt="Diverse young professionals discussing career paths"
             fill
             className="object-cover object-center brightness-75"
             priority
-            quality={90}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/90 via-[#111827]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0e1b3d]/95 via-[#0e1b3d]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0e1b3d]/70 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:20px_20px] opacity-30" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,#ffffff05_50%,transparent_100%)] opacity-70" />
         </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 text-fuchsia-300 mb-4">
-              <div className="p-1.5 rounded-lg bg-fuchsia-500/10 backdrop-blur-sm border border-fuchsia-400/20">
-                <Compass className="h-4 w-4" />
-              </div>
-              <span className="text-sm font-medium tracking-wide uppercase">Your Future Starts Here</span>
+        
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 z-10 text-center">
+          <div className="inline-flex items-center gap-3 text-indigo-300 mb-6">
+            <div className="p-2 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-400/20">
+              <Compass className="h-5 w-5" />
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Plan Your Future Career
-            </h1>
-            <p className="text-base sm:text-lg text-gray-200 max-w-2xl mx-auto">
-              Not sure what career path to take? We're here to help you explore your options and find your perfect career in South Yorkshire.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <button
-                onClick={() => setIsQuizOpen(true)}
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-medium transition-colors duration-200"
-              >
-                Take Career Quiz
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </button>
-              <Link
-                href="/career-advice"
-                className="inline-flex items-center px-6 py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium backdrop-blur-sm transition-colors duration-200"
-              >
-                Speak to an Advisor
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </div>
+            <span className="text-base font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
+            Plan Your Career in South Yorkshire
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-10">
+            Discover opportunities, explore career paths, and build the skills you need for success in the region's growing industries.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button 
+              onClick={() => setIsQuizOpen(true)}
+              className="inline-flex items-center justify-center px-6 py-3 bg-white text-indigo-700 font-medium rounded-lg hover:bg-gray-100 transition-colors shadow-lg"
+            >
+              Take Our Career Quiz
+              <ChevronRight className="ml-2 h-5 w-5" />
+            </button>
+            <Link
+              href="#career-sectors"
+              className="inline-flex items-center justify-center px-6 py-3 bg-indigo-700 text-white font-medium rounded-lg hover:bg-indigo-600 transition-colors border border-indigo-500"
+            >
+              Explore Career Sectors
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Career Tools Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">

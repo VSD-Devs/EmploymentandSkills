@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X, Search } from 'lucide-react'
+import { Menu, X, Search, ChevronDown, Briefcase, Users, GraduationCap, BookOpen, LineChart, Building2 } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { performSearch } from '@/utils/search'
 import SearchResults from './SearchResults'
@@ -15,14 +15,136 @@ interface SearchResult {
   category: string
 }
 
+// Define navigation dropdown items
+interface DropdownItem {
+  title: string
+  description?: string
+  url: string
+  icon?: React.ReactNode
+}
+
+interface SubMenu {
+  [key: string]: {
+    items: DropdownItem[]
+  }
+}
+
 const Navigation = () => {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [showResults, setShowResults] = useState(false)
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [dropdownTimeoutId, setDropdownTimeoutId] = useState<NodeJS.Timeout | null>(null)
+  
   const searchContainerRef = useRef<HTMLDivElement>(null)
   const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  
+  // Define submenu items
+  const subMenus: SubMenu = {
+    adultSkills: {
+      items: [
+        { 
+          title: 'Employment Support',
+          description: 'Career Development',
+          url: '/employment-support',
+          icon: <Briefcase className="w-5 h-5" /> 
+        },
+        { 
+          title: 'Funded Training',
+          description: 'Professional Development',
+          url: '/funded-training-for-adults',
+          icon: <Users className="w-5 h-5" /> 
+        },
+        { 
+          title: 'Apprenticeships',
+          description: 'Career Change & Progression',
+          url: '/apprenticeships',
+          icon: <GraduationCap className="w-5 h-5" /> 
+        }
+      ]
+    },
+    educators: {
+      items: [
+        {
+          title: 'Colleges & Training Providers',
+          description: 'Deliver Skills Training',
+          url: '/educators/training-providers',
+          icon: <Briefcase className="w-5 h-5" />
+        },
+        {
+          title: 'Schools',
+          description: 'Career Education',
+          url: '/educators/schools',
+          icon: <GraduationCap className="w-5 h-5" />
+        }
+      ]
+    },
+    youngPeople: {
+      items: [
+        {
+          title: 'T-Levels',
+          description: 'Technical Qualifications',
+          url: '/t-levels-for-students',
+          icon: <GraduationCap className="w-5 h-5" />
+        },
+        {
+          title: 'University',
+          description: 'Explore Higher Education',
+          url: '/university',
+          icon: <GraduationCap className="w-5 h-5" />
+        },
+        {
+          title: 'Skills & Training',
+          description: 'Build Your Future',
+          url: '/skills-training',
+          icon: <BookOpen className="w-5 h-5" />
+        },
+        {
+          title: 'Career Planning',
+          description: 'Find Your Path',
+          url: '/plan-your-career',
+          icon: <Briefcase className="w-5 h-5" />
+        }
+      ]
+    },
+    business: {
+      items: [
+        {
+          title: 'Funding & Training',
+          description: 'Access funding to grow your business',
+          url: '/funded-training',
+          icon: <LineChart className="w-5 h-5" />
+        },
+        {
+          title: 'Start-ups',
+          description: 'Launch your business journey',
+          url: '/startup-support',
+          icon: <Building2 className="w-5 h-5" />
+        },
+        {
+          title: 'Recruitment',
+          description: 'Find and develop talent',
+          url: '/recruitment-support',
+          icon: <Users className="w-5 h-5" />
+        },
+        {
+          title: 'Community & Schools',
+          description: 'Build your future workforce',
+          url: '/community-schools',
+          icon: <GraduationCap className="w-5 h-5" />
+        },
+        {
+          title: 'Business Growth',
+          description: 'Advice to scale your business',
+          url: '/business-support',
+          icon: <Building2 className="w-5 h-5" />
+        }
+      ]
+    }
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -32,12 +154,19 @@ const Navigation = () => {
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
         setIsOpen(false)
       }
+      
+      // Close dropdown when clicking outside
+      if (activeDropdown && dropdownRefs.current[activeDropdown] && 
+          !dropdownRefs.current[activeDropdown]?.contains(event.target as Node)) {
+        setActiveDropdown(null)
+      }
     }
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsOpen(false)
         setShowResults(false)
+        setActiveDropdown(null)
       }
     }
 
@@ -47,7 +176,7 @@ const Navigation = () => {
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('keydown', handleEscape)
     }
-  }, [])
+  }, [activeDropdown])
 
   // Close mobile menu when window is resized to desktop size
   useEffect(() => {
@@ -100,6 +229,22 @@ const Navigation = () => {
     return pathname?.startsWith(path)
   }
 
+  // Dropdown handling functions with delay for better UX
+  const handleMouseEnter = (dropdownId: string) => {
+    if (dropdownTimeoutId) {
+      clearTimeout(dropdownTimeoutId)
+      setDropdownTimeoutId(null)
+    }
+    setActiveDropdown(dropdownId)
+  }
+
+  const handleMouseLeave = () => {
+    const timeoutId = setTimeout(() => {
+      setActiveDropdown(null)
+    }, 150) // Small delay before closing for better UX
+    setDropdownTimeoutId(timeoutId)
+  }
+
   return (
     <nav className="bg-slate-50 border-b border-slate-200 shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,46 +263,211 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-1">
-            <Link 
-              href="/young-people"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
-                isActive('/young-people')
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-              }`}
+            <div className="relative"
+                 onMouseEnter={() => handleMouseEnter('youngPeople')}
+                 onMouseLeave={handleMouseLeave}
+                 ref={(el) => {
+                   dropdownRefs.current['youngPeople'] = el;
+                   return undefined;
+                 }}
             >
-              Young People
-            </Link>
-            <Link 
-              href="/adult-skills"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
-                isActive('/adult-skills')
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-              }`}
+              <Link 
+                href="/young-people"
+                className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold inline-flex items-center ${
+                  isActive('/young-people')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
+                aria-expanded={activeDropdown === 'youngPeople'}
+                aria-haspopup="true"
+              >
+                Young People
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${activeDropdown === 'youngPeople' ? 'rotate-180' : ''}`} />
+              </Link>
+              
+              {/* Dropdown menu for Young People */}
+              {activeDropdown === 'youngPeople' && (
+                <div 
+                  className="absolute left-0 mt-1 w-72 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden focus:outline-none z-50 transform origin-top-left transition-all duration-200 ease-out"
+                >
+                  <div className="p-2">
+                    {subMenus.youngPeople.items.map((item, index) => (
+                      <Link
+                        key={index}
+                        href={item.url}
+                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                      >
+                        <div className="p-1 bg-slate-100 rounded-md">
+                          {item.icon}
+                        </div>
+                        <div>
+                          <span className="font-medium">{item.title}</span>
+                          {item.description && (
+                            <p className="text-sm text-slate-500 mt-0.5">{item.description}</p>
+                          )}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Adult Skills with Dropdown */}
+            <div className="relative"
+                 onMouseEnter={() => handleMouseEnter('adultSkills')}
+                 onMouseLeave={handleMouseLeave}
+                 ref={(el) => {
+                   dropdownRefs.current['adultSkills'] = el;
+                   return undefined;
+                 }}
             >
-              Adults
-            </Link>
-            <Link 
-              href="/business"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
-                isActive('/business')
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-              }`}
+              <Link 
+                href="/adult-skills"
+                className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold inline-flex items-center ${
+                  isActive('/adult-skills')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
+                aria-expanded={activeDropdown === 'adultSkills'}
+                aria-haspopup="true"
+              >
+                Adults
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${activeDropdown === 'adultSkills' ? 'rotate-180' : ''}`} />
+              </Link>
+              
+              {/* Dropdown menu for Adults */}
+              {activeDropdown === 'adultSkills' && (
+                <div 
+                  className="absolute left-0 mt-1 w-72 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden focus:outline-none z-50 transform origin-top-left transition-all duration-200 ease-out"
+                >
+                  <div className="p-2">
+                    {subMenus.adultSkills.items.map((item, index) => (
+                      <Link
+                        key={index}
+                        href={item.url}
+                        className="group flex items-start gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                      >
+                        <div className="flex-shrink-0 mt-1">
+                          <div className="p-1.5 bg-slate-100 group-hover:bg-blue-100 rounded-lg transition-colors">
+                            {item.icon}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="font-medium">{item.title}</p>
+                          {item.description && (
+                            <p className="text-xs text-slate-500 group-hover:text-slate-600">{item.description}</p>
+                          )}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Educators with Dropdown */}
+            <div className="relative"
+                 onMouseEnter={() => handleMouseEnter('educators')}
+                 onMouseLeave={handleMouseLeave}
+                 ref={(el) => {
+                   dropdownRefs.current['educators'] = el;
+                   return undefined;
+                 }}
             >
-              Businesses
-            </Link>
-            <Link 
-              href="/educators"
-              className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
-                isActive('/educators')
-                  ? 'bg-blue-50 text-blue-600'
-                  : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-              }`}
+              <Link 
+                href="/educators"
+                className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold inline-flex items-center ${
+                  isActive('/educators')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
+                aria-expanded={activeDropdown === 'educators'}
+                aria-haspopup="true"
+              >
+                Educators
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${activeDropdown === 'educators' ? 'rotate-180' : ''}`} />
+              </Link>
+              
+              {/* Dropdown menu for Educators */}
+              {activeDropdown === 'educators' && (
+                <div 
+                  className="absolute left-0 mt-1 w-72 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden focus:outline-none z-50 transform origin-top-left transition-all duration-200 ease-out"
+                >
+                  <div className="p-2">
+                    {subMenus.educators.items.map((item, index) => (
+                      <Link
+                        key={index}
+                        href={item.url}
+                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                      >
+                        <div className="p-1 bg-slate-100 rounded-md">
+                          {item.icon}
+                        </div>
+                        <div>
+                          <span className="font-medium">{item.title}</span>
+                          {item.description && (
+                            <p className="text-sm text-slate-500 mt-0.5">{item.description}</p>
+                          )}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Business with Dropdown */}
+            <div className="relative"
+                 onMouseEnter={() => handleMouseEnter('business')}
+                 onMouseLeave={handleMouseLeave}
+                 ref={(el) => {
+                   dropdownRefs.current['business'] = el;
+                   return undefined;
+                 }}
             >
-              Educators
-            </Link>
+              <Link 
+                href="/business"
+                className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold inline-flex items-center ${
+                  isActive('/business')
+                    ? 'bg-blue-50 text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                }`}
+                aria-expanded={activeDropdown === 'business'}
+                aria-haspopup="true"
+              >
+                Businesses
+                <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-200 ${activeDropdown === 'business' ? 'rotate-180' : ''}`} />
+              </Link>
+              
+              {/* Dropdown menu for Business */}
+              {activeDropdown === 'business' && (
+                <div 
+                  className="absolute left-0 mt-1 w-72 rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden focus:outline-none z-50 transform origin-top-left transition-all duration-200 ease-out"
+                >
+                  <div className="p-2">
+                    {subMenus.business.items.map((item, index) => (
+                      <Link
+                        key={index}
+                        href={item.url}
+                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                      >
+                        <div className="p-1 bg-slate-100 rounded-md">
+                          {item.icon}
+                        </div>
+                        <div>
+                          <span className="font-medium">{item.title}</span>
+                          {item.description && (
+                            <p className="text-sm text-slate-500 mt-0.5">{item.description}</p>
+                          )}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            
             <Link 
               href="/parents"
               className={`px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-semibold ${
@@ -261,52 +571,182 @@ const Navigation = () => {
             </button>
           </div>
 
+          {/* Move search to the top */}
+          <div className="px-4 py-3 border-b border-slate-200">
+            <form onSubmit={handleSearch} className="relative">
+              <input
+                type="search"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                className="w-full pl-3 pr-10 py-2 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-900 placeholder-slate-500"
+                aria-label="Search website"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md"
+                aria-label="Submit search"
+              >
+                <Search className="h-5 w-5" />
+              </button>
+            </form>
+            {showResults && (
+              <div className="absolute inset-x-0 top-full mt-2 px-4">
+                <SearchResults
+                  results={searchResults}
+                  isVisible={showResults}
+                  onClose={() => setShowResults(false)}
+                />
+              </div>
+            )}
+          </div>
+
           <div className="flex-1 overflow-y-auto py-4 px-4">
             <nav className="space-y-2">
-              <Link
-                href="/young-people"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
-                  isActive('/young-people')
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                Young People
-              </Link>
-              <Link
-                href="/adult-skills"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
-                  isActive('/adult-skills')
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                Adults
-              </Link>
-              <Link
-                href="/business"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
-                  isActive('/business')
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                Businesses
-              </Link>
-              <Link
-                href="/educators"
-                className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
-                  isActive('/educators')
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                Educators
-              </Link>
+              {/* Young People with Dropdown */}
+              <div>
+                <Link
+                  href="/young-people"
+                  className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
+                    isActive('/young-people')
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Young People
+                </Link>
+                <div className="ml-4 mt-1 space-y-1 border-l-2 border-slate-100 pl-3">
+                  {subMenus.youngPeople.items.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item.url}
+                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        isActive(item.url)
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <div className="p-1 bg-slate-100 rounded-md">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <span className="font-medium">{item.title}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Adults Section with Submenus */}
+              <div>
+                <Link
+                  href="/adult-skills"
+                  className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
+                    isActive('/adult-skills')
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Adults
+                </Link>
+                <div className="ml-4 mt-1 space-y-1 border-l-2 border-slate-100 pl-3">
+                  {subMenus.adultSkills.items.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item.url}
+                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        isActive(item.url)
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <div className="p-1 bg-slate-100 rounded-md">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <span className="font-medium">{item.title}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Educators with Dropdown */}
+              <div>
+                <Link
+                  href="/educators"
+                  className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
+                    isActive('/educators')
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Educators
+                </Link>
+                <div className="ml-4 mt-1 space-y-1 border-l-2 border-slate-100 pl-3">
+                  {subMenus.educators.items.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item.url}
+                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        isActive(item.url)
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <div className="p-1 bg-slate-100 rounded-md">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <span className="font-medium">{item.title}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Business with Dropdown */}
+              <div>
+                <Link
+                  href="/business"
+                  className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
+                    isActive('/business')
+                      ? 'bg-blue-50 text-blue-600'
+                      : 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Businesses
+                </Link>
+                <div className="ml-4 mt-1 space-y-1 border-l-2 border-slate-100 pl-3">
+                  {subMenus.business.items.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item.url}
+                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        isActive(item.url)
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <div className="p-1 bg-slate-100 rounded-md">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <span className="font-medium">{item.title}</span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
               <Link
                 href="/parents"
                 className={`block px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold ${
@@ -341,35 +781,6 @@ const Navigation = () => {
                 Contact
               </Link>
             </nav>
-
-            <div className="mt-6">
-              <form onSubmit={handleSearch} className="relative">
-                <input
-                  type="search"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="w-full pl-3 pr-10 py-2 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-900 placeholder-slate-500"
-                  aria-label="Search website"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md"
-                  aria-label="Submit search"
-                >
-                  <Search className="h-5 w-5" />
-                </button>
-              </form>
-              {showResults && (
-                <div className="absolute inset-x-0 top-full mt-2 px-4">
-                  <SearchResults
-                    results={searchResults}
-                    isVisible={showResults}
-                    onClose={() => setShowResults(false)}
-                  />
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </div>
@@ -377,4 +788,4 @@ const Navigation = () => {
   )
 }
 
-export default Navigation 
+export default Navigation
