@@ -18,6 +18,22 @@ interface ProfileData {
   recommendedSectors: SectorSlug[];
 }
 
+// Add types for quiz questions and options
+interface QuizOption {
+  id: string;
+  text: string;
+  paths: string[];
+  description?: string;
+  icon?: string;
+}
+
+interface QuizQuestion {
+  question: string;
+  options: QuizOption[];
+  stage: 1 | 2;
+  explanation?: string;
+}
+
 // Map quiz paths to sector slugs
 const pathToSectorMap: { [key: string]: string } = {
   'tech': 'digital-tech',
@@ -36,6 +52,7 @@ interface CareerQuizProps {
 }
 
 const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
+  const [showFrontPage, setShowFrontPage] = useState(true)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<string[][]>([])
   const [showResults, setShowResults] = useState(false)
@@ -51,6 +68,7 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
         setAnswers(answers)
         setStage(stage)
         setShowResults(true)
+        setShowFrontPage(false)
         localStorage.removeItem('careerQuizState') // Clear after restoring
       }
     }
@@ -108,6 +126,7 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
 
   const handleAnswer = (paths: string[]) => {
     const newAnswers = [...answers, paths]
+    setShowFrontPage(false)
     
     if (currentQuestion === 4) {
       setAnswers(newAnswers)
@@ -155,6 +174,16 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
     setShowResults(false)
     setShowIntermediate(false)
     setStage(1)
+    setShowFrontPage(true)
+    // Add scroll to top
+    const quizContainer = document.querySelector('.quiz-scroll-container')
+    if (quizContainer) {
+      quizContainer.scrollTop = 0
+    }
+  }
+
+  const startQuiz = () => {
+    setShowFrontPage(false)
     // Add scroll to top
     const quizContainer = document.querySelector('.quiz-scroll-container')
     if (quizContainer) {
@@ -296,13 +325,122 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
     return sector;
   };
 
+  const renderFrontPage = () => {
+    return (
+      <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto">
+        <div className="text-center mb-8 md:mb-10">
+          <div className="w-20 h-20 bg-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Compass className="h-10 w-10 text-white" />
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-zinc-900 mb-4">
+            Career Pathways Quiz
+          </h2>
+          <p className="text-base md:text-lg text-zinc-600 max-w-2xl mx-auto">
+            Take our comprehensive career assessment to discover career paths that align with your skills, interests, and personal traits.
+          </p>
+        </div>
+
+        <div className="bg-emerald-50 rounded-xl md:rounded-2xl p-6 md:p-8 mb-8 md:mb-10 border-2 border-emerald-100">
+          <h3 className="text-lg md:text-xl font-semibold text-emerald-800 mb-4">
+            About This Assessment
+          </h3>
+          <div className="space-y-4 md:space-y-6">
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-emerald-200 flex items-center justify-center flex-shrink-0">
+                <span className="font-semibold text-emerald-800">1</span>
+              </div>
+              <div>
+                <h4 className="font-medium text-base text-zinc-900 mb-1">Two-Stage Assessment</h4>
+                <p className="text-sm md:text-base text-zinc-600">
+                  The quiz has two stages: personality traits (5 questions) and skills assessment (5 questions) to provide tailored recommendations.
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-emerald-200 flex items-center justify-center flex-shrink-0">
+                <span className="font-semibold text-emerald-800">2</span>
+              </div>
+              <div>
+                <h4 className="font-medium text-base text-zinc-900 mb-1">Personalised Results</h4>
+                <p className="text-sm md:text-base text-zinc-600">
+                  You'll receive personalised career recommendations, detailed role information, and next steps based on your profile.
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-emerald-200 flex items-center justify-center flex-shrink-0">
+                <span className="font-semibold text-emerald-800">3</span>
+              </div>
+              <div>
+                <h4 className="font-medium text-base text-zinc-900 mb-1">Time Required</h4>
+                <p className="text-sm md:text-base text-zinc-600">
+                  The assessment takes approximately 5-10 minutes to complete. You can complete just stage 1 or both stages.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-zinc-50 rounded-xl md:rounded-2xl p-6 md:p-8 mb-8 md:mb-10 border-2 border-zinc-200">
+          <h3 className="text-lg md:text-xl font-semibold text-zinc-800 mb-4">
+            Data Privacy Information
+          </h3>
+          <p className="text-sm md:text-base text-zinc-600 mb-4">
+            We care about your privacy. Here's how we handle the data collected in this assessment:
+          </p>
+          <ul className="space-y-2 md:space-y-3">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+              <span className="text-sm md:text-base text-zinc-600">
+                Your results are stored locally on your device only
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+              <span className="text-sm md:text-base text-zinc-600">
+                No personal identifiable information is collected
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+              <span className="text-sm md:text-base text-zinc-600">
+                We use anonymous assessment data to improve our recommendations
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+              <span className="text-sm md:text-base text-zinc-600">
+                You can retake the assessment at any time
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="text-center">
+          <button
+            onClick={startQuiz}
+            className="inline-flex items-center justify-center gap-2 bg-emerald-600 text-white px-6 py-4 md:px-8 md:py-4 rounded-xl hover:bg-emerald-500 transition-colors shadow-lg font-medium text-base md:text-lg group"
+          >
+            <span>Start Career Assessment</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <p className="mt-4 text-sm text-zinc-500">
+            Takes approximately 5-10 minutes to complete
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   const renderResults = () => {
     const recommendations = getRecommendedPaths()
-    const { profile, roles } = recommendations
+    const { profile, roles, paths } = recommendations
     const isDetailedAnalysis = stage === 2
 
     return (
-      <div className="w-full">
+      <div className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto">
         {!isDetailedAnalysis && (
           <div className="bg-emerald-50 rounded-xl md:rounded-2xl p-4 md:p-6 mb-6 md:mb-8 border-2 border-emerald-200">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -326,7 +464,37 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
           </div>
         )}
 
-        {/* Profile Summary */}
+        {/* Enhanced match score visualization */}
+        <div className="bg-white rounded-xl md:rounded-2xl border-2 border-zinc-100 p-4 md:p-6 mb-6 md:mb-8 shadow-sm">
+          <h3 className="text-lg md:text-xl font-semibold text-zinc-900 mb-3 md:mb-4">Your Career Match Scores</h3>
+          <div className="space-y-4">
+            {paths.map((path, index) => {
+              const sectorSlug = pathToSectorMap[path] || path;
+              const sector = sectorData[sectorSlug];
+              const matchScore = 100 - (index * 15); // Simple scoring algorithm
+              
+              return (
+                <div key={path} className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm md:text-base font-medium text-zinc-800">{sector?.title || path.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                    <span className="text-sm font-semibold text-emerald-700">{matchScore}% Match</span>
+                  </div>
+                  <div className="w-full h-2 bg-zinc-100 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-emerald-600 rounded-full"
+                      style={{ width: `${matchScore}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-xs md:text-sm text-zinc-500">
+                    {sector?.description?.slice(0, 100) || `Careers in the ${path.replace(/-/g, ' ')} sector align with your profile`}{sector?.description?.length > 100 ? '...' : ''}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Profile Summary - now with more detailed insights */}
         <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl md:rounded-2xl p-4 md:p-8 mb-6 md:mb-8">
           <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-emerald-600 flex items-center justify-center">
@@ -346,7 +514,7 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
               
               <div>
                 <h4 className="text-base md:text-lg font-medium text-zinc-800 mb-2 md:mb-3">Key Professional Traits</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                   {profile.traits.map((trait, index) => (
                     <div key={index} className="flex items-start gap-2 md:gap-3">
                       <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-emerald-200 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -363,7 +531,7 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                 <p className="text-sm md:text-base text-zinc-700 leading-relaxed mb-3 md:mb-4">
                   Based on your comprehensive profile, you show particularly high compatibility with roles in these sectors. Each sector offers unique opportunities that align with your traits:
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                   {profile.recommendedSectors.map((sector, index) => (
                     <div key={index} className="bg-white/50 rounded-lg md:rounded-xl p-3 md:p-4">
                       <h5 className="font-medium text-sm md:text-base text-emerald-800 mb-1 md:mb-2">
@@ -374,6 +542,35 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                       </p>
                     </div>
                   ))}
+                </div>
+              </div>
+              
+              {/* New: Yorkshire-specific insights */}
+              <div>
+                <h4 className="text-base md:text-lg font-medium text-zinc-800 mb-2 md:mb-3">Yorkshire Career Landscape</h4>
+                <div className="bg-white/60 rounded-lg md:rounded-xl p-4 md:p-5">
+                  <p className="text-sm md:text-base text-zinc-700 mb-3">
+                    Based on your profile, here's how your career matches align with opportunities in Yorkshire:
+                  </p>
+                  <div className="space-y-3">
+                    {paths.slice(0, 2).map((path, index) => {
+                      const sectorSlug = pathToSectorMap[path] || path;
+                      const sector = sectorData[sectorSlug];
+                      return (
+                        <div key={path} className="flex items-start gap-3">
+                          <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span className="text-sm font-semibold text-emerald-700">{index + 1}</span>
+                          </div>
+                          <div>
+                            <h5 className="text-sm font-medium text-zinc-900">{sector?.title || path.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h5>
+                            <p className="text-xs text-zinc-600">
+                              {`Yorkshire has a growing ${path.replace(/-/g, ' ')} sector with opportunities for professionals with your skills.`}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
@@ -411,16 +608,27 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                   ))}
                 </div>
               </div>
+              
+              {/* New: Brief Yorkshire context */}
+              <div>
+                <h4 className="text-base md:text-lg font-medium text-zinc-800 mb-2 md:mb-3">Yorkshire Opportunities</h4>
+                <p className="text-sm md:text-base text-zinc-700 mb-3">
+                  Yorkshire offers diverse career paths across multiple industries. Complete the second stage for region-specific insights related to your profile.
+                </p>
+              </div>
             </div>
           )}
         </div>
 
-        {/* Recommended Roles */}
+        {/* Recommended Roles - Enhanced with more details */}
         <div className="space-y-4 md:space-y-8">
           <div className="text-center">
-            <h3 className="text-xl md:text-2xl font-semibold text-zinc-900">Recommended Roles</h3>
+            <h3 className="text-xl md:text-2xl font-semibold text-zinc-900 mb-2">Recommended Roles</h3>
+            <p className="text-base text-zinc-600 max-w-3xl mx-auto">
+              Based on your profile, these roles in Yorkshire would be an excellent match for your skills and interests
+            </p>
           </div>
-          <div className="grid gap-4 md:gap-6">
+          <div className="grid gap-4 md:gap-6 lg:grid-cols-2">
             {roles.map((roleSlug) => {
               const role = roleData[roleSlug]
               if (!role) return null
@@ -430,13 +638,32 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                   key={roleSlug}
                   href={`/pathways/${getRoleSector(roleSlug)}/roles/${roleSlug}`}
                   onClick={handleRoleClick}
-                  className="block bg-emerald-600 hover:bg-emerald-500 transition-all duration-300 rounded-xl md:rounded-2xl shadow-md md:shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="block bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 transition-all duration-300 rounded-xl md:rounded-2xl shadow-md md:shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   <div className="p-4 md:p-8">
-                    <h4 className="text-lg md:text-xl font-semibold text-white mb-1 md:mb-2">
-                      {role.title}
-                    </h4>
-                    <p className="text-sm md:text-base text-emerald-100 mb-4 md:mb-6">{role.description}</p>
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4 md:mb-6">
+                      <div>
+                        <h4 className="text-lg md:text-xl font-semibold text-white mb-1 md:mb-2">
+                          {role.title}
+                        </h4>
+                        <p className="text-sm md:text-base text-emerald-100 mb-2">{role.description}</p>
+                        
+                        {/* New: Location context */}
+                        <div className="flex items-center text-xs text-emerald-200 gap-1 mb-4">
+                          <span>Popular in: </span>
+                          <span className="bg-emerald-700/50 px-2 py-0.5 rounded-full">Yorkshire</span>
+                          {(role as any).popularLocations?.map((location: string, idx: number) => (
+                            <span key={idx} className="bg-emerald-700/50 px-2 py-0.5 rounded-full">{location}</span>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="hidden md:block md:flex-shrink-0 px-3 py-2 bg-emerald-700/50 rounded-lg backdrop-blur-sm self-start">
+                        <span className="text-xs uppercase tracking-wide text-emerald-200">
+                          {getRoleSector(roleSlug).replace(/-/g, ' ')}
+                        </span>
+                      </div>
+                    </div>
                     
                     <div className="mb-4 md:mb-6 p-3 md:p-4 bg-emerald-700/50 rounded-lg md:rounded-xl backdrop-blur-sm">
                       <h5 className="text-sm md:text-base font-medium text-white mb-1 md:mb-2">Why This Role Matches You</h5>
@@ -447,7 +674,7 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                             This role particularly benefits from {profile.traits[2] || profile.traits[0]}, which you've demonstrated consistently in your responses.
                           </p>
                           <p className="text-xs md:text-sm text-emerald-100">
-                            Your answers in the detailed assessment showed strong alignment with the key responsibilities and work environment of this role.
+                            Yorkshire's {getRoleSector(roleSlug).replace(/-/g, ' ')} sector is actively seeking professionals with your specific skill set, making this an opportune time to explore this career path.
                           </p>
                         </div>
                       ) : (
@@ -471,6 +698,23 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                         <p className="text-xs md:text-sm text-emerald-100">{role.salary.senior}</p>
                       </div>
                     </div>
+                    
+                    {/* New: Growth & Development section */}
+                    {isDetailedAnalysis && (
+                      <div className="mb-4 md:mb-6 p-3 md:p-4 bg-emerald-700/30 rounded-lg md:rounded-xl">
+                        <h5 className="font-medium text-xs md:text-sm text-white mb-2">Growth & Development</h5>
+                        <p className="text-xs text-emerald-100 mb-2">
+                          This role offers clear progression paths with opportunities to advance to {(role as any).progression?.next || 'senior positions'} with experience.
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-emerald-300"></div>
+                          <div className="flex-1 h-0.5 bg-emerald-300/50"></div>
+                          <div className="w-3 h-3 rounded-full bg-emerald-300"></div>
+                          <div className="flex-1 h-0.5 bg-emerald-300/50"></div>
+                          <div className="w-4 h-4 rounded-full bg-emerald-300"></div>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="mb-4">
                       <h5 className="font-medium text-xs md:text-sm text-white mb-2">Key Skills</h5>
@@ -521,53 +765,94 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
         {isDetailedAnalysis && (
           <div className="mt-8 md:mt-12 bg-zinc-50 rounded-xl md:rounded-2xl p-4 md:p-8">
             <h3 className="text-lg md:text-xl font-semibold text-zinc-900 mb-3 md:mb-4">Next Steps</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-              <div>
-                <h4 className="text-sm md:text-base font-medium text-zinc-700 mb-2 md:mb-3">Recommended Actions</h4>
-                <ul className="space-y-2 md:space-y-3">
-                  <li className="flex items-start gap-2 md:gap-3">
-                    <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-emerald-600" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mb-3">
+                  <Target className="w-5 h-5 text-emerald-700" />
+                </div>
+                <h4 className="text-base font-medium text-zinc-900 mb-2">Explore Career Paths</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-3 h-3 text-emerald-600" />
                     </div>
-                    <span className="text-xs md:text-sm text-zinc-600">Explore detailed job roles in your recommended sectors</span>
+                    <span className="text-sm text-zinc-600">Browse detailed job profiles in your matched sectors</span>
                   </li>
-                  <li className="flex items-start gap-2 md:gap-3">
-                    <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-emerald-600" />
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-3 h-3 text-emerald-600" />
                     </div>
-                    <span className="text-xs md:text-sm text-zinc-600">Research training and qualification requirements</span>
+                    <span className="text-sm text-zinc-600">Research entry requirements and qualifications</span>
                   </li>
-                  <li className="flex items-start gap-2 md:gap-3">
-                    <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-emerald-600" />
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-3 h-3 text-emerald-600" />
                     </div>
-                    <span className="text-xs md:text-sm text-zinc-600">Connect with professionals in your chosen sectors</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-sm md:text-base font-medium text-zinc-700 mb-2 md:mb-3">Available Support</h4>
-                <ul className="space-y-2 md:space-y-3">
-                  <li className="flex items-start gap-2 md:gap-3">
-                    <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-emerald-600" />
-                    </div>
-                    <span className="text-xs md:text-sm text-zinc-600">Career guidance and mentoring programmes</span>
-                  </li>
-                  <li className="flex items-start gap-2 md:gap-3">
-                    <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-emerald-600" />
-                    </div>
-                    <span className="text-xs md:text-sm text-zinc-600">Skills development workshops and courses</span>
-                  </li>
-                  <li className="flex items-start gap-2 md:gap-3">
-                    <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-emerald-600" />
-                    </div>
-                    <span className="text-xs md:text-sm text-zinc-600">Industry networking events and job fairs</span>
+                    <span className="text-sm text-zinc-600">Look at job satisfaction and work-life balance</span>
                   </li>
                 </ul>
               </div>
+              
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mb-3">
+                  <Sparkles className="w-5 h-5 text-emerald-700" />
+                </div>
+                <h4 className="text-base font-medium text-zinc-900 mb-2">Develop Your Skills</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-3 h-3 text-emerald-600" />
+                    </div>
+                    <span className="text-sm text-zinc-600">Find Yorkshire training providers and courses</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-3 h-3 text-emerald-600" />
+                    </div>
+                    <span className="text-sm text-zinc-600">Explore apprenticeships and work-based learning</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-3 h-3 text-emerald-600" />
+                    </div>
+                    <span className="text-sm text-zinc-600">Look for free online courses to build knowledge</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mb-3">
+                  <ArrowRight className="w-5 h-5 text-emerald-700" />
+                </div>
+                <h4 className="text-base font-medium text-zinc-900 mb-2">Take Action</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-3 h-3 text-emerald-600" />
+                    </div>
+                    <span className="text-sm text-zinc-600">Connect with Yorkshire career advisors for guidance</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-3 h-3 text-emerald-600" />
+                    </div>
+                    <span className="text-sm text-zinc-600">Attend local job fairs and networking events</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <ChevronRight className="w-3 h-3 text-emerald-600" />
+                    </div>
+                    <span className="text-sm text-zinc-600">Set up job alerts for relevant opportunities</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="mt-6 p-4 bg-emerald-50 border border-emerald-100 rounded-lg">
+              <h4 className="text-base font-medium text-emerald-800 mb-2">Did you know?</h4>
+              <p className="text-sm text-emerald-700">
+                Yorkshire's economy is growing, with exciting opportunities across digital tech, manufacturing, healthcare, and creative sectors. Now is a great time to start planning your career journey in the region.
+              </p>
             </div>
           </div>
         )}
@@ -593,13 +878,13 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
   }
 
   // Filter questions based on current stage
-  const currentStageQuestions = quizQuestions.filter(q => q.stage === stage)
+  const currentStageQuestions = quizQuestions.filter(q => q.stage === stage) as QuizQuestion[];
 
   if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center overflow-hidden">
-      <div className="relative w-full max-h-full h-full md:h-auto md:max-w-6xl md:mx-4 md:my-8 flex items-center justify-center">
+      <div className="relative w-full max-h-full h-full md:h-auto md:max-w-7xl lg:max-w-[90%] xl:max-w-[80%] md:mx-4 md:my-8 flex items-center justify-center">
         {/* Desktop close button - Updated positioning and z-index */}
         <button
           onClick={() => {
@@ -612,12 +897,15 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
           <X className="h-6 w-6" />
         </button>
 
-        <div className="relative bg-white w-full h-full md:h-auto md:max-h-[90vh] md:w-auto md:rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+        <div className="relative bg-white w-full h-full md:h-auto md:max-h-[90vh] md:w-full md:rounded-3xl shadow-2xl overflow-hidden flex flex-col">
           {/* Mobile-friendly header with back/close button */}
           <div className="sticky top-0 z-20 bg-white border-b border-zinc-100 px-4 py-4 flex items-center justify-between md:hidden">
             <button
               onClick={() => {
-                if (currentQuestion > (stage === 1 ? 0 : 5) && !showResults && !showIntermediate) {
+                if (showFrontPage) {
+                  resetQuiz()
+                  onClose()
+                } else if (currentQuestion > (stage === 1 ? 0 : 5) && !showResults && !showIntermediate) {
                   setCurrentQuestion(currentQuestion - 1)
                 } else if (showResults) {
                   setShowResults(false)
@@ -637,8 +925,11 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
               <ArrowLeft className="h-6 w-6" />
             </button>
             <span className="font-medium text-base text-zinc-900">
-              Career Quiz {stage === 2 ? '- Stage 2' : ''}
-              {!showResults && !showIntermediate && ` (${stage === 1 ? currentQuestion + 1 : currentQuestion - 4}/5)`}
+              {showFrontPage ? "Career Assessment" : 
+                (showResults ? "Your Results" : 
+                  (showIntermediate ? "Stage 1 Complete" : `Career Quiz ${stage === 2 ? '- Stage 2' : ''} (${stage === 1 ? currentQuestion + 1 : currentQuestion - 4}/5)`)
+                )
+              }
             </span>
             <button
               onClick={() => {
@@ -664,7 +955,7 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                   {renderResults()}
                 </div>
               ) : showIntermediate ? (
-                <div className="text-center max-w-2xl mx-auto">
+                <div className="text-center max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto">
                   <div className="w-16 h-16 md:w-20 md:h-20 bg-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Target className="h-8 w-8 md:h-10 md:w-10 text-white" />
                   </div>
@@ -674,7 +965,7 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                   <p className="text-base md:text-lg text-zinc-600 mb-6 md:mb-8">
                     You've completed the first stage of questions. Continue to the skills assessment for more personalised career recommendations.
                   </p>
-                  <div className="flex flex-col gap-3 justify-center">
+                  <div className="flex flex-col md:flex-row justify-center gap-3 md:gap-6 max-w-2xl mx-auto">
                     <button
                       onClick={startSecondStage}
                       className="w-full px-4 py-3 md:px-8 md:py-4 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-all font-medium text-base md:text-lg shadow-md group relative overflow-hidden"
@@ -694,10 +985,12 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                     </button>
                   </div>
                 </div>
+              ) : showFrontPage ? (
+                renderFrontPage()
               ) : (
                 <div>
                   {/* Top Quiz Header with icon - hidden on mobile */}
-                  <div className="hidden md:flex items-center gap-4 mb-6">
+                  <div className="hidden md:flex items-center gap-4 mb-8">
                     <div className="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center">
                       <Compass className="h-6 w-6 text-white" />
                     </div>
@@ -707,61 +1000,83 @@ const CareerQuiz: React.FC<CareerQuizProps> = ({ isOpen, onClose }) => {
                     </div>
                   </div>
                   
-                  {/* Progress indicator - simplified for mobile */}
-                  <div className="mb-6 md:mb-10">
-                    <div className="hidden md:flex items-center justify-between mb-4">
-                      <h3 className="text-xl md:text-2xl font-bold text-zinc-900">
-                        Question {stage === 1 ? currentQuestion + 1 : currentQuestion - 4} 
-                        <span className="text-zinc-400 ml-3 text-base md:text-lg font-normal">
-                          (Stage {stage} of 2)
+                  <div className="max-w-3xl md:max-w-4xl mx-auto">
+                    {/* Progress indicator - simplified for mobile */}
+                    <div className="mb-6 md:mb-10">
+                      <div className="hidden md:flex items-center justify-between mb-4">
+                        <h3 className="text-xl md:text-2xl font-bold text-zinc-900">
+                          Question {stage === 1 ? currentQuestion + 1 : currentQuestion - 4} 
+                          <span className="text-zinc-400 ml-3 text-base md:text-lg font-normal">
+                            (Stage {stage} of 2)
+                          </span>
+                        </h3>
+                        <span className="text-base md:text-lg text-zinc-500">
+                          {stage === 1 ? currentQuestion + 1 : currentQuestion - 4} of 5
                         </span>
+                      </div>
+                      <div className="w-full bg-zinc-200 rounded-full h-2">
+                        <div
+                          className="bg-emerald-600 h-2 rounded-full transition-all duration-300"
+                          style={{ 
+                            width: `${((stage === 1 ? currentQuestion + 1 : currentQuestion - 4) / 5) * 100}%` 
+                          }}
+                        ></div>
+                      </div>
+                    </div>
+
+                    <div className="mb-6 md:mb-10">
+                      <h3 className="text-xl md:text-2xl font-semibold text-zinc-900 mb-5 md:mb-8">
+                        {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].question}
                       </h3>
-                      <span className="text-base md:text-lg text-zinc-500">
-                        {stage === 1 ? currentQuestion + 1 : currentQuestion - 4} of 5
-                      </span>
+                      
+                      {/* Enhanced question explanation */}
+                      {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].explanation && (
+                        <p className="text-zinc-600 mb-6 text-base md:text-lg">
+                          {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].explanation}
+                        </p>
+                      )}
+                      
+                      <div className="grid gap-3 md:gap-4 md:grid-cols-1 lg:grid-cols-2">
+                        {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].options.map((option) => (
+                          <button
+                            key={option.id}
+                            onClick={() => handleAnswer(option.paths)}
+                            className="relative text-left p-5 md:p-6 rounded-xl border-2 border-zinc-200 hover:border-emerald-500 hover:bg-emerald-50 active:bg-emerald-100 transition-all duration-300 group shadow-sm hover:shadow-md"
+                          >
+                            <div className="flex items-start gap-4">
+                              {option.icon && (
+                                <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-200 transition-colors duration-300">
+                                  <span className="text-lg">{option.icon}</span>
+                                </div>
+                              )}
+                              <div>
+                                <span className="block text-base md:text-lg font-medium text-zinc-900 group-hover:text-emerald-700 mb-1 transition-colors">{option.text}</span>
+                                {option.description && (
+                                  <span className="block text-sm md:text-base text-zinc-500 group-hover:text-zinc-600 transition-colors">{option.description}</span>
+                                )}
+                              </div>
+                              <div className="absolute right-5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border-2 border-zinc-300 group-hover:border-emerald-500 flex items-center justify-center transition-colors">
+                                <div className="w-3 h-3 rounded-full bg-emerald-500 scale-0 group-hover:scale-100 transition-transform"></div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                    <div className="w-full bg-zinc-200 rounded-full h-2">
-                      <div
-                        className="bg-emerald-600 h-2 rounded-full transition-all duration-300"
-                        style={{ 
-                          width: `${((stage === 1 ? currentQuestion + 1 : currentQuestion - 4) / 5) * 100}%` 
-                        }}
-                      ></div>
-                    </div>
-                  </div>
 
-                  <div className="mb-6 md:mb-10">
-                    <h3 className="text-xl md:text-2xl font-semibold text-zinc-900 mb-5 md:mb-8">
-                      {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].question}
-                    </h3>
-                    <div className="grid gap-3">
-                      {currentStageQuestions[stage === 1 ? currentQuestion : currentQuestion - 5].options.map((option) => (
-                        <button
-                          key={option.id}
-                          onClick={() => handleAnswer(option.paths)}
-                          className="text-left p-4 md:p-6 rounded-xl border-2 border-zinc-200 hover:border-emerald-500 hover:bg-emerald-50 active:bg-emerald-100 transition-colors group"
-                        >
-                          <div className="flex items-center">
-                            <span className="text-base md:text-lg font-medium text-zinc-900 group-hover:text-emerald-700">{option.text}</span>
-                            <ArrowUpRight className="ml-auto w-5 h-5 opacity-0 group-hover:opacity-100 text-emerald-600 transition-opacity" />
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Only show on desktop, navigation and hints */}
-                  <div className="hidden md:flex justify-between items-center pt-8 border-t border-zinc-100">
-                    <button
-                      onClick={() => setCurrentQuestion(Math.max(stage === 1 ? 0 : 5, currentQuestion - 1))}
-                      disabled={currentQuestion === (stage === 1 ? 0 : 5)}
-                      className="text-lg text-zinc-600 font-medium hover:text-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-                    >
-                      <ArrowLeft className="w-5 h-5 mr-2" />
-                      Previous
-                    </button>
-                    <div className="text-base text-zinc-500">
-                      Your answers are saved automatically
+                    {/* Only show on desktop, navigation and hints */}
+                    <div className="hidden md:flex justify-between items-center pt-8 border-t border-zinc-100">
+                      <button
+                        onClick={() => setCurrentQuestion(Math.max(stage === 1 ? 0 : 5, currentQuestion - 1))}
+                        disabled={currentQuestion === (stage === 1 ? 0 : 5)}
+                        className="text-lg text-zinc-600 font-medium hover:text-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                      >
+                        <ArrowLeft className="w-5 h-5 mr-2" />
+                        Previous
+                      </button>
+                      <div className="text-base text-zinc-500">
+                        Your answers are saved automatically
+                      </div>
                     </div>
                   </div>
                 </div>

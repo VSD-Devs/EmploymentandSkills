@@ -295,7 +295,7 @@ export default function TLevelsForStudentsPage() {
               <span className="text-xs font-medium text-emerald-900">What Are T-Levels?</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              A New Way to Train for Your <span className="text-emerald-600">Future Career</span>
+            Blending Study with <span className="text-emerald-600">Work Experience</span>
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
               Designed with employers to give you the knowledge and experience needed for skilled employment

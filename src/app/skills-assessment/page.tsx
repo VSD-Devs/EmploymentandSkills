@@ -32,7 +32,7 @@ export default function SkillsAssessmentPage() {
               
               <div className="max-w-3xl">
                 <h1 className="text-3xl md:text-5xl font-bold mb-6">
-                  Discover your career path
+                  Career path
                 </h1>
                 <p className="text-xl mb-8 text-blue-50">
                   Our skills assessment will help you identify suitable career paths based on your unique strengths, interests and preferences.

@@ -1,16 +1,76 @@
 import React from 'react';
 import Link from 'next/link';
+import { categoryThemes } from '@/data/roles';
 
-// Static sector data to avoid data fetching
-const sectors = [
-  { id: 'digital', name: 'Digital & Tech', color: 'bg-purple-100 text-purple-700' },
-  { id: 'business', name: 'Business & Finance', color: 'bg-indigo-100 text-indigo-700' },
-  { id: 'healthcare', name: 'Healthcare', color: 'bg-emerald-100 text-emerald-700' },
-  { id: 'creative', name: 'Creative Industries', color: 'bg-amber-100 text-amber-700' },
-  { id: 'engineering', name: 'Engineering', color: 'bg-blue-100 text-blue-700' },
-  { id: 'hospitality', name: 'Hospitality', color: 'bg-slate-100 text-slate-700' },
-  { id: 'construction', name: 'Construction', color: 'bg-emerald-100 text-emerald-700' },
-  { id: 'education', name: 'Education', color: 'bg-violet-100 text-violet-700' }
+// Define types for our data structures
+type CategoryKey = keyof typeof categoryThemes;
+
+type SectorItem = {
+  id: string;
+  name: string;
+  dataCategory: CategoryKey | string;
+  color: string;
+};
+
+// Define a mapping function for color styles based on categoryThemes
+const getColorStyle = (category: string): string => {
+  if (category in categoryThemes) {
+    const theme = categoryThemes[category as CategoryKey];
+    return `bg-${theme.color}-100 text-${theme.color}-700`;
+  }
+  return 'bg-gray-100 text-gray-700';
+};
+
+// Updated sector data to match valid route slugs and use consistent design colors
+const sectors: SectorItem[] = [
+  { 
+    id: 'digital-tech', 
+    name: 'Digital & Tech', 
+    dataCategory: 'digital', 
+    color: getColorStyle('digital')
+  },
+  { 
+    id: 'business-finance', 
+    name: 'Business & Finance', 
+    dataCategory: 'business',
+    color: getColorStyle('business')
+  },
+  { 
+    id: 'healthcare', 
+    name: 'Healthcare', 
+    dataCategory: 'healthcare',
+    color: getColorStyle('healthcare')
+  },
+  { 
+    id: 'creative-media', 
+    name: 'Creative Industries', 
+    dataCategory: 'creative',
+    color: getColorStyle('creative')
+  },
+  { 
+    id: 'manufacturing', 
+    name: 'Engineering & Manufacturing', 
+    dataCategory: 'engineering',
+    color: getColorStyle('engineering')
+  },
+  { 
+    id: 'hospitality-tourism', 
+    name: 'Hospitality & Tourism', 
+    dataCategory: 'hospitality',
+    color: getColorStyle('hospitality')
+  },
+  { 
+    id: 'construction', 
+    name: 'Construction', 
+    dataCategory: 'construction',
+    color: getColorStyle('construction')
+  },
+  { 
+    id: 'education-training', 
+    name: 'Education & Training', 
+    dataCategory: 'education',
+    color: 'bg-violet-100 text-violet-700' // Education isn't in categoryThemes, using default
+  }
 ];
 
 export default function SectorsGrid() {

@@ -24,6 +24,10 @@ export type Role = {
     entry: string;
     experienced: string;
     senior: string;
+    averageByRegion?: {
+      [region: string]: string;
+    };
+    additionalInfo?: string;
   };
   paths: {
     university: CareerPath;
@@ -35,7 +39,11 @@ export type Role = {
   futureProspects: string[];
   requiredQualifications: string[];
   desiredQualifications: string[];
-  industryTrends: string[];
+  industryTrends: {
+    trend: string;
+    impact: string;
+    opportunity: string;
+  }[];
   toolsAndTech: string[];
   workSchedule: string;
   remoteWorkOptions: string;

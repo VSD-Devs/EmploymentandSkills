@@ -249,10 +249,10 @@ const Hero = () => {
               <span className="text-xs sm:text-sm font-medium text-blue-900">For Job Seekers</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Your Career Journey Starts Here
+              Career Support
             </h2>
             <p className="text-base sm:text-lg text-slate-800">
-              Get free access to career guidance, funded training programs, and employment support
+              Get free access to career guidance, funded training programmes and employment support
             </p>
           </div>
 
@@ -268,7 +268,7 @@ const Hero = () => {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-slate-900 mb-3">Personalized Career Guidance</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Personalised Career Guidance</h3>
                 <p className="text-slate-700 mb-4">
                   Take our career quiz and get matched with pathways that fit your skills and aspirations
                 </p>
@@ -283,14 +283,14 @@ const Hero = () => {
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all group">
               <div className="aspect-video relative overflow-hidden">
                 <Image 
-                  src="/images/funded-training.jpg" 
+                  src="/images/adult-skills-hero.webp" 
                   alt="Adult learners in classroom" 
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-slate-900 mb-3">Fully Funded Training</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Funded Training</h3>
                 <p className="text-slate-700 mb-4">
                   Access free courses and qualifications in growing industries across South Yorkshire
                 </p>
@@ -341,7 +341,7 @@ const Hero = () => {
               <span className="text-xs sm:text-sm font-medium text-blue-900">For Businesses</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              Comprehensive Business Support
+               Support for South Yorkshire Businesses
             </h2>
             <p className="text-base sm:text-lg text-slate-800">
               From workforce development to startup incubation - grow your business with South Yorkshire

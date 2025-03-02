@@ -1,0 +1,14 @@
+import * as data0 from '../src/data/businessRoles';
+import * as data1 from '../src/data/careerPaths';
+import * as data2 from '../src/data/careerQuizData';
+import * as data3 from '../src/data/creativeRoles';
+import * as data4 from '../src/data/digitalRoles';
+import * as data5 from '../src/data/engineeringRoles';
+import * as data6 from '../src/data/events';
+import * as data7 from '../src/data/fallbackVacancies';
+import * as data8 from '../src/data/faq';
+import * as data9 from '../src/data/healthcareRoles';
+import * as data10 from '../src/data/hospitalityRoles';
+import * as data11 from '../src/data/roles';
+import * as data12 from '../src/data/sectors';
+import * as data13 from '../src/data/sitemap';

@@ -1,0 +1,14 @@
+// import * as data0 from '../../src/data/businessRoles.ts';
+// import * as data1 from '../../src/data/careerPaths.ts';
+// import * as data2 from '../../src/data/careerQuizData.ts';
+// import * as data3 from '../../src/data/creativeRoles.ts';
+// import * as data4 from '../../src/data/digitalRoles.ts';
+// import * as data5 from '../../src/data/engineeringRoles.ts';
+// import * as data6 from '../../src/data/events.ts';
+// import * as data7 from '../../src/data/fallbackVacancies.ts';
+// import * as data8 from '../../src/data/faq.ts';
+// import * as data9 from '../../src/data/healthcareRoles.ts';
+// import * as data10 from '../../src/data/hospitalityRoles.ts';
+// import * as data11 from '../../src/data/roles.ts';
+// import * as data12 from '../../src/data/sectors.ts';
+// import * as data13 from '../../src/data/sitemap.ts';

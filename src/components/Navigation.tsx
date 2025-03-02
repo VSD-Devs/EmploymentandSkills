@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X, Search, ChevronDown, Briefcase, Users, GraduationCap, BookOpen, LineChart, Building2 } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { performSearch } from '@/utils/search'
 import SearchResults from './SearchResults'
 import { cn } from "@/lib/utils";
@@ -31,16 +31,21 @@ interface SubMenu {
 
 const Navigation = () => {
   const pathname = usePathname()
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [showResults, setShowResults] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [dropdownTimeoutId, setDropdownTimeoutId] = useState<NodeJS.Timeout | null>(null)
+  const [isMobileSearchActive, setIsMobileSearchActive] = useState(false)
   
   const searchContainerRef = useRef<HTMLDivElement>(null)
+  const mobileSearchContainerRef = useRef<HTMLDivElement>(null)
   const mobileMenuRef = useRef<HTMLDivElement>(null)
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null)
   
   // Define submenu items
   const subMenus: SubMenu = {
@@ -88,6 +93,12 @@ const Navigation = () => {
           title: 'T-Levels',
           description: 'Technical Qualifications',
           url: '/t-levels-for-students',
+          icon: <GraduationCap className="w-5 h-5" />
+        },
+        {
+          title: 'Apprenticeships',
+          description: 'Learn whilst earning',
+          url: '/apprenticeships',
           icon: <GraduationCap className="w-5 h-5" />
         },
         {
@@ -151,6 +162,9 @@ const Navigation = () => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
         setShowResults(false)
       }
+      if (mobileSearchContainerRef.current && !mobileSearchContainerRef.current.contains(event.target as Node)) {
+        setIsMobileSearchActive(false)
+      }
       if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
         setIsOpen(false)
       }
@@ -167,6 +181,7 @@ const Navigation = () => {
         setIsOpen(false)
         setShowResults(false)
         setActiveDropdown(null)
+        setIsMobileSearchActive(false)
       }
     }
 
@@ -183,6 +198,7 @@ const Navigation = () => {
     const handleResize = () => {
       if (window.innerWidth >= 768) { // md breakpoint
         setIsOpen(false)
+        setIsMobileSearchActive(false)
       }
     }
 
@@ -192,7 +208,7 @@ const Navigation = () => {
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen || isMobileSearchActive) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
@@ -200,13 +216,30 @@ const Navigation = () => {
     return () => {
       document.body.style.overflow = 'unset'
     }
-  }, [isOpen])
+  }, [isOpen, isMobileSearchActive])
+
+  // Focus search input when search opens
+  useEffect(() => {
+    if (isMobileSearchActive && mobileSearchInputRef.current) {
+      mobileSearchInputRef.current.focus()
+    }
+  }, [isMobileSearchActive])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
+    if (searchQuery.trim().length < 2) return
+    
     const results = performSearch(searchQuery)
     setSearchResults(results)
     setShowResults(true)
+    
+    // If no results found and search query is substantial, navigate to search page
+    if (results.length === 0 && searchQuery.trim().length > 3) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
+      setShowResults(false)
+      setSearchQuery('')
+      setIsMobileSearchActive(false)
+    }
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -220,6 +253,17 @@ const Navigation = () => {
       setSearchResults([])
       setShowResults(false)
     }
+  }
+
+  const openMobileSearch = () => {
+    setIsMobileSearchActive(true)
+    setIsOpen(false) // Close menu if open
+  }
+
+  const closeMobileSearch = () => {
+    setIsMobileSearchActive(false)
+    setSearchQuery('')
+    setSearchResults([])
   }
 
   const isActive = (path: string) => {
@@ -507,6 +551,7 @@ const Navigation = () => {
                   onChange={handleSearchChange}
                   className="w-64 pl-3 pr-10 py-2 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-900 placeholder-slate-500"
                   aria-label="Search website"
+                  ref={searchInputRef}
                 />
                 <button
                   type="submit"
@@ -520,12 +565,20 @@ const Navigation = () => {
                 results={searchResults}
                 isVisible={showResults}
                 onClose={() => setShowResults(false)}
+                query={searchQuery}
               />
             </div>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile search and menu buttons */}
           <div className="flex items-center md:hidden">
+            <button
+              onClick={openMobileSearch}
+              className="text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 p-2 mr-1"
+              aria-label="Search website"
+            >
+              <Search className="h-6 w-6" />
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-slate-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 p-2"
@@ -569,36 +622,6 @@ const Navigation = () => {
             >
               <X className="h-6 w-6" />
             </button>
-          </div>
-
-          {/* Move search to the top */}
-          <div className="px-4 py-3 border-b border-slate-200">
-            <form onSubmit={handleSearch} className="relative">
-              <input
-                type="search"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className="w-full pl-3 pr-10 py-2 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-900 placeholder-slate-500"
-                aria-label="Search website"
-              />
-              <button
-                type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md"
-                aria-label="Submit search"
-              >
-                <Search className="h-5 w-5" />
-              </button>
-            </form>
-            {showResults && (
-              <div className="absolute inset-x-0 top-full mt-2 px-4">
-                <SearchResults
-                  results={searchResults}
-                  isVisible={showResults}
-                  onClose={() => setShowResults(false)}
-                />
-              </div>
-            )}
           </div>
 
           <div className="flex-1 overflow-y-auto py-4 px-4">
@@ -782,6 +805,93 @@ const Navigation = () => {
               </Link>
             </nav>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile search overlay */}
+      <div 
+        ref={mobileSearchContainerRef}
+        className={`${
+          isMobileSearchActive ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        } fixed inset-0 z-50 md:hidden transition-all duration-300 ease-in-out bg-white`}
+        aria-hidden={!isMobileSearchActive}
+      >
+        <div className="p-4 border-b border-slate-200">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-lg font-semibold text-slate-900">Search</h2>
+            <button
+              onClick={closeMobileSearch}
+              className="p-2 text-slate-500 hover:text-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Close search"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+          
+          <form onSubmit={handleSearch} className="relative">
+            <input
+              type="search"
+              placeholder="Search for skills, courses, careers..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-900 placeholder-slate-500"
+              aria-label="Search website"
+              ref={mobileSearchInputRef}
+            />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+            <button
+              type="submit"
+              className="absolute right-3 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white p-1 rounded-md"
+              aria-label="Submit search"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+          </form>
+          
+          {searchResults.length > 0 && showResults ? (
+            <div className="py-2">
+              <SearchResults
+                results={searchResults}
+                isVisible={showResults}
+                onClose={() => {
+                  setShowResults(false)
+                  mobileSearchInputRef.current?.focus()
+                }}
+                query={searchQuery}
+              />
+            </div>
+          ) : searchQuery.length > 0 ? (
+            <div className="py-4 text-center text-slate-500">
+              No results found. Try different keywords or 
+              <Link 
+                href={`/search?q=${encodeURIComponent(searchQuery)}`}
+                className="ml-1 text-blue-600 hover:underline"
+                onClick={closeMobileSearch}
+              >
+                view all search results
+              </Link>
+            </div>
+          ) : (
+            <div className="py-4">
+              <p className="text-slate-500 text-sm mb-3">Popular searches:</p>
+              <div className="flex flex-wrap gap-2">
+                {['Apprenticeships', 'T-Levels', 'Courses', 'Skills'].map((term) => (
+                  <button 
+                    key={term}
+                    onClick={() => {
+                      setSearchQuery(term)
+                      const results = performSearch(term)
+                      setSearchResults(results)
+                      setShowResults(true)
+                    }}
+                    className="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 rounded-md text-sm transition-colors"
+                  >
+                    {term}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>
