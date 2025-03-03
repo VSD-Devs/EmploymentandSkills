@@ -26,22 +26,22 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   
   return (
     <nav 
-      className={`flex items-center py-3 overflow-x-auto scrollbar-hide ${className}`} 
+      className={`flex items-center py-2 overflow-x-auto scrollbar-hide ${className}`}
       aria-label="Breadcrumb"
     >
-      <ol className="flex items-center flex-nowrap text-sm">
+      <ol className="flex items-center flex-nowrap text-[13px] !leading-snug">
         {items.map((item, index) => (
           <React.Fragment key={item.href}>
             {index > 0 && (
               <li className="flex items-center flex-shrink-0">
-                <ChevronRight className={`h-3.5 w-3.5 ${chevronColor} mx-2.5`} />
+                <ChevronRight className={`h-3.5 w-3.5 ${chevronColor} mx-2 !text-[13px]`} />
               </li>
             )}
-            <li className={`flex-shrink-0 ${index === items.length - 1 ? activeColor : textColor}`}>
+            <li className={`flex-shrink-0 ${index === items.length - 1 ? activeColor : textColor} !text-[13px]`}>
               {index === items.length - 1 ? (
-                <span aria-current="page">{item.label}</span>
+                <span aria-current="page" className="!text-[13px]">{item.label}</span>
               ) : (
-                <Link href={item.href} className={`${hoverColor} transition-colors duration-150`}>
+                <Link href={item.href} className={`${hoverColor} transition-colors duration-150 !text-[13px]`}>
                   {item.label}
                 </Link>
               )}

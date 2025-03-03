@@ -339,7 +339,7 @@ const Navigation = () => {
                       <Link
                         key={index}
                         href={item.url}
-                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors !text-[13px]"
                       >
                         <div className="p-1 bg-slate-100 rounded-md">
                           {item.icon}
@@ -347,7 +347,7 @@ const Navigation = () => {
                         <div>
                           <span className="font-medium">{item.title}</span>
                           {item.description && (
-                            <p className="text-sm text-slate-500 mt-0.5">{item.description}</p>
+                            <p className="text-slate-500 mt-0.5 !text-[11px]">{item.description}</p>
                           )}
                         </div>
                       </Link>
@@ -390,7 +390,7 @@ const Navigation = () => {
                       <Link
                         key={index}
                         href={item.url}
-                        className="group flex items-start gap-3 px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                        className="group flex items-start gap-3 px-4 py-3 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 !text-[13px]"
                       >
                         <div className="flex-shrink-0 mt-1">
                           <div className="p-1.5 bg-slate-100 group-hover:bg-blue-100 rounded-lg transition-colors">
@@ -400,7 +400,7 @@ const Navigation = () => {
                         <div>
                           <p className="font-medium">{item.title}</p>
                           {item.description && (
-                            <p className="text-xs text-slate-500 group-hover:text-slate-600">{item.description}</p>
+                            <p className="text-slate-500 group-hover:text-slate-600 !text-[11px]">{item.description}</p>
                           )}
                         </div>
                       </Link>
@@ -443,7 +443,7 @@ const Navigation = () => {
                       <Link
                         key={index}
                         href={item.url}
-                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors !text-[13px]"
                       >
                         <div className="p-1 bg-slate-100 rounded-md">
                           {item.icon}
@@ -451,7 +451,7 @@ const Navigation = () => {
                         <div>
                           <span className="font-medium">{item.title}</span>
                           {item.description && (
-                            <p className="text-sm text-slate-500 mt-0.5">{item.description}</p>
+                            <p className="text-slate-500 mt-0.5 !text-[11px]">{item.description}</p>
                           )}
                         </div>
                       </Link>
@@ -494,7 +494,7 @@ const Navigation = () => {
                       <Link
                         key={index}
                         href={item.url}
-                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors"
+                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-50 transition-colors !text-[13px]"
                       >
                         <div className="p-1 bg-slate-100 rounded-md">
                           {item.icon}
@@ -502,7 +502,7 @@ const Navigation = () => {
                         <div>
                           <span className="font-medium">{item.title}</span>
                           {item.description && (
-                            <p className="text-sm text-slate-500 mt-0.5">{item.description}</p>
+                            <p className="text-slate-500 mt-0.5 !text-[11px]">{item.description}</p>
                           )}
                         </div>
                       </Link>
@@ -644,7 +644,7 @@ const Navigation = () => {
                     <Link
                       key={index}
                       href={item.url}
-                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 !text-[13px] ${
                         isActive(item.url)
                           ? 'bg-blue-50 text-blue-600'
                           : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
@@ -680,7 +680,7 @@ const Navigation = () => {
                     <Link
                       key={index}
                       href={item.url}
-                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 !text-[13px] ${
                         isActive(item.url)
                           ? 'bg-blue-50 text-blue-600'
                           : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
@@ -716,7 +716,7 @@ const Navigation = () => {
                     <Link
                       key={index}
                       href={item.url}
-                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 !text-[13px] ${
                         isActive(item.url)
                           ? 'bg-blue-50 text-blue-600'
                           : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
@@ -752,7 +752,7 @@ const Navigation = () => {
                     <Link
                       key={index}
                       href={item.url}
-                      className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 !text-[13px] ${
                         isActive(item.url)
                           ? 'bg-blue-50 text-blue-600'
                           : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'

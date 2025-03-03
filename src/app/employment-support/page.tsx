@@ -303,10 +303,15 @@ const EmploymentSupportPage = () => {
       onTouchEnd={handleTouchEnd}
     >
       {/* Breadcrumbs */}
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Employment Support', href: '/employment-support' },
-      ]} />
+      <div className="bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+          <Breadcrumbs items={[
+            { label: 'Home', href: '/' },
+            { label: 'Adult Skills', href: '/adult-skills' },
+            { label: 'Employment Support', href: '/employment-support' },
+          ]} />
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section id="overview" className="relative bg-gradient-to-br from-blue-800 to-indigo-900 py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">

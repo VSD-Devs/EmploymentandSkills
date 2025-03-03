@@ -248,11 +248,15 @@ const SkillsTrainingPage = () => {
       onTouchEnd={handleTouchEnd}
     >
       {/* Breadcrumbs */}
-      <Breadcrumbs items={[
-        { label: 'Home', href: '/' },
-        { label: 'Young People', href: '/young-people' },
-        { label: 'Skills Training', href: '/skills-training' },
-      ]} />
+      <div className="bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
+          <Breadcrumbs items={[
+            { label: 'Home', href: '/' },
+            { label: 'Young People', href: '/young-people' },
+            { label: 'Skills Training', href: '/skills-training' },
+          ]} />
+        </div>
+      </div>
 
       {/* Hero Section */}
       <section id="overview" className="relative bg-gradient-to-br from-emerald-800 to-teal-900 py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">

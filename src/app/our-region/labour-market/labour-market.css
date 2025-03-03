@@ -1,0 +1,70 @@
+/* Labour Market Page Styles */
+
+.clip-path-wave-top {
+  clip-path: polygon(
+    0% 0%, 
+    100% 0%, 
+    100% 100%, 
+    0% 100%, 
+    0% 60%, 
+    4% 65%, 
+    8% 70%, 
+    12% 75%, 
+    16% 80%, 
+    20% 85%, 
+    24% 89%, 
+    28% 92%, 
+    32% 94%, 
+    36% 96%, 
+    40% 97%, 
+    44% 98%, 
+    48% 99%, 
+    52% 99%, 
+    56% 98%, 
+    60% 97%, 
+    64% 96%, 
+    68% 94%, 
+    72% 92%, 
+    76% 89%, 
+    80% 85%, 
+    84% 80%, 
+    88% 75%, 
+    92% 70%, 
+    96% 65%, 
+    100% 60%, 
+    100% 0%, 
+    0% 0%
+  );
+}
+
+/* Custom scrollbar-hide utility class for the horizontal tabs scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Card hover effects */
+.stat-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Data visualisation colours - accessible, contrasting palette */
+:root {
+  --chart-color-1: #0e7490; /* teal-700 */
+  --chart-color-2: #0369a1; /* sky-700 */
+  --chart-color-3: #4f46e5; /* indigo-600 */
+  --chart-color-4: #7e22ce; /* purple-700 */
+  --chart-color-5: #be185d; /* pink-700 */
+  --chart-color-6: #b45309; /* amber-700 */
+  --chart-color-7: #166534; /* green-700 */
+  --chart-color-8: #a16207; /* yellow-700 */
+} 

@@ -353,7 +353,7 @@ const Hero = () => {
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all group">
               <div className="aspect-video relative overflow-hidden">
                 <Image 
-                  src="/images/workforce-development.jpg" 
+                  src="/images/office-development.jpg" 
                   alt="Team training session" 
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -362,7 +362,7 @@ const Hero = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Workforce Development</h3>
                 <p className="text-slate-700 mb-4">
-                  Upskill your team with funded training programs and apprenticeship opportunities
+                  Upskill your team with funded training programmes and apprenticeship opportunities
                 </p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center">
@@ -392,7 +392,7 @@ const Hero = () => {
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all group">
               <div className="aspect-video relative overflow-hidden">
                 <Image 
-                  src="/images/business-growth.jpg" 
+                  src="/images/business-growth.png" 
                   alt="Business expansion meeting" 
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -401,7 +401,7 @@ const Hero = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Business Growth</h3>
                 <p className="text-slate-700 mb-4">
-                  Access funding, grants, and expert support to scale your operations
+                  Access funding, grants, and expert support to scale your operations and meet your goals.
                 </p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center">
@@ -435,7 +435,7 @@ const Hero = () => {
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all group">
               <div className="aspect-video relative overflow-hidden">
                 <Image 
-                  src="/images/startup-support.jpg" 
+                  src="/images/start-up1.jpg" 
                   alt="Entrepreneurs working" 
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -444,12 +444,12 @@ const Hero = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-slate-900 mb-3">Start-Up Support</h3>
                 <p className="text-slate-700 mb-4">
-                  Launch and grow your business with our entrepreneur programs and funding
+                  Launch and grow your business with our entrepreneur programmes and funding
                 </p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center">
                     <Rocket className="w-5 h-5 text-amber-600 mr-2" />
-                    <span className="text-slate-800">Incubation programs</span>
+                    <span className="text-slate-800">Incubation programmes</span>
                   </div>
                   <div className="flex items-center">
                     <Lightbulb className="w-5 h-5 text-purple-600 mr-2" />
@@ -473,7 +473,7 @@ const Hero = () => {
 
           <div className="mt-10 text-center">
             <Link 
-              href="/business/support"
+              href="/business/"
               className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md font-medium"
             >
               Explore All Business Resources

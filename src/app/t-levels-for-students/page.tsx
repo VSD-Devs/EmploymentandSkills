@@ -127,7 +127,7 @@ export default function TLevelsForStudentsPage() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4">
           <Breadcrumbs items={[
             { label: 'Home', href: '/' },
-            { label: 'Career Options', href: '/career-options' },
+            { label: 'Young People', href: '/young-people' },
             { label: 'T-Levels', href: '/t-levels-for-students' },
           ]} />
         </div>
@@ -151,7 +151,7 @@ export default function TLevelsForStudentsPage() {
               </div>
 
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
-                Launch Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 to-emerald-400">Career</span> with T-Levels
+                 T-Levels
               </h1>
               
               <p className="text-base sm:text-lg md:text-xl text-emerald-100 max-w-2xl leading-relaxed">
