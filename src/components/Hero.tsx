@@ -295,7 +295,7 @@ const Hero = () => {
                   Access free courses and qualifications in growing industries across South Yorkshire
                 </p>
                 <Link 
-                  href="/training" 
+                  href="/funded-training-for-adults" 
                   className="inline-flex items-center justify-center w-full text-center bg-gradient-to-r from-amber-600 to-amber-500 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-amber-600/20 hover:from-amber-700 hover:to-amber-600 transition-all"
                 >
                   Explore Training Options
@@ -308,7 +308,7 @@ const Hero = () => {
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-all group">
               <div className="aspect-video relative overflow-hidden">
                 <Image 
-                  src="/images/employment-support.jpg" 
+                  src="/images/apprentice-interview.jpg" 
                   alt="Job interview practice" 
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"

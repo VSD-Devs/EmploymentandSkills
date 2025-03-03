@@ -337,7 +337,7 @@ const ApprenticeshipPage = () => {
           <div className="relative z-10 mt-8 sm:mt-10">
             <div className="md:grid md:grid-cols-12 gap-8 items-start">
               {/* Left column - Stacked on mobile */}
-              <div className="md:col-span-5 lg:col-span-4 relative mb-16 sm:mb-24 md:mb-0 md:-mt-16 mx-auto max-w-xs sm:max-w-sm md:max-w-none">
+              <div className="md:col-span-5 lg:col-span-4 relative mb-16 sm:mb-24 md:mb-0 md:mt-8 mx-auto max-w-xs sm:max-w-sm md:max-w-none md:-ml-8 lg:-ml-16">
                 <div className="aspect-[3/4] rounded-xl sm:rounded-2xl overflow-hidden shadow-xl sm:shadow-2xl relative">
                   <Image
                     src="/images/apprenticeship-learning.jpg"

@@ -24,7 +24,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link href="/about" className="text-zinc-400 hover:text-white transition-colors">
-                  About Us
+                  About SYMCA
                 </Link>
               </li>
               <li>

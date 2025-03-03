@@ -1,7 +1,6 @@
 'use client'
 
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { 
@@ -27,9 +26,27 @@ import {
   Home,
   ChevronUp,
   Menu,
-  Code2
+  Code2,
+  MapPin,
+  Handshake,
+  TrendingUp,
+  Badge,
+  ShoppingBag,
+  Check,
+  Send,
+  BrainCircuit as BrainIcon,
+  LightbulbIcon as Lightbulb,
+  ArrowUp,
+  ClipboardCheck
 } from 'lucide-react'
+import { 
+  Dialog, 
+  Transition 
+} from '@headlessui/react'
+import { X as XMarkIcon } from 'lucide-react'
+import Footer from '@/components/Footer'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import SkillsDiagnosticModal from '@/components/SkillsDiagnosticModal'
 
 const IMAGES = {
   hero: "/images/funded-hero.jpg",
@@ -82,6 +99,7 @@ interface AssessmentQuestion {
 
 const FundedTrainingPage: React.FC = () => {
   const [showAssessment, setShowAssessment] = useState(false)
+  const [showSkillsDiagnostic, setShowSkillsDiagnostic] = useState(false)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [outcome, setOutcome] = useState<'skills-bank' | 'skills-bootcamps' | 'growth-advisor' | null>(null)
   const [showBackToTop, setShowBackToTop] = useState(false)
@@ -103,6 +121,7 @@ const FundedTrainingPage: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
+  const [isVisible, setIsVisible] = useState(true)
 
   // Track scroll position for QuickNav and BackToTop
   useEffect(() => {
@@ -370,156 +389,124 @@ const FundedTrainingPage: React.FC = () => {
 
       <main className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative bg-[#111827] py-32 flex items-center min-h-[600px]">
-          {/* Breadcrumbs Overlay */}
-          <nav className="absolute top-4 left-0 z-20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <ol className="flex items-center space-x-2 bg-white/80 rounded-lg p-2 inline-block">
-                <li>
-                  <Link 
-                    href="/" 
-                    className="text-gray-800 hover:text-gray-900 flex items-center text-sm transition-colors"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <ChevronRight className="h-4 w-4 text-gray-600" />
-                </li>
-                <li>
-                  <Link 
-                    href="/business" 
-                    className="text-gray-800 hover:text-gray-900 flex items-center text-sm transition-colors"
-                  >
-                    Business Support
-                  </Link>
-                </li>
-                <li>
-                  <ChevronRight className="h-4 w-4 text-gray-600" />
-                </li>
-                <li aria-current="page">
-                  <span className="text-gray-800 font-medium text-sm">
-                    Funded Training
-                  </span>
-                </li>
-              </ol>
-            </div>
-          </nav>
-
-          <div className="absolute inset-0">
-            <Image
-              src="/images/hero-business.webp"
-              alt="Business professionals in South Yorkshire engaging in training"
-              fill
-              className="object-cover object-center object-[center_25%] brightness-75"
-              priority
-              quality={90}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/95 via-[#111827]/80 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111827]/70 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:20px_20px] opacity-30" />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,#ffffff05_50%,transparent_100%)] opacity-70" />
-          </div>
-
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <div className="inline-flex items-center gap-2 text-emerald-300 mb-4">
-                <div className="p-1.5 rounded-lg bg-emerald-500/10 backdrop-blur-sm border border-emerald-400/20">
-                  <Building2 className="h-4 w-4" />
+        <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-slate-50 to-indigo-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
+            <div className="grid md:grid-cols-12 gap-8 items-center">
+              {/* Hero Text Content */}
+              <div className="md:col-span-6 lg:col-span-5 text-center md:text-left">
+                <div className="inline-flex items-center px-3 py-1.5 bg-blue-100 border border-blue-200 rounded-full mb-4">
+                  <span className="text-sm font-medium text-blue-800">Business Growth & Training</span>
                 </div>
-                <span className="text-sm font-medium tracking-wide uppercase">For South Yorkshire Businesses</span>
+                
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight mb-4">
+                  Funded Training <span className="text-blue-600">for Businesses</span>
+                </h1>
+                
+                <p className="text-base sm:text-lg text-slate-700 mb-6 leading-relaxed">
+                  Access funding to upskill your workforce, develop essential capabilities, and drive business growth in South Yorkshire.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+                  <button 
+                    onClick={() => setShowSkillsDiagnostic(true)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-lg shadow-lg hover:shadow-blue-600/20 inline-flex items-center justify-center"
+                  >
+                    Start Skills Diagnostic
+                    <BrainIcon className="ml-2 h-5 w-5" />
+                  </button>
+                  <Link 
+                    href="#contact" 
+                    className="bg-white text-blue-700 border border-blue-200 px-5 py-2.5 rounded-lg font-medium hover:bg-blue-50 transition-colors inline-flex items-center justify-center"
+                  >
+                    Contact Our Team
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </div>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
-                Funded Training for Businesses
-              </h1>
-              <p className="text-base md:text-lg text-slate-200 mb-8 leading-relaxed max-w-3xl mx-auto">
-                Funded training opportunities are available for businesses that can demonstrate how training initiatives will support their growth objectives and enhance resilience.
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <button
-                  onClick={() => setShowAssessment(true)}
-                  className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors text-base sm:text-lg"
-                >
-                  Skills Assessment
-                  <LightbulbIcon className="ml-2 h-5 w-5" />
-                </button>
-                <Link
-                  href="#contact"
-                  className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-medium hover:bg-white/20 transition-colors border border-white/20 text-base sm:text-lg"
-                >
-                  Speak to Our Team
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Link>
+              
+              {/* Hero Key Features - Right side */}
+              <div className="md:col-span-6 lg:col-span-7 relative">
+                <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-lg">
+                  {/* Large Featured Image */}
+                  <div className="rounded-xl overflow-hidden mb-4 relative h-52">
+                    <Image 
+                      src="/images/hero-business.webp"
+                      alt="Business professionals in a training environment"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                  
+                  {/* Key Features Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 hover:shadow-md transition-all">
+                      <div className="flex flex-col items-center text-center">
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                          <Users className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <h3 className="font-semibold text-slate-900 mb-1 text-sm">Skilled Workforce</h3>
+                        <p className="text-xs text-slate-600">Develop talent in-house</p>
+                      </div>
+                    </div>
+                    <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 hover:shadow-md transition-all">
+                      <div className="flex flex-col items-center text-center">
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                          <PieChart className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <h3 className="font-semibold text-slate-900 mb-1 text-sm">Business Growth</h3>
+                        <p className="text-xs text-slate-600">Increase productivity & profits</p>
+                      </div>
+                    </div>
+                    <div className="bg-slate-50 border border-slate-100 rounded-xl p-3 hover:shadow-md transition-all">
+                      <div className="flex flex-col items-center text-center">
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+                          <Rocket className="w-5 h-5 text-blue-600" />
+                        </div>
+                        <h3 className="font-semibold text-slate-900 mb-1 text-sm">Up to 60% Funding</h3>
+                        <p className="text-xs text-slate-600">Reduce training costs</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Quick Navigation - Desktop */}
-        <div className="sticky top-0 z-40 bg-white shadow-md border-b border-gray-100 hidden md:block">
+        {/* Desktop Navigation Bar */}
+        <div className="hidden md:block sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-center">
-              <div className="flex space-x-6 py-4">
-                <a 
-                  href="#overview" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('overview');
-                  }}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeSection === 'overview' 
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'hover:bg-slate-50 text-slate-700'
-                  }`}
-                  aria-current={activeSection === 'overview' ? 'page' : undefined}
-                >
-                  Overview
-                </a>
-                <a 
-                  href="#skills-bank" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('skills-bank');
-                  }}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeSection === 'skills-bank' 
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'hover:bg-slate-50 text-slate-700'
-                  }`}
-                  aria-current={activeSection === 'skills-bank' ? 'page' : undefined}
-                >
-                  Skills Bank
-                </a>
-                <a 
-                  href="#skills-bootcamps" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('skills-bootcamps');
-                  }}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeSection === 'skills-bootcamps' 
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'hover:bg-slate-50 text-slate-700'
-                  }`}
-                  aria-current={activeSection === 'skills-bootcamps' ? 'page' : undefined}
-                >
-                  Skills Bootcamps
-                </a>
-                <a 
-                  href="#contact" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection('contact');
-                  }}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeSection === 'contact' 
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'hover:bg-slate-50 text-slate-700'
-                  }`}
-                  aria-current={activeSection === 'contact' ? 'page' : undefined}
-                >
-                  Contact
-                </a>
+            <div className="flex items-center justify-between py-4">
+              <div className="flex items-center gap-1 text-blue-800 font-bold text-xl">
+                <Building2 className="h-6 w-6" />
+                <span>Business Funding</span>
+              </div>
+              
+              <div className="flex items-center gap-6">
+                {[
+                  { id: 'overview', label: 'Overview' },
+                  { id: 'funding-options', label: 'Funding Options' },
+                  { id: 'eligibility', label: 'Eligibility' },
+                  { id: 'success-stories', label: 'Success Stories' },
+                  { id: 'contact', label: 'Apply Now' }
+                ].map((item) => (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    className={`text-sm font-medium py-1.5 border-b-2 transition-colors ${
+                      activeSection === item.id
+                        ? 'border-blue-600 text-blue-600'
+                        : 'border-transparent text-gray-600 hover:text-blue-600 hover:border-blue-200'
+                    }`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      scrollToSection(item.id)
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -539,52 +526,52 @@ const FundedTrainingPage: React.FC = () => {
                   aria-label="View overview section"
                   className={`group px-3 py-2 flex-1 flex flex-col items-center rounded-lg transition-all ${
                     activeSection === 'overview' 
-                      ? 'text-emerald-800 shadow-md transform -translate-y-1 bg-emerald-50'
+                      ? 'text-blue-800 shadow-md transform -translate-y-1 bg-blue-50'
                       : 'hover:bg-gray-50 text-gray-700'
                   }`}
                 >
                   <Target className={`w-5 h-5 ${
-                    activeSection === 'overview' ? 'text-emerald-600' : 'text-gray-500'
+                    activeSection === 'overview' ? 'text-blue-600' : 'text-gray-500'
                   }`} />
                   <span className="text-xs mt-1 font-medium">Overview</span>
                 </a>
                 
                 <a 
-                  href="#skills-bank" 
+                  href="#funding-options" 
                   onClick={(e) => {
                     e.preventDefault();
-                    scrollToSection('skills-bank');
+                    scrollToSection('funding-options');
                   }}
-                  aria-label="View Skills Bank section"
+                  aria-label="View funding options section"
                   className={`group px-3 py-2 flex-1 flex flex-col items-center rounded-lg transition-all ${
-                    activeSection === 'skills-bank' 
-                      ? 'text-emerald-800 shadow-md transform -translate-y-1 bg-emerald-50'
+                    activeSection === 'funding-options' 
+                      ? 'text-blue-800 shadow-md transform -translate-y-1 bg-blue-50'
                       : 'hover:bg-gray-50 text-gray-700'
                   }`}
                 >
                   <Briefcase className={`w-5 h-5 ${
-                    activeSection === 'skills-bank' ? 'text-emerald-600' : 'text-gray-500'
+                    activeSection === 'funding-options' ? 'text-blue-600' : 'text-gray-500'
                   }`} />
-                  <span className="text-xs mt-1 font-medium">Skills Bank</span>
+                  <span className="text-xs mt-1 font-medium">Funding</span>
                 </a>
                 
                 <a 
-                  href="#skills-bootcamps" 
+                  href="#eligibility" 
                   onClick={(e) => {
                     e.preventDefault();
-                    scrollToSection('skills-bootcamps');
+                    scrollToSection('eligibility');
                   }}
-                  aria-label="View Skills Bootcamps section"
+                  aria-label="View eligibility section"
                   className={`group px-3 py-2 flex-1 flex flex-col items-center rounded-lg transition-all ${
-                    activeSection === 'skills-bootcamps' 
-                      ? 'text-emerald-800 shadow-md transform -translate-y-1 bg-emerald-50'
+                    activeSection === 'eligibility' 
+                      ? 'text-blue-800 shadow-md transform -translate-y-1 bg-blue-50'
                       : 'hover:bg-gray-50 text-gray-700'
                   }`}
                 >
-                  <BookOpen className={`w-5 h-5 ${
-                    activeSection === 'skills-bootcamps' ? 'text-emerald-600' : 'text-gray-500'
+                  <CheckCircle2 className={`w-5 h-5 ${
+                    activeSection === 'eligibility' ? 'text-blue-600' : 'text-gray-500'
                   }`} />
-                  <span className="text-xs mt-1 font-medium">Bootcamps</span>
+                  <span className="text-xs mt-1 font-medium">Eligibility</span>
                 </a>
                 
                 <a 
@@ -596,14 +583,14 @@ const FundedTrainingPage: React.FC = () => {
                   aria-label="View contact section"
                   className={`group px-3 py-2 flex-1 flex flex-col items-center rounded-lg transition-all ${
                     activeSection === 'contact' 
-                      ? 'text-emerald-800 shadow-md transform -translate-y-1 bg-emerald-50'
+                      ? 'text-blue-800 shadow-md transform -translate-y-1 bg-blue-50'
                       : 'hover:bg-gray-50 text-gray-700'
                   }`}
                 >
                   <Mail className={`w-5 h-5 ${
-                    activeSection === 'contact' ? 'text-emerald-600' : 'text-gray-500'
+                    activeSection === 'contact' ? 'text-blue-600' : 'text-gray-500'
                   }`} />
-                  <span className="text-xs mt-1 font-medium">Contact</span>
+                  <span className="text-xs mt-1 font-medium">Apply</span>
                 </a>
               </div>
             </div>
@@ -621,292 +608,279 @@ const FundedTrainingPage: React.FC = () => {
           <ChevronUp className="w-5 h-5 text-gray-600" />
         </button>
 
-        {/* Assessment Modal */}
-        {showAssessment && (
-          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center">
-            <div className="relative bg-white rounded-2xl max-w-2xl w-full mx-4 p-8">
-              <button
-                onClick={resetAssessment}
-                className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"
-              >
-                <X className="h-6 w-6" />
-              </button>
-
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">
-                  Skills Assessment
-                </h2>
-                <p className="text-slate-600">
-                  Answer a few quick questions to help us recommend the best option for your business.
-                </p>
-              </div>
-
-              {!outcome ? (
-                <div className="space-y-6">
-                  <h3 className="text-xl font-semibold text-slate-800">
-                    {assessmentQuestions[currentQuestion].question}
-                  </h3>
-                  <div className="grid gap-4">
-                    {assessmentQuestions[currentQuestion].options.map((option, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleOptionSelect(option)}
-                        className="w-full text-left px-6 py-4 rounded-xl border-2 border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition-colors group"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-emerald-100 flex items-center justify-center transition-colors">
-                            <span className="text-slate-600 group-hover:text-emerald-600 font-medium">
-                              {index + 1}
-                            </span>
-                          </div>
-                          <span className="text-lg font-medium text-slate-700">
-                            {option.text}
-                          </span>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center">
-                  <div className={`w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-6 ${
-                    outcome === 'skills-bank' ? 'bg-emerald-100' :
-                    outcome === 'skills-bootcamps' ? 'bg-blue-100' :
-                    'bg-purple-100'
-                  }`}>
-                    {React.createElement(outcomeDetails[outcome].icon, {
-                      className: outcome === 'skills-bank' ? 'h-8 w-8 text-emerald-600' :
-                                outcome === 'skills-bootcamps' ? 'h-8 w-8 text-blue-600' :
-                                'h-8 w-8 text-purple-600'
-                    })}
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">
-                    {outcomeDetails[outcome].title}
-                  </h3>
-                  <p className="text-slate-600 mb-8">
-                    {outcomeDetails[outcome].description}
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link
-                      href={outcomeDetails[outcome].cta.href}
-                      onClick={resetAssessment}
-                      className={
-                        outcome === 'skills-bank' ? 'inline-flex items-center justify-center px-6 py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors' :
-                        outcome === 'skills-bootcamps' ? 'inline-flex items-center justify-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors' :
-                        'inline-flex items-center justify-center px-6 py-3 rounded-lg bg-purple-600 text-white font-medium hover:bg-purple-500 transition-colors'
-                      }
-                    >
-                      {outcomeDetails[outcome].cta.text}
-                      <ChevronRight className="ml-2 h-5 w-5" />
-                    </Link>
-                    <button
-                      onClick={resetAssessment}
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-slate-100 text-slate-700 font-medium hover:bg-slate-200 transition-colors"
-                    >
-                      Start Over
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+        {/* Skills Diagnostic Modal */}
+        <SkillsDiagnosticModal 
+          isOpen={showSkillsDiagnostic} 
+          onClose={() => setShowSkillsDiagnostic(false)} 
+        />
 
         {/* Overview Section */}
-        <div id="overview" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-16 relative z-10 scroll-mt-20">
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Skills Bootcamps",
-                description: "Intensive, flexible courses designed to quickly build in-demand capabilities within your workforce.",
-                features: ["Up to 60% funding available", "12-16 week intensive courses", "Industry-recognised certifications"],
-                image: IMAGES.bootcampsImage2,
-                icon: <BookOpen className="h-5 w-5 text-emerald-600" />,
-                alt: "Skills Bootcamps training session",
-                href: "#skills-bootcamps"
-              },
-              {
-                title: "Skills Bank",
-                description: "Direct funding support to invest in training that addresses your business needs and growth plans.",
-                features: ["Tailored to your business needs", "Wide range of approved providers", "Quick application process"],
-                image: "/images/skills-bank3.jpg",
-                icon: <Briefcase className="h-5 w-5 text-emerald-600" />,
-                alt: "Skills Bank training programme",
-                href: "#skills-bank"
-              },
-              {
-                title: "Skills Consultation",
-                description: "Get a free assessment of your workforce skills needs and personalised training recommendations.",
-                features: ["Free consultation session", "Personalised training roadmap", "Funding eligibility check"],
-                image: "/images/skills-consultant.jpg",
-                icon: <Target className="h-5 w-5 text-emerald-600" />,
-                alt: "Skills consultant providing advice",
-                href: "#contact"
-              }
-            ].map((card, index) => (
-              <div key={index} className="flex flex-col h-full bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-lg transition-all">
-                <div className="relative h-48">
-                  <Image
-                    src={card.image}
-                    alt={card.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
-                </div>
-                <div className="p-8 flex-grow flex flex-col">
-                  <div className="h-[4.5rem] mb-4">
-                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-50 mb-3">
-                      {card.icon}
-                      <span className="text-sm font-medium text-emerald-900">{card.title}</span>
-                    </span>
-                    <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
-                      {card.title}
-                    </h2>
-                  </div>
-                  <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                    {card.description}
-                  </p>
-                  <div className="space-y-4 mb-6 flex-grow">
-                    {card.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-3 text-gray-700">
-                        <div className="h-6 w-6 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 mt-1">
-                          <ChevronRight className="h-4 w-4 text-emerald-600" aria-hidden="true" />
-                        </div>
-                        <span className="text-base sm:text-lg">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <Link
-                    href={card.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(card.href.replace('#', ''));
-                    }}
-                    className="inline-flex items-center justify-center w-full px-5 py-3 mt-auto rounded-lg bg-emerald-50 text-emerald-700 font-medium hover:bg-emerald-100 transition-colors group"
-                  >
-                    Learn More
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Skills Bank Section */}
-        <section id="skills-bank" className="py-20 bg-white scroll-mt-20">
+        <section id="overview" className="py-12 md:py-24 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="relative rounded-2xl overflow-hidden shadow-xl">
-                <div className="aspect-w-16 aspect-h-9 lg:aspect-auto lg:h-[600px]">
-                  <Image
-                    src="/images/skills-bank3.jpg"
-                    alt="Skills Bank training session showing professionals collaborating on business growth strategies"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-emerald-900/30 to-transparent mix-blend-multiply" />
+            <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+              <div className="inline-flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-blue-100 mb-2 sm:mb-3">
+                <span className="text-xs sm:text-sm font-medium text-blue-900">Overview</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                Skills Diagnostic Tool
+              </h2>
+              <p className="text-base sm:text-lg text-slate-800">
+                Our Skills Diagnostic tool will help identify the right funding and training options for your business needs
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div>
+                <div className="prose prose-lg max-w-none text-slate-600">
+                  <p>
+                    Navigating the world of business training and funding can be complex. That's why we've created a personalised approach to help you find the perfect solution for your business.
+                  </p>
+                  <p>
+                    Our comprehensive Skills Diagnostic tool analyses your business needs, goals, and current workforce to recommend the most suitable funding programmes and training solutions.
+                  </p>
+                  <h3 className="text-xl font-semibold text-slate-900 mt-8 mb-4">Why use our Skills Diagnostic?</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
+                      <span>Personalised recommendations based on your specific business needs</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
+                      <span>Quick assessment that takes less than 3 minutes to complete</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
+                      <span>Identify the highest funding percentage available for your circumstances</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
+                      <span>Receive tailored advice on next steps to secure your funding</span>
+                    </li>
+                  </ul>
                 </div>
                 
-                {/* Floating Stats Card */}
-                <div className="absolute -bottom-5 lg:-right-5 max-w-xs bg-white rounded-xl shadow-lg p-6 border border-emerald-100">
-                  <h3 className="text-xl font-bold text-slate-900 mb-4">
-                    Programme Impact
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                        <FileCheck className="h-6 w-6 text-emerald-600" />
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-emerald-600">60%</div>
-                        <div className="text-sm text-slate-600">of training costs covered</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                        <Building2 className="h-6 w-6 text-emerald-600" />
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-emerald-600">500+</div>
-                        <div className="text-sm text-slate-600">South Yorkshire businesses supported</div>
-                      </div>
-                    </div>
+                <div className="mt-8 p-6 bg-blue-50 rounded-xl border border-blue-100">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Lightbulb className="h-6 w-6 text-amber-500" />
+                    <h4 className="font-semibold text-slate-900">Did you know?</h4>
                   </div>
+                  <p className="text-slate-700">
+                    Businesses that undergo a skills diagnostic before training are 43% more likely to see measurable improvements in workforce performance and productivity.
+                  </p>
+                </div>
+                
+                <div className="mt-8">
+                  <button
+                    onClick={() => setShowSkillsDiagnostic(true)}
+                    className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium inline-flex items-center justify-center shadow-lg hover:shadow-blue-600/20"
+                  >
+                    Start Your Skills Diagnostic
+                    <BrainIcon className="ml-2 h-5 w-5" />
+                  </button>
                 </div>
               </div>
               
-              <div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-100 mb-6">
-                  <Briefcase className="h-5 w-5 text-emerald-600" />
-                  <span className="text-base font-medium text-emerald-900">Skills Bank</span>
+              <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+                <div className="bg-gradient-to-br from-indigo-600 to-blue-700 p-6 text-white">
+                  <h3 className="text-xl font-bold mb-2">Skills Diagnostic</h3>
+                  <p className="text-blue-100">
+                    Answer a few questions about your business to get personalised training recommendations
+                  </p>
                 </div>
                 
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
-                  60% Funding Towards <span className="text-emerald-600">Business Training</span>
-                </h2>
-                
-                <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                  Skills Bank provides flexible funding to support training that directly addresses your business needs and growth plans. With up to 60% of training costs covered, you can invest in developing your workforce without significant financial burden.
-                </p>
-
-                <div className="grid sm:grid-cols-2 gap-6 mb-8">
-                  {[
-                    {
-                      title: "Tailored Training",
-                      description: "Custom programmes aligned with your business needs",
-                      icon: <Target className="h-6 w-6 text-emerald-600" />
-                    },
-                    {
-                      title: "Wide Provider Network",
-                      description: "Access to quality-assured training providers",
-                      icon: <Users className="h-6 w-6 text-emerald-600" />
-                    },
-                    {
-                      title: "Quick Application",
-                      description: "Streamlined process with minimal paperwork",
-                      icon: <Clock className="h-6 w-6 text-emerald-600" />
-                    },
-                    {
-                      title: "Flexible Delivery",
-                      description: "On-site, remote or blended learning options",
-                      icon: <Sparkles className="h-6 w-6 text-emerald-600" />
-                    }
-                  ].map((feature, index) => (
-                    <div key={index} className="flex items-start gap-4 p-4 rounded-lg hover:bg-emerald-50 transition-colors">
-                      <div className="mt-1 flex-shrink-0">
-                        <div className="h-10 w-10 rounded-lg bg-emerald-100 flex items-center justify-center">
-                          {feature.icon}
-                        </div>
-                      </div>
+                <div className="p-6">
+                  <div className="space-y-4 mb-6">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 font-semibold">1</div>
                       <div>
-                        <h3 className="text-lg font-semibold text-slate-900 mb-1">{feature.title}</h3>
-                        <p className="text-slate-600">{feature.description}</p>
+                        <h4 className="font-medium text-slate-900">Tell us about your business</h4>
+                        <p className="text-sm text-slate-600">Location, size, and sector information</p>
                       </div>
                     </div>
-                  ))}
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 font-semibold">2</div>
+                      <div>
+                        <h4 className="font-medium text-slate-900">Share your business goals</h4>
+                        <p className="text-sm text-slate-600">What you want to achieve with training</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 font-semibold">3</div>
+                      <div>
+                        <h4 className="font-medium text-slate-900">Identify skills needs</h4>
+                        <p className="text-sm text-slate-600">Areas where your workforce needs development</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 font-semibold">4</div>
+                      <div>
+                        <h4 className="font-medium text-slate-900">Get recommendations</h4>
+                        <p className="text-sm text-slate-600">Personalised funding and training solutions</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6">
+                    <div className="flex items-start gap-3">
+                      <div className="text-indigo-600">
+                        <CheckCircle2 className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-sm italic text-slate-700">
+                          "The skills diagnostic helped us identify exactly what training our team needed. The funding recommendations saved us thousands of pounds."
+                        </p>
+                        <p className="text-xs text-slate-500 mt-1">
+                          — Sarah T., Operations Director, Sheffield Manufacturing
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <button
+                    onClick={() => setShowSkillsDiagnostic(true)}
+                    className="w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium inline-flex items-center justify-center"
+                  >
+                    Start Diagnostic
+                    <ChevronRight className="ml-2 h-5 w-5" />
+                  </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                <div className="flex flex-col sm:flex-row gap-4 mt-8">
+        {/* Funding Options Section */}
+        <section id="funding-options" className="py-16 md:py-24 bg-slate-50 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+              <div className="inline-flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-blue-100 mb-2 sm:mb-3">
+                <span className="text-xs sm:text-sm font-medium text-blue-900">Funding Options</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                Funded Options for Your Business
+              </h2>
+              <p className="text-base sm:text-lg text-slate-800">
+                Explore the range of funded training programmes available to help your business grow and develop
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Fully Funded Card */}
+              <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all border border-slate-200/60 overflow-hidden flex flex-col h-full">
+                <div className="p-6 bg-blue-50 border-b border-blue-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-blue-800 bg-blue-100 px-3 py-1 rounded-full text-sm font-medium">Adult Skills Funding</span>
+                    <span className="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full text-xs font-medium">Fully Funded</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    Adult Skills Funding
+                  </h3>
+                  <p className="text-slate-600">
+                    Access fully funded training for eligible employees in South Yorkshire, helping them develop essential workplace skills.
+                  </p>
+                </div>
+                <div className="p-6 flex-grow">
+                  <h4 className="font-medium text-slate-900 mb-3">Requirements:</h4>
+                  <ul className="space-y-2 mb-6">
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-700">Business based in South Yorkshire</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-700">Employees aged 19+</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-700">UK/EU resident with right to work</span>
+                    </li>
+                  </ul>
+                  <Link
+                    href="/adult-skills"
+                    className="inline-flex items-center text-blue-700 hover:text-blue-900 font-medium mt-auto"
+                  >
+                    Learn More
+                    <ChevronRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Skills Bank Card */}
+              <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all border border-slate-200/60 overflow-hidden flex flex-col h-full">
+                <div className="p-6 bg-indigo-50 border-b border-indigo-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-indigo-800 bg-indigo-100 px-3 py-1 rounded-full text-sm font-medium">Skills Bank</span>
+                    <span className="text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full text-xs font-medium">Up to 60% Funded</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    Skills Bank
+                  </h3>
+                  <p className="text-slate-600">
+                    Tailored training solutions with significant funding support to help your business achieve its growth ambitions.
+                  </p>
+                </div>
+                <div className="p-6 flex-grow">
+                  <h4 className="font-medium text-slate-900 mb-3">Requirements:</h4>
+                  <ul className="space-y-2 mb-6">
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="h-5 w-5 text-indigo-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-700">Business based in South Yorkshire</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="h-5 w-5 text-indigo-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-700">Clear growth plans for your business</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="h-5 w-5 text-indigo-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-700">Commitment to staff development</span>
+                    </li>
+                  </ul>
                   <Link
                     href="/skills-bank"
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-colors shadow-sm hover:shadow-emerald-200 group"
+                    className="inline-flex items-center text-indigo-700 hover:text-indigo-900 font-medium mt-auto"
                   >
-                    Learn More About Skills Bank
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    Learn More
+                    <ChevronRight className="ml-1 h-4 w-4" />
                   </Link>
+                </div>
+              </div>
+
+              {/* Skills Bootcamps Card */}
+              <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all border border-slate-200/60 overflow-hidden flex flex-col h-full">
+                <div className="p-6 bg-purple-50 border-b border-purple-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-purple-800 bg-purple-100 px-3 py-1 rounded-full text-sm font-medium">Skills Bootcamps</span>
+                    <span className="text-sky-700 bg-sky-100 px-2 py-0.5 rounded-full text-xs font-medium">Co-investment</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    Skills Bootcamps
+                  </h3>
+                  <p className="text-slate-600">
+                    Intensive, flexible training courses in high-demand skills areas with employer contribution required.
+                  </p>
+                </div>
+                <div className="p-6 flex-grow">
+                  <h4 className="font-medium text-slate-900 mb-3">Requirements:</h4>
+                  <ul className="space-y-2 mb-6">
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-700">10% cost for SMEs (under 250 staff)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-700">30% cost for large employers</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <ChevronRight className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-slate-700">Courses run for up to 16 weeks</span>
+                    </li>
+                  </ul>
                   <Link
-                    href="#contact"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection('contact');
-                    }}
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-emerald-200 text-emerald-700 font-medium hover:bg-emerald-50 transition-colors"
+                    href="/skills-bootcamps"
+                    className="inline-flex items-center text-purple-700 hover:text-purple-900 font-medium mt-auto"
                   >
-                    Speak to an Advisor
+                    Learn More
+                    <ChevronRight className="ml-1 h-4 w-4" />
                   </Link>
                 </div>
               </div>
@@ -914,371 +888,468 @@ const FundedTrainingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Skills Bootcamps Section */}
-        <section id="skills-bootcamps" className="py-20 bg-slate-50 scroll-mt-20">
+        {/* Eligibility Section */}
+        <section id="eligibility" className="py-16 md:py-24 bg-white scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="order-2 lg:order-1">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100 mb-6">
-                  <BookOpen className="h-5 w-5 text-blue-600" />
-                  <span className="text-base font-medium text-blue-900">Skills Bootcamps</span>
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="inline-flex items-center px-3 py-1.5 bg-blue-100 border border-blue-200 rounded-full mb-4 sm:mb-6">
+                  <span className="text-xs sm:text-sm font-medium text-blue-800">Eligibility Criteria</span>
                 </div>
                 
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
-                  Funded Workforce Development through <span className="text-blue-600">Skills Bootcamps</span>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4 sm:mb-6">
+                  Is Your Business <span className="text-blue-600">Eligible?</span>
                 </h2>
                 
-                <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                  Skills Bootcamps offer intensive, flexible courses designed to quickly build in-demand capabilities within your workforce. These programmes focus on specific skills gaps in key sectors, with courses lasting 12-16 weeks.
+                <p className="text-base sm:text-lg text-slate-700 mb-6 sm:mb-8 leading-relaxed">
+                  Our funding programmes have specific criteria to ensure resources reach businesses that will benefit most and contribute to South Yorkshire's economic growth.
                 </p>
-
-                <div className="bg-white rounded-xl shadow-sm border border-slate-200 mb-8 overflow-hidden">
-                  <div className="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-200">
-                    {[
-                      {
-                        title: "Digital & Technical",
-                        items: ["Coding & Programming", "Cybersecurity", "Data Analytics", "Cloud Services"]
-                      },
-                      {
-                        title: "Construction & Green Skills",
-                        items: ["Sustainable Construction", "Renewable Energy", "Green Building", "Retrofit Skills"]
-                      }
-                    ].map((category, idx) => (
-                      <div key={idx} className="p-6">
-                        <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                          {idx === 0 ? (
-                            <div className="p-1.5 rounded-md bg-blue-100">
-                              <Code2 className="h-5 w-5 text-blue-600" />
-                            </div>
-                          ) : (
-                            <div className="p-1.5 rounded-md bg-emerald-100">
-                              <Building2 className="h-5 w-5 text-emerald-600" />
-                            </div>
-                          )}
-                          {category.title}
-                        </h3>
-                        <ul className="space-y-2">
-                          {category.items.map((item, itemIdx) => (
-                            <li key={itemIdx} className="flex items-center gap-3">
-                              <div className="h-2 w-2 rounded-full bg-blue-500 flex-shrink-0"></div>
-                              <span className="text-slate-700">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
+                
+                <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8 mb-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-6">Common Requirements:</h3>
+                  <ul className="space-y-6">
+                    <li className="flex items-start gap-4">
+                      <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+                        <MapPin className="h-5 w-5 text-blue-600" aria-hidden="true" />
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-4 mb-8">
-                  {[
-                    "Industry-recognised certifications",
-                    "Immediate application in the workplace",
-                    "Short, intensive training periods",
-                    "Aligned with employer needs",
-                    "Funding for both new and existing staff"
-                  ].map((feature, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <CheckCircle2 className="h-6 w-6 text-blue-600 flex-shrink-0" />
-                      <span className="text-slate-700">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                  <Link
-                    href="/skills-bootcamps"
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors shadow-sm hover:shadow-blue-200 group"
-                  >
-                    Explore Skills Bootcamps
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="#contact"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection('contact');
-                    }}
-                    className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-blue-200 text-blue-700 font-medium hover:bg-blue-50 transition-colors"
-                  >
-                    Request Information
-                  </Link>
-                </div>
-              </div>
-              <div className="relative order-1 lg:order-2 rounded-2xl overflow-hidden shadow-xl">
-                <div className="aspect-w-16 aspect-h-9 lg:aspect-auto lg:h-[600px]">
-                  <Image
-                    src={"/images/skills-hub.jpg"}
-                    alt="Skills Bootcamp practical training session with diverse learners"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-900/30 to-transparent mix-blend-multiply" />
+                      <div>
+                        <span className="text-lg font-medium text-slate-900">South Yorkshire Based</span>
+                        <p className="text-slate-700 mt-1">Business must be located in Sheffield, Doncaster, Barnsley, or Rotherham</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+                        <Users className="h-5 w-5 text-blue-600" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <span className="text-lg font-medium text-slate-900">Small to Medium Enterprise</span>
+                        <p className="text-slate-700 mt-1">Many programmes are limited to SMEs with fewer than 250 employees</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-4">
+                      <div className="h-8 w-8 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 mt-1">
+                        <Target className="h-5 w-5 text-blue-600" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <span className="text-lg font-medium text-slate-900">Growth Ambitions</span>
+                        <p className="text-slate-700 mt-1">Demonstrable plans for business growth or workforce development</p>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
                 
-                {/* Bootcamp Duration Feature */}
-                <div className="absolute -bottom-5 -left-5 md:left-auto md:-right-5 max-w-xs bg-white rounded-xl shadow-lg p-6 border border-blue-100">
-                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-blue-600" />
-                    Bootcamp Duration
-                  </h3>
-                  <div className="relative pt-8">
-                    <div className="h-2 bg-slate-100 rounded-full">
-                      <div className="h-2 bg-blue-500 rounded-full w-[50%]"></div>
+                <button
+                  onClick={() => setShowAssessment(true)}
+                  className="text-base bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-blue-600/20 inline-flex items-center justify-center"
+                >
+                  Check Your Eligibility Now
+                  <Lightbulb className="ml-2 h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="relative">
+                <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-lg">
+                  <div className="relative rounded-xl overflow-hidden h-64 mb-6">
+                    <Image
+                      src="/images/business-meeting.jpg"
+                      alt="Business team discussing training opportunities"
+                      fill
+                      className="object-cover"
+                    />
+                    
+                    {/* Business testimonial overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <div className="space-y-4">
+                        <div className="bg-white/95 backdrop-blur-sm rounded-lg p-4">
+                          <div className="flex items-start gap-3">
+                            <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                              <Handshake className="h-5 w-5 text-blue-600" />
+                            </div>
+                            <div>
+                              <p className="text-slate-700 italic">
+                                "The Skills Bank funding allowed us to develop critical digital skills in our team, directly contributing to 30% business growth."
+                              </p>
+                              <p className="text-blue-700 font-medium text-sm mt-1">Sheffield Tech Solutions - Managing Director</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex justify-between mt-2 text-xs text-slate-500">
-                      <span>Week 1</span>
-                      <span>Week 8</span>
-                      <span>Week 16</span>
-                    </div>
-                    <div className="absolute top-0 left-[50%] -translate-x-1/2 bg-blue-600 text-white text-sm font-medium py-1 px-2 rounded">
-                      12-16 Weeks
-                    </div>
+                  </div>
+                  
+                  {/* Additional eligibility information */}
+                  <div className="mt-6 bg-blue-50 rounded-xl p-5 border border-blue-100">
+                    <h4 className="text-lg font-semibold text-slate-900 mb-3">Additional Considerations:</h4>
+                    <ul className="space-y-2">
+                      <li className="flex items-start gap-2">
+                        <ChevronRight className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <p className="text-slate-600">Each funding programme has specific eligibility criteria - we can help determine the best fit</p>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ChevronRight className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <p className="text-slate-600">Some sectors may have priority access to certain funding streams</p>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <ChevronRight className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <p className="text-slate-600">Our team can provide a personalised assessment of your eligibility</p>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Success Stories Section */}
+        <section id="case-studies" className="py-16 md:py-24 bg-slate-50 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+              <div className="inline-flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-blue-100 mb-2 sm:mb-3">
+                <span className="text-xs sm:text-sm font-medium text-blue-900">Success Stories</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                Businesses Transformed Through Training
+              </h2>
+              <p className="text-base sm:text-lg text-slate-700">
+                See how South Yorkshire businesses have leveraged funded training to accelerate growth and success
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              {/* Success Story 1 */}
+              <div className="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-lg transition-all hover:shadow-xl group">
+                <div className="h-48 relative">
+                  <Image
+                    src="/images/manufacturing-business.jpg"
+                    alt="Manufacturing business in Sheffield"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h3 className="text-xl font-bold text-white">Sheffield Engineering Ltd</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
+                      <TrendingUp className="h-3.5 w-3.5 text-blue-600" />
+                    </div>
+                    <span className="text-sm font-medium text-blue-700">Manufacturing</span>
+                  </div>
+                  <p className="text-slate-700 mb-6">
+                    Transformed their production processes through leadership and digital skills training, leading to:
+                  </p>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-center gap-2">
+                      <Badge className="h-5 w-5 text-emerald-600" />
+                      <span className="text-slate-700">20% increase in productivity</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Badge className="h-5 w-5 text-emerald-600" />
+                      <span className="text-slate-700">15% reduction in waste</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Badge className="h-5 w-5 text-emerald-600" />
+                      <span className="text-slate-700">30% growth in revenue</span>
+                    </li>
+                  </ul>
+                  <div className="border-t border-slate-100 pt-4 flex justify-between items-center">
+                    <div>
+                      <span className="text-xs text-slate-500">Funding Used:</span>
+                      <p className="text-sm font-medium text-slate-800">Skills Bank (60% funded)</p>
+                    </div>
+                    <Link href="/case-studies/sheffield-engineering" className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
+                      Read Full Story
+                      <ArrowRight className="ml-1 h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Success Story 2 */}
+              <div className="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-lg transition-all hover:shadow-xl group">
+                <div className="h-48 relative">
+                  <Image
+                    src="/images/tech-office.jpg"
+                    alt="Technology company in Rotherham"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h3 className="text-xl font-bold text-white">Rotherham Digital Solutions</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
+                      <Code2 className="h-3.5 w-3.5 text-blue-600" />
+                    </div>
+                    <span className="text-sm font-medium text-blue-700">Technology</span>
+                  </div>
+                  <p className="text-slate-700 mb-6">
+                    Used Skills Bootcamps to upskill their development team in cloud technologies, resulting in:
+                  </p>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-center gap-2">
+                      <Badge className="h-5 w-5 text-emerald-600" />
+                      <span className="text-slate-700">3 new enterprise clients secured</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Badge className="h-5 w-5 text-emerald-600" />
+                      <span className="text-slate-700">40% increase in client retention</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Badge className="h-5 w-5 text-emerald-600" />
+                      <span className="text-slate-700">25% revenue growth in 6 months</span>
+                    </li>
+                  </ul>
+                  <div className="border-t border-slate-100 pt-4 flex justify-between items-center">
+                    <div>
+                      <span className="text-xs text-slate-500">Funding Used:</span>
+                      <p className="text-sm font-medium text-slate-800">Skills Bootcamps (90% funded)</p>
+                    </div>
+                    <Link href="/case-studies/rotherham-digital" className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
+                      Read Full Story
+                      <ArrowRight className="ml-1 h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Success Story 3 */}
+              <div className="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-lg transition-all hover:shadow-xl group">
+                <div className="h-48 relative">
+                  <Image
+                    src="/images/retail-business.jpg"
+                    alt="Retail business in Doncaster"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h3 className="text-xl font-bold text-white">Doncaster Retail Group</h3>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center">
+                      <ShoppingBag className="h-3.5 w-3.5 text-blue-600" />
+                    </div>
+                    <span className="text-sm font-medium text-blue-700">Retail</span>
+                  </div>
+                  <p className="text-slate-700 mb-6">
+                    Revitalised their business through digital marketing and customer service training:
+                  </p>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-center gap-2">
+                      <Badge className="h-5 w-5 text-emerald-600" />
+                      <span className="text-slate-700">35% increase in online sales</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Badge className="h-5 w-5 text-emerald-600" />
+                      <span className="text-slate-700">28% improvement in staff satisfaction</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <Badge className="h-5 w-5 text-emerald-600" />
+                      <span className="text-slate-700">50% reduction in staff turnover</span>
+                    </li>
+                  </ul>
+                  <div className="border-t border-slate-100 pt-4 flex justify-between items-center">
+                    <div>
+                      <span className="text-xs text-slate-500">Funding Used:</span>
+                      <p className="text-sm font-medium text-slate-800">Adult Skills Funding (100% funded)</p>
+                    </div>
+                    <Link href="/case-studies/doncaster-retail" className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
+                      Read Full Story
+                      <ArrowRight className="ml-1 h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="text-center">
+              <Link 
+                href="/case-studies" 
+                className="inline-flex items-center px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all shadow-md hover:shadow-xl"
+              >
+                View All Case Studies
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </div>
           </div>
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="relative bg-slate-50 py-24 scroll-mt-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-slate-50/80" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center mb-16">
-              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-emerald-100/80 backdrop-blur-sm mb-8 border border-emerald-200/50">
-                <Mail className="h-6 w-6 text-emerald-700" />
-                <span className="text-lg font-medium text-emerald-900">Training Enquiries</span>
+        <section id="contact" className="py-16 md:py-24 bg-gradient-to-r from-blue-600 to-indigo-700 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+              <div className="inline-flex items-center gap-2 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/20 backdrop-blur-sm mb-2 sm:mb-3">
+                <span className="text-xs sm:text-sm font-medium text-white">Apply Now</span>
               </div>
-              <h2 className="text-4xl font-bold text-slate-900 mb-8">
-                Need Help Finding the Right Support?
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+                Ready to grow your business?
               </h2>
-              <p className="text-xl text-slate-600 leading-relaxed">
-                Our specialists will guide you through the options and help maximise your funding opportunities.
+              <p className="text-base sm:text-lg text-blue-100">
+                Our team can help you identify the right funding options and create a training plan that meets your business needs
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-5 gap-8 mb-16">
-              <div className="lg:col-span-3">
-                <form className="bg-white rounded-2xl p-8 sm:p-10 shadow-sm border border-slate-200/80 hover:border-emerald-200/60 transition-colors h-full">
-                  <div className="space-y-8">
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="name" className="block text-base font-medium text-slate-700 mb-2">
-                          Full Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          required
-                          className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-base"
-                          placeholder="Your full name"
-                          aria-required="true"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="company" className="block text-base font-medium text-slate-700 mb-2">
-                          Company Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="company"
-                          name="company"
-                          required
-                          className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-base"
-                          placeholder="Your company name"
-                          aria-required="true"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="email" className="block text-base font-medium text-slate-700 mb-2">
-                          Email Address <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          required
-                          className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-base"
-                          placeholder="your.email@company.com"
-                          aria-required="true"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="phone" className="block text-base font-medium text-slate-700 mb-2">
-                          Phone Number
-                        </label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-base"
-                          placeholder="Your phone number"
-                        />
-                      </div>
-                    </div>
-
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="bg-white rounded-2xl p-8 shadow-xl">
+                <h3 className="text-2xl font-bold text-slate-900 mb-6">Request a Callback</h3>
+                <form className="space-y-6">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
-                      <label htmlFor="interest" className="block text-base font-medium text-slate-700 mb-2">
-                        I'm interested in <span className="text-red-500">*</span>
+                      <label htmlFor="business-name" className="block text-sm font-medium text-slate-700 mb-1">
+                        Business Name <span className="text-red-500">*</span>
                       </label>
-                      <select 
-                        id="interest" 
-                        name="interest"
-                        required
-                        className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-base"
-                        aria-required="true"
-                      >
-                        <option value="">Please select an option</option>
-                        <option value="skills-bank">Skills Bank funding</option>
-                        <option value="skills-bootcamps">Skills Bootcamps</option>
-                        <option value="consultation">Skills consultation</option>
-                        <option value="multiple">Multiple programmes</option>
-                        <option value="not-sure">Not sure - need guidance</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label htmlFor="message" className="block text-base font-medium text-slate-700 mb-2">
-                        How Can We Help? <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={4}
-                        required
-                        className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white/80 text-base"
-                        placeholder="Describe your training needs and goals..."
-                        aria-required="true"
-                      ></textarea>
-                    </div>
-
-                    <div className="flex items-center">
                       <input
-                        id="consent"
-                        name="consent"
-                        type="checkbox"
+                        type="text"
+                        id="business-name"
+                        name="business-name"
+                        className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         required
-                        className="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
-                        aria-required="true"
                       />
-                      <label htmlFor="consent" className="ml-3 block text-sm text-slate-700">
-                        I consent to South Yorkshire Combined Authority contacting me <span className="text-red-500">*</span>
+                    </div>
+                    <div>
+                      <label htmlFor="contact-name" className="block text-sm font-medium text-slate-700 mb-1">
+                        Contact Name <span className="text-red-500">*</span>
                       </label>
+                      <input
+                        type="text"
+                        id="contact-name"
+                        name="contact-name"
+                        className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        required
+                      />
                     </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-slate-500">
-                        <span className="text-red-500">*</span> Required fields
-                      </div>
-                      <button
-                        type="submit"
-                        className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-500 transition-all shadow-sm hover:shadow text-base"
-                      >
-                        Send Message
-                        <ArrowRight className="ml-2 h-5 w-5" />
-                      </button>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
+                        Email Address <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        required
+                      />
                     </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">
+                        Phone Number <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        required
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="interest" className="block text-sm font-medium text-slate-700 mb-1">
+                      Interested in <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      id="interest"
+                      name="interest"
+                      className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      required
+                    >
+                      <option value="">Select a funding option</option>
+                      <option value="skills-bank">Skills Bank</option>
+                      <option value="skills-bootcamps">Skills Bootcamps</option>
+                      <option value="adult-funding">Adult Skills Funding</option>
+                      <option value="not-sure">Not sure - need guidance</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <button
+                      type="submit"
+                      className="w-full px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all shadow-lg"
+                    >
+                      Submit Request
+                    </button>
+                    <p className="text-xs text-slate-500 mt-2 text-center">
+                      We'll respond within one working day
+                    </p>
                   </div>
                 </form>
               </div>
-
-              <div className="lg:col-span-2">
-                <div className="bg-slate-900 rounded-2xl p-8 sm:p-10 shadow-sm text-white h-full flex flex-col">
-                  <h3 className="text-2xl font-bold mb-6">Get In Touch</h3>
-                  <p className="text-slate-300 mb-8">
-                    Our team is here to help you find the right training solution for your business. Contact us today.
-                  </p>
-                  
-                  <div className="space-y-6 mb-8">
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-emerald-800/30 flex items-center justify-center mt-1">
-                        <Phone className="h-5 w-5 text-emerald-400" />
-                      </div>
-                      <div className="ml-4">
-                        <p className="text-sm font-medium text-emerald-300">Call us at</p>
-                        <a href="tel:08081783061" className="text-lg font-semibold text-white hover:text-emerald-200 transition-colors">
-                          0808 178 3061
-                        </a>
-                        <p className="text-sm text-slate-400 mt-1">Monday to Friday, 9am - 5pm</p>
-                      </div>
+              
+              <div className="text-white">
+                <h3 className="text-2xl font-bold mb-6">Contact Our Business Team</h3>
+                <p className="text-blue-100 mb-8">
+                  Our dedicated team of business advisors can help you navigate the funding options and find the right solution for your business needs.
+                </p>
+                
+                <div className="space-y-6 mb-10">
+                  <div className="flex items-start gap-4">
+                    <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <Phone className="h-5 w-5 text-blue-200" />
                     </div>
-                    
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-emerald-800/30 flex items-center justify-center mt-1">
-                        <Mail className="h-5 w-5 text-emerald-400" />
-                      </div>
-                      <div className="ml-4">
-                        <p className="text-sm font-medium text-emerald-300">Email us at</p>
-                        <a href="mailto:training@southyorkshire-ca.gov.uk" className="text-lg font-semibold text-white hover:text-emerald-200 transition-colors">
-                          training@southyorkshire-ca.gov.uk
-                        </a>
-                        <p className="text-sm text-slate-400 mt-1">We aim to respond within 24 hours</p>
-                      </div>
+                    <div>
+                      <p className="text-sm font-medium text-blue-200">Call us on</p>
+                      <a href="tel:0808 178 9901" className="text-xl font-bold text-white hover:text-blue-200">
+                        0808 178 9901
+                      </a>
+                      <p className="text-sm text-blue-200 mt-1">Monday to Friday, 9am - 5pm</p>
                     </div>
                   </div>
                   
-                  <div className="bg-slate-800/50 rounded-xl p-6 mt-auto">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                        <Users className="h-5 w-5 text-emerald-700" />
-                      </div>
-                      <div className="text-xl font-bold text-white">Business Growth Team</div>
+                  <div className="flex items-start gap-4">
+                    <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <Mail className="h-5 w-5 text-blue-200" />
                     </div>
-                    <p className="text-slate-300">
-                      Our dedicated Business Growth Advisors can provide free impartial guidance on all aspects of your business.
-                    </p>
+                    <div>
+                      <p className="text-sm font-medium text-blue-200">Email us at</p>
+                      <a href="mailto:business@southyorkshire-ca.gov.uk" className="text-xl font-bold text-white hover:text-blue-200">
+                        business@southyorkshire-ca.gov.uk
+                      </a>
+                      <p className="text-sm text-blue-200 mt-1">We aim to respond within 24 hours</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            
-            {/* FAQ Accordion */}
-            <div className="max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-slate-900 mb-8 text-center">Frequently Asked Questions</h3>
-              <div className="space-y-4">
-                {[
-                  {
-                    question: "How much funding is available for training?",
-                    answer: "Through Skills Bank, businesses can access up to 60% funding for training costs. The exact amount depends on your business size, sector, and growth objectives."
-                  },
-                  {
-                    question: "Who is eligible for Skills Bootcamps?",
-                    answer: "Skills Bootcamps are available to businesses in South Yorkshire. They're suitable for both existing staff development and for new employee training."
-                  },
-                  {
-                    question: "How long does the application process take?",
-                    answer: "The application process is streamlined for efficiency. Initial approval can be obtained within 2-3 weeks, with funding decisions typically made within 4-6 weeks."
-                  },
-                  {
-                    question: "Can I choose my own training provider?",
-                    answer: "Yes, through Skills Bank you can work with your preferred provider if they meet our quality standards. For Skills Bootcamps, we work with a network of approved providers."
-                  }
-                ].map((faq, index) => (
-                  <details key={index} className="group bg-white rounded-xl border border-slate-200 overflow-hidden">
-                    <summary className="flex items-center justify-between cursor-pointer p-6">
-                      <h4 className="text-lg font-medium text-slate-900">{faq.question}</h4>
-                      <span className="ml-6 flex-shrink-0 rounded-full bg-emerald-50 p-1.5 text-emerald-700 group-open:rotate-180 transition-transform">
-                        <ChevronRight className="h-4 w-4" />
-                      </span>
-                    </summary>
-                    <div className="px-6 pb-6 text-slate-600">
-                      <p>{faq.answer}</p>
+                
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                      <Lightbulb className="h-4 w-4 text-blue-600" />
                     </div>
-                  </details>
-                ))}
+                    <h4 className="text-lg font-semibold text-white">Need advice?</h4>
+                  </div>
+                  <p className="text-blue-100 mb-4">
+                    Our team can provide a free, no-obligation consultation to discuss your business needs and the funding options available to you.
+                  </p>
+                  <Link
+                    href="/business-support"
+                    className="inline-flex items-center text-white font-medium hover:text-blue-200"
+                  >
+                    Learn about our business support services
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </section>
       </main>
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default FundedTrainingPage
+export default FundedTrainingPage;

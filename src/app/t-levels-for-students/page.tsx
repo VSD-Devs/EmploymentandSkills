@@ -3,101 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Clock, GraduationCap, BookOpen, Briefcase, ChevronRight, ArrowRight, CheckCircle, Users, Building2, Calendar, Lightbulb, Award, BarChart, Cog, Video, ExternalLink, PawPrint } from 'lucide-react'
+import { Clock, GraduationCap, BookOpen, Briefcase, ChevronRight, ArrowRight, CheckCircle, Users, Building2, Calendar, Lightbulb, Award, BarChart, Cog, Video, ExternalLink, PawPrint, Layers, Calculator, MoveRight, File } from 'lucide-react'
 import Breadcrumbs from '@/components/Breadcrumbs'
-
-// T-Level course options
-const tLevelCourses = [
-  {
-    title: 'Digital Production',
-    sectors: [
-      'Software Development',
-      'Data Analysis', 
-      'Networking and Cyber Security'
-    ],
-    icon: <Briefcase className="w-6 h-6" />,
-    jobs: ['Web Developer', 'IT Support Technician', 'Software Engineer', 'Data Analyst', 'Cyber Security Specialist'],
-    image: '/images/t-level-digital.jpg'
-  },
-  {
-    title: 'Business & Accounting',
-    sectors: [
-      'Accounting',
-      'Legal Services',
-      'Management and Administration'
-    ],
-    icon: <BarChart className="w-6 h-6" />,
-    jobs: ['Accountant', 'Bookkeeper', 'Legal Secretary', 'Business Administrator', 'Office Manager'],
-    image: '/images/t-level-business.jpg'
-  },
-  {
-    title: 'Education & Childcare',
-    sectors: [
-      'Education and Early Years',
-      'Teaching Assistant', 
-      'Educational Support'
-    ],
-    icon: <Users className="w-6 h-6" />,
-    jobs: ['Teaching Assistant', 'Nursery Worker', 'Educational Support Staff', 'Early Years Educator'],
-    image: '/images/t-level-education.jpg'
-  },
-  {
-    title: 'Health & Science',
-    sectors: [
-      'Supporting The Adult Nursing Team',
-      'Supporting The Mental Health Team', 
-      'Laboratory Science'
-    ],
-    icon: <BookOpen className="w-6 h-6" />,
-    jobs: ['Healthcare Support Worker', 'Laboratory Technician', 'Pharmacy Assistant', 'Mental Health Support Worker'],
-    image: '/images/t-level-health.jpg'
-  },
-  {
-    title: 'Construction',
-    sectors: [
-      'Design, Surveying and Planning',
-      'Bricklaying',
-      'Carpentry and Joinery',
-      'Plastering',
-      'Plumbing'
-    ],
-    icon: <Building2 className="w-6 h-6" />,
-    jobs: ['Architectural Technician', 'Construction Site Supervisor', 'Building Services Technician', 'Bricklayer', 'Carpenter', 'Plumber'],
-    image: '/images/t-level-construction.jpg'
-  },
-  {
-    title: 'Engineering & Manufacturing',
-    sectors: [
-      'Design and Development (Electrical and Electronic)',
-      'Electrotechnical Engineering',
-      'Light and Electric Vehicles Maintenance'
-    ],
-    icon: <Cog className="w-6 h-6" />,
-    jobs: ['Electrical Technician', 'Electronic Engineer', 'Manufacturing Technician', 'Vehicle Maintenance Technician'],
-    image: '/images/t-level-engineering.jpg'
-  },
-  {
-    title: 'Creative & Media',
-    sectors: [
-      'Fashion and Textiles',
-      'Content Creation and Media Production',
-      'Creative Media Technician',
-      'Events and Venues Technician'
-    ],
-    icon: <Video className="w-6 h-6" />,
-    jobs: ['Media Production Assistant', 'Fashion Design Assistant', 'Events Coordinator', 'Content Creator'],
-    image: '/images/t-level-media.jpg'
-  },
-  {
-    title: 'Animal Care',
-    sectors: [
-      'Animal Care and Management'
-    ],
-    icon: <PawPrint className="w-6 h-6" />,
-    jobs: ['Veterinary Assistant', 'Animal Care Technician'],
-    image: '/images/t-level-animal.jpg'
-  }
-]
 
 // Student success stories
 const successStories = [
@@ -117,14 +24,62 @@ const successStories = [
   }
 ]
 
-// T-Level providers in South Yorkshire
+// T-Level providers in South Yorkshire - Enhanced with more detailed information
 const providers = [
-  { name: "Sheffield College", location: "Sheffield", website: "https://www.sheffcol.ac.uk/t-levels" },
-  { name: "Barnsley College", location: "Barnsley", website: "https://www.barnsley.ac.uk/t-levels" },
-  { name: "Rotherham College", location: "Rotherham", website: "https://www.rotherham.ac.uk/t-levels" },
-  { name: "Doncaster College", location: "Doncaster", website: "https://www.don.ac.uk/t-levels" },
-  { name: "UTC Sheffield Olympic Legacy Park", location: "Sheffield", website: "https://www.utcsheffield.org.uk/t-levels" },
-  { name: "Dearne Valley College", location: "Rotherham", website: "https://www.dearne-coll.ac.uk/t-levels" }
+  { 
+    name: "Sheffield College", 
+    image: "/images/providers/sheffield-college.jpg",
+    location: "Sheffield", 
+    website: "https://www.sheffcol.ac.uk/t-levels",
+    courses: ["Digital Production", "Education & Childcare", "Health & Science"],
+    description: "Sheffield College offers modern facilities with strong industry connections to support your T-Level journey.",
+    features: ["Modern digital labs", "Industry mentors", "Career coaching"]
+  },
+  { 
+    name: "Barnsley College", 
+    image: "/images/providers/barnsley-college.jpg",
+    location: "Barnsley", 
+    website: "https://www.barnsley.ac.uk/t-levels",
+    courses: ["Construction", "Digital", "Education & Childcare", "Health & Science"],
+    description: "Barnsley College provides exceptional learning environments with strong employer connections across various sectors.",
+    features: ["State-of-the-art workshops", "Virtual reality training", "Industry projects"]
+  },
+  { 
+    name: "Rotherham College", 
+    image: "/images/providers/rotherham-college.jpg",
+    location: "Rotherham", 
+    website: "https://www.rotherham.ac.uk/t-levels",
+    courses: ["Digital Business Services", "Health", "Education & Childcare"],
+    description: "Rotherham College delivers T-Level qualifications designed to meet the needs of local and national employers.",
+    features: ["Healthcare simulation suite", "Employer events", "1-to-1 placement support"]
+  },
+  { 
+    name: "Doncaster College", 
+    image: "/images/providers/doncaster-college.jpg",
+    location: "Doncaster", 
+    website: "https://www.don.ac.uk/t-levels",
+    courses: ["Design & Development", "Education & Childcare", "Health"],
+    description: "Doncaster College offers excellent industry placement opportunities with a focus on practical skills development.",
+    features: ["Dedicated T-Level hub", "Employer partnerships", "Small class sizes"]
+  },
+  { 
+    name: "UTC Sheffield Olympic Legacy Park", 
+    image: "/images/providers/utc-sheffield.jpg",
+    location: "Sheffield", 
+    website: "https://www.utcsheffield.org.uk/t-levels",
+    courses: ["Health & Science", "Digital"],
+    description: "UTC Sheffield specialises in technical education with cutting-edge facilities for T-Level delivery.",
+    features: ["Specialist equipment", "Industry expert teaching", "Project-based learning"]
+  },
+  { 
+    name: "Dearne Valley College", 
+    image: "/images/providers/dearne-valley-college.jpg",
+    location: "Rotherham", 
+    website: "https://www.dearne-coll.ac.uk/t-levels",
+    courses: ["Digital Support Services", "Education & Childcare"],
+    description: "Dearne Valley College provides T-Level qualifications with excellent employer connections and a supportive environment.",
+    features: ["Small group teaching", "Technical specialist tutors", "Employability workshops"]
+  }
 ]
 
 export default function TLevelsForStudentsPage() {
@@ -159,10 +114,10 @@ export default function TLevelsForStudentsPage() {
   // Navigation items
   const navItems = [
     { id: 'overview', label: 'Overview', icon: <BookOpen className="h-4 w-4" /> },
-    { id: 'courses', label: 'Courses', icon: <GraduationCap className="h-4 w-4" /> },
     { id: 'benefits', label: 'Benefits', icon: <Award className="h-4 w-4" /> },
-    { id: 'stories', label: 'Stories', icon: <Users className="h-4 w-4" /> },
-    { id: 'providers', label: 'Providers', icon: <Building2 className="h-4 w-4" /> }
+    { id: 'courses', label: 'Courses', icon: <GraduationCap className="h-4 w-4" /> },
+    { id: 'providers', label: 'Providers', icon: <Building2 className="h-4 w-4" /> },
+    { id: 'stories', label: 'Stories', icon: <Users className="h-4 w-4" /> }
   ]
 
   return (
@@ -178,92 +133,111 @@ export default function TLevelsForStudentsPage() {
         </div>
       </div>
 
-      {/* Hero Section - Made more responsive */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-slate-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-          <div className="grid md:grid-cols-12 gap-8 items-center">
-            {/* Hero Text Content */}
-            <div className="md:col-span-6 lg:col-span-5 text-center md:text-left">
-              <div className="inline-flex items-center px-3 py-1.5 bg-emerald-100 border border-emerald-200 rounded-full mb-4">
-                <GraduationCap className="h-4 w-4 text-emerald-800 mr-2" />
-                <span className="text-sm font-medium text-emerald-800">Qualifications with Experience</span>
+      {/* Hero Section - Redesigned to match apprenticeships page */}
+      <section className="relative bg-gradient-to-br from-emerald-800 to-blue-900 py-10 sm:py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-24 -right-24 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-emerald-700/20 blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/2 w-40 sm:w-64 h-40 sm:h-64 rounded-full bg-emerald-500/20 blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center gap-6 sm:gap-8 md:gap-12">
+            {/* Hero Content */}
+            <div className="md:w-1/2 space-y-4 sm:space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-700/50 backdrop-blur-sm border border-emerald-500/30">
+                <GraduationCap className="h-4 w-4 text-emerald-300" />
+                <span className="text-xs md:text-sm font-medium text-emerald-100">South Yorkshire T-Levels</span>
               </div>
-              
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight mb-4">
-                T-Levels: <span className="text-emerald-600">Your Practical Route</span> to Career Success
+
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                Launch Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 to-emerald-400">Career</span> with T-Levels
               </h1>
               
-              <p className="text-base sm:text-lg text-slate-600 mb-6 leading-relaxed">
-                Combine classroom learning with real workplace experience. Gain the skills, knowledge, and practical experience that employers are looking for.
+              <p className="text-base sm:text-lg md:text-xl text-emerald-100 max-w-2xl leading-relaxed">
+                Combine classroom learning with real workplace experience and gain the skills, knowledge, and experience that employers are looking for
               </p>
-              
-              <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+
+              <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 pt-2">
                 <Link
                   href="#courses"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-5 py-2.5 rounded-lg shadow-lg hover:shadow-emerald-600/20 inline-flex items-center justify-center"
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-white text-emerald-900 font-medium hover:bg-emerald-50 transition-colors shadow-lg shadow-emerald-900/20 text-sm sm:text-base w-full xs:w-auto"
                 >
                   Explore Courses
-                  <ChevronRight className="ml-2 h-5 w-5" />
+                  <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
                 <Link
                   href="#providers"
-                  className="bg-white text-emerald-700 border border-emerald-200 px-5 py-2.5 rounded-lg font-medium hover:bg-emerald-50 transition-colors inline-flex items-center justify-center"
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-emerald-700/50 text-white font-medium backdrop-blur-sm border border-emerald-500/50 hover:bg-emerald-700/70 transition-colors text-sm sm:text-base w-full xs:w-auto"
                 >
                   View Providers
-                  <Users className="ml-2 h-5 w-5" />
+                  <Users className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
               </div>
             </div>
-            
-            {/* Hero Image & Key Features - Right side */}
-            <div className="md:col-span-6 lg:col-span-7 relative">
-              <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-lg">
-                {/* Main T-Level Image */}
-                <div className="rounded-xl overflow-hidden mb-4 relative h-52">
-                  <Image 
-                    src="/images/t-levels-hero.jpg"
-                    alt="Students exploring T-Level career opportunities"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                
-                {/* Key Features Grid - Responsive layout */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {[
-                    {
-                      icon: <Award className="w-5 h-5" />,
-                      title: '3 A-Level Equivalent',
-                      description: 'UCAS points for university'
-                    },
-                    {
-                      icon: <Briefcase className="w-5 h-5" />,
-                      title: '315+ Hour Placement',
-                      description: 'Real workplace experience'
-                    },
-                    {
-                      icon: <GraduationCap className="w-5 h-5" />,
-                      title: 'Balanced Learning',
-                      description: '80% classroom, 20% work'
-                    }
-                  ].map((feature, index) => (
-                    <div key={index} className="bg-slate-50 border border-slate-100 rounded-xl p-3 hover:shadow-md transition-all">
-                      <div className="flex flex-col items-center text-center">
-                        <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center mb-2">
-                          {React.cloneElement(feature.icon, { className: 'w-5 h-5 text-emerald-600' })}
-                        </div>
-                        <h3 className="font-semibold text-slate-900 mb-1 text-sm">{feature.title}</h3>
-                        <p className="text-xs text-slate-600">{feature.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+
+            {/* Hero Image */}
+            <div className="md:w-1/2 relative mt-6 sm:mt-8 md:mt-0">
+              <div className="aspect-[3/2] overflow-hidden rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl relative">
+                <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-transparent z-10"></div>
+                <div className="absolute -left-4 -top-4 w-16 sm:w-24 h-16 sm:h-24 rounded-full bg-emerald-500/20 blur-3xl"></div>
+                <Image 
+                  src="/images/t-levels-hero.jpg"
+                  alt="Students exploring T-Level career opportunities"
+                  width={600}
+                  height={400}
+                  className="object-cover w-full h-full"
+                  priority
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Quick Stats - Added to match apprenticeships page */}
+      <div className="relative mt-8 sm:mt-12 md:mt-16 mb-8 sm:mb-12 md:mb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+            <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow">
+              <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
+                <div className="p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl bg-emerald-100">
+                  <Award className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-emerald-600" />
+                </div>
+                <div>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">UCAS</p>
+                  <p className="text-sm sm:text-base md:text-lg text-gray-600">Points for University</p>
+                </div>
+              </div>
+              <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-gray-500 leading-relaxed">T-Levels are worth UCAS points – a Distinction* is worth the same as 3 A*s at A Level (168 UCAS points)</p>
+            </div>
+            <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow">
+              <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
+                <div className="p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl bg-emerald-100">
+                  <Briefcase className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-emerald-600" />
+                </div>
+                <div>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">315+</p>
+                  <p className="text-sm sm:text-base md:text-lg text-gray-600">Hours of Work Experience</p>
+                </div>
+              </div>
+              <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-gray-500 leading-relaxed">Gain meaningful industry experience with an employer placement, applying your classroom knowledge in real situations</p>
+            </div>
+            <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow">
+              <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
+                <div className="p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl bg-emerald-100">
+                  <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-emerald-600" />
+                </div>
+                <div>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">2 Years</p>
+                  <p className="text-sm sm:text-base md:text-lg text-gray-600">Course Duration</p>
+                </div>
+              </div>
+              <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-gray-500 leading-relaxed">Combine 80% classroom learning with 20% on-the-job experience for a balanced approach to your technical education</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Quick Navigation - Desktop Only */}
       <div className="sticky top-0 z-50 bg-white shadow-md border-b border-slate-100 hidden md:block">
@@ -286,158 +260,119 @@ export default function TLevelsForStudentsPage() {
       </div>
 
       {/* Rest of the content sections - with improved mobile responsiveness */}
-      {/* T-Level Overview Section */}
+      {/* T-Level Overview Section - Flowing design */}
       <div id="overview" className="scroll-mt-20 py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-16">
+          {/* Introduction - Changed from centered to left-aligned */}
+          <div className="mb-16"> {/* Removed max-w-3xl mx-auto */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 mb-3">
               <GraduationCap className="h-4 w-4 text-emerald-800" />
-              <span className="text-xs font-medium text-emerald-900">What Are T-Levels?</span>
+              <span className="text-sm font-medium text-emerald-900">T-Level Qualifications</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-            Blending Study with <span className="text-emerald-600">Work Experience</span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+              What Are <span className="text-emerald-600">T-Levels?</span>
             </h2>
-            <p className="text-base sm:text-lg text-slate-600">
-              Designed with employers to give you the knowledge and experience needed for skilled employment
-            </p>
+            
+            <div className="space-y-6">
+              <p className="text-2xl leading-relaxed text-slate-700">
+                T Levels are 2-year courses that follow GCSEs and are equivalent to 3 A Levels. These courses have been developed in collaboration with employers so that the content meets the needs of industry and prepares you for work.
+              </p>
+              <p className="text-2xl leading-relaxed text-slate-700">
+                T Levels offer students a mixture of classroom learning and 'on-the-job' experience during an industry placement of at least 315 hours (approximately 45 days).
+              </p>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div>
-              <div className="prose prose-lg max-w-none text-slate-600">
-                <p>
-                  T Levels are 2-year courses that follow GCSEs and are equivalent to 3 A Levels. These courses have been developed in collaboration with employers so that the content meets the needs of industry and prepares you for work.
-                </p>
-                <p>
-                  T Levels offer students a mixture of classroom learning and 'on-the-job' experience during an industry placement of at least 315 hours (approximately 45 days).
-                </p>
-                <h3 className="text-xl font-semibold text-slate-900 mt-8 mb-4">How T-Levels Are Structured:</h3>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
-                    <span><strong>Technical qualification</strong> - including core theory, concepts and skills for an industry area</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
-                    <span><strong>Industry placement</strong> - with an employer to develop practical and technical skills</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
-                    <span><strong>Minimum standard in maths and English</strong> - if not already achieved</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-lg">
-              <div className="relative rounded-xl overflow-hidden h-48 sm:h-64 mb-6">
+          {/* Content with image and flowing sections */}
+          <div className="grid md:grid-cols-5 gap-10 md:gap-16 items-start">
+            {/* Image - 2 columns */}
+            <div className="md:col-span-2 order-2 md:order-1">
+              <div className="relative rounded-xl overflow-hidden h-56 sm:h-72 md:h-96 mb-6 shadow-md">
                 <Image 
                   src="/images/t-level-classroom.jpg" 
                   alt="Students learning in a T-Level classroom environment"
                   fill
                   className="object-cover"
                 />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-4">After Completing a T-Level:</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  "Skilled employment",
-                  "Higher apprenticeships",
-                  "University degrees",
-                  "Higher technical qualifications"
-                ].map((option, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                    <span className="text-slate-700">{option}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Courses Section - Improved mobile layout */}
-      <div id="courses" className="scroll-mt-20 py-16 sm:py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 mb-3">
-              <BookOpen className="h-4 w-4 text-emerald-800" />
-              <span className="text-xs font-medium text-emerald-900">Available Courses</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
-              Explore T-Level <span className="text-emerald-600">Courses</span>
-            </h2>
-            <p className="text-base sm:text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed mb-8">
-              Find the T-Level that matches your interests and career aspirations
-            </p>
-            
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 max-w-3xl mx-auto">
-              {tLevelCourses.map((course, i) => (
-                <button 
-                  key={i}
-                  onClick={() => setSelectedCourse(course.title === selectedCourse ? null : course.title)}
-                  className={`px-2 sm:px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all
-                    ${course.title === selectedCourse 
-                      ? 'bg-emerald-100 text-emerald-800' 
-                      : 'bg-white hover:bg-slate-100 text-slate-700'}`}
-                >
-                  {course.title}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
-            {tLevelCourses.map((course, index) => (
-              <div 
-                key={index}
-                className={`bg-white rounded-xl shadow-lg border ${course.title === selectedCourse ? 'border-emerald-300 ring-2 ring-emerald-100' : 'border-slate-200'} overflow-hidden transition-all duration-300 hover:shadow-xl`}
-              >
-                <div className="relative h-40 sm:h-48">
-                  <Image
-                    src={course.image}
-                    alt={`${course.title} T-Level course`}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/40 to-transparent" />
-                  <div className="absolute bottom-0 left-0 p-4 sm:p-6">
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">{course.title}</h3>
-                  </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent flex items-end">
+                  <p className="text-white text-lg font-medium p-6">
+                    Blend of classroom learning (80%) and workplace experience (20%)
+                  </p>
                 </div>
-                <div className="p-4 sm:p-6">
-                  <h4 className="font-semibold text-slate-900 mb-3">Specialisations:</h4>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {course.sectors.map((sector, i) => (
-                      <span key={i} className="px-2 sm:px-3 py-1 sm:py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-xs sm:text-sm font-medium">
-                        {sector}
-                      </span>
-                    ))}
+              </div>
+            </div>
+
+            {/* Content sections - 3 columns */}
+            <div className="md:col-span-3 order-1 md:order-2">
+              {/* Course Structure */}
+              <div className="mb-12">
+                <h3 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-6 flex items-center border-b border-slate-200 pb-3">
+                  <span className="border-b-3 border-emerald-500 pb-3 -mb-3.5">Course Structure</span>
+                </h3>
+                <ul className="space-y-8">
+                  <li className="flex gap-5">
+                    <div className="mt-1 text-emerald-600">
+                      <BookOpen className="w-7 h-7" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-semibold text-slate-800 mb-2">Technical qualification</h4>
+                      <p className="text-lg text-slate-700">Including core theory, concepts and skills for an industry area</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-5">
+                    <div className="mt-1 text-emerald-600">
+                      <Briefcase className="w-7 h-7" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-semibold text-slate-800 mb-2">Industry placement</h4>
+                      <p className="text-lg text-slate-700">With an employer to develop practical and technical skills</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-5">
+                    <div className="mt-1 text-emerald-600">
+                      <Lightbulb className="w-7 h-7" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-semibold text-slate-800 mb-2">Maths and English</h4>
+                      <p className="text-lg text-slate-700">Minimum standard in maths and English if not already achieved</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              
+              {/* Where T-Levels Lead */}
+              <div>
+                <h3 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-6 flex items-center border-b border-slate-200 pb-3">
+                  <span className="border-b-3 border-emerald-500 pb-3 -mb-3.5">Where T-Levels Can Lead</span>
+                </h3>
+                <div className="grid grid-cols-2 gap-y-6 gap-x-4">
+                  <div className="flex items-center gap-4">
+                    <div className="text-emerald-600">
+                      <Briefcase className="w-6 h-6" />
+                    </div>
+                    <p className="text-lg font-medium text-slate-700">Skilled employment</p>
                   </div>
-                  
-                  <h4 className="font-semibold text-slate-900 mb-2 mt-4">Potential Career Paths:</h4>
-                  <ul className="space-y-2">
-                    {course.jobs.map((job, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <CheckCircle className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                        <span className="text-slate-700 text-sm sm:text-base">{job}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <div className="mt-6 pt-4 border-t border-slate-100">
-                    <Link
-                      href={`#providers`}
-                      className="text-emerald-600 hover:text-emerald-800 text-sm font-medium flex items-center justify-end"
-                    >
-                      View Local Providers
-                      <ChevronRight className="ml-1 h-4 w-4" />
-                    </Link>
+                  <div className="flex items-center gap-4">
+                    <div className="text-emerald-600">
+                      <GraduationCap className="w-6 h-6" />
+                    </div>
+                    <p className="text-lg font-medium text-slate-700">University degrees</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-emerald-600">
+                      <Award className="w-6 h-6" />
+                    </div>
+                    <p className="text-lg font-medium text-slate-700">Higher apprenticeships</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-emerald-600">
+                      <BookOpen className="w-6 h-6" />
+                    </div>
+                    <p className="text-lg font-medium text-slate-700">Higher technical qualifications</p>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
@@ -448,12 +383,12 @@ export default function TLevelsForStudentsPage() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 mb-3">
               <Award className="h-4 w-4 text-emerald-800" />
-              <span className="text-xs font-medium text-emerald-900">Why Choose T-Levels?</span>
+              <span className="text-sm font-medium text-emerald-900">Why Choose T-Levels?</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
               Benefits <span className="text-emerald-600">for Students</span>
             </h2>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            <p className="text-2xl text-slate-600 max-w-3xl mx-auto">
               T-Levels offer unique advantages that set you up for career success
             </p>
           </div>
@@ -503,7 +438,7 @@ export default function TLevelsForStudentsPage() {
                     {React.cloneElement(benefit.icon, { className: 'w-7 h-7 text-emerald-600' })}
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-2">{benefit.title}</h3>
-                  <p className="text-slate-600 mb-6">{benefit.description}</p>
+                  <p className="text-lg text-slate-600 mb-6">{benefit.description}</p>
                   <ul className="space-y-3 text-slate-600 mt-auto">
                     {benefit.benefits.map((item, i) => (
                       <li key={i} className="flex items-start">
@@ -530,18 +465,111 @@ export default function TLevelsForStudentsPage() {
         </div>
       </div>
 
+      {/* Providers Section - COMPLETELY REDESIGNED */}
+      <div id="providers" className="scroll-mt-20 py-16 sm:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end gap-4 sm:gap-6 md:justify-between mb-10 sm:mb-16">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 mb-3">
+                <Building2 className="h-4 w-4 text-emerald-800" />
+                <span className="text-sm font-medium text-emerald-900">Find a Provider</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">
+                T-Level Providers in <span className="text-emerald-600">South Yorkshire</span>
+              </h2>
+            </div>
+            <p className="text-base sm:text-lg text-slate-600 md:max-w-lg mt-3 md:mt-0">
+              Discover colleges and educational institutions offering T-Levels in our region, with details on their courses and specialities
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {providers.map((provider, index) => (
+              <div 
+                key={index} 
+                className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-slate-200 h-full flex flex-col group"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <Image 
+                    src={provider.image} 
+                    alt={`${provider.name} campus`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute top-0 right-0 m-4 px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium">
+                    {provider.location}
+                  </div>
+                </div>
+                
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{provider.name}</h3>
+                  <p className="text-slate-600 mb-4">{provider.description}</p>
+                  
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-slate-900 mb-2">T-Levels Offered:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {provider.courses.map((course, i) => (
+                        <span key={i} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+                          {course}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="mb-5">
+                    <h4 className="text-sm font-semibold text-slate-900 mb-2">Provider Features:</h4>
+                    <ul className="space-y-1">
+                      {provider.features.map((feature, i) => (
+                        <li key={i} className="flex items-start text-sm text-slate-600">
+                          <CheckCircle className="h-4 w-4 text-emerald-600 mt-0.5 mr-2 flex-shrink-0" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <a 
+                    href={provider.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 mt-auto"
+                  >
+                    View T-Level Courses
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-10 sm:mt-16 bg-slate-50 rounded-xl border border-slate-200 p-6 sm:p-8">
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4">Need help choosing a provider?</h3>
+            <p className="text-base sm:text-lg text-slate-600 mb-6">
+              Our team can help match you with the right T-Level provider based on your interests and career aspirations.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center px-5 py-2.5 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors font-medium shadow-lg hover:shadow-emerald-600/20"
+            >
+              Get Advice
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* Success Stories */}
       <div id="stories" className="scroll-mt-20 py-16 sm:py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 mb-3">
               <Users className="h-4 w-4 text-emerald-800" />
-              <span className="text-xs font-medium text-emerald-900">Success Stories</span>
+              <span className="text-sm font-medium text-emerald-900">Success Stories</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
               Student <span className="text-emerald-600">Success</span> Stories
             </h2>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
               Hear from students who have completed T-Levels and where they are now
             </p>
           </div>
@@ -568,7 +596,7 @@ export default function TLevelsForStudentsPage() {
                     </p>
                   </div>
                 </div>
-                <p className="text-slate-700 text-lg mb-6 leading-relaxed relative pl-6 before:absolute before:left-0 before:top-2 before:w-1 before:h-12 before:bg-emerald-200">
+                <p className="text-slate-700 text-xl mb-6 leading-relaxed relative pl-6 before:absolute before:left-0 before:top-2 before:w-1 before:h-12 before:bg-emerald-200">
                   "{story.quote}"
                 </p>
                 <div className="flex items-center gap-2 text-emerald-600">
@@ -591,59 +619,16 @@ export default function TLevelsForStudentsPage() {
         </div>
       </div>
 
-      {/* Providers Section */}
-      <div id="providers" className="scroll-mt-20 py-16 sm:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 mb-3">
-              <Building2 className="h-4 w-4 text-emerald-800" />
-              <span className="text-xs font-medium text-emerald-900">Find a Provider</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
-              T-Level Providers in <span className="text-emerald-600">South Yorkshire</span>
-            </h2>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-              Discover colleges and educational institutions offering T-Levels in our region
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {providers.map((provider, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 hover:shadow-md transition-all">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-emerald-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-slate-900">{provider.name}</h3>
-                    <p className="text-slate-500">{provider.location}</p>
-                  </div>
-                </div>
-                <a 
-                  href={provider.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex w-full items-center justify-center px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition-colors text-base font-semibold focus:ring-4 focus:ring-emerald-300 focus:outline-none"
-                >
-                  View T-Level Courses
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Application CTA */}
       <div className="bg-white py-16 mb-8 md:mb-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl shadow-xl overflow-hidden">
             <div className="px-6 py-12 sm:px-12 sm:py-16 lg:flex lg:items-center lg:justify-between">
               <div>
-                <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
                   Ready to start your T-Level journey?
                 </h2>
-                <p className="mt-4 text-lg text-emerald-100 max-w-3xl">
+                <p className="mt-4 text-2xl text-emerald-100 max-w-3xl">
                   Applications for T-Levels are now open. Contact your chosen provider or speak to a careers advisor to start your application.
                 </p>
               </div>
@@ -651,7 +636,7 @@ export default function TLevelsForStudentsPage() {
                 <div className="inline-flex rounded-md shadow">
                   <Link
                     href="#providers"
-                    className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-emerald-700 bg-white hover:bg-emerald-50"
+                    className="inline-flex items-center justify-center px-5 py-3 border border-transparent rounded-md shadow-sm text-base font-medium rounded-md text-emerald-700 bg-white hover:bg-emerald-50"
                   >
                     Find a Provider
                     <ChevronRight className="ml-2 h-5 w-5" />
@@ -687,7 +672,7 @@ export default function TLevelsForStudentsPage() {
                     <div className={`${activeSection === item.id ? 'text-emerald-600' : 'text-slate-500'} p-1 rounded-lg`}>
                       {React.cloneElement(item.icon, { className: 'w-5 h-5' })}
                     </div>
-                    <span className={`text-xs font-medium ${activeSection === item.id ? 'text-emerald-800' : 'text-slate-900'} whitespace-nowrap`}>
+                    <span className={`text-sm font-medium ${activeSection === item.id ? 'text-emerald-800' : 'text-slate-900'} whitespace-nowrap`}>
                       {item.label}
                     </span>
                   </div>

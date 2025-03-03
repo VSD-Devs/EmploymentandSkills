@@ -8,6 +8,26 @@
     @apply antialiased text-gray-900;
   }
 
+  /* Make paragraph text larger for better accessibility */
+  p {
+    font-size: 1.25rem; /* Increased from 1.125rem to 1.25rem (20px) */
+    line-height: 1.7;
+  }
+  
+  /* Make list text match paragraph size for consistency */
+  li {
+    font-size: 1.25rem; /* Match paragraph size */
+    line-height: 1.7;
+  }
+
+  /* Also increase these common text elements */
+  span:not(.text-sm):not(.text-xs):not([class*="text-"]), 
+  div:not([class*="text-"]):not([class*="heading"]):not([class*="title"]) > label,
+  .body-text {
+    font-size: 1.25rem;
+    line-height: 1.7;
+  }
+
   /* Default link styles */
   a:not(.btn) {
     text-decoration: none;
@@ -27,6 +47,23 @@
   .btn-secondary {
     @apply bg-white text-blue-600 hover:bg-blue-50;
   }
+  
+  /* Main content area with improved accessibility */
+  .content-area {
+    /* Base styling */
+    @apply max-w-4xl mx-auto;
+    
+    /* Typography */
+    & p, & li, & span:not([class*="text-"]), & label {
+      font-size: 1.25rem;
+      line-height: 1.7;
+    }
+    
+    /* Spacing */
+    & p {
+      margin-bottom: 1.5rem;
+    }
+  }
 }
 
 /* Utility styles */
@@ -37,5 +74,11 @@
 
   .skip-to-main {
     @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-blue-600 focus:rounded-lg focus:shadow-lg;
+  }
+  
+  /* Utility class for accessible text sizing */
+  .accessible-text {
+    font-size: 1.25rem;
+    line-height: 1.7;
   }
 } 
