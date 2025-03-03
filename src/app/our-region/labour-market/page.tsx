@@ -395,7 +395,7 @@ export default function LabourMarketPage() {
               <div className="bg-white rounded-xl p-6 shadow-md">
                 <h3 className="text-xl font-medium text-slate-800 mb-4">Total Employment</h3>
                 <div className="flex items-end space-x-3">
-                  <p className="text-4xl font-bold text-teal-700">{(lmiData?.employment?.total / 1000).toFixed(1) || '0'}k</p>
+                  <p className="text-4xl font-bold text-teal-700">{(lmiData?.employment?.total ? (lmiData.employment.total / 1000).toFixed(1) : '0')}k</p>
                   <div className="flex items-center mb-1 text-teal-600">
                     <TrendingUp className="h-4 w-4 mr-1" />
                     <span className="text-sm font-medium">+0.8%</span>

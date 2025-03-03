@@ -101,7 +101,7 @@ export async function GET() {
 
     return NextResponse.json(courses.filter(course => course.title && course.provider));
   } catch (error) {
-    console.error('Error fetching courses:', error);
+    console.warn('Error fetching courses:', error);
     return NextResponse.json({ error: 'Failed to fetch courses' }, { status: 500 });
   }
 } 

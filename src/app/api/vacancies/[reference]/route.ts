@@ -9,7 +9,7 @@ export const revalidate = 300 // revalidate every 5 minutes
 // Simple cache object
 const cache: {
   [key: string]: {
-    data: any;
+    data: Record<string, unknown>;
     timestamp: number;
   };
 } = {};
@@ -55,7 +55,7 @@ export async function GET(
 
     return NextResponse.json(vacancyDetails, { headers });
   } catch (error) {
-    console.error('Error fetching vacancy details:', error);
+    console.warn('Error fetching vacancy details:', error);
     
     return NextResponse.json(
       { error: 'Failed to fetch vacancy details', message: (error as Error).message },
