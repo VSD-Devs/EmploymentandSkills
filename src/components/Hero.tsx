@@ -720,8 +720,8 @@ const Hero = () => {
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-end">
                   <CareerQuizButton 
-                    variant="primary"
-                    className="bg-white text-emerald-800 hover:bg-slate-100 px-6 py-3 rounded-lg shadow-lg font-medium"
+                    variant="cta"
+                    className="px-6 py-3 rounded-lg font-medium"
                   />
                   <Link 
                     href="/pathways" 

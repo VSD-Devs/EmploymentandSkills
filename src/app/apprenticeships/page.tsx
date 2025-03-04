@@ -646,11 +646,11 @@ const ApprenticeshipPage = () => {
                 <span className="text-xs md:text-sm font-medium text-emerald-700">Latest Opportunities</span>
               </span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
-                Featured <span className="text-emerald-600">Vacancies</span>
+                Apprenticeship <span className="text-emerald-600">Vacancies</span>
               </h2>
             </div>
             <p className="text-base sm:text-lg text-gray-600 md:max-w-lg">
-              Find your perfect apprenticeship opportunity in South Yorkshire
+              Apprenticeship vacancies across South Yorkshire
             </p>
           </div>
 
@@ -778,15 +778,22 @@ const ApprenticeshipPage = () => {
                 ))}
               </div>
               
-              {/* View More Button */}
-              <div className="flex justify-center mt-8 sm:mt-12 md:mt-16">
-                <Link
-                  href="/apprenticeships/vacancies"
-                  className="inline-flex items-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-sm sm:text-base font-medium hover:from-emerald-500 hover:to-emerald-400 transition-colors shadow-lg w-full sm:w-auto justify-center"
-                >
-                  View All Vacancies
-                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                </Link>
+              {/* View More Button Section */}
+              <div className="py-12 sm:py-16 md:py-20 bg-gray-50 mt-12 sm:mt-16 md:mt-20">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <div className="flex flex-col items-center gap-4">
+                    <p className="text-gray-600 text-sm sm:text-base text-center">
+                      Explore more apprenticeship opportunities in South Yorkshire
+                    </p>
+                    <Link
+                      href="/apprenticeships/vacancies"
+                      className="inline-flex items-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-sm sm:text-base font-medium hover:from-emerald-500 hover:to-emerald-400 transition-colors shadow-lg w-full sm:w-auto justify-center"
+                    >
+                      View All Vacancies
+                      <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           )}

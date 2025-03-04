@@ -7,7 +7,7 @@ import { ReactNode } from 'react'
 
 interface CareerQuizButtonProps {
   className?: string;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'cta';
   children?: ReactNode;
 }
 
@@ -16,7 +16,8 @@ const CareerQuizButton: React.FC<CareerQuizButtonProps> = ({ className = '', var
 
   const buttonStyles = {
     primary: 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-200',
-    secondary: 'bg-white text-emerald-600 border border-emerald-200 hover:border-emerald-300 hover:bg-emerald-50'
+    secondary: 'bg-white text-emerald-600 border border-emerald-200 hover:border-emerald-300 hover:bg-emerald-50',
+    cta: 'bg-white text-emerald-800 hover:bg-slate-100 shadow-lg'
   }
 
   return (
