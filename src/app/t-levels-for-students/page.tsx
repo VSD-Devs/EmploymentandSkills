@@ -28,7 +28,7 @@ const successStories = [
 const providers = [
   { 
     name: "Sheffield College", 
-    image: "/images/providers/sheffield-college.jpg",
+    image: "/images/providers/sheffield-college.webp",
     location: "Sheffield", 
     website: "https://www.sheffcol.ac.uk/t-levels",
     courses: ["Digital Production", "Education & Childcare", "Health & Science"],
@@ -37,7 +37,7 @@ const providers = [
   },
   { 
     name: "Barnsley College", 
-    image: "/images/providers/barnsley-college.jpg",
+    image: "/images/providers/barnsley-college.webp",
     location: "Barnsley", 
     website: "https://www.barnsley.ac.uk/t-levels",
     courses: ["Construction", "Digital", "Education & Childcare", "Health & Science"],
@@ -64,7 +64,7 @@ const providers = [
   },
   { 
     name: "UTC Sheffield Olympic Legacy Park", 
-    image: "/images/providers/utc-sheffield.jpg",
+    image: "/images/providers/utc-sheffield-olympic-legacy-park.jpg",
     location: "Sheffield", 
     website: "https://www.utcsheffield.org.uk/t-levels",
     courses: ["Health & Science", "Digital"],
@@ -73,7 +73,7 @@ const providers = [
   },
   { 
     name: "Dearne Valley College", 
-    image: "/images/providers/dearne-valley-college.jpg",
+    image: "/images/providers/dearne-valley.jpg",
     location: "Rotherham", 
     website: "https://www.dearne-coll.ac.uk/t-levels",
     courses: ["Digital Support Services", "Education & Childcare"],
@@ -158,19 +158,19 @@ export default function TLevelsForStudentsPage() {
                 Combine classroom learning with real workplace experience and gain the skills, knowledge, and experience that employers are looking for
               </p>
 
-              <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 pt-2">
+              <div className="flex flex-col gap-3 sm:gap-4 pt-2">
                 <Link
-                  href="#courses"
-                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-white text-emerald-900 font-medium hover:bg-emerald-50 transition-colors shadow-lg shadow-emerald-900/20 text-sm sm:text-base w-full xs:w-auto"
+                  href="#providers"
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-white text-emerald-900 font-medium hover:bg-emerald-50 transition-colors shadow-lg shadow-emerald-900/20 text-sm sm:text-base"
                 >
                   Explore Courses
                   <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
                 <Link
-                  href="#providers"
-                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-emerald-700/50 text-white font-medium backdrop-blur-sm border border-emerald-500/50 hover:bg-emerald-700/70 transition-colors text-sm sm:text-base w-full xs:w-auto"
+                  href="/contact"
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-emerald-700/50 text-white font-medium backdrop-blur-sm border border-emerald-500/50 hover:bg-emerald-700/70 transition-colors text-sm sm:text-base"
                 >
-                  View Providers
+                  Get Advice
                   <Users className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
               </div>

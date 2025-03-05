@@ -79,22 +79,6 @@ const UniversityPage = () => {
     }
   ]
 
-  // Key statistics for higher education in South Yorkshire
-  const keyStats = [
-    {
-      number: "60,000+",
-      label: "Students",
-      description: "Join a vibrant community of learners from all over the world",
-      icon: <Users className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-blue-600" />
-    },
-    {
-      number: "300+",
-      label: "Degree Programmes",
-      description: "Choose from a diverse range of courses to match your interests and career goals",
-      icon: <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-blue-600" />
-    }
-  ]
-
   return (
     <main className="min-h-screen bg-white">
       {/* Breadcrumbs at the very top of the page */}
@@ -138,7 +122,7 @@ const UniversityPage = () => {
                   href="https://www.shu.ac.uk/courses"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-white text-blue-900 font-medium hover:bg-blue-50 transition-colors shadow-lg shadow-blue-900/20 text-sm sm:text-base w-full xs:w-auto"
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-white text-blue-800 font-medium hover:bg-blue-50 transition-colors shadow-lg shadow-blue-900/20 text-sm sm:text-base w-full xs:w-auto"
                 >
                   Explore SHU Courses
                   <ArrowUpRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -147,7 +131,7 @@ const UniversityPage = () => {
                   href="https://www.sheffield.ac.uk/courses"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-blue-700/50 text-white font-medium backdrop-blur-sm border border-blue-500/50 hover:bg-blue-700/70 transition-colors text-sm sm:text-base w-full xs:w-auto"
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-white text-blue-800 font-medium hover:bg-blue-50 transition-colors text-sm sm:text-base w-full xs:w-auto"
                 >
                   UoS Courses
                   <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -173,28 +157,6 @@ const UniversityPage = () => {
           </div>
         </div>
       </section>
-
-      {/* Quick Stats - MOBILE OPTIMIZED */}
-      <div className="relative mt-8 sm:mt-12 md:mt-16 mb-8 sm:mb-12 md:mb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
-            {keyStats.map((stat, index) => (
-              <div key={index} className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow">
-                <div className="flex items-center gap-3 sm:gap-4 md:gap-5">
-                  <div className="p-2 sm:p-3 md:p-4 rounded-lg sm:rounded-xl bg-blue-100">
-                    {stat.icon}
-                  </div>
-                  <div>
-                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{stat.number}</p>
-                    <p className="text-sm sm:text-base md:text-lg text-gray-600">{stat.label}</p>
-                  </div>
-                </div>
-                <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg text-gray-500 leading-relaxed">{stat.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* Universities Section - MOBILE OPTIMIZED */}
       <section id="universities" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50 relative overflow-hidden">
@@ -382,7 +344,7 @@ const UniversityPage = () => {
                 href="https://www.shu.ac.uk/courses"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-white text-blue-700 font-medium hover:bg-blue-50 transition-colors shadow-lg text-sm sm:text-base w-full sm:w-auto"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 rounded-lg bg-white text-blue-800 font-medium hover:bg-blue-50 transition-colors shadow-lg text-sm sm:text-base w-full sm:w-auto"
               >
                 <span>Sheffield Hallam Courses</span>
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />

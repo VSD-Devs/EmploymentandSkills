@@ -104,49 +104,63 @@ export default function PlanYourCareer() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative bg-[#0e1b3d] py-32 flex items-center min-h-[600px]">
+      <section className="relative bg-gradient-to-br from-blue-800 to-teal-900 py-10 sm:py-12 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <Image 
-            src="/images/careers-hero.jpg" 
-            alt="Diverse young professionals discussing career paths"
-            fill
-            className="object-cover object-center brightness-75"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0e1b3d]/95 via-[#0e1b3d]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#0e1b3d]/70 to-transparent" />
-          <div className="absolute inset-0 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:20px_20px] opacity-30" />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,#ffffff05_50%,transparent_100%)] opacity-70" />
+          <div className="absolute -top-24 -right-24 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-blue-700/20 blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/2 w-40 sm:w-64 h-40 sm:h-64 rounded-full bg-teal-500/20 blur-3xl"></div>
         </div>
         
-        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 z-10 text-center">
-          <div className="inline-flex items-center gap-3 text-indigo-300 mb-6">
-            <div className="p-2 rounded-lg bg-indigo-500/10 backdrop-blur-sm border border-indigo-400/20">
-              <Compass className="h-5 w-5" />
+        <div className="relative max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center gap-6 sm:gap-8 md:gap-12">
+            {/* Hero Content */}
+            <div className="md:w-1/2 space-y-4 sm:space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-700/50 backdrop-blur-sm border border-blue-500/30">
+                <Compass className="h-4 w-4 text-blue-300" />
+                <span className="text-xs md:text-sm font-medium text-blue-100">Career Planning</span>
+              </div>
+
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                Plan Your Career in <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-teal-200">South Yorkshire</span>
+              </h1>
+              
+              <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl leading-relaxed">
+                Discover pathways, explore opportunities, and get the guidance you need to build a successful future
+              </p>
+
+              <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 pt-2">
+                <button
+                  onClick={() => setIsQuizOpen(true)}
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-blue-600/50 text-white font-medium backdrop-blur-sm border border-blue-500/50 hover:bg-blue-600/70 transition-colors text-sm sm:text-base w-full xs:w-auto"
+                >
+                  Take Career Quiz
+                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                </button>
+                <Link
+                  href="#tools"
+                  className="inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg bg-white/10 text-white font-medium backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-colors text-sm sm:text-base w-full xs:w-auto"
+                >
+                  View Career Tools
+                  <ChevronRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                </Link>
+              </div>
             </div>
-            <span className="text-base font-medium tracking-wide uppercase">South Yorkshire Mayoral Combined Authority</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 tracking-tight">
-            Plan Your Career in South Yorkshire
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-10">
-            Discover opportunities, explore career paths, and build the skills you need for success in the region's growing industries.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => setIsQuizOpen(true)}
-              className="inline-flex items-center justify-center px-6 py-3 bg-white text-indigo-700 font-medium rounded-lg hover:bg-gray-100 transition-colors shadow-lg"
-            >
-              Take Our Career Quiz
-              <ChevronRight className="ml-2 h-5 w-5" />
-            </button>
-            <Link
-              href="#career-sectors"
-              className="inline-flex items-center justify-center px-6 py-3 bg-indigo-700 text-white font-medium rounded-lg hover:bg-indigo-600 transition-colors border border-indigo-500"
-            >
-              Explore Career Sectors
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+
+            {/* Hero Image */}
+            <div className="md:w-1/2 relative mt-6 sm:mt-8 md:mt-0">
+              <div className="aspect-[3/2] overflow-hidden rounded-xl sm:rounded-2xl shadow-lg sm:shadow-2xl relative">
+                <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-transparent z-10"></div>
+                <div className="absolute -left-4 -top-4 w-16 sm:w-24 h-16 sm:h-24 rounded-full bg-blue-500/20 blur-3xl"></div>
+                <Image 
+                  src="/images/careers-hero.jpg"
+                  alt="Diverse young professionals discussing career paths"
+                  width={600}
+                  height={400}
+                  className="object-cover w-full h-full"
+                  priority
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

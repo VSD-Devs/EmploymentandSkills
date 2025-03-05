@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Briefcase, Search, MapPin, Building2, GraduationCap, Clock, CheckCircle2, ArrowRight, Quote, ExternalLink, BookOpen, Users, Camera } from 'lucide-react'
@@ -123,7 +123,7 @@ export const dynamic = 'force-dynamic'
 
 const ApprenticeshipPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, _setSelectedCategory] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState('All')
   const [postcode, _setPostcode] = useState('')
   const [sortBy, _setSortBy] = useState<SortOption>('AgeDesc')
   const [selectedSalaryRange, _setSelectedSalaryRange] = useState('')
@@ -132,6 +132,62 @@ const ApprenticeshipPage = () => {
   const [error, setError] = useState<string | null>(null)
   const [_currentChunk, setCurrentChunk] = useState(0)
   const _CHUNK_SIZE = 6
+  const [activeSection, setActiveSection] = useState('overview')
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+
+  // Handle touch events for mobile swipe navigation
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientY)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.touches[0].clientY)
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStart && touchEnd) {
+      const touchDiff = touchStart - touchEnd
+      const sections = ['overview', 'process', 'featured', 'stories', 'resources']
+      const currentIndex = sections.indexOf(activeSection)
+      
+      if (touchDiff > 50 && currentIndex < sections.length - 1) {
+        // Swipe up
+        const nextSection = sections[currentIndex + 1]
+        document.getElementById(nextSection)?.scrollIntoView({ behavior: 'smooth' })
+        setActiveSection(nextSection)
+      } else if (touchDiff < -50 && currentIndex > 0) {
+        // Swipe down
+        const prevSection = sections[currentIndex - 1]
+        document.getElementById(prevSection)?.scrollIntoView({ behavior: 'smooth' })
+        setActiveSection(prevSection)
+      }
+    }
+  }
+
+  // Handle scroll to update active section
+  const handleScroll = useCallback(() => {
+    const sections = ['overview', 'process', 'featured', 'stories', 'resources']
+    const scrollPosition = window.scrollY + window.innerHeight / 3
+
+    sections.forEach((section) => {
+      const element = document.getElementById(section)
+      if (element) {
+        const sectionTop = element.offsetTop
+        const sectionBottom = sectionTop + element.offsetHeight
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          setActiveSection(section)
+        }
+      }
+    })
+  }, [])
+
+  // Add scroll listener
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [handleScroll])
 
   useEffect(() => {
     const fetchVacancies = async () => {
@@ -204,7 +260,12 @@ const ApprenticeshipPage = () => {
   })
 
   return (
-    <main className="min-h-screen bg-white">
+    <main 
+      className="min-h-screen bg-white"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Breadcrumbs at the very top of the page */}
       <div className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
@@ -279,6 +340,85 @@ const ApprenticeshipPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Desktop Navigation Bar */}
+      <div className="hidden md:block sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-4">
+            <div className="flex items-center gap-1 text-emerald-800 font-bold text-xl">
+              <Briefcase className="h-6 w-6" />
+              <span>Apprenticeships</span>
+            </div>
+            
+            <div className="flex items-center gap-6">
+              {[
+                { id: 'overview', label: 'Overview' },
+                { id: 'process', label: 'How It Works' },
+                { id: 'featured', label: 'Featured Vacancies' },
+                { id: 'stories', label: 'Success Stories' },
+                { id: 'resources', label: 'Resources' }
+              ].map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={`text-sm font-medium py-1.5 border-b-2 transition-colors ${
+                    activeSection === item.id
+                      ? 'border-emerald-600 text-emerald-600'
+                      : 'border-transparent text-gray-600 hover:text-emerald-600 hover:border-emerald-200'
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
+                    setActiveSection(item.id)
+                  }}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+            
+            <Link
+              href="/apprenticeships/vacancies"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 transition-colors"
+            >
+              Find Vacancies
+              <Search className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation Bar */}
+      <div className="fixed md:hidden bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between py-2">
+            {[
+              { id: 'overview', icon: Users, label: 'Overview' },
+              { id: 'process', icon: CheckCircle2, label: 'Process' },
+              { id: 'featured', icon: Briefcase, label: 'Vacancies' },
+              { id: 'stories', icon: Quote, label: 'Stories' }
+            ].map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={`flex flex-col items-center px-3 py-1.5 rounded-lg transition-colors ${
+                  activeSection === item.id
+                    ? 'text-emerald-600 bg-emerald-50'
+                    : 'text-gray-500'
+                }`}
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
+                  setActiveSection(item.id)
+                }}
+              >
+                <item.icon className="h-5 w-5" />
+                <span className="text-xs mt-1 font-medium">{item.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* Quick Stats - MOBILE OPTIMIZED - Adjusted position */}
       <div className="relative mt-8 sm:mt-12 md:mt-16 mb-8 sm:mb-12 md:mb-20">
@@ -556,7 +696,7 @@ const ApprenticeshipPage = () => {
         <div className="absolute bottom-0 right-0 w-full h-20 sm:h-40 bg-gradient-to-t from-emerald-50/30 to-transparent"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="mb-8 sm:mb-12 md:mb-16">
+          <div className="mb-8 sm:mb-12 md:mb-16" id="process">
             <div className="flex flex-col md:flex-row md:items-end gap-4 sm:gap-6 md:justify-between">
               <div>
                 <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 mb-4 shadow-sm">
@@ -633,7 +773,7 @@ const ApprenticeshipPage = () => {
       </section>
 
       {/* Current Vacancies Section - MOBILE OPTIMIZED */}
-      <section id="current-vacancies" className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden">
+      <section id="featured" className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 -right-20 w-64 sm:w-96 h-64 sm:h-96 bg-emerald-50/30 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-40 sm:w-80 h-40 sm:h-80 bg-gradient-to-br from-emerald-50/40 to-blue-50/30 rounded-full blur-2xl"></div>
@@ -825,7 +965,7 @@ const ApprenticeshipPage = () => {
       </section>
 
       {/* Success Stories Section - MOBILE OPTIMIZED */}
-      <section id="success-stories" className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden">
+      <section id="stories" className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 -left-16 w-40 sm:w-80 h-40 sm:h-80 bg-emerald-50/50 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 -right-16 w-32 sm:w-60 h-32 sm:h-60 bg-emerald-50/70 rounded-full blur-3xl"></div>

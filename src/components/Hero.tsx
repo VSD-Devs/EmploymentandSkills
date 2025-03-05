@@ -618,7 +618,7 @@ const Hero = () => {
                       Meet the Mayor
                     </Link>
                     <Link 
-                      href="/about/symca" 
+                      href="/about/" 
                       className="px-4 py-2 border border-blue-600 text-blue-700 rounded-lg hover:bg-blue-50 transition-colors font-medium"
                     >
                       About SYMCA
